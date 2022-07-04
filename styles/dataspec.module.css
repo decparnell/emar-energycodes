@@ -1,0 +1,116 @@
+.container {
+  width: 100vw;
+  height: 86vh;
+}
+
+.searchContainer {
+  margin: 5%;
+  border-radius: 15px;
+  background: #94c1b9;
+  box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.25);
+  width: 90%;
+}
+
+.fullWidthTable{
+  width:90%;
+  margin-left:5%;
+}
+
+.contentContainer {
+  margin: 5%;
+  border-radius: 15px;
+  background: #94c1b9;
+  box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.25);
+}
+.marketMessageHeader {
+  margin: 0 1%;
+}
+.dataSpecExplainaition{
+  margin: 0 1%;
+  text-align: center;
+}
+.svList {
+  margin-left: 10%;
+  width: 80%;
+}
+
+.searchForm {
+  margin: 2% 3%;
+}
+.textInput {
+  margin: 0 20%;
+  width: 60%;
+  margin-bottom:2%;
+}
+
+.radio{
+  margin-left:10%;
+  margin-bottom:2%;
+}
+
+.searchButton{
+  margin-left:15%;
+}
+
+.flowStructure{
+  width:90%;
+  margin-left:5%;
+}
+
+.collectionRow{
+  background-color: #94c1b9;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+.tableHearSide,.mmTable{
+  text-align: center;
+  
+  color: black;
+  border: 1px solid #6e9f5b;
+  font-weight: bold;
+}
+
+.tableHearSide{
+  background-color: #94c1b9;
+}
+.mmTable{
+  background-color: #6e9f5b;
+}
+
+.sourcetargetContainer{
+  width:70%;
+  margin-left:15%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  display:flex;
+  justify-content: space-between;
+  font-weight: bold;
+  text-align: center;
+}
+.source,.target{
+  width:30%;
+  background-color:  #94c1b9;
+  text-align: center;
+  font-size:110%;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+}
+
+.sourceArrowTarget{
+  width:5%;
+  height:1%;
+  margin:auto;
+}
+
+.errorMessage{
+  text-align: center;
+  font-size: large;
+  color: red;
+}
+.filterRow{ 
+  background-color:transparent; 
+  border:none;
+}

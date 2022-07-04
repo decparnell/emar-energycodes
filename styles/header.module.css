@@ -1,0 +1,45 @@
+.header {
+  background-color: #ebf2f1;
+  height: 8vh;
+  width: 100%;
+}
+.logo {
+  height: 100%;
+  width: 5%;
+  float: left;
+}
+.secondHeader {
+  min-height: 6vh;
+  height: 6vh;
+  width: 100%;
+  background-color: #6e9f5b;
+}
+
+.navLinks {
+    float: right;
+    height: 100%;
+    margin-right:2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  .navLink,.secondHeaderLink {
+    height: 100%;
+    margin-left: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .navLink{
+
+    font-weight: bold;
+
+  }
+  .dataSpecDropDown{
+    border:0.5px solid black;
+    font-weight: bold;
+    padding: 3px;
+  }

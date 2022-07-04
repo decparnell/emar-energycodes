@@ -1,0 +1,101 @@
+.container {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-auto-rows: 43vh 43vh;
+}
+
+.contentContainer {
+  margin: 5%;
+  border-radius: 15px;
+  background: #94c1b9;
+  box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.25);
+  font-size: 8;
+}
+.scheduleContentContainer {
+  width: 100%;
+}
+
+.scheduleContainer {
+  width: 90vw;
+  height: auto;
+  margin-left: 5vw;
+  border-radius: 15px;
+  background: #94c1b9;
+  box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.25);
+}
+.contentTitle {
+  text-align: center;
+}
+
+.partName {
+  margin-left: 2vw;
+}
+.section {
+  width: 90vw;
+  margin-left: 5vw;
+  margin-bottom: 5vh;
+  padding-left: 5vw;
+  height: auto;
+  padding: 20px;
+  border-radius: 15px;
+  background: #94c1b9;
+  box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.25);
+}
+
+.compenentContainer {
+  width: 100%;
+  display: inline-block;
+  border: 1px solid #6e9f5b;
+}
+
+.orderNum {
+  width: 5%;
+  float: left;
+  font-weight: 600;
+  text-align: center;
+  vertical-align: top;
+}
+.textHolder {
+  width: 85%;
+  float: left;
+  vertical-align: top;
+}
+.linkButton {
+  width: 10%;
+  height: 100%;
+  float: left;
+}
+
+.linksPopup {
+  background-color: #6e9f5b;
+  border: 1px solid black;
+  padding: 5vh;
+  border-radius: 15px;
+  box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.25);
+}
+
+.popupTitle {
+  margin: 0;
+  padding: 0;
+}
+.plain_text {
+  margin: 0;
+  padding: 0;
+}
+.indented_text {
+  padding-left: 5vw;
+  margin: 0;
+}
+
+.double_indented_text {
+  padding-left: 10vw;
+  margin: 0;
+}
+
+.linkedText {
+  font-weight: 600;
+}
+
+.selected{
+  border: 1.5px solid black;
+}
