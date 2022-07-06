@@ -43,3 +43,48 @@ button{
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
 }
+
+.plain_text {
+  margin: 0;
+  padding: 0;
+}
+.indented_1 {
+  margin: 0;
+  padding-left: 5vw;
+}
+
+.indented_2 {
+  padding-left: 10vw;
+  margin: 0;
+}
+.indented_3 {
+  padding-left: 15vw;
+  margin: 0;
+}
+
+.indented_4 {
+  padding-left: 20vw;
+  margin: 0;
+}
+.indented_5 {
+  padding-left: 25vw;
+  margin: 0;
+}
+
+.indented_6 {
+  padding-left: 30vw;
+  margin: 0;
+}
+.indented_7 {
+  padding-left: 35vw;
+  margin: 0;
+}
+
+.indented_8 {
+  padding-left: 40vw;
+  margin: 0;
+}
+.indented_9 {
+  padding-left: 45vw;
+  margin: 0;
+}

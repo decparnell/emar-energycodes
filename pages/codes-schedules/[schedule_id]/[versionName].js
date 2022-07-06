@@ -48,7 +48,8 @@ function createContent(parts, sections, components) {
           component.componentType,
           section.sectionOrder,
           component.componentOrder,
-          component.componentId
+          component.componentId,
+          component.indent
         )
       );
       content.push(
