@@ -78,19 +78,6 @@
   margin: 0;
   padding: 0;
 }
-.plain_text {
-  margin: 0;
-  padding: 0;
-}
-.indented_text {
-  padding-left: 5vw;
-  margin: 0;
-}
-
-.double_indented_text {
-  padding-left: 10vw;
-  margin: 0;
-}
 
 .linkedText {
   font-weight: 600;

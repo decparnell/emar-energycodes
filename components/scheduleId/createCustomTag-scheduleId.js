@@ -12,7 +12,14 @@ const linkedWords = [
   { word: "Working Days", link: "working-days" },
 ];
 
-function CreateCustomTag(text, style, secNumber, compNumber, componentId) {
+function CreateCustomTag(
+  text,
+  style,
+  secNumber,
+  compNumber,
+  componentId,
+  indent
+) {
   //mock up for component links
   let componentLinks = [];
   if (componentId < 170 && componentId > 160) {
@@ -26,14 +33,16 @@ function CreateCustomTag(text, style, secNumber, compNumber, componentId) {
   const orderNumber = secNumber + "." + compNumber;
   //create initial value for the tag and class name
   let CustomTag = `${style}`;
-  let customClassName = styles.plain_text;
+  let customClassName = createIndentedText(indent);
   //alter class and tag depending on what the style is
-  if (style === "li") {
+  if (
+    ["listNumber", "listNumberItem", "listBullet", "listBulletItem"].includes(
+      style
+    )
+  ) {
     CustomTag = `p`;
-    customClassName = styles.indented_text;
-  } else if (style === "li2") {
-    CustomTag = `p`;
-    customClassName = styles.double_indented_text;
+  } else if (style === "title") {
+    CustomTag = `h4`;
   } else if (style === "table") {
     CustomTag = `table`;
   }
@@ -51,6 +60,14 @@ function CreateCustomTag(text, style, secNumber, compNumber, componentId) {
       </div>
     </div>
   );
+  return output;
+}
+
+function createIndentedText(indent) {
+  let output = "plain_text";
+  if (indent != 0) {
+    output = `indented_${indent}`;
+  }
   return output;
 }
 
