@@ -42,14 +42,21 @@
   box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.25);
 }
 
-.compenentContainer {
+.componentContainer {
   width: 100%;
   display: inline-block;
   border: 1px solid #6e9f5b;
+  margin-bottom:1vh;
 }
 
 .subHeading{
+  width: 100%;
+  display: inline-block;
   margin-top:3vh;
+}
+
+.multipleClauses{
+  margin-top:1vh;
 }
 
 .orderNum {

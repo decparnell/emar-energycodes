@@ -12,15 +12,18 @@ const linkedWords = [
   { word: "Working Days", link: "working-days" },
 ];
 
-function CreateCustomTag(
-  text,
-  style,
-  secNumber,
-  compNumber,
-  componentId,
-  indent,
-  clauseReference
-) {
+function CreateCustomTag(clauseReference, clauseComponents) {
+  const clauseJsx = [];
+  const componentId = clauseComponents[0].componentId;
+  const style = clauseComponents[0].componentType;
+  //create decimal value of component order
+  let orderNumber = " - ";
+  if (clauseReference) {
+    orderNumber = clauseReference;
+  } else if (style == "title") {
+    orderNumber = "";
+  }
+
   //mock up for component links
   let componentLinks = [];
   if (componentId < 170 && componentId > 160) {
@@ -30,17 +33,8 @@ function CreateCustomTag(
   if (componentLinks.length > 0) {
     needed = true;
   }
-  //create decimal value of component order
-  let orderNumber = " - ";
-  if (clauseReference) {
-    orderNumber = clauseReference;
-  } else if (style == "title") {
-    orderNumber = "";
-  }
-  //create initial value for the tag and class name
   let CustomTag = `${style}`;
-  let customClassName = createIndentedText(indent);
-  let componentComtainer = `${styles.compenentContainer}`;
+  let componentContainer = `${styles.componentContainer}`;
   //alter class and tag depending on what the style is
   if (
     ["listNumber", "listNumberItem", "listBullet", "listBulletItem"].includes(
@@ -50,18 +44,35 @@ function CreateCustomTag(
     CustomTag = `p`;
   } else if (style === "title") {
     CustomTag = `h3`;
-    componentComtainer = `${componentComtainer} ${styles.subHeading}`;
+    componentContainer = `${styles.subHeading}`;
   } else if (style === "table") {
     CustomTag = `table`;
   }
-  //create an array of the text to display including all links using split text function
-  const linkedText = splitTextByKeyWords(text);
+
+  //LOOP OVER EACH COMPONENT IN THE CLAUSE AND ADD IT TO THE SAME BOX (mainly ofr lists.)
+
+  for (const compI in clauseComponents) {
+    const comp = clauseComponents[compI];
+    const text = comp.componentText;
+    const indent = comp.indent;
+    //create initial value for the tag and class name
+    let customClassName = createIndentedText(indent);
+    if (compI > 0) {
+      customClassName = `${customClassName} ${styles.multipleClauses}`;
+    }
+    //create an array of the text to display including all links using split text function
+    const linkedText = splitTextByKeyWords(text);
+    clauseJsx.push(
+      <CustomTag className={customClassName}>{linkedText}</CustomTag>
+    );
+  }
+
   //output is returned when this func is called.... JSX containing component, links, and numbering
   const output = (
-    <div className={componentComtainer}>
+    <div className={componentContainer}>
       <div className={styles.orderNum}>{orderNumber}</div>
       <div className={styles.textHolder} key={componentId}>
-        <CustomTag className={customClassName}>{linkedText}</CustomTag>
+        {clauseJsx}
       </div>
       <div className={styles.linkButton}>
         <CreatePopUp needed={needed} />

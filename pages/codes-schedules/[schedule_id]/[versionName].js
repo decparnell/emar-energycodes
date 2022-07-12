@@ -5,6 +5,7 @@ import CreateCustomTag from "../../../components/scheduleId/createCustomTag-sche
 //import CreateCustomTag from "../../components/scheduleId/deleteMe";
 import CreateChangeTable from "../../../components/scheduleId/createChangeTable";
 import ScheduleHeader from "../../../components/scheduleId/scheduleHeader";
+import { listItemsToIgnore, listHeaders } from "../../../components/settings";
 function ScheduleDetail({ versions, parts, sections, components, document }) {
   const docInfo = document[0];
   const router = useRouter();
@@ -33,6 +34,7 @@ export default ScheduleDetail;
 
 function createContent(parts, sections, components) {
   let content = [];
+
   for (const part of parts) {
     content.push(<h2 className={styles.partName}>{part.partName}</h2>);
     let sectionsInPart = sections.filter((sec) => {
@@ -42,17 +44,28 @@ function createContent(parts, sections, components) {
       let componentsInSection = components.filter(function (el2) {
         return el2.sectionId_FK === section.sectionId;
       });
-      const componentsJsx = componentsInSection.map((component) =>
-        CreateCustomTag(
-          component.componentText,
-          component.componentType,
-          section.sectionOrder,
-          component.componentOrder,
-          component.componentId,
-          component.indent,
-          component.clauseReference
-        )
-      );
+      const clauses = componentsInSection.filter(function (el2) {
+        return listItemsToIgnore.indexOf(el2.componentType) == -1;
+      });
+      const componentsJsx = [];
+      const clausesProcessed = [];
+      for (const clauseI in clauses) {
+        const clause = clauses[clauseI];
+        if (clausesProcessed.indexOf(clause.clauseReference) == -1) {
+          clausesProcessed.push(clause.clauseReference);
+          let clauseComponents = [];
+          if (clause.componentType == "title") {
+            clauseComponents.push(clause);
+          } else {
+            clauseComponents = componentsInSection.filter(function (el2) {
+              return el2.clauseReference === clause.clauseReference;
+            });
+          }
+          componentsJsx.push(
+            CreateCustomTag(clause.clauseReference, clauseComponents)
+          );
+        }
+      }
       content.push(
         <div key={section.sectionName} className={styles.section}>
           <h2>
