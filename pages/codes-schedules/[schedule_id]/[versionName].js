@@ -49,14 +49,15 @@ function createContent(parts, sections, components) {
           section.sectionOrder,
           component.componentOrder,
           component.componentId,
-          component.indent
+          component.indent,
+          component.clauseReference
         )
       );
       content.push(
         <div key={section.sectionName} className={styles.section}>
-          <h3>
+          <h2>
             ({section.sectionOrder}) {section.sectionName}
-          </h3>
+          </h2>
           {componentsJsx}
         </div>
       );

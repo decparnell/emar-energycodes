@@ -18,7 +18,8 @@ function CreateCustomTag(
   secNumber,
   compNumber,
   componentId,
-  indent
+  indent,
+  clauseReference
 ) {
   //mock up for component links
   let componentLinks = [];
@@ -30,10 +31,16 @@ function CreateCustomTag(
     needed = true;
   }
   //create decimal value of component order
-  const orderNumber = secNumber + "." + compNumber;
+  let orderNumber = " - ";
+  if (clauseReference) {
+    orderNumber = clauseReference;
+  } else if (style == "title") {
+    orderNumber = "";
+  }
   //create initial value for the tag and class name
   let CustomTag = `${style}`;
   let customClassName = createIndentedText(indent);
+  let componentComtainer = `${styles.compenentContainer}`;
   //alter class and tag depending on what the style is
   if (
     ["listNumber", "listNumberItem", "listBullet", "listBulletItem"].includes(
@@ -42,7 +49,8 @@ function CreateCustomTag(
   ) {
     CustomTag = `p`;
   } else if (style === "title") {
-    CustomTag = `h4`;
+    CustomTag = `h3`;
+    componentComtainer = `${componentComtainer} ${styles.subHeading}`;
   } else if (style === "table") {
     CustomTag = `table`;
   }
@@ -50,7 +58,7 @@ function CreateCustomTag(
   const linkedText = splitTextByKeyWords(text);
   //output is returned when this func is called.... JSX containing component, links, and numbering
   const output = (
-    <div className={styles.compenentContainer}>
+    <div className={componentComtainer}>
       <div className={styles.orderNum}>{orderNumber}</div>
       <div className={styles.textHolder} key={componentId}>
         <CustomTag className={customClassName}>{linkedText}</CustomTag>
