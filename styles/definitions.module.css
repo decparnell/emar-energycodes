@@ -1,0 +1,42 @@
+.fullContainer{
+    width:100%;
+    text-align: center;
+}
+
+/* definitions page title */
+.definitionsTitle {
+    text-align: center;
+  }
+  
+/* definition name */
+.wordDefinition {
+    margin-left: 2vw;
+  }
+
+/* container with entire text body */
+.definitionBody {
+    width: 90vw;
+    margin-left: 5vw;
+    margin-bottom: 5vh;
+    padding-left: 5vw;
+    height: auto;
+    padding: 20px;
+    border-radius: 15px;
+    background: #94c1b9;
+    box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  /* the box within with the definition */
+.definitionContainer {
+    width: 100%;
+    display: inline-block;
+    border: 1px solid #6e9f5b;
+  }
+
+
+/* the actual text */
+.definitionHolder {
+    width: 85%;
+    float: left;
+    vertical-align: top;
+  }
