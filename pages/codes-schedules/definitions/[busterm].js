@@ -1,4 +1,6 @@
 import { useRouter } from "next/router";
+import styles from "../../../styles/definitions.module.css"
+
 
 function definitions({ versions, parts, sections, components, document }) {
   const docInfo = document[0];
@@ -6,9 +8,22 @@ function definitions({ versions, parts, sections, components, document }) {
   const componentInfo = components[0];
 
   return (
-    <div>
-      <h1>{docInfo.documentName}</h1> <h2>{partInfo.sectionName}</h2>
-      <p>{componentInfo.componentText}</p>
+    <div className={styles.fullContainer}>
+      <div className={styles.definitionTitle}>
+      <div className={styles.definitionBody}>
+      <div> 
+        <h1>{docInfo.documentName}</h1>
+        <h2>{partInfo.sectionName}</h2>
+        <div className={[styles.definitionContainer,]}>
+          <div className={styles.definitionHolder}>
+          <p>{componentInfo.componentText}</p>
+          </div>        
+           </div>      
+        </div> 
+      </div>
+ 
+      </div>
+         
     </div>
   );
 }

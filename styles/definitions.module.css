@@ -1,15 +1,15 @@
 .fullContainer{
     width:100%;
-    text-align: center;
+    text-align: left;
 }
 
-/* definitions page title */
+/* definitions word title */
 .definitionsTitle {
-    text-align: center;
+    text-align: left;
   }
   
 /* definition name */
-.wordDefinition {
+.wordToDefine {
     margin-left: 2vw;
   }
 
@@ -18,6 +18,7 @@
     width: 90vw;
     margin-left: 5vw;
     margin-bottom: 5vh;
+    margin-top: 5vh;
     padding-left: 5vw;
     height: auto;
     padding: 20px;
@@ -36,7 +37,8 @@
 
 /* the actual text */
 .definitionHolder {
-    width: 85%;
+    width: 100%;
     float: left;
     vertical-align: top;
+    margin-left: 2vw;
   }
