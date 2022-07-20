@@ -9,11 +9,10 @@ function definitions({ versions, parts, sections, components, document }) {
 
   return (
     <div className={styles.fullContainer}>
-      <div className={styles.definitionsTitle}> <h1>Word Definitions</h1> 
+      <div className={styles.definitionsTitle}> <h1>{docInfo.documentName};</h1> 
       </div>
       <div className={styles.definitionBody}>
       <div> 
-        <h1 className={styles.wordToDefine}>{docInfo.documentName}</h1>
         <h2>{partInfo.sectionName}</h2>
         <div className={[styles.definitionContainer,]}>
           <div className={styles.definitionHolder}>
