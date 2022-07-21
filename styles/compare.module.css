@@ -8,8 +8,9 @@
     width:75%;
     height:25vh;
     margin-left:12.5%;
-    background-color: #94c1b9;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    /* background-image: linear-gradient(180deg, #9dd9d2, #fff8f0 ); */
+    background-color: #9dd9d2;
+    box-shadow: 4px 4px 4px rgba(83, 18, 83, 0.4);
     border-radius: 5px;
 }
 

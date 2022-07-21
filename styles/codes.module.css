@@ -7,8 +7,9 @@
 .contentContainer {
   margin: 5%;
   border-radius: 15px;
-  background: #94c1b9;
-  box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.25);
+  background-image: linear-gradient(360deg, #9dd9d2, #fff8f0 );
+  box-shadow: 5px 5px 4px rgba(83, 18, 83, 0.4);
+  border: 1px solid rgba(83, 18, 83, 1);
   font-size: 8;
 }
 .scheduleContentContainer {
@@ -20,8 +21,7 @@
   height: auto;
   margin-left: 5vw;
   border-radius: 15px;
-  background: #94c1b9;
-  box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.25);
+  background-image: linear-gradient(180deg, #9dd9d2, #fff8f0);
 }
 .contentTitle {
   text-align: center;
@@ -38,14 +38,14 @@
   height: auto;
   padding: 20px;
   border-radius: 15px;
-  background: #94c1b9;
-  box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.25);
+  background: #9dd9d2;
+  box-shadow: 5px 5px 4px rgba(83, 18, 83, 0.4);
 }
 
 .compenentContainer {
   width: 100%;
   display: inline-block;
-  border: 1px solid #6e9f5b;
+  border: 1px solid rgba(83, 18, 83, 1);
 }
 
 .subHeading{
@@ -71,11 +71,11 @@
 }
 
 .linksPopup {
-  background-color: #6e9f5b;
-  border: 1px solid black;
+  background-color: #9dd9d2;
+  border: 1px solid rgba(83, 18, 83, 1);
   padding: 5vh;
   border-radius: 15px;
-  box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 5px 5px 4px rgba(83, 18, 83, 0.4);
 }
 
 .popupTitle {
@@ -88,5 +88,5 @@
 }
 
 .selected{
-  border: 1.5px solid black;
+  border: 1.5px solid rgba(83, 18, 83, 1);
 }

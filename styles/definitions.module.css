@@ -1,5 +1,6 @@
 .fullContainer{
     width:100%;
+    height: 100%;
     text-align: left;
 }
 
@@ -20,25 +21,25 @@
     margin-left: 5vw;
     margin-bottom: 5vh;
     margin-top: 5vh;
-    padding-left: 5vw;
     height: auto;
     padding: 20px;
     border-radius: 15px;
-    background: #94c1b9;
-    box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.25);
+    background-image: linear-gradient(to bottom right, #9dd9d2, #fff8f0 );
+    box-shadow: 5px 5px 4px rgba(83, 18, 83, 0.4);
+    border: 1px solid rgba(83, 18, 83, 1);
   }
 
   /* the box within with the definition */
 .definitionContainer {
     width: 100%;
     display: inline-block;
-    border: 1px solid #6e9f5b;
+    border: 1px solid rgba(83, 18, 83, 1);
   }
 
 
 /* the actual text */
 .definitionHolder {
-    width: 100%;
+    width: 95%;
     float: left;
     vertical-align: top;
     margin-left: 2vw;

@@ -1,17 +1,17 @@
 .dropdown{
     border: 1px solid grey;
     text-align: center;
-    background-color: #6e9f5b;
+    background-color: #f4d06f;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
 }
 
 .option{
-    border: 1px solid grey;
-    background-color: #ebf2f1;
+    border: 1px solid #531253;
+    background-color: #f4d06f;
 }
 .chosen{
-    background-color: #6e9f5b;
+    background-color: #ff8811;
 }
 .option:hover {
     background-color: #ddd;

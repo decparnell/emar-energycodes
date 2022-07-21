@@ -41,19 +41,3 @@ cursor: pointer;
 .tooltip_con:hover .tooltip {
     visibility: visible;
 }
-
-
-
-/*
-.contentContainer {
-  margin: 5%;
-  border-radius: 15px;
-  background: #94c1b9;
-  box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.25);
-}
-
-.contentTitle {
-  margin-left: 10px;
-}
-
-*/
