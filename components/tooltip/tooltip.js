@@ -1,11 +1,18 @@
-import { useRouter } from "next/router";
-import definitions from "../../pages/codes-schedules/definitions/[busterm]";
 
-function tool_tip () {
+import React from "react";
+import definitions, { getStaticProps } from "../../pages/codes-schedules/definitions/[busterm]";
+import styles from "../../styles.tooltip.module.css";
+
+function ToolTip(props) {
+    props = {definitions}
     return (
-        <div class="tooltip">{definitions}
-            <span class="tooltiptext">{definitions}</span>
+        <div className={styles.tooltip_con}>
+            <div className={styles.tooltip}> 
+                <span className={styles.tooltip}>{props.definitions}</span>
+            </div>
+            
         </div>
-    )
-    
-} 
+    );
+}
+
+export default ToolTip; 

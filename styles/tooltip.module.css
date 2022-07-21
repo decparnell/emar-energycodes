@@ -1,25 +1,31 @@
 /* tooltip container */
-.tooltip{
+.tooltip_con{
 position: relative; 
 display: inline-block; 
+background-color: #ddd;
+padding: 5px;
+border-radius: 5px;
+cursor: pointer;
 }
 
 /* text */
-.tooltip .tooltiptext {
+.tooltip {
     visibility: hidden;
+    z-index: 1;
     width: 300px;
-    background-color: #ddd;
+    padding: 0px 15px;
+    background: #ddd; 
     text-align: center;
-    color: black;
+    color: black; 
     font-weight: 600;
+    
     border-radius: 5px;
-    padding: 5px;
     position: absolute;
 }
 
 
 /* tooltip speech bubble shape */
-.tooltip .tooltiptext::after{
+.tooltip::after{
     content: " "; 
     position: absolute;
     bottom: 100%; 
@@ -32,7 +38,7 @@ display: inline-block;
 }
 
 /* text visible on hover */
-.tooltip:hover .tooltiptext {
+.tooltip_con:hover .tooltip {
     visibility: visible;
 }
 
