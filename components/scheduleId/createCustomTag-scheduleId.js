@@ -2,17 +2,7 @@ import styles from "../../styles/codes.module.css";
 import Link from "next/link";
 import Popup from "reactjs-popup";
 
-//temp value of the linked words which will switch to the API
-const linkedWords = [
-  { word: "SDES User", link: "sdes-user" },
-  { word: "SDES", link: "sdes" },
-  { word: "Parties", link: 31 },
-  { word: "SDEP", link: "sdep" },
-  { word: "CMRP", link: "cmrp" },
-  { word: "Working Days", link: "working-days" },
-];
-
-function CreateCustomTag(clauseReference, clauseComponents) {
+function CreateCustomTag(clauseReference, clauseComponents, definitions) {
   const clauseJsx = [];
   const componentId = clauseComponents[0].componentId;
   const style = clauseComponents[0].componentType;
@@ -76,7 +66,8 @@ function CreateCustomTag(clauseReference, clauseComponents) {
           headersJsx,
           headers[header],
           CustomTag,
-          customClassName
+          customClassName,
+          definitions
         );
       }
       tableJsx.push(<tr>{headersJsx}</tr>);
@@ -89,7 +80,8 @@ function CreateCustomTag(clauseReference, clauseComponents) {
             dataJsx,
             dataItems[entry],
             CustomTag,
-            customClassName
+            customClassName,
+            definitions
           );
         }
         tableJsx.push(<tr>{dataJsx}</tr>);
@@ -99,7 +91,13 @@ function CreateCustomTag(clauseReference, clauseComponents) {
     } else if (tag == "tableData") {
     } else {
       //create an array of the text to display including all links using split text function
-      addLinkedComponentsToOutput(clauseJsx, text, CustomTag, customClassName);
+      addLinkedComponentsToOutput(
+        clauseJsx,
+        text,
+        CustomTag,
+        customClassName,
+        definitions
+      );
     }
   }
 
@@ -122,10 +120,11 @@ function addLinkedComponentsToOutput(
   clauseJsx,
   text,
   CustomTag,
-  customClassName
+  customClassName,
+  definitions
 ) {
   //create an array of the text to display including all links using split text function
-  const linkedText = splitTextByKeyWords(text);
+  const linkedText = splitTextByKeyWords(text, definitions);
   clauseJsx.push(
     <CustomTag className={customClassName}>{linkedText}</CustomTag>
   );
@@ -139,18 +138,21 @@ function createIndentedText(indent) {
   return output;
 }
 
-function splitTextByKeyWords(text) {
+function splitTextByKeyWords(text, definitions) {
   //creating temp text value and the output array
   let searchText = text;
   let arrayOfText = [];
   //creating an array of the words that need linking
-  const wordsToLink = linkedWords.map((a) => a.word);
+  let wordsToLink = definitions.map((a) => a.linkText);
+  wordsToLink = wordsToLink.sort((a, b) => b.length - a.length);
   //for each word that needs linking
   for (const word in wordsToLink) {
     //create a variable containing the word
     let linkingWord = wordsToLink[word];
     //find the info about the linking word ie what the link for the word should be
-    let linkInfo = linkedWords.find((element) => element.word == linkingWord);
+    let linkInfo = definitions.find(
+      (element) => element.linkText == linkingWord
+    );
     //if the word can be found in the text
     if (searchText.indexOf(linkingWord) >= 0) {
       //split the text on the word to get an array of two halves
@@ -163,7 +165,7 @@ function splitTextByKeyWords(text) {
           <a
             className={styles.linkedText}
             href={`/codes-schedules/definitions/${encodeURIComponent(
-              linkInfo["link"]
+              linkInfo["linkForwardUrl"]
             )}`}
           >
             {linkingWord}

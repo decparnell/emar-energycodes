@@ -10,7 +10,9 @@ function ScenarioPage({ scenarioVariantInfo, structure }) {
 
   return (
     <>
-      <h1>{scenarioVariant}</h1>
+      <div className={styles.titleContainer}>
+        <h1 className={styles.contentTitle}>{scenarioVariant}</h1>
+      </div>
       <table>
         <tr>
           <td className={styles.tableHearSide}>Name</td>

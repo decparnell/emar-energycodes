@@ -1,12 +1,16 @@
 import { useRouter } from "next/router";
-import Link from "next/link";
 import styles from "../../../styles/codes.module.css";
 import CreateCustomTag from "../../../components/scheduleId/createCustomTag-scheduleId";
-//import CreateCustomTag from "../../components/scheduleId/deleteMe";
 import CreateChangeTable from "../../../components/scheduleId/createChangeTable";
-import ScheduleHeader from "../../../components/scheduleId/scheduleHeader";
 import { listItemsToIgnore, listHeaders } from "../../../components/settings";
-function ScheduleDetail({ versions, parts, sections, components, document }) {
+function ScheduleDetail({
+  versions,
+  parts,
+  sections,
+  components,
+  document,
+  definitions,
+}) {
   const docInfo = document[0];
   const router = useRouter();
   const schedule_id = router.query.schedule_id;
@@ -25,14 +29,14 @@ function ScheduleDetail({ versions, parts, sections, components, document }) {
         <tbody>{CreateChangeTable(versions, schedule_id, versionName)}</tbody>
       </table>
 
-      {createContent(parts, sections, components)}
+      {createContent(parts, sections, components, definitions)}
     </>
   );
 }
 
 export default ScheduleDetail;
 
-function createContent(parts, sections, components) {
+function createContent(parts, sections, components, definitions) {
   let content = [];
 
   for (const part of parts) {
@@ -62,15 +66,19 @@ function createContent(parts, sections, components) {
             });
           }
           componentsJsx.push(
-            CreateCustomTag(clause.clauseReference, clauseComponents)
+            CreateCustomTag(
+              clause.clauseReference,
+              clauseComponents,
+              definitions
+            )
           );
         }
       }
       content.push(
         <div key={section.sectionName} className={styles.section}>
-          <h2>
+          <h3>
             ({section.sectionOrder}) {section.sectionName}
-          </h2>
+          </h3>
           {componentsJsx}
         </div>
       );
@@ -79,28 +87,11 @@ function createContent(parts, sections, components) {
   return <div className={styles.scheduleContentContainer}>{content}</div>;
 }
 
-export async function getStaticPaths() {
-  const data = await fetch(
-    "https://prod-02.uksouth.logic.azure.com:443/workflows/42c048e7e8dc41758ed35c02ff7b4de7/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6P22c3SoD1TzE42D8fz1HCWKFo4u-l34pRvtnf2i47g"
-  );
-  const schedules = await data.json();
-  return {
-    paths: schedules.map((schedule) => {
-      return {
-        params: {
-          schedule_id: String(schedule.documentId),
-          versionName: String(schedule.versionName),
-        },
-      };
-    }),
-    fallback: false,
-  };
-}
-
-export async function getStaticProps({ params }) {
+// This gets called on every request
+export async function getServerSideProps(context) {
   //return the info about the latest version
   const dataReq = await fetch(
-    `https://prod-24.uksouth.logic.azure.com/workflows/c33b5eaa44fa46e9937c34b52091467b/triggers/manual/paths/invoke/${params.schedule_id}/${params.versionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xtAmkWUamwr-8PSmPnraMtCqA6mgxiAXrCqqZPf06OI`
+    `https://prod-24.uksouth.logic.azure.com/workflows/c33b5eaa44fa46e9937c34b52091467b/triggers/manual/paths/invoke/${context.params.schedule_id}/${context.params.versionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xtAmkWUamwr-8PSmPnraMtCqA6mgxiAXrCqqZPf06OI`
   );
   const dataJson = await dataReq.json();
   const parts = dataJson.parts;
@@ -108,7 +99,13 @@ export async function getStaticProps({ params }) {
   const components = dataJson.components;
   const versions = dataJson.versions;
   const document = dataJson.document;
+
+  const definitionsReq = await fetch(
+    `https://prod-27.uksouth.logic.azure.com:443/workflows/ba14c0c80fa447f99dd47e6c861c3ffd/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=w7CExwLA7utrpv2MTCbiIN9YYsAkH6op-PGZLxfy0bA`
+  );
+  const definitionsJson = await definitionsReq.json();
+  const definitions = definitionsJson.definitions;
   return {
-    props: { versions, parts, sections, components, document },
+    props: { versions, parts, sections, components, document, definitions },
   };
 }

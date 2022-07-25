@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Open Sans', cursive;
+  background-color: #E7F4E4;
 }
 
 a {
@@ -19,19 +20,22 @@ table {
   margin-left: 15vw;
   padding-top: 1vh;
   padding-bottom: 1vh;
+  text-align: center;
 }
 th {
   text-align: center;
-  background-color: #6e9f5b;
-  color: black;
-  border: 1px solid #6e9f5b;
+  background-color: #60935d;
+  color: white;
+  border: 1px solid #60935d;
 }
 td {
-  border: 1px solid #6e9f5b;
+  border-bottom: 1px solid #60935d;
   text-align: center;
 }
 tr {
-  background-color: #f2f2f2;
+  background-color: #E7F4E4;
+  text-align: center;
+  
 }
 
 tr:hover {
@@ -39,7 +43,7 @@ tr:hover {
 }
 
 button{
-  background-color: #f2f2f2;
+  background-color: #E7F4E4;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
 }
@@ -87,4 +91,27 @@ button{
 .indented_9 {
   padding-left: 45vw;
   margin: 0;
+}
+
+h1{
+  font-size: 40px;
+}
+h2{
+  font-size: 34px;
+}
+h3{
+  font-size: 26px;
+}
+h4{
+  font-size: 22px;
+}
+h5{
+  font-size: 20px;
+}
+h6{
+  font-size: 18px;
+}
+
+p,div{
+  font-size:16px;
 }

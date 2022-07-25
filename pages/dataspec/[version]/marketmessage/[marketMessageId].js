@@ -22,10 +22,12 @@ function MmDetailPage({ searchResults }) {
   return (
     <>
       <div className={styles.contentContainer}>
-        <h2 className={styles.marketMessageHeader}>
-          {marketMessageInfo.EnergyMarketMessageIdentifier} -{" "}
-          {marketMessageInfo.Label}
-        </h2>
+        <div className={styles.titleContainer}>
+          <h1 className={styles.contentTitle}>
+            {marketMessageInfo.EnergyMarketMessageIdentifier} -{" "}
+            {marketMessageInfo.Label}
+          </h1>
+        </div>
         <table className={styles.fullWidthTable}>
           <tbody>
             <tr>

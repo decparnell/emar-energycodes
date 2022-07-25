@@ -44,7 +44,10 @@ function CreateSearchResults(
               },
             }}
           >
-            <tr key={entry.EnergyMarketMessageIdentifier}>
+            <tr
+              key={entry.EnergyMarketMessageIdentifier}
+              className={styles.searchResultsRow}
+            >
               <td>{entry.EnergyMarketMessageIdentifier}</td>
               <td>
                 {removeNullValues(entry.DTCDcode) +
@@ -80,7 +83,10 @@ function CreateSearchResults(
               },
             }}
           >
-            <tr key={entry.DataItemIdentifier}>
+            <tr
+              key={entry.DataItemIdentifier}
+              className={styles.searchResultsRow}
+            >
               <td>{entry.DataItemIdentifier}</td>
               <td>
                 {removeNullValues(entry.DTCLegacyReference) +
@@ -148,7 +154,10 @@ function CreateSearchResults(
               },
             }}
           >
-            <tr key={entry.EnergyMarketMessageScenarioVariantIdentifier}>
+            <tr
+              key={entry.EnergyMarketMessageScenarioVariantIdentifier}
+              className={styles.searchResultsRow}
+            >
               <td>{entry.EnergyMarketMessageScenarioVariantIdentifier}</td>
               <td>{entry.EnergyMarketMessageScenarioVariantName}</td>
               <td>{entry.SourceName}</td>

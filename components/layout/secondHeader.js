@@ -28,9 +28,9 @@ function SecondNavbar() {
       {isCodesPath ? (
         <div className={styles.navLinks}>
           <div className={styles.secondHeaderLink}>
-            <Link href="/codes-schedules/compare">
+            {/* <Link href="/codes-schedules/compare">
               Compare Schedule Versions
-            </Link>
+            </Link> */}
           </div>
         </div>
       ) : isDataSpecPath ? (

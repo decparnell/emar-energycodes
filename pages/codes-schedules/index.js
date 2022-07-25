@@ -5,27 +5,27 @@ function CodesPage({ gov, green, metering, other, party, transition }) {
   return (
     <div className={styles.container}>
       <div className={styles.contentContainer}>
-        <h3 className={styles.contentTitle}>Governance & Misc.</h3>
+        <h2 className={styles.contentTitle}>Governance & Misc.</h2>
         {CreateList(gov)}
       </div>
       <div className={styles.contentContainer}>
-        <h3 className={styles.contentTitle}>Metering</h3>
+        <h2 className={styles.contentTitle}>Metering</h2>
         {CreateList(metering)}
       </div>
       <div className={styles.contentContainer}>
-        <h3 className={styles.contentTitle}>Party Management</h3>
+        <h2 className={styles.contentTitle}>Party Management</h2>
         {CreateList(party)}
       </div>
       <div className={styles.contentContainer}>
-        <h3 className={styles.contentTitle}>Green Deal & Theft</h3>
+        <h2 className={styles.contentTitle}>Green Deal & Theft</h2>
         {CreateList(green)}
       </div>
       <div className={styles.contentContainer}>
-        <h3 className={styles.contentTitle}>Transition to REC</h3>
+        <h2 className={styles.contentTitle}>Transition to REC</h2>
         {CreateList(transition)}
       </div>
       <div className={styles.contentContainer}>
-        <h3 className={styles.contentTitle}>Other</h3>
+        <h2 className={styles.contentTitle}>Other</h2>
         {CreateList(other)}
       </div>
     </div>
@@ -38,7 +38,7 @@ function CreateList(listItems) {
   return (
     <ul>
       {listItems.map((item) => (
-        <li key={item.documentId} style={{ fontSize: 12 }}>
+        <li key={item.documentId} style={{ fontSize: 14 }}>
           <Link
             href={`/codes-schedules/${encodeURIComponent(
               item.documentId
