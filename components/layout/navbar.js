@@ -11,7 +11,7 @@ function navbar() {
     <Fragment>
       <div className={styles.header}>
         <div className={styles.logo}>
-          <Image alt="Recco logo" src={logo} />
+          {/* <Image alt="Recco logo" src={logo} /> */}
         </div>
         <div className={styles.navLinks}>
           <div className={styles.navLink}>

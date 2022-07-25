@@ -1,7 +1,8 @@
 .header {
-  background-color: #ebf2f1;
+  background-image: linear-gradient(to right,#4d8934, #70ada3);
   height: 8vh;
   width: 100%;
+
 }
 .logo {
   height: 100%;
@@ -12,7 +13,7 @@
   min-height: 6vh;
   height: 6vh;
   width: 100%;
-  background-color: #6e9f5b;
+
 }
 
 .navLinks {
@@ -34,9 +35,8 @@
   }
   
   .navLink{
-
     font-weight: bold;
-
+    font-size: 20px;
   }
   .dataSpecDropDown{
     border:0.5px solid black;
