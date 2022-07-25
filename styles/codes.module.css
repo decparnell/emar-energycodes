@@ -97,3 +97,9 @@
 .selected{
   border: 1.5px solid black;
 }
+
+.clauseTable{
+  width:70%;
+  margin-left:15%;
+  text-align: center;
+}
