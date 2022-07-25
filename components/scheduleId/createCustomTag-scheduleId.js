@@ -55,16 +55,52 @@ function CreateCustomTag(clauseReference, clauseComponents) {
     const comp = clauseComponents[compI];
     const text = comp.componentText;
     const indent = comp.indent;
+    const tag = comp.componentType;
     //create initial value for the tag and class name
     let customClassName = createIndentedText(indent);
     if (compI > 0) {
       customClassName = `${customClassName} ${styles.multipleClauses}`;
     }
-    //create an array of the text to display including all links using split text function
-    const linkedText = splitTextByKeyWords(text);
-    clauseJsx.push(
-      <CustomTag className={customClassName}>{linkedText}</CustomTag>
-    );
+
+    //append jsx to the clauseJsx array depending on the type of data coming in
+    if (tag == "tableHeader") {
+      const tableJsx = [];
+      const headersJsx = [];
+      const tableData = clauseComponents.filter(
+        (component) => component.componentType == "tableData"
+      );
+      CustomTag = `th`;
+      const headers = text.split("|||");
+      for (const header in headers) {
+        addLinkedComponentsToOutput(
+          headersJsx,
+          headers[header],
+          CustomTag,
+          customClassName
+        );
+      }
+      tableJsx.push(<tr>{headersJsx}</tr>);
+      for (const item in tableData) {
+        CustomTag = `td`;
+        const dataJsx = [];
+        const dataItems = tableData[item].componentText.split("|||");
+        for (const entry in dataItems) {
+          addLinkedComponentsToOutput(
+            dataJsx,
+            dataItems[entry],
+            CustomTag,
+            customClassName
+          );
+        }
+        tableJsx.push(<tr>{dataJsx}</tr>);
+      }
+
+      clauseJsx.push(<table className={styles.clauseTable}>{tableJsx}</table>);
+    } else if (tag == "tableData") {
+    } else {
+      //create an array of the text to display including all links using split text function
+      addLinkedComponentsToOutput(clauseJsx, text, CustomTag, customClassName);
+    }
   }
 
   //output is returned when this func is called.... JSX containing component, links, and numbering
@@ -80,6 +116,19 @@ function CreateCustomTag(clauseReference, clauseComponents) {
     </div>
   );
   return output;
+}
+
+function addLinkedComponentsToOutput(
+  clauseJsx,
+  text,
+  CustomTag,
+  customClassName
+) {
+  //create an array of the text to display including all links using split text function
+  const linkedText = splitTextByKeyWords(text);
+  clauseJsx.push(
+    <CustomTag className={customClassName}>{linkedText}</CustomTag>
+  );
 }
 
 function createIndentedText(indent) {
