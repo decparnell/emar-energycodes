@@ -9,11 +9,11 @@ function ScenarioPage({ scenarioVariantInfo, structure }) {
   const scenarioVariant = router.query.scenarioVariant;
 
   return (
-    <>
-      <div className={styles.titleContainer}>
-        <h1 className={styles.contentTitle}>{scenarioVariant}</h1>
-      </div>
-      <table>
+    <div className={styles.contentContainer}>
+      <h1 className={styles.contentTitle}>
+        {scenarioVariant} - {svInfo.EnergyMarketMessageScenarioVariantName}
+      </h1>
+      <table className={styles.fullWidthTable}>
         <tr>
           <td className={styles.tableHearSide}>Name</td>
           <td>{svInfo.EnergyMarketMessageScenarioVariantName}</td>
@@ -37,7 +37,7 @@ function ScenarioPage({ scenarioVariantInfo, structure }) {
         </div>
       </div>
       {CreateFlowStructure(structure)}
-    </>
+    </div>
   );
 }
 
