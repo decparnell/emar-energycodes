@@ -22,11 +22,9 @@ function DiDetailPage({ searchResults }) {
   return (
     <>
       <div className={styles.contentContainer}>
-        <div className={styles.titleContainer}>
-          <h1 className={styles.contentTitle}>
-            {dataItemInfo.DataItemIdentifier} - {dataItemInfo.DataItemName}
-          </h1>
-        </div>
+        <h1 className={styles.contentTitle}>
+          {dataItemInfo.DataItemIdentifier} - {dataItemInfo.DataItemName}
+        </h1>
         <table className={styles.fullWidthTable}>
           <tbody>
             <tr>

@@ -15,6 +15,7 @@
 .fullWidthTable{
   width:90%;
   margin-left:5%;
+  color:black;
 }
 
 .contentContainer {
@@ -34,6 +35,7 @@
 .svList {
   margin-left: 10%;
   width: 80%;
+  color:black;
 }
 
 .searchForm {
@@ -86,22 +88,23 @@
 
 .pointer{
   cursor: pointer;
+  color:black;
 }
 
 .tableHearSide,.mmTable{
   text-align: center;
   background: #36494E;
   color: white;
-  border: 1px solid #6e9f5b;
+  border: 1px solid #60935d;
   font-weight: bold;
 }
 
 .tableHearSide{
-  background: #36494E;
+  background: #60935d;
   color: white;
 }
 .mmTable{
-  background-color: #6e9f5b;
+  background-color: #60935d;
 }
 
 .sourcetargetContainer{
@@ -116,7 +119,7 @@
 }
 .source,.target{
   width:30%;
-  background: #36494E;
+  background: #60935d;
   color: white;
   text-align: center;
   font-size:110%;
