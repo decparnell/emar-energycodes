@@ -1,18 +1,21 @@
-
-import React from "react";
-import definitions, { getStaticProps } from "../../pages/codes-schedules/definitions/[busterm]";
 import styles from "../../styles.tooltip.module.css";
 
 function ToolTip(props) {
-    props = {definitions}
+    const textToHighlight = props.text
+    const dataReq = await fetch(
+        ''
+      );
+      const dataJson = await dataReq.json();
+      const definition = dataJson.definition
+    
     return (
-        <div className={styles.tooltip_con}>
             <div className={styles.tooltip}> 
-                <span className={styles.tooltip}>{props.definitions}</span>
+            {textToHighlight}
+                <span className={styles.tooltip}>{definition}</span>
             </div>
             
-        </div>
-    );
+   );
 }
 
 export default ToolTip; 
+
