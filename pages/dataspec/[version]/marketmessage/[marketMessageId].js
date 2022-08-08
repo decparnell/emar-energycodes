@@ -49,7 +49,7 @@ function MmDetailPage({ searchResults }) {
           </tbody>
         </table>
         <h2 className={styles.svHeader}>
-          The Scenario Vaiants for this message are:
+          The Scenario Variants for this message are:
         </h2>
         <table className={styles.svList}>
           <thead>
