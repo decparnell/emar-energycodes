@@ -1,16 +1,16 @@
 .container {
   width: 100vw;
-  height: 86vh;
-  /* background-color: #6cd4ff; */
+  height: 100vh;
+/* background-color: #70ada3 */
 }
 
 .searchContainer {
   margin: 5%;
   border-radius: 15px;
-  /* background-color: #fff8f0; */
-  box-shadow: 5px 5px 4px rgba(83, 18, 83, 0.4);
-  background-image: linear-gradient(360deg, #9dd9d2, #fff8f0 );
-  border: 1px solid rgba(83, 18, 83, 1);
+ /* background-color: #fff8f0; */
+  box-shadow: 5px 5px 4px rgba(123, 40, 46, 0.3);
+  background-image: linear-gradient(360deg, rgba(112, 173, 163, 1), rgba(196, 211, 141, 0.1) );
+  border: 1px solid rgba(123, 40, 46, 1);
   width: 90%;
   height: auto;
   padding: 20px;
@@ -24,8 +24,8 @@
 .contentContainer {
   margin: 5%;
   border-radius: 15px;
-  background: #9dd9d2;
-  box-shadow: 5px 5px 4px rgba(83, 18, 83, 0.4);
+  background: #70ada3;
+  box-shadow: 5px 5px 4px rgba(123, 40, 46, 0.3);
 }
 .marketMessageHeader {
   margin: 0 1% 1%;
@@ -69,7 +69,7 @@
 }
 
 .collectionRow{
-  background-color: #94c1b9;
+  background-color: #70ada3;
 }
 
 .pointer{
@@ -80,15 +80,15 @@
   text-align: center;
   
   color: black;
-  border: 1px solid #6e9f5b;
+  border: 1px solid #70ada3;
   font-weight: bold;
 }
 
 .tableHearSide{
-  background-color: #94c1b9;
+  background-color: #70ada3;
 }
 .mmTable{
-  background-color: #6e9f5b;
+  background-color: #70ada3;
 }
 
 .sourcetargetContainer{
@@ -103,10 +103,10 @@
 }
 .source,.target{
   width:30%;
-  background-color:  #94c1b9;
+  background-color:  #70ada3;
   text-align: center;
   font-size:110%;
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+  box-shadow: 3px 3px 3px rgba(123, 40, 46, 0.3);
   border-radius: 5px;
 }
 

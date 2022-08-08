@@ -24,16 +24,16 @@
     height: auto;
     padding: 20px;
     border-radius: 15px;
-    background-image: linear-gradient(to bottom right, #9dd9d2, #fff8f0 );
-    box-shadow: 5px 5px 4px rgba(83, 18, 83, 0.4);
-    border: 1px solid rgba(83, 18, 83, 1);
+    background-image: linear-gradient(to bottom right, #70ada3, rgba(196, 211, 141, 0.1) );
+    box-shadow: 5px 5px 4px rgba(123, 40, 46, 0.3);
+    border: 1px solid rgba(123, 40, 46, 1);
   }
 
   /* the box within with the definition */
 .definitionContainer {
     width: 100%;
     display: inline-block;
-    border: 1px solid rgba(83, 18, 83, 1);
+    border: 1px solid rgba(123, 40, 46, 1);
   }
 
 
