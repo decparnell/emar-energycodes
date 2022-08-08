@@ -5,10 +5,10 @@
 
 .contentContainer {
   margin: 3%;
-  padding-left:3%;
-  padding-right:5%;
+  padding-left: 3%;
+  padding-right: 5%;
   border-radius: 5px;
-  background: #36494E;
+  background: #36494e;
   color: white;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
 }
@@ -21,7 +21,7 @@
   height: auto;
   margin-left: 5vw;
   border-radius: 5px;
-  background: #36494E;
+  background: #36494e;
   color: white;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
 }
@@ -40,7 +40,7 @@
   height: auto;
   padding: 20px;
   border-radius: 5px;
-  background: #36494E;
+  background: #36494e;
   color: white;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
 }
@@ -48,17 +48,17 @@
 .componentContainer {
   width: 100%;
   display: inline-block;
-  margin-bottom:3vh;
+  margin-bottom: 3vh;
 }
 
-.subHeading{
+.subHeading {
   width: 100%;
   display: inline-block;
-  margin-top:3vh;
+  margin-top: 3vh;
 }
 
-.multipleClauses{
-  margin-top:1vh;
+.multipleClauses {
+  margin-top: 1vh;
 }
 
 .orderNum {
@@ -80,7 +80,7 @@
 }
 
 .linksPopup {
-  background: #36494E;
+  background: #36494e;
   color: white;
   border: 1px solid black;
   padding: 5vh;
@@ -97,16 +97,61 @@
   font-weight: 600;
 }
 
-.selected{
+.selected {
   border: 1.5px solid black;
 }
 
-.clauseTable{
-  width:100%;
-  margin:0;
+.clauseTable {
+  width: 100%;
+  margin: 0;
   text-align: center;
 }
 
-.clauseTable td{
+.clauseTable td {
   color: black;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  width: 20vw;
+  color: #36494e;
+  background-image: linear-gradient(#4d8934, #70ada3);
+}
+
+.sidebarSectionsList {
+  padding: 1em;
+}
+
+.sidebarSectionsList > li {
+  list-style: none;
+  padding: 0.2em 0;
+}
+
+.sidebarSectionsList > li > a {
+  text-decoration: none;
+}
+
+.hamburger {
+  width: 35px;
+  height: 35px;
+  position: fixed;
+  top: 1em;
+  left: 1.5em;
+}
+
+.closeBnt {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  width: 35px;
+  height: 35px;
+}
+
+@media only screen and (max-width: 800px) {
+  .sidebar {
+    width: 50vw;
+  }
 }

@@ -1,8 +1,11 @@
 import { useRouter } from "next/router";
+import { useState } from "react";
 import styles from "../../../styles/codes.module.css";
 import CreateCustomTag from "../../../components/scheduleId/createCustomTag-scheduleId";
 import CreateChangeTable from "../../../components/scheduleId/createChangeTable";
 import { listItemsToIgnore, listHeaders } from "../../../components/settings";
+import { AiOutlineCloseSquare, AiOutlineMenu } from "react-icons/ai";
+
 function ScheduleDetail({
   versions,
   parts,
@@ -15,9 +18,41 @@ function ScheduleDetail({
   const router = useRouter();
   const schedule_id = router.query.schedule_id;
   const versionName = router.query.versionName;
+  const [isOpen, setIsOpen] = useState(true);
+
+  const handleClose = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <>
+      {isOpen ? (
+        <aside className={styles.sidebar}>
+          <nav>
+            <AiOutlineCloseSquare
+              onClick={handleClose}
+              className={styles.closeBnt}
+            />
+
+            <ul className={styles.sidebarSectionsList}>
+              {sections.map((section) => {
+                return (
+                  <li key={section.sectionId}>
+                    <a href={`#${section.sectionId}`}>
+                      {section.sectionOrder}. {section.sectionName}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        </aside>
+      ) : (
+        <div onClick={handleClose}>
+          <AiOutlineMenu className={styles.hamburger} />
+        </div>
+      )}
+
       <div className={styles.scheduleContainer}>
         <h1 className={styles.contentTitle}>{docInfo.documentName}</h1>
       </div>
@@ -75,7 +110,11 @@ function createContent(parts, sections, components, definitions) {
         }
       }
       content.push(
-        <div key={section.sectionName} className={styles.section}>
+        <div
+          id={section.sectionId}
+          key={section.sectionName}
+          className={styles.section}
+        >
           <h3>
             ({section.sectionOrder}) {section.sectionName}
           </h3>
