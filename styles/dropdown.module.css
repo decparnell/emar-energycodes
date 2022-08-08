@@ -1,19 +1,19 @@
 .dropdown{
     border: 1px solid grey;
     text-align: center;
-    background-color: #f4d06f;
+    background-color: #e7ab00;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
 }
 
 .option{
-    border: 1px solid #531253;
-    background-color: #f4d06f;
+    border: 1px solid #7b282e;
+    background-color: #e7ab00;
 }
 .chosen{
-    background-color: #ff8811;
+    background-color: #be6516;
 }
 .option:hover {
-    background-color: #ddd;
+    background-color: #c4d38d;
     cursor: pointer;
   }
