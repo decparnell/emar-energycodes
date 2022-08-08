@@ -23,12 +23,12 @@ table {
 th {
   text-align: center;
   /* background-color: #6e9f5b;    */
-  background-color: rgba(255, 136, 17, 1);
+  background-color: rgba(231, 171, 0, 1);
   color: black;
-  border: 1px solid rgba(83, 18, 83, 1);
+  border: 1px solid rgba(123, 40, 46, 1);
 }
 td {
-  border: 1px solid rgba(83, 18, 83, 1);
+  border: 1px solid rgba(123, 40, 46, 1);
   text-align: center;
 }
 tr {
@@ -36,7 +36,7 @@ tr {
 }
 
 tr:hover {
-  background-color: #ddd;
+  background-color: #c4d38d;
 }
 
 button{
