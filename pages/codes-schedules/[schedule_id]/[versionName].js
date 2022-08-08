@@ -18,19 +18,20 @@ function ScheduleDetail({
   const router = useRouter();
   const schedule_id = router.query.schedule_id;
   const versionName = router.query.versionName;
-  const [isOpen, setIsOpen] = useState(true);
 
-  const handleClose = () => {
-    setIsOpen(!isOpen);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   return (
     <>
-      {isOpen ? (
+      {isSidebarOpen ? (
         <aside className={styles.sidebar}>
           <nav>
             <AiOutlineCloseSquare
-              onClick={handleClose}
+              onClick={toggleSidebar}
               className={styles.closeBnt}
             />
 
@@ -48,7 +49,7 @@ function ScheduleDetail({
           </nav>
         </aside>
       ) : (
-        <div onClick={handleClose}>
+        <div onClick={toggleSidebar}>
           <AiOutlineMenu className={styles.hamburger} />
         </div>
       )}
