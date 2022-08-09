@@ -17,7 +17,9 @@ export default function MyApp({ Component, pageProps }) {
       .versionNumber
   );
 
-  const [chosenDataSpecVersion, setChosenDataSpecVersion] = useState();
+  const [chosenDataSpecVersion, setChosenDataSpecVersion] = useState(
+    latestDataSpecVersion
+  );
   return (
     <AppContext.Provider
       value={{

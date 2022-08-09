@@ -1,18 +1,17 @@
 .container {
-  display: grid;
-  grid-template-columns: 50% 50%;
-  grid-auto-rows: 43vh 43vh;
-  background-color: #E7F4E4;
+  width:100%;
+}
+.dashboardSelector{
+  width:50%;
+  margin-left:25%;
+  justify-content: space-between;
+  display:flex;
 }
 
-.contentContainer {
-  margin: 5%;
-  border-radius: 5px;
-  background: #36494E;
-  color: white;
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+.dashButtonTitle{
+  margin:2%;
 }
-
-.contentTitle {
-  margin-left: 10px;
+.selectedDashboard{
+  background-color: #60935d;
+  color:white;
 }
