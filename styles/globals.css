@@ -128,3 +128,29 @@ h6{
 p,div{
   font-size:16px;
 }
+.small_button{
+  background-color: #60935d;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 0.5%;
+  width:5%;
+}
+
+.medium_button{
+  background-color: #60935d;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 0.5%;
+  width:10%
+}
+
+.large_button{
+  background-color: #60935d;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 0.5%;
+  width:15%;
+}
