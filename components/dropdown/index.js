@@ -56,7 +56,7 @@ function Dropdown(props) {
         <AiFillCaretUp onClick={() => setDropdownOpen((current) => !current)} />
       )}
       {dropdownOpen && dropdownType == "version" ? (
-        <div>
+        <div className={styles.versionOptions}>
           {props.options.map((option, index) => (
             <div
               className={
@@ -72,7 +72,7 @@ function Dropdown(props) {
           ))}
         </div>
       ) : dropdownOpen && dropdownType != "version" ? (
-        <div>
+        <div className={styles.options}>
           {props.options.map((option, index) => (
             <div
               className={styles.option}

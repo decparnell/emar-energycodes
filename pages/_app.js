@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import Layout from "../components/layout/layout";
 import AppContext from "../components/context/AppContext";
+//import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 
 export default function MyApp({ Component, pageProps }) {

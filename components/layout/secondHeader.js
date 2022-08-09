@@ -36,13 +36,16 @@ function SecondNavbar() {
             <h4 className={styles.versionText}>Version Chosen:</h4>
           </div>
           <div className={styles.secondHeaderLink}>
-            <Dropdown
-              style={styles.dataSpecDropDown}
-              options={allDataSpecVersions}
-              value={[latestDataSpecVersion, value.setLatestDataSpecVersion]}
-              dropdownType="version"
-              isDataspecSubPath={isDataspecSubPath}
-            />
+            {
+              <Dropdown
+                style={styles.dataSpecDropDown}
+                options={allDataSpecVersions}
+                value={[latestDataSpecVersion, value.setLatestDataSpecVersion]}
+                dropdownType="version"
+                isDataspecSubPath={isDataspecSubPath}
+              />
+            }
+            {/*<VersionDropdown />*/}
           </div>
         </div>
       ) : null}
