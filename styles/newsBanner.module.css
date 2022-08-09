@@ -1,14 +1,11 @@
 .newsBannerContainer {
   background-color: #e7ab00;
   color: #ffffff;
-  height: 8vh;
   width: 100%;
    height: 100%;
-    margin-right:2%;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding :2%
 }
 
 .titleHolder{

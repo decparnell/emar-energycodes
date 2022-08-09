@@ -48,7 +48,10 @@ export const NewsBanner = () => {
 
   return (
     <div className={styles.newsBannerContainer}>
-      <h3> {`${activeNewsItems[currentIndex].heading} -`}</h3>
+      <h3 className={styles.titleHolder}>
+        {`${activeNewsItems[currentIndex].heading} -`}
+      </h3>
+      &nbsp;
       <span> {`${activeNewsItems[currentIndex].details}`}</span>
     </div>
   );
