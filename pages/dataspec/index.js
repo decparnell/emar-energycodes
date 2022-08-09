@@ -45,7 +45,7 @@ function DataSpecPage() {
         <meta property="og:title" content="My page title" key="title" />
       </Head>
       <div className={styles.searchContainer}>
-        <h2 className={styles.marketMessageHeader}> Search</h2>
+        <h1 className={styles.searchBoxHeader}>Data Specification Search</h1>
         <p className={styles.dataSpecExplainaition}>
           Here you can search the data specification for either Market Message;
           Scenario Variants; and Data Items.
