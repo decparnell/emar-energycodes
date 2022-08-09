@@ -93,6 +93,19 @@ button{
   margin: 0;
 }
 
+.columns_2{
+  grid-template-columns: 50% 50%
+}
+.columns_3{
+  grid-template-columns: 33% 33% 33%;
+}
+.columns_4{
+  grid-template-columns: 25% 25% 25% 25%;
+}
+.columns_5{
+  grid-template-columns: 20% 20% 20% 20% 20%;
+}
+
 h1{
   font-size: 40px;
 }

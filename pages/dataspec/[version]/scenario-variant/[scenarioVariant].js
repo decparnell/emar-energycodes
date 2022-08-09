@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import CreateFlowStructure from "../../../../components/dataspec/createFlowStructure";
 import styles from "../../../../styles/dataspec.module.css";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import Head from "next/head";
 
 function ScenarioPage({ scenarioVariantInfo, structure }) {
   const svInfo = scenarioVariantInfo[0];
@@ -10,6 +11,10 @@ function ScenarioPage({ scenarioVariantInfo, structure }) {
 
   return (
     <div className={styles.contentContainer}>
+      <Head>
+        <title>EMAR - {svInfo.EnergyMarketMessageScenarioVariantName}</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
       <h1 className={styles.contentTitle}>
         {scenarioVariant} - {svInfo.EnergyMarketMessageScenarioVariantName}
       </h1>

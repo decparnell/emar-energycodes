@@ -1,9 +1,14 @@
 import Link from "next/link";
 import styles from "../../styles/codes.module.css";
+import Head from "next/head";
 
 function CodesPage({ gov, green, metering, other, party, transition }) {
   return (
     <div className={styles.container}>
+      <Head>
+        <title>EMAR Codes Schedules</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
       <div className={styles.contentContainer}>
         <h2 className={styles.contentTitle}>Governance & Misc.</h2>
         {CreateList(gov)}
