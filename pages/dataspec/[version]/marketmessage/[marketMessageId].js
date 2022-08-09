@@ -4,6 +4,8 @@ import removeNullValues from "../../../../components/dataspec/functions/removeNu
 import addPaddingToGroupId from "../../../../components/dataspec/functions/addIdPadding";
 import AppContext from "../../../../components/context/AppContext";
 import { useContext, useEffect } from "react";
+import Head from "next/head";
+
 function MmDetailPage({ searchResults }) {
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
@@ -21,6 +23,10 @@ function MmDetailPage({ searchResults }) {
     removeNullValues(marketMessageInfo.UNCMessageIdentifier);
   return (
     <div className={styles.contentContainer}>
+      <Head>
+        <title>EMAR - {marketMessageInfo.Label}</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
       <h1 className={styles.contentTitle}>
         {marketMessageInfo.EnergyMarketMessageIdentifier} -{" "}
         {marketMessageInfo.Label}

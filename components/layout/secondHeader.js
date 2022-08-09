@@ -3,6 +3,7 @@ import Link from "next/link";
 import AppContext from "../context/AppContext";
 import { useContext } from "react";
 import Dropdown from "../dropdown";
+import { VersionDropdown } from "../dropdown/version";
 import styles from "../../styles/header.module.css";
 function SecondNavbar() {
   const router = useRouter();
@@ -27,11 +28,7 @@ function SecondNavbar() {
     <div className={styles.secondHeader}>
       {isCodesPath ? (
         <div className={styles.navLinks}>
-          <div className={styles.secondHeaderLink}>
-            {/* <Link href="/codes-schedules/compare">
-              Compare Schedule Versions
-            </Link> */}
-          </div>
+          <div className={styles.secondHeaderLink}></div>
         </div>
       ) : isDataSpecPath ? (
         <div className={styles.navLinks}>
