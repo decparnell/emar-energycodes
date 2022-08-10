@@ -17,18 +17,18 @@ export default function MyApp({ Component, pageProps }) {
       .versionNumber
   );
 
-  const [chosenDataSpecVersion, setChosenDataSpecVersion] = useState(
-    latestDataSpecVersion
-  );
+  const [newsItems, setNewsItems] = useState();
   return (
     <AppContext.Provider
       value={{
         state: {
           latestDataSpecVersion: latestDataSpecVersion,
           allDataSpecVersions: allDataSpecVersions,
+          newsItems: newsItems,
         },
         setLatestDataSpecVersion: setLatestDataSpecVersion,
         setAllDataSpecVersions: setAllDataSpecVersions,
+        setNewsItems: setNewsItems,
       }}
     >
       <Layout>

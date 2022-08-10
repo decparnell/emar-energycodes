@@ -7,10 +7,10 @@
     padding-left:3%;
     padding-right:5%;
     border-radius: 5px;
-    background: #34494e;
-    color: white;
+    background: white;
+    color: black;
     border-top: 10px solid #4d8934;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
   }
 
   .sectionHeader{
@@ -22,7 +22,7 @@
 
   }
   .seperator{
-    border-bottom:1px solid #E7F4E4;
+    border-bottom:1px solid #34494e;
     width:85%;
     margin-bottom: 1%;
   }
