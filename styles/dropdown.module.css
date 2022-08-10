@@ -4,11 +4,14 @@
     color: white;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
-    position:relative
+    position:relative;
 }
 
 .options,.versionOptions{
     position: absolute;
+    border: 1px solid #6e9f5b;
+    overflow-y: scroll;
+    max-height: 300px;
 }
 
 .versionOptions{
@@ -16,9 +19,9 @@
 }
 
 .option{
-    border: 1px solid grey;
-    background-color: #E7F4E4;
-    color:black;
+    background-color: #36494E;
+    color:white;
+    border-bottom: 1px solid #6e9f5b;
 }
 .chosen{
     background-color: #6e9f5b;
