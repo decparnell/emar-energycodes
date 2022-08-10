@@ -47,12 +47,16 @@ export const NewsBanner = () => {
   }, [currentIndex, activeNewsItems.length]);
 
   return (
-    <div className={styles.newsBannerContainer}>
-      <h3 className={styles.titleHolder}>
-        {`${activeNewsItems[currentIndex].heading} -`}
-      </h3>
-      &nbsp;
-      <span> {`${activeNewsItems[currentIndex].details}`}</span>
-    </div>
+    <>
+      {activeNewsItems.length > 0 ? (
+        <div className={styles.newsBannerContainer}>
+          <h3 className={styles.titleHolder}>
+            {`${activeNewsItems[currentIndex].heading} -`}
+          </h3>
+          &nbsp;
+          <span> {`${activeNewsItems[currentIndex].details}`}</span>
+        </div>
+      ): null}
+    </>
   );
 };
