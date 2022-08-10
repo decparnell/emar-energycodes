@@ -1,8 +1,13 @@
 import styles from "../styles/home.module.css";
 import Head from "next/head";
 import Dashboard from "../components/dashboard";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import AppContext from "../components/context/AppContext";
 function HomePage({ dashboards, sections, items, latestVersionJson }) {
+  const value = useContext(AppContext);
+  //princess add the var that you set the api results to in the brackets below
+  value.setNewsItems();
+
   const [currentDashboard, setCurrentDashboard] = useState(
     dashboards.filter((dashboard) => dashboard.dashboardOrder == 1)[0]
   );
