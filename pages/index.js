@@ -82,6 +82,10 @@ export async function getServerSideProps(context) {
     `https://prod-02.uksouth.logic.azure.com:443/workflows/42c048e7e8dc41758ed35c02ff7b4de7/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6P22c3SoD1TzE42D8fz1HCWKFo4u-l34pRvtnf2i47g`
   );
   const latestVersionJson = await getLatestVersions.json();
+  //princess add the call in here like the one above
+  //
+  //
+
   // Pass data to the page via props
   return { props: { dashboards, sections, items, latestVersionJson } };
 }
