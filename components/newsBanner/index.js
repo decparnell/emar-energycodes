@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "../../styles/newsBanner.module.css";
+import AppContext from "../context/AppContext";
 
-export const NewsBanner = () => {
+export const NewsBanner = (latestNews) => {
   const newsBannerData = [
     {
       id: 1,
@@ -21,7 +22,7 @@ export const NewsBanner = () => {
       details: "Version 3.0.0 will be out of date soon",
       active: true
     },
-    {
+    { 
       id: 4,
       heading: "This is just a test",
       details: "Version 4.0.0 of the data spec will be released 2023",
@@ -32,7 +33,9 @@ export const NewsBanner = () => {
   let [currentIndex, setCurrentIndex] = useState(0);
   const activeNewsItems = newsBannerData.filter(
     (eachItem) => eachItem.active === true
-  );
+  )
+  const value = useContext(AppContext)
+  let {latestNews} = value.state;
 
   useEffect(() => {
     const intervalId = setInterval(() => {
