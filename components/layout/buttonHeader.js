@@ -16,7 +16,7 @@ function ButtonNavbar() {
       {buttonHeaderOptions.map((but, i) =>
         but.id == chosenButton ? (
           <button
-            className={`large_button ${styles.buttonItem} ${styles.chosenButton}`}
+            className={`medium_button ${styles.buttonItem} ${styles.chosenButton}`}
             key={i}
             onClick={(e) => handleClick(but.id, e)}
           >
@@ -24,7 +24,7 @@ function ButtonNavbar() {
           </button>
         ) : (
           <button
-            className={`large_button ${styles.buttonItem}`}
+            className={`medium_button ${styles.buttonItem}`}
             key={i}
             onClick={(e) => handleClick(but.id, e)}
           >
