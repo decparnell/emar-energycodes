@@ -1,0 +1,28 @@
+.dashboardContainer{
+    display: grid;
+    background-color: #E7F4E4;
+}
+.sectionContainer{
+    margin: 3%;
+    padding-left:3%;
+    padding-right:5%;
+    border-radius: 5px;
+    background: white;
+    color: black;
+    border-top: 10px solid #4d8934;
+    box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
+  }
+
+  .sectionHeader{
+    margin:0;
+    text-align: center;
+  }
+  .itemContainer{
+    cursor:pointer;
+
+  }
+  .seperator{
+    border-bottom:1px solid #34494e;
+    width:85%;
+    margin-bottom: 1%;
+  }

@@ -4,7 +4,7 @@ import SearchForm from "../../components/dataspec/searchForm";
 import createSearchResults from "../../components/dataspec/createSearchResults";
 import AppContext from "../../components/context/AppContext";
 import { useContext, useEffect } from "react";
-
+import Head from "next/head";
 function DataSpecPage() {
   const [searchResults, setSearchResults] = useState();
   const [clearFilter, setClearFilter] = useState();
@@ -40,8 +40,12 @@ function DataSpecPage() {
   }
   return (
     <div className={styles.container}>
+      <Head>
+        <title>EMAR Data Specification</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
       <div className={styles.searchContainer}>
-        <h2 className={styles.marketMessageHeader}> Search</h2>
+        <h1 className={styles.searchBoxHeader}>Data Specification Search</h1>
         <p className={styles.dataSpecExplainaition}>
           Here you can search the data specification for either Market Message;
           Scenario Variants; and Data Items.

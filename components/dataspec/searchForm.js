@@ -94,7 +94,7 @@ const SearchForm = (
         className={styles.radio}
       />{" "}
       Scenario Variant
-      <button type="submit" className={styles.searchButton}>
+      <button type="submit" className={`${styles.searchButton} medium_button`}>
         Search
       </button>
       {errorMessage ? (
