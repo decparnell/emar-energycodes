@@ -3,11 +3,20 @@ import Head from "next/head";
 import Dashboard from "../components/dashboard";
 import { useState, useEffect, useContext } from "react";
 import AppContext from "../components/context/AppContext";
-function HomePage({ dashboards, sections, items, latestVersionJson, latestNews }) {
-  const value = useContext(AppContext);
-  //princess add the var that you set the api results to in the brackets below
-  value.setNewsItems(latestNews);
+import TabNavbar from "../components/layout/tabHeader";
+import ButtonNavbar from "../components/layout/buttonHeader";
+import DataSpecSearch from "../components/dataspec/dataSpecSearch";
 
+function HomePage({
+  dashboards,
+  sections,
+  items,
+  latestVersionJson,
+  latestNews,
+}) {
+  const value = useContext(AppContext);
+  let { chosenButton, chosenTab } = value.state;
+  value.setNewsItems(latestNews);
 
   const [currentDashboard, setCurrentDashboard] = useState(
     dashboards.filter((dashboard) => dashboard.dashboardOrder == 1)[0]
@@ -20,6 +29,13 @@ function HomePage({ dashboards, sections, items, latestVersionJson, latestNews }
   );
 
   useEffect(() => {
+    const newDashboard = dashboards.filter(
+      (dashboard) => dashboard.dashboardId == chosenTab
+    )[0];
+    setCurrentDashboard(newDashboard);
+  }, [chosenTab]);
+
+  useEffect(() => {
     setCurrentSections(
       sections.filter(
         (section) => section.dashboardId_FK == currentDashboard.dashboardId
@@ -27,47 +43,29 @@ function HomePage({ dashboards, sections, items, latestVersionJson, latestNews }
     );
   }, [currentDashboard]);
 
-  function onClickDashboard(dashboardName, e) {
-    e.preventDefault();
-    const newDashboard = dashboards.filter(
-      (dashboard) => dashboard.dashboardName == dashboardName
-    )[0];
-    setCurrentDashboard(newDashboard);
-  }
-
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>EMAR Dashboards</title>
-        <meta property="og:title" content="My page title" key="title" />
-      </Head>
-      <div className={styles.dashboardSelector}>
-        {dashboards.map((dash) =>
-          dash.dashboardName == currentDashboard.dashboardName ? (
-            <button
-              onClick={(e) => onClickDashboard(dash.dashboardName, e)}
-              className={`${styles.dashboardButton} ${styles.selectedDashboard}`}
-            >
-              <h4 className={styles.dashButtonTitle}>{dash.dashboardName}</h4>
-            </button>
-          ) : (
-            <button
-              onClick={(e) => onClickDashboard(dash.dashboardName, e)}
-              className={styles.dashboardButton}
-            >
-              <h4 className={styles.dashButtonTitle}>{dash.dashboardName}</h4>
-            </button>
-          )
-        )}
+    <>
+      <TabNavbar />
+      <ButtonNavbar />
+      <div className={styles.container}>
+        <Head>
+          <title>EMAR Dashboards</title>
+          <meta property="og:title" content="My page title" key="title" />
+        </Head>
+
+        {chosenButton == "1" ? (
+          <Dashboard
+            name={currentDashboard.dashboardName}
+            columns={currentDashboard.dashboardColumns}
+            sections={currentSections}
+            items={items}
+            versions={latestVersionJson}
+          />
+        ) : chosenButton == "2" && chosenTab == "2" ? (
+          <DataSpecSearch />
+        ) : null}
       </div>
-      <Dashboard
-        name={currentDashboard.dashboardName}
-        columns={currentDashboard.dashboardColumns}
-        sections={currentSections}
-        items={items}
-        versions={latestVersionJson}
-      />
-    </div>
+    </>
   );
 }
 
@@ -90,10 +88,12 @@ export async function getServerSideProps(context) {
   const latestVersionJson = await getLatestVersions.json();
 
   const newsData = await fetch(
-    'https://prod2-21.uksouth.logic.azure.com:443/workflows/3b40d5e4e24449e187511befe44b600b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=ikzFKQ4CtAXK2-HMi8rjTZ5Is_ho1YnNGDCNg8t0HRk'
+    "https://prod2-21.uksouth.logic.azure.com:443/workflows/3b40d5e4e24449e187511befe44b600b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=ikzFKQ4CtAXK2-HMi8rjTZ5Is_ho1YnNGDCNg8t0HRk"
   );
-  const latestNews = await newsData.json(); 
+  const latestNews = await newsData.json();
 
   // Pass data to the page via props
-  return { props: { dashboards, sections, items, latestVersionJson, latestNews } };
+  return {
+    props: { dashboards, sections, items, latestVersionJson, latestNews },
+  };
 }

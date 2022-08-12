@@ -17,12 +17,6 @@ function navbar() {
           <div className={styles.navLink}>
             <Link href="/">Home</Link>
           </div>
-          <div className={styles.navLink}>
-            <Link href="/dataspec">Data Spec</Link>
-          </div>
-          <div className={styles.navLink}>
-            <Link href="/codes-schedules">Codes Schedules</Link>
-          </div>
         </div>
       </div>
     </Fragment>

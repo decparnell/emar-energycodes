@@ -7,7 +7,7 @@ export default function Layout({ children }) {
     <>
       <Navbar />
       <NewsBanner />
-      <SecondNavbar />
+      {/*<SecondNavbar />*/}
       <main>{children}</main>
     </>
   );

@@ -19,6 +19,8 @@ export default function MyApp({ Component, pageProps }) {
   );
 
   const [newsItems, setNewsItems] = useState();
+  const [chosenTab, setChosenTab] = useState(1);
+  const [chosenButton, setChosenButton] = useState(1);
   return (
     <AppContext.Provider
       value={{
@@ -26,10 +28,14 @@ export default function MyApp({ Component, pageProps }) {
           latestDataSpecVersion: latestDataSpecVersion,
           allDataSpecVersions: allDataSpecVersions,
           newsItems: newsItems,
+          chosenTab: chosenTab,
+          chosenButton: chosenButton,
         },
         setLatestDataSpecVersion: setLatestDataSpecVersion,
         setAllDataSpecVersions: setAllDataSpecVersions,
         setNewsItems: setNewsItems,
+        setChosenTab: setChosenTab,
+        setChosenButton: setChosenButton,
       }}
     >
       <Layout>
