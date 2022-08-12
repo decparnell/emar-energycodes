@@ -83,6 +83,7 @@ function DiDetailPage({ searchResults }) {
                   mmid: entry.EnergyMarketMessageIdentifier,
                 },
               }}
+              passHref={true}
             >
               <tr
                 key={entry.EnergyMarketMessageIdentifier}

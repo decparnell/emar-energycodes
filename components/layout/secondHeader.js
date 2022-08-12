@@ -1,10 +1,9 @@
 import { useRouter } from "next/router";
-import Link from "next/link";
 import AppContext from "../context/AppContext";
 import { useContext } from "react";
 import Dropdown from "../dropdown";
-import { VersionDropdown } from "../dropdown/version";
 import styles from "../../styles/header.module.css";
+
 function SecondNavbar() {
   const router = useRouter();
   const pathName = router.pathname;
@@ -45,7 +44,6 @@ function SecondNavbar() {
                 isDataspecSubPath={isDataspecSubPath}
               />
             }
-            {/*<VersionDropdown />*/}
           </div>
         </div>
       ) : null}

@@ -43,6 +43,7 @@ function CreateSearchResults(
                 mmid: entry.EnergyMarketMessageIdentifier,
               },
             }}
+            passHref={true}
           >
             <tr
               key={entry.EnergyMarketMessageIdentifier}
@@ -82,6 +83,7 @@ function CreateSearchResults(
                 dataItemId: entry.DataItemIdentifier,
               },
             }}
+            passHref={true}
           >
             <tr
               key={entry.DataItemIdentifier}
@@ -153,6 +155,7 @@ function CreateSearchResults(
                   entry.EnergyMarketMessageScenarioVariantIdentifier,
               },
             }}
+            passHref={true}
           >
             <tr
               key={entry.EnergyMarketMessageScenarioVariantIdentifier}
