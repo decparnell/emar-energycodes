@@ -1,10 +1,10 @@
 import styles from "../../styles/dataspec.module.css";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import SearchForm from "../../components/dataspec/searchForm";
 import createSearchResults from "../../components/dataspec/createSearchResults";
 import AppContext from "../../components/context/AppContext";
-import { useContext, useEffect } from "react";
 import Head from "next/head";
+
 function DataSpecPage() {
   const [searchResults, setSearchResults] = useState();
   const [clearFilter, setClearFilter] = useState();

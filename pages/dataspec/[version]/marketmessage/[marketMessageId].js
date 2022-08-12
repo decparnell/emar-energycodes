@@ -73,6 +73,7 @@ function MmDetailPage({ searchResults }) {
                   sv: entry.EnergyMarketMessageScenarioVariantIdentifier,
                 },
               }}
+              passHref={true}
             >
               <tr
                 key={entry.EnergyMarketMessageScenarioVariantIdentifier}
