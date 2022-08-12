@@ -41,7 +41,7 @@
 
 .weekNames {
   color: white;
-  cursor: default;
+  cursor: pointer;
   background-color: #6e9f5b;
   font-weight: bold;
 }
