@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useState } from "react";
 import styles from "../../../styles/codes.module.css";
 import CreateCustomTag from "../../../components/scheduleId/createCustomTag-scheduleId";
 import CreateChangeTable from "../../../components/scheduleId/createChangeTable";
@@ -18,24 +19,69 @@ function ScheduleDetail({
   const schedule_id = router.query.schedule_id;
   const versionName = router.query.versionName;
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <>
+      <aside
+        className={[
+          isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed,
+          styles.sidebar,
+        ].join(" ")}
+      >
+        <div className={styles.hamburger}>
+          <div
+            className={[isSidebarOpen ? styles.open : null, styles.burger].join(
+              " "
+            )}
+            onClick={toggleSidebar}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
       <Head>
         <title>EMAR - {docInfo.documentName}</title>
         <meta property="og:title" content="My page title" key="title" />
       </Head>
-      <div className={styles.scheduleContainer}>
-        <h1 className={styles.contentTitle}>{docInfo.documentName}</h1>
+
+        <div className={styles.sidebarSectionsList}>
+          {sections.map((section) => {
+            return (
+              <a key={section.sectionId} href={`#${section.sectionId}`}>
+                {section.sectionOrder}. {section.sectionName}
+              </a>
+            );
+          })}
+        </div>
+      </aside>
+      <div
+        className={[
+          isSidebarOpen
+            ? styles.contentWithSidebar
+            : styles.contentWithoutSidebar,
+          styles.content,
+        ].join(" ")}
+      >
+        <div className={styles.scheduleContainer}>
+          <h1 className={styles.contentTitle}>{docInfo.documentName}</h1>
+        </div>
+
+        <table id="version" className={styles.table}>
+          <th>Version</th>
+          <th>Implementation Date</th>
+          <th>Reason</th>
+          <tbody>{CreateChangeTable(versions, schedule_id, versionName)}</tbody>
+        </table>
+
+        {createContent(parts, sections, components, definitions)}
       </div>
-
-      <table id="version">
-        <th>Version</th>
-        <th>Implementation Date</th>
-        <th>Reason</th>
-        <tbody>{CreateChangeTable(versions, schedule_id, versionName)}</tbody>
-      </table>
-
-      {createContent(parts, sections, components, definitions)}
     </>
   );
 }
@@ -81,7 +127,11 @@ function createContent(parts, sections, components, definitions) {
         }
       }
       content.push(
-        <div key={section.sectionName} className={styles.section}>
+        <div
+          id={section.sectionId}
+          key={section.sectionName}
+          className={styles.section}
+        >
           <h3>
             ({section.sectionOrder}) {section.sectionName}
           </h3>

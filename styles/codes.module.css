@@ -5,10 +5,10 @@
 
 .contentContainer {
   margin: 3%;
-  padding-left:3%;
-  padding-right:5%;
+  padding-left: 3%;
+  padding-right: 5%;
   border-radius: 5px;
-  background: #36494E;
+  background: #36494e;
   color: white;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
 }
@@ -17,11 +17,11 @@
 }
 
 .scheduleContainer {
-  width: 90vw;
+  width: 90%;
   height: auto;
   margin-left: 5vw;
   border-radius: 5px;
-  background: #36494E;
+  background: #36494e;
   color: white;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
 }
@@ -33,14 +33,14 @@
   margin-left: 2vw;
 }
 .section {
-  width: 90vw;
+  width: 90%;
   margin-left: 5vw;
   margin-bottom: 5vh;
   padding-left: 5vw;
   height: auto;
   padding: 20px;
   border-radius: 5px;
-  background: #36494E;
+  background: #36494e;
   color: white;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
 }
@@ -48,17 +48,17 @@
 .componentContainer {
   width: 100%;
   display: inline-block;
-  margin-bottom:3vh;
+  margin-bottom: 3vh;
 }
 
-.subHeading{
+.subHeading {
   width: 100%;
   display: inline-block;
-  margin-top:3vh;
+  margin-top: 3vh;
 }
 
-.multipleClauses{
-  margin-top:1vh;
+.multipleClauses {
+  margin-top: 1vh;
 }
 
 .orderNum {
@@ -80,7 +80,7 @@
 }
 
 .linksPopup {
-  background: #36494E;
+  background: #36494e;
   color: white;
   border: 1px solid black;
   padding: 5vh;
@@ -97,16 +97,127 @@
   font-weight: 600;
 }
 
-.selected{
+.selected {
   border: 1.5px solid black;
 }
 
-.clauseTable{
-  width:100%;
-  margin:0;
+.table {
+  width: 70%;
+}
+
+.clauseTable {
+  width: 100%;
+  margin: 0;
   text-align: center;
 }
 
-.clauseTable td{
+.clauseTable td {
   color: black;
+}
+
+.sidebar {
+  height: 100%;
+  display: block;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(#4d8934, #70ada3);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  transition: 0.5s;
+  color: white;
+  /* padding: 2em; */
+}
+
+.sidebarSectionsList {
+  margin: 4em 2em;
+}
+
+.sidebar a {
+  text-decoration: none;
+  display: block;
+  transition: all 0.5s;
+  padding: 0.2em;
+}
+
+.sidebarOpen {
+  width: 20vw;
+}
+
+.sidebarClosed {
+  width: 0;
+}
+
+.content {
+  transition: margin-left 0.5s;
+}
+
+.contentWithSidebar {
+  margin-left: 20vw;
+}
+
+.contentWithoutSidebar {
+  margin-left: 0;
+}
+
+.hamburger {
+  position: fixed;
+  top: 2%;
+  left: 1em;
+}
+
+.burger {
+  width: 35px;
+  height: 35px;
+  transform: rotate(0deg);
+  transition: 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.burger span {
+  display: block;
+  position: absolute;
+  height: 4px;
+  width: 100%;
+  background: #36494e;
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: 0.25s ease-in-out;
+}
+
+.burger span:nth-child(1) {
+  top: 0px;
+}
+
+.burger span:nth-child(2),
+.burger span:nth-child(3) {
+  top: 9px;
+}
+
+.burger span:nth-child(4) {
+  top: 18px;
+}
+
+.burger.open span:nth-child(1) {
+  top: 9px;
+  width: 0%;
+  left: 50%;
+}
+
+.burger.open span:nth-child(2) {
+  transform: rotate(45deg);
+}
+
+.burger.open span:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+.burger.open span:nth-child(4) {
+  top: 9px;
+  width: 0%;
+  left: 50%;
 }
