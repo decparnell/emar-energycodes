@@ -2,7 +2,7 @@ import styles from "../../styles/dataspec.module.css";
 import { useState } from "react";
 const SearchForm = (
   setSearchResults,
-  setSearchType,
+  searchType,
   errorMessage,
   setErrorMessage,
   latestDataSpecVersion,
@@ -11,12 +11,10 @@ const SearchForm = (
   setClearFilter
 ) => {
   const completeSearch = async (event) => {
-    setSearchResults(null);
     setErrorMessage(null);
     event.preventDefault(); // don't redirect the page
     setSourceFilterValue("Filter the source:");
     setTargetFilterValue("Filter the target:");
-    const searchType = event.target.searchCriteria.value;
     const searchValue = event.target.freeTextSearch.value;
     let dataReq = "";
 
@@ -59,7 +57,6 @@ const SearchForm = (
         );
       }
     }
-    setSearchType(searchType);
   };
 
   return (
@@ -72,28 +69,6 @@ const SearchForm = (
         required
         className={styles.textInput}
       />
-      <input
-        type="radio"
-        value="mm"
-        name="searchCriteria"
-        defaultChecked
-        className={styles.radio}
-      />{" "}
-      Market Message (Data Flow)
-      <input
-        type="radio"
-        value="di"
-        name="searchCriteria"
-        className={styles.radio}
-      />{" "}
-      Data Item
-      <input
-        type="radio"
-        value="sv"
-        name="searchCriteria"
-        className={styles.radio}
-      />{" "}
-      Scenario Variant
       <button type="submit" className={`${styles.searchButton} medium_button`}>
         Search
       </button>

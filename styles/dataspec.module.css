@@ -143,3 +143,26 @@
   background-color:transparent; 
   border:none;
 }
+
+.searchTypeButtons{
+  width: 80%;
+  margin:3% 10% 2% 10%;
+  justify-content: space-between;
+  display:flex;
+}
+.searchTypeButton{
+  width:20%;
+  padding:0;
+  background-color: white;
+  color:black;
+  cursor: pointer;
+}
+.chosen{
+  background-color: #60935d;
+  color:white;
+}
+
+.sourceTargetFilters{
+  width:100%;
+  background-color: red;
+}

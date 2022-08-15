@@ -9,8 +9,7 @@ import SecondNavbar from "../layout/secondHeader";
 function DataSpecSearch() {
   const [searchResults, setSearchResults] = useState();
   const [clearFilter, setClearFilter] = useState();
-
-  const [searchType, setSearchType] = useState();
+  const [searchType, setSearchType] = useState("mm");
   const [errorMessage, setErrorMessage] = useState();
   const [sourceFilterValue, setSourceFilterValue] =
     useState("Filter the source:");
@@ -39,6 +38,12 @@ function DataSpecSearch() {
     setSourceFilterValue("Filter the source:");
     setSearchResults(clearFilter);
   }
+
+  function handleButtonClick(newType, e) {
+    e.preventDefault();
+    setSearchType(newType);
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -60,9 +65,62 @@ function DataSpecSearch() {
           the name of the item you are searching for (Partials are also
           permitted)
         </p>
+        <div className={styles.searchTypeButtons}>
+          {searchType == "mm" ? (
+            <button
+              className={`medium_button ${styles.searchTypeButton}  ${styles.chosen}`}
+              onClick={(e) => handleButtonClick("mm", e)}
+            >
+              Market Message
+            </button>
+          ) : (
+            <button
+              className={`medium_button ${styles.searchTypeButton}`}
+              onClick={(e) => handleButtonClick("mm", e)}
+            >
+              Market Message
+            </button>
+          )}
+
+          {searchType == "sv" ? (
+            <button
+              className={`medium_button ${styles.searchTypeButton} ${styles.chosen}`}
+              onClick={(e) => handleButtonClick("sv", e)}
+            >
+              Scenario Variant
+            </button>
+          ) : (
+            <button
+              className={`medium_button ${styles.searchTypeButton}`}
+              onClick={(e) => handleButtonClick("sv", e)}
+            >
+              Scenario Variant
+            </button>
+          )}
+
+          {searchType == "di" ? (
+            <button
+              className={`medium_button ${styles.searchTypeButton}  ${styles.chosen}`}
+              onClick={(e) => handleButtonClick("di", e)}
+            >
+              Data Item
+            </button>
+          ) : (
+            <button
+              className={`medium_button ${styles.searchTypeButton}`}
+              onClick={(e) => handleButtonClick("di", e)}
+            >
+              Data Item
+            </button>
+          )}
+        </div>
+
+        {searchType == "mm" || searchType == "sv" ? (
+          <div className={styles.sourceTargetFilters}>.</div>
+        ) : null}
         {SearchForm(
           setSearchResults,
-          setSearchType,
+          searchType,
           errorMessage,
           setErrorMessage,
           latestDataSpecVersion,

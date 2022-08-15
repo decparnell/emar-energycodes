@@ -1,12 +1,9 @@
 import styles from "../../styles/dataspec.module.css";
 import removeNullValues from "./functions/removeNulls";
 import Link from "next/link";
-import Dropdown from "../dropdown";
-import {
-  getDistinctValuesSource,
-  getDistinctValuesTarget,
-} from "./functions/getDistinctValues";
-
+import { MarketMessageSearchResults } from "./marketMessageSearchResults";
+import { ScenarioVariantSearchResults } from "./scenarioVariantSearchResults";
+import { DataItemSearchResults } from "./DataItemSearchResults";
 function CreateSearchResults(
   searchResults,
   searchType,
@@ -24,152 +21,32 @@ function CreateSearchResults(
 
   if (errorMessage) {
   } else if (searchType == "mm") {
-    tableHeader = (
-      <thead>
-        <th>Market Message Reference</th>
-        <th>Local Catalogue Reference</th>
-        <th>Market Message Name</th>
-      </thead>
+    const mmSearch = MarketMessageSearchResults(
+      searchResults,
+      latestDataSpecVersion
     );
-
-    tableBody = (
-      <tbody>
-        {searchResults.map((entry) => (
-          <Link
-            key={entry.EnergyMarketMessageIdentifier}
-            href={{
-              pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[mmid]`,
-              query: {
-                mmid: entry.EnergyMarketMessageIdentifier,
-              },
-            }}
-            passHref={true}
-          >
-            <tr
-              key={entry.EnergyMarketMessageIdentifier}
-              className={styles.searchResultsRow}
-            >
-              <td>{entry.EnergyMarketMessageIdentifier}</td>
-              <td>
-                {removeNullValues(entry.DTCDcode) +
-                  removeNullValues(entry.CSSMessageIdentifier) +
-                  removeNullValues(entry.LegacyRGMAMessageIdentifier) +
-                  removeNullValues(entry.LegacySPAAMessageIdentifier) +
-                  removeNullValues(entry.UNCMessageIdentifier)}
-              </td>
-              <td>{entry.Label}</td>
-            </tr>
-          </Link>
-        ))}
-      </tbody>
-    );
+    tableHeader = mmSearch[0];
+    tableBody = mmSearch[1];
   } else if (searchType == "di") {
-    tableHeader = (
-      <thead>
-        <th>Data Item Reference</th>
-        <th>Local Catalogue Reference</th>
-        <th>Data Item Name</th>
-      </thead>
+    const diSearch = DataItemSearchResults(
+      searchResults,
+      latestDataSpecVersion
     );
-
-    tableBody = (
-      <tbody>
-        {searchResults.map((entry) => (
-          <Link
-            key={entry.DataItemIdentifier}
-            href={{
-              pathname: `/dataspec/${latestDataSpecVersion}/dataitem/[dataItemId]`,
-              query: {
-                dataItemId: entry.DataItemIdentifier,
-              },
-            }}
-            passHref={true}
-          >
-            <tr
-              key={entry.DataItemIdentifier}
-              className={styles.searchResultsRow}
-            >
-              <td>{entry.DataItemIdentifier}</td>
-              <td>
-                {removeNullValues(entry.DTCLegacyReference) +
-                  removeNullValues(entry.SPAALegacyReference) +
-                  removeNullValues(entry.RGMALegacyReference) +
-                  removeNullValues(entry.UNCDataItemReference) +
-                  removeNullValues(entry.IUCDataItemReference) +
-                  removeNullValues(entry.DCUSADataItemReference)}
-              </td>
-              <td>{entry.DataItemName}</td>
-            </tr>
-          </Link>
-        ))}
-      </tbody>
-    );
+    tableHeader = diSearch[0];
+    tableBody = diSearch[1];
   } else {
-    const sourceOptions = getDistinctValuesSource(searchResults);
-    const targetOptions = getDistinctValuesTarget(searchResults);
-    tableFilters = <div className={styles.filterContainer}></div>;
-    tableHeader = (
-      <>
-        <thead className={styles.filterRow}>
-          <th className={styles.filterRow}></th>
-          <th className={styles.filterRow}></th>
-          <th className={styles.filterRow}>
-            <Dropdown
-              style={`${styles.dataSpecDropDown} ${styles.sourceDropdown}`}
-              options={sourceOptions}
-              value={[sourceFilterValue, setSourceFilterValue]}
-              version={false}
-              dropdownType="filter"
-              closeFilter={resetFilter}
-            />
-          </th>
-          <th className={styles.filterRow}>
-            <Dropdown
-              style={`${styles.dataSpecDropDown} ${styles.targetDropdown}`}
-              options={targetOptions}
-              value={[targetFilterValue, setTargetFilterValue]}
-              version={false}
-              dropdownType="filter"
-              closeFilter={resetFilter}
-            />
-          </th>
-        </thead>
-        <thead>
-          <th>Scenario Variant Reference</th>
-          <th>Scenario Variant Name</th>
-          <th>Source</th>
-          <th>Target</th>
-        </thead>
-      </>
+    const svSearch = ScenarioVariantSearchResults(
+      searchResults,
+      latestDataSpecVersion,
+      sourceFilterValue,
+      setSourceFilterValue,
+      targetFilterValue,
+      setTargetFilterValue,
+      resetFilter
     );
-
-    tableBody = (
-      <tbody>
-        {searchResults.map((entry) => (
-          <Link
-            key={entry.EnergyMarketMessageScenarioVariantIdentifier}
-            href={{
-              pathname: `/dataspec/${latestDataSpecVersion}/scenario-variant/[scenarioVariant]`,
-              query: {
-                scenarioVariant:
-                  entry.EnergyMarketMessageScenarioVariantIdentifier,
-              },
-            }}
-            passHref={true}
-          >
-            <tr
-              key={entry.EnergyMarketMessageScenarioVariantIdentifier}
-              className={styles.searchResultsRow}
-            >
-              <td>{entry.EnergyMarketMessageScenarioVariantIdentifier}</td>
-              <td>{entry.EnergyMarketMessageScenarioVariantName}</td>
-              <td>{entry.SourceName}</td>
-              <td>{entry.TargetName}</td>
-            </tr>
-          </Link>
-        ))}
-      </tbody>
-    );
+    tableFilters = svSearch[0];
+    tableHeader = svSearch[1];
+    tableBody = svSearch[2];
   }
   return (
     <div className={styles.contentContainer}>
