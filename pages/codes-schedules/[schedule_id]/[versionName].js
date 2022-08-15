@@ -4,7 +4,6 @@ import styles from "../../../styles/codes.module.css";
 import CreateCustomTag from "../../../components/scheduleId/createCustomTag-scheduleId";
 import CreateChangeTable from "../../../components/scheduleId/createChangeTable";
 import { listItemsToIgnore, listHeaders } from "../../../components/settings";
-import { AiOutlineCloseSquare, AiOutlineMenu } from "react-icons/ai";
 
 function ScheduleDetail({
   versions,
@@ -27,45 +26,57 @@ function ScheduleDetail({
 
   return (
     <>
-      {isSidebarOpen ? (
-        <aside className={styles.sidebar}>
-          <nav>
-            <AiOutlineCloseSquare
-              onClick={toggleSidebar}
-              className={styles.closeBnt}
-            />
-
-            <ul className={styles.sidebarSectionsList}>
-              {sections.map((section) => {
-                return (
-                  <li key={section.sectionId}>
-                    <a href={`#${section.sectionId}`}>
-                      {section.sectionOrder}. {section.sectionName}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-        </aside>
-      ) : (
-        <div onClick={toggleSidebar}>
-          <AiOutlineMenu className={styles.hamburger} />
+      <aside
+        className={[
+          isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed,
+          styles.sidebar,
+        ].join(" ")}
+      >
+        <div className={styles.hamburger}>
+          <div
+            className={[isSidebarOpen ? styles.open : null, styles.burger].join(
+              " "
+            )}
+            onClick={toggleSidebar}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </div>
-      )}
 
-      <div className={styles.scheduleContainer}>
-        <h1 className={styles.contentTitle}>{docInfo.documentName}</h1>
+        <div className={styles.sidebarSectionsList}>
+          {sections.map((section) => {
+            return (
+              <a key={section.sectionId} href={`#${section.sectionId}`}>
+                {section.sectionOrder}. {section.sectionName}
+              </a>
+            );
+          })}
+        </div>
+      </aside>
+      <div
+        className={[
+          isSidebarOpen
+            ? styles.contentWithSidebar
+            : styles.contentWithoutSidebar,
+          styles.content,
+        ].join(" ")}
+      >
+        <div className={styles.scheduleContainer}>
+          <h1 className={styles.contentTitle}>{docInfo.documentName}</h1>
+        </div>
+
+        <table id="version" className={styles.table}>
+          <th>Version</th>
+          <th>Implementation Date</th>
+          <th>Reason</th>
+          <tbody>{CreateChangeTable(versions, schedule_id, versionName)}</tbody>
+        </table>
+
+        {createContent(parts, sections, components, definitions)}
       </div>
-
-      <table id="version">
-        <th>Version</th>
-        <th>Implementation Date</th>
-        <th>Reason</th>
-        <tbody>{CreateChangeTable(versions, schedule_id, versionName)}</tbody>
-      </table>
-
-      {createContent(parts, sections, components, definitions)}
     </>
   );
 }

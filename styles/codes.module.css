@@ -17,7 +17,7 @@
 }
 
 .scheduleContainer {
-  width: 90vw;
+  width: 90%;
   height: auto;
   margin-left: 5vw;
   border-radius: 5px;
@@ -33,7 +33,7 @@
   margin-left: 2vw;
 }
 .section {
-  width: 90vw;
+  width: 90%;
   margin-left: 5vw;
   margin-bottom: 5vh;
   padding-left: 5vw;
@@ -101,6 +101,10 @@
   border: 1.5px solid black;
 }
 
+.table {
+  width: 70%;
+}
+
 .clauseTable {
   width: 100%;
   margin: 0;
@@ -112,46 +116,108 @@
 }
 
 .sidebar {
+  height: 100%;
+  display: block;
+  width: 0;
   position: fixed;
+  z-index: 1;
   top: 0;
-  bottom: 0;
-  overflow-y: scroll;
-  width: 20vw;
-  color: #36494e;
+  left: 0;
   background-image: linear-gradient(#4d8934, #70ada3);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  transition: 0.5s;
+  color: white;
+  /* padding: 2em; */
 }
 
 .sidebarSectionsList {
-  padding: 1em;
+  margin: 4em 2em;
 }
 
-.sidebarSectionsList > li {
-  list-style: none;
-  padding: 0.2em 0;
-}
-
-.sidebarSectionsList > li > a {
+.sidebar a {
   text-decoration: none;
+  display: block;
+  transition: all 0.5s;
+  padding: 0.2em;
+}
+
+.sidebarOpen {
+  width: 20vw;
+}
+
+.sidebarClosed {
+  width: 0;
+}
+
+.content {
+  transition: margin-left 0.5s;
+}
+
+.contentWithSidebar {
+  margin-left: 20vw;
+}
+
+.contentWithoutSidebar {
+  margin-left: 0;
 }
 
 .hamburger {
-  width: 35px;
-  height: 35px;
   position: fixed;
-  top: 1em;
-  left: 1.5em;
+  top: 2%;
+  left: 1em;
 }
 
-.closeBnt {
-  position: absolute;
-  top: 0.5em;
-  right: 0.5em;
+.burger {
   width: 35px;
   height: 35px;
+  transform: rotate(0deg);
+  transition: 0.5s ease-in-out;
+  cursor: pointer;
 }
 
-@media only screen and (max-width: 800px) {
-  .sidebar {
-    width: 50vw;
-  }
+.burger span {
+  display: block;
+  position: absolute;
+  height: 4px;
+  width: 100%;
+  background: #36494e;
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: 0.25s ease-in-out;
+}
+
+.burger span:nth-child(1) {
+  top: 0px;
+}
+
+.burger span:nth-child(2),
+.burger span:nth-child(3) {
+  top: 9px;
+}
+
+.burger span:nth-child(4) {
+  top: 18px;
+}
+
+.burger.open span:nth-child(1) {
+  top: 9px;
+  width: 0%;
+  left: 50%;
+}
+
+.burger.open span:nth-child(2) {
+  transform: rotate(45deg);
+}
+
+.burger.open span:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+.burger.open span:nth-child(4) {
+  top: 9px;
+  width: 0%;
+  left: 50%;
 }
