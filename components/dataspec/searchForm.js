@@ -63,7 +63,7 @@ const SearchForm = (
   };
 
   return (
-    <form onSubmit={completeSearch} className={styles.searchForm}>
+    <form onSubmit={completeSearch} className={`${styles.searchForm}`}>
       <input
         id="freeTextSearch"
         name="freeTextSearch"
@@ -77,24 +77,24 @@ const SearchForm = (
         value="mm"
         name="searchCriteria"
         defaultChecked
-        className={styles.radio}
+        className={`${styles.radio} pointer`}
       />{" "}
       Market Message (Data Flow)
       <input
         type="radio"
         value="di"
         name="searchCriteria"
-        className={styles.radio}
+        className={`${styles.radio} pointer`}
       />{" "}
       Data Item
       <input
         type="radio"
         value="sv"
         name="searchCriteria"
-        className={styles.radio}
+        className={`${styles.radio} pointer`}
       />{" "}
       Scenario Variant
-      <button type="submit" className={`${styles.searchButton} medium_button`}>
+      <button type="submit" className={`${styles.searchButton} medium_button pointer`}>
         Search
       </button>
       {errorMessage ? (

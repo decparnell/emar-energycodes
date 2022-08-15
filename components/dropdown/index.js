@@ -43,7 +43,7 @@ function Dropdown(props) {
   };
 
   return (
-    <div className={`${props.style} ${styles.dropdown}`}>
+    <div className={`${props.style} ${styles.dropdown} pointer`}>
       {dropdownValue}
       {dropdownType == "filter" && !dropdownValue.includes("Filter") ? (
         <AiFillCloseSquare onClick={() => clearFilter()} />

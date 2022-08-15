@@ -47,7 +47,7 @@ function CreateSearchResults(
           >
             <tr
               key={entry.EnergyMarketMessageIdentifier}
-              className={styles.searchResultsRow}
+              className={`${styles.searchResultsRow} pointer`} 
             >
               <td>{entry.EnergyMarketMessageIdentifier}</td>
               <td>
@@ -87,7 +87,7 @@ function CreateSearchResults(
           >
             <tr
               key={entry.DataItemIdentifier}
-              className={styles.searchResultsRow}
+              className={`${styles.searchResultsRow} pointer`}
             >
               <td>{entry.DataItemIdentifier}</td>
               <td>
@@ -115,7 +115,7 @@ function CreateSearchResults(
           <th className={styles.filterRow}></th>
           <th className={styles.filterRow}>
             <Dropdown
-              style={`${styles.dataSpecDropDown} ${styles.sourceDropdown}`}
+              style={`${styles.dataSpecDropDown} ${styles.sourceDropdown} pointer`}
               options={sourceOptions}
               value={[sourceFilterValue, setSourceFilterValue]}
               version={false}
@@ -125,7 +125,7 @@ function CreateSearchResults(
           </th>
           <th className={styles.filterRow}>
             <Dropdown
-              style={`${styles.dataSpecDropDown} ${styles.targetDropdown}`}
+              style={`${styles.dataSpecDropDown} ${styles.targetDropdown} pointer`}
               options={targetOptions}
               value={[targetFilterValue, setTargetFilterValue]}
               version={false}
@@ -159,7 +159,7 @@ function CreateSearchResults(
           >
             <tr
               key={entry.EnergyMarketMessageScenarioVariantIdentifier}
-              className={styles.searchResultsRow}
+              className={`${styles.searchResultsRow} pointer`}
             >
               <td>{entry.EnergyMarketMessageScenarioVariantIdentifier}</td>
               <td>{entry.EnergyMarketMessageScenarioVariantName}</td>
