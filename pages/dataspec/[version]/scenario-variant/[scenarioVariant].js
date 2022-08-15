@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import CreateFlowStructure from "../../../../components/dataspec/createFlowStructure";
 import styles from "../../../../styles/dataspec.module.css";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import Head from "next/head";
+import SecondNavbar from "../../../../components/layout/secondHeader";
 
 function ScenarioPage({ scenarioVariantInfo, structure }) {
   const svInfo = scenarioVariantInfo[0];
@@ -9,35 +11,42 @@ function ScenarioPage({ scenarioVariantInfo, structure }) {
   const scenarioVariant = router.query.scenarioVariant;
 
   return (
-    <div className={styles.contentContainer}>
-      <h1 className={styles.contentTitle}>
-        {scenarioVariant} - {svInfo.EnergyMarketMessageScenarioVariantName}
-      </h1>
-      <table className={styles.fullWidthTable}>
-        <tr>
-          <td className={styles.tableHearSide}>Name</td>
-          <td>{svInfo.EnergyMarketMessageScenarioVariantName}</td>
-        </tr>
-        <tr>
-          <td className={styles.tableHearSide}>Description</td>
-          <td>{svInfo.EnergyMarketMessageScenarioVariantDescription}</td>
-        </tr>
-        <tr>
-          <td className={styles.tableHearSide}>Owner</td>
-          <td>{svInfo.OwnerName}</td>
-        </tr>
-      </table>
-      <div className={styles.sourcetargetContainer}>
-        <div className={styles.source}>
-          <p>{svInfo.SourceName}</p>
+    <>
+      <SecondNavbar />
+      <div className={styles.contentContainer}>
+        <Head>
+          <title>EMAR - {svInfo.EnergyMarketMessageScenarioVariantName}</title>
+          <meta property="og:title" content="My page title" key="title" />
+        </Head>
+        <h1 className={styles.contentTitle}>
+          {scenarioVariant} - {svInfo.EnergyMarketMessageScenarioVariantName}
+        </h1>
+        <table className={styles.fullWidthTable}>
+          <tr>
+            <td className={styles.tableHearSide}>Name</td>
+            <td>{svInfo.EnergyMarketMessageScenarioVariantName}</td>
+          </tr>
+          <tr>
+            <td className={styles.tableHearSide}>Description</td>
+            <td>{svInfo.EnergyMarketMessageScenarioVariantDescription}</td>
+          </tr>
+          <tr>
+            <td className={styles.tableHearSide}>Owner</td>
+            <td>{svInfo.OwnerName}</td>
+          </tr>
+        </table>
+        <div className={styles.sourcetargetContainer}>
+          <div className={styles.source}>
+            <p>{svInfo.SourceName}</p>
+          </div>
+          <AiOutlineArrowRight className={styles.sourceArrowTarget} />
+          <div className={styles.target}>
+            <p>{svInfo.TargetName}</p>
+          </div>
         </div>
-        <AiOutlineArrowRight className={styles.sourceArrowTarget} />
-        <div className={styles.target}>
-          <p>{svInfo.TargetName}</p>
-        </div>
+        {CreateFlowStructure(structure)}
       </div>
-      {CreateFlowStructure(structure)}
-    </div>
+    </>
   );
 }
 

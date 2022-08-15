@@ -4,6 +4,9 @@ import removeNullValues from "../../../../components/dataspec/functions/removeNu
 import addPaddingToGroupId from "../../../../components/dataspec/functions/addIdPadding";
 import AppContext from "../../../../components/context/AppContext";
 import { useContext, useEffect } from "react";
+import Head from "next/head";
+import SecondNavbar from "../../../../components/layout/secondHeader";
+
 function MmDetailPage({ searchResults }) {
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
@@ -20,68 +23,76 @@ function MmDetailPage({ searchResults }) {
     removeNullValues(marketMessageInfo.LegacySPAAMessageIdentifier) +
     removeNullValues(marketMessageInfo.UNCMessageIdentifier);
   return (
-    <div className={styles.contentContainer}>
-      <h1 className={styles.contentTitle}>
-        {marketMessageInfo.EnergyMarketMessageIdentifier} -{" "}
-        {marketMessageInfo.Label}
-      </h1>
-      <table className={styles.fullWidthTable}>
-        <tbody>
-          <tr>
-            <td className={styles.mmTable}>Local Catalogue Reference</td>
-            <td>{removeNullValues(legacy)}</td>
-          </tr>
-          <tr>
-            <td className={styles.mmTable}>Description</td>
-            <td>{marketMessageInfo.Description}</td>
-          </tr>
-          <tr>
-            <td className={styles.mmTable}>Version Number</td>
-            <td>
-              {addPaddingToGroupId(marketMessageInfo.MessageVersionNumber)}
-            </td>
-          </tr>
-          <tr>
-            <td className={styles.mmTable}>Notes</td>
-            <td>{marketMessageInfo.ExternalNotes}</td>
-          </tr>
-        </tbody>
-      </table>
-      <h2 className={styles.svHeader}>
-        The Scenario Vaiants for this message are:
-      </h2>
-      <table className={styles.svList}>
-        <thead>
-          <th>Variant Id</th>
-          <th>SV Name</th>
-          <th>Source</th>
-          <th>Target</th>
-        </thead>
-        <tbody>
-          {svForMarketMessage.map((entry) => (
-            <Link
-              key={entry.EnergyMarketMessageScenarioVariantIdentifier}
-              href={{
-                pathname: `/dataspec/${latestDataSpecVersion}/scenario-variant/[sv]`,
-                query: {
-                  sv: entry.EnergyMarketMessageScenarioVariantIdentifier,
-                },
-              }}
-            >
-              <tr
+    <>
+      <SecondNavbar />
+      <div className={styles.contentContainer}>
+        <Head>
+          <title>EMAR - {marketMessageInfo.Label}</title>
+          <meta property="og:title" content="My page title" key="title" />
+        </Head>
+        <h1 className={styles.contentTitle}>
+          {marketMessageInfo.EnergyMarketMessageIdentifier} -{" "}
+          {marketMessageInfo.Label}
+        </h1>
+        <table className={styles.fullWidthTable}>
+          <tbody>
+            <tr>
+              <td className={styles.mmTable}>Local Catalogue Reference</td>
+              <td>{removeNullValues(legacy)}</td>
+            </tr>
+            <tr>
+              <td className={styles.mmTable}>Description</td>
+              <td>{marketMessageInfo.Description}</td>
+            </tr>
+            <tr>
+              <td className={styles.mmTable}>Version Number</td>
+              <td>
+                {addPaddingToGroupId(marketMessageInfo.MessageVersionNumber)}
+              </td>
+            </tr>
+            <tr>
+              <td className={styles.mmTable}>Notes</td>
+              <td>{marketMessageInfo.ExternalNotes}</td>
+            </tr>
+          </tbody>
+        </table>
+        <h2 className={styles.svHeader}>
+          The Scenario Vaiants for this message are:
+        </h2>
+        <table className={styles.svList}>
+          <thead>
+            <th>Variant Id</th>
+            <th>SV Name</th>
+            <th>Source</th>
+            <th>Target</th>
+          </thead>
+          <tbody>
+            {svForMarketMessage.map((entry) => (
+              <Link
                 key={entry.EnergyMarketMessageScenarioVariantIdentifier}
-                className={styles.pointer}
+                href={{
+                  pathname: `/dataspec/${latestDataSpecVersion}/scenario-variant/[sv]`,
+                  query: {
+                    sv: entry.EnergyMarketMessageScenarioVariantIdentifier,
+                  },
+                }}
+                passHref={true}
               >
-                <td>{entry.EnergyMarketMessageScenarioVariantIdentifier}</td>
-                <td>{entry.EnergyMarketMessageScenarioVariantName}</td>
-                <td>{entry.SourceMarketDataServiceName}</td>
-                <td>{entry.TargetMarketDataServiceName}</td>
-              </tr>
-            </Link>
-          ))}
-        </tbody>
-      </table>
-    </div>
+                <tr
+                  key={entry.EnergyMarketMessageScenarioVariantIdentifier}
+                  className={styles.pointer}
+                >
+                  <td>{entry.EnergyMarketMessageScenarioVariantIdentifier}</td>
+                  <td>{entry.EnergyMarketMessageScenarioVariantName}</td>
+                  <td>{entry.SourceMarketDataServiceName}</td>
+                  <td>{entry.TargetMarketDataServiceName}</td>
+                </tr>
+              </Link>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }
 

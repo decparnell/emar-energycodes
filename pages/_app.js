@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import Layout from "../components/layout/layout";
 import AppContext from "../components/context/AppContext";
+//import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 
 export default function MyApp({ Component, pageProps }) {
@@ -17,16 +18,24 @@ export default function MyApp({ Component, pageProps }) {
       .versionNumber
   );
 
-  const [chosenDataSpecVersion, setChosenDataSpecVersion] = useState();
+  const [newsItems, setNewsItems] = useState();
+  const [chosenTab, setChosenTab] = useState(1);
+  const [chosenButton, setChosenButton] = useState(1);
   return (
     <AppContext.Provider
       value={{
         state: {
           latestDataSpecVersion: latestDataSpecVersion,
           allDataSpecVersions: allDataSpecVersions,
+          newsItems: newsItems,
+          chosenTab: chosenTab,
+          chosenButton: chosenButton,
         },
         setLatestDataSpecVersion: setLatestDataSpecVersion,
         setAllDataSpecVersions: setAllDataSpecVersions,
+        setNewsItems: setNewsItems,
+        setChosenTab: setChosenTab,
+        setChosenButton: setChosenButton,
       }}
     >
       <Layout>

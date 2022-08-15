@@ -3,6 +3,9 @@ import Link from "next/link";
 import removeNullValues from "../../../../components/dataspec/functions/removeNulls";
 import AppContext from "../../../../components/context/AppContext";
 import { useContext, useEffect } from "react";
+import Head from "next/head";
+import SecondNavbar from "../../../../components/layout/secondHeader";
+
 function DiDetailPage({ searchResults }) {
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
@@ -21,7 +24,12 @@ function DiDetailPage({ searchResults }) {
     removeNullValues(dataItemInfo.DCUSADataItemReference);
   return (
     <>
+      <SecondNavbar />
       <div className={styles.contentContainer}>
+        <Head>
+          <title>EMAR - {dataItemInfo.DataItemName}</title>
+          <meta property="og:title" content="My page title" key="title" />
+        </Head>
         <h1 className={styles.contentTitle}>
           {dataItemInfo.DataItemIdentifier} - {dataItemInfo.DataItemName}
         </h1>
@@ -79,6 +87,7 @@ function DiDetailPage({ searchResults }) {
                     mmid: entry.EnergyMarketMessageIdentifier,
                   },
                 }}
+                passHref={true}
               >
                 <tr
                   key={entry.EnergyMarketMessageIdentifier}

@@ -4,6 +4,7 @@ import styles from "../../../styles/codes.module.css";
 import CreateCustomTag from "../../../components/scheduleId/createCustomTag-scheduleId";
 import CreateChangeTable from "../../../components/scheduleId/createChangeTable";
 import { listItemsToIgnore, listHeaders } from "../../../components/settings";
+import Head from "next/head";
 
 function ScheduleDetail({
   versions,
@@ -45,6 +46,10 @@ function ScheduleDetail({
             <span></span>
           </div>
         </div>
+      <Head>
+        <title>EMAR - {docInfo.documentName}</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
 
         <div className={styles.sidebarSectionsList}>
           {sections.map((section) => {
