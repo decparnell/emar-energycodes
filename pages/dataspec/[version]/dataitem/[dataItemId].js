@@ -4,6 +4,7 @@ import removeNullValues from "../../../../components/dataspec/functions/removeNu
 import AppContext from "../../../../components/context/AppContext";
 import { useContext, useEffect } from "react";
 import Head from "next/head";
+
 function DiDetailPage({ searchResults }) {
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
@@ -80,8 +81,8 @@ function DiDetailPage({ searchResults }) {
               href={{
                 pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[mmid]`,
                 query: {
-                  mmid: entry.EnergyMarketMessageIdentifier,
-                },
+                  mmid: entry.EnergyMarketMessageIdentifier
+                }
               }}
             >
               <tr
@@ -108,7 +109,7 @@ export async function getServerSideProps(context) {
     `https://prod-02.uksouth.logic.azure.com/workflows/5454d5de7bcc4ce59f905b0ceeb6a778/triggers/manual/paths/invoke/searchType/{searchType}/searchValue/${context.params.dataItemId}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=PjsWaPjm_aHA3QcaiqNmWXg7OVtbegI-ZA2gwZnNnoc`
   );
   const dataJson = await dataReq.json();
-  const searchResults = [dataJson.dataItemInfo[0], dataJson.mmList];
+  const searchResults = [dataJson.dataItemInfo[0], dataJson.mmList, dataJson.enums];
 
   // Pass data to the page via props
   return { props: { searchResults } };
