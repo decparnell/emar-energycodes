@@ -11,6 +11,7 @@ const SearchForm = (
   setClearFilter
 ) => {
   const completeSearch = async (event) => {
+    setSearchResults(null);
     setErrorMessage(null);
     event.preventDefault(); // don't redirect the page
     setSourceFilterValue("Filter the source:");
@@ -65,6 +66,7 @@ const SearchForm = (
         id="freeTextSearch"
         name="freeTextSearch"
         type="text"
+        placeholder="Text Search"
         autoComplete="on"
         required
         className={styles.textInput}

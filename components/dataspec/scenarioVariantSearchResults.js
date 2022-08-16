@@ -19,30 +19,6 @@ export const ScenarioVariantSearchResults = (
   const tableFilters = <div className={styles.filterContainer}></div>;
   const tableHeader = (
     <>
-      <thead className={styles.filterRow}>
-        <th className={styles.filterRow}></th>
-        <th className={styles.filterRow}></th>
-        <th className={styles.filterRow}>
-          <Dropdown
-            style={`${styles.dataSpecDropDown} ${styles.sourceDropdown}`}
-            options={sourceOptions}
-            value={[sourceFilterValue, setSourceFilterValue]}
-            version={false}
-            dropdownType="filter"
-            closeFilter={resetFilter}
-          />
-        </th>
-        <th className={styles.filterRow}>
-          <Dropdown
-            style={`${styles.dataSpecDropDown} ${styles.targetDropdown}`}
-            options={targetOptions}
-            value={[targetFilterValue, setTargetFilterValue]}
-            version={false}
-            dropdownType="filter"
-            closeFilter={resetFilter}
-          />
-        </th>
-      </thead>
       <thead>
         <th>Scenario Variant Reference</th>
         <th>Scenario Variant Name</th>
@@ -80,5 +56,5 @@ export const ScenarioVariantSearchResults = (
     </tbody>
   );
 
-  return [tableFilters, tableHeader, tableBody];
+  return [tableHeader, tableBody];
 };

@@ -1,6 +1,5 @@
 import styles from "../../styles/dataspec.module.css";
-import removeNullValues from "./functions/removeNulls";
-import Link from "next/link";
+import { getDistinctValuesMarketMessage } from "./functions/getDistinctValues";
 import { MarketMessageSearchResults } from "./marketMessageSearchResults";
 import { ScenarioVariantSearchResults } from "./scenarioVariantSearchResults";
 import { DataItemSearchResults } from "./DataItemSearchResults";
@@ -21,10 +20,9 @@ function CreateSearchResults(
 
   if (errorMessage) {
   } else if (searchType == "mm") {
-    const mmSearch = MarketMessageSearchResults(
-      searchResults,
-      latestDataSpecVersion
-    );
+    const mmInfo = getDistinctValuesMarketMessage(searchResults);
+    console.log(mmInfo);
+    const mmSearch = MarketMessageSearchResults(mmInfo, latestDataSpecVersion);
     tableHeader = mmSearch[0];
     tableBody = mmSearch[1];
   } else if (searchType == "di") {
@@ -44,13 +42,11 @@ function CreateSearchResults(
       setTargetFilterValue,
       resetFilter
     );
-    tableFilters = svSearch[0];
-    tableHeader = svSearch[1];
-    tableBody = svSearch[2];
+    tableHeader = svSearch[0];
+    tableBody = svSearch[1];
   }
   return (
     <div className={styles.contentContainer}>
-      {tableFilters}
       <table className={styles.fullWidthTable}>
         {tableHeader}
         {tableBody}
