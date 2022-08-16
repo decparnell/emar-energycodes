@@ -4,8 +4,8 @@ import removeNullValues from "../../../../components/dataspec/functions/removeNu
 import AppContext from "../../../../components/context/AppContext";
 import { useContext, useEffect } from "react";
 import Head from "next/head";
-
 function DiDetailPage({ searchResults }) {
+  console.log("***********************", searchResults[2]);
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
   useEffect(() => {
@@ -14,6 +14,8 @@ function DiDetailPage({ searchResults }) {
   });
   const dataItemInfo = searchResults[0];
   const mmForDataItem = searchResults[1];
+  const dataEnumerations = searchResults[2]
+
   const legacy =
     removeNullValues(dataItemInfo.DTCLegacyReference) +
     removeNullValues(dataItemInfo.SPAALegacyReference) +
@@ -96,6 +98,60 @@ function DiDetailPage({ searchResults }) {
           ))}
         </tbody>
       </table>
+      <table className={styles.svList}>
+        <thead>
+          <th>Market Message Id</th>
+          <th>Market Message Name</th>
+        </thead>
+        <tbody>
+          {mmForDataItem.map((entry) => (
+            <Link
+              key={entry.EnergyMarketMessageIdentifier}
+              href={{
+                pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[mmid]`,
+                query: {
+                  mmid: entry.EnergyMarketMessageIdentifier
+                }
+              }}
+            >
+              <tr
+                key={entry.EnergyMarketMessageIdentifier}
+                className={styles.pointer}
+              >
+                <td>{entry.EnergyMarketMessageIdentifier}</td>
+                <td>{entry.Label}</td>
+              </tr>
+            </Link>
+          ))}
+        </tbody>
+      </table>
+      <h2 className={styles.svHeader}>
+        The Data Enumerations for this Data Item are:
+      </h2>
+      <table className={styles.svList}>
+        <thead>
+          <th>Enumeration Value</th>
+          <th>Enumeration Description</th>
+        </thead>
+        <tbody>
+          {dataEnumerations.map((entry) => (
+            <Link
+              key={entry.EnumerationValue}
+              href={{
+                pathname: `/dataspec/${latestDataSpecVersion}/dataenumerations/[dienumId]`,
+                query: {
+                  dienumId: entry.DataItemEnumerationId
+                }
+              }}
+            >
+              <tr key={entry.EnumerationValue} className={styles.pointer}>
+                <td>{entry.EnumerationValue}</td>
+                <td>{entry.EnumerationDescription}</td>
+              </tr>
+            </Link>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
@@ -109,7 +165,12 @@ export async function getServerSideProps(context) {
     `https://prod-02.uksouth.logic.azure.com/workflows/5454d5de7bcc4ce59f905b0ceeb6a778/triggers/manual/paths/invoke/searchType/{searchType}/searchValue/${context.params.dataItemId}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=PjsWaPjm_aHA3QcaiqNmWXg7OVtbegI-ZA2gwZnNnoc`
   );
   const dataJson = await dataReq.json();
-  const searchResults = [dataJson.dataItemInfo[0], dataJson.mmList, dataJson.enums];
+  const searchResults = [
+    dataJson.dataItemInfo[0],
+    dataJson.mmList,
+    dataJson.enumerations,
+  
+  ];
 
   // Pass data to the page via props
   return { props: { searchResults } };
