@@ -14,7 +14,7 @@ function DiDetailPage({ searchResults }) {
   });
   const dataItemInfo = searchResults[0];
   const mmForDataItem = searchResults[1];
-  const dataEnumerations = searchResults[2]
+  const dataEnumerations = searchResults[2];
 
   const legacy =
     removeNullValues(dataItemInfo.DTCLegacyReference) +
@@ -23,135 +23,115 @@ function DiDetailPage({ searchResults }) {
     removeNullValues(dataItemInfo.UNCDataItemReference) +
     removeNullValues(dataItemInfo.IUCDataItemReference) +
     removeNullValues(dataItemInfo.DCUSADataItemReference);
+
   return (
     <div className={styles.contentContainer}>
       <Head>
         <title>EMAR - {dataItemInfo.DataItemName}</title>
         <meta property="og:title" content="My page title" key="title" />
       </Head>
-      <h1 className={styles.contentTitle}>
-        {dataItemInfo.DataItemIdentifier} - {dataItemInfo.DataItemName}
-      </h1>
-      <table className={styles.fullWidthTable}>
-        <tbody>
-          <tr>
-            <td className={styles.mmTable}>Local Catalogue Reference</td>
-            <td>{removeNullValues(legacy)}</td>
-          </tr>
-          <tr>
-            <td className={styles.mmTable}>Description</td>
-            <td>{dataItemInfo.DataItemDefinition}</td>
-          </tr>
-          <tr>
-            <td className={styles.mmTable}>Logical Length</td>
-            <td>{dataItemInfo.DataItemLogicalLength}</td>
-          </tr>
-          <tr>
-            <td className={styles.mmTable}>Logical Decimal Length</td>
-            <td>{dataItemInfo.DataItemLogicalDecimalLength}</td>
-          </tr>
-          <tr>
-            <td className={styles.mmTable}>Physical Length</td>
-            <td>{dataItemInfo.DataItemPhysicalLength}</td>
-          </tr>
-          <tr>
-            <td className={styles.mmTable}>Data Type</td>
-            <td>{dataItemInfo.DataTypeFormatRuleName}</td>
-          </tr>
-          <tr>
-            <td className={styles.mmTable}>Data Item Owner</td>
-            <td>{dataItemInfo.MarketRoleDataServiceName}</td>
-          </tr>
-          <tr>
-            <td className={styles.mmTable}>Notes</td>
-            <td>{dataItemInfo.ExternalNotes}</td>
-          </tr>
-        </tbody>
-      </table>
-      <h2 className={styles.svHeader}>
-        The Market Messages for this Data Item are:
-      </h2>
-      <table className={styles.svList}>
-        <thead>
-          <th>Market Message Id</th>
-          <th>Market Message Name</th>
-        </thead>
-        <tbody>
-          {mmForDataItem.map((entry) => (
-            <Link
-              key={entry.EnergyMarketMessageIdentifier}
-              href={{
-                pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[mmid]`,
-                query: {
-                  mmid: entry.EnergyMarketMessageIdentifier
-                }
-              }}
-            >
-              <tr
-                key={entry.EnergyMarketMessageIdentifier}
-                className={styles.pointer}
-              >
-                <td>{entry.EnergyMarketMessageIdentifier}</td>
-                <td>{entry.Label}</td>
+      <div className={styles.flexContainer}>
+        <div className={styles.fullBoxTable}>
+          <h1 className={styles.contentTitle}>
+            {dataItemInfo.DataItemIdentifier} - {dataItemInfo.DataItemName}
+          </h1>
+          <table className={styles.fullWidthTable}>
+            <tbody>
+              <tr>
+                <td className={styles.mmTable}>Local Catalogue Reference</td>
+                <td>{removeNullValues(legacy)}</td>
               </tr>
-            </Link>
-          ))}
-        </tbody>
-      </table>
-      <table className={styles.svList}>
-        <thead>
-          <th>Market Message Id</th>
-          <th>Market Message Name</th>
-        </thead>
-        <tbody>
-          {mmForDataItem.map((entry) => (
-            <Link
-              key={entry.EnergyMarketMessageIdentifier}
-              href={{
-                pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[mmid]`,
-                query: {
-                  mmid: entry.EnergyMarketMessageIdentifier
-                }
-              }}
-            >
-              <tr
-                key={entry.EnergyMarketMessageIdentifier}
-                className={styles.pointer}
-              >
-                <td>{entry.EnergyMarketMessageIdentifier}</td>
-                <td>{entry.Label}</td>
+              <tr>
+                <td className={styles.mmTable}>Description</td>
+                <td>{dataItemInfo.DataItemDefinition}</td>
               </tr>
-            </Link>
-          ))}
-        </tbody>
-      </table>
-      <h2 className={styles.svHeader}>
-        The Data Enumerations for this Data Item are:
-      </h2>
-      <table className={styles.svList}>
-        <thead>
-          <th>Enumeration Value</th>
-          <th>Enumeration Description</th>
-        </thead>
-        <tbody>
-          {dataEnumerations.map((entry) => (
-            // <Link
-            //   key={entry.EnumerationValue}
-            //   href={{
-            //     pathname: `/dataspec/${latestDataSpecVersion}/dataenumerations/[dienumId]`,
-            //     query: {
-            //       dienumId: entry.DataItemEnumerationId
-            //     }
-            //   }}
-            // >
-              <tr key={entry.EnumerationValue}s>
-                <td>{entry.EnumerationValue}</td>
-                <td>{entry.EnumerationDescription}</td>
+              <tr>
+                <td className={styles.mmTable}>Logical Length</td>
+                <td>{dataItemInfo.DataItemLogicalLength}</td>
               </tr>
-            // </Link>
-          ))}
-        </tbody>
-      </table>
+              <tr>
+                <td className={styles.mmTable}>Logical Decimal Length</td>
+                <td>{dataItemInfo.DataItemLogicalDecimalLength}</td>
+              </tr>
+              <tr>
+                <td className={styles.mmTable}>Physical Length</td>
+                <td>{dataItemInfo.DataItemPhysicalLength}</td>
+              </tr>
+              <tr>
+                <td className={styles.mmTable}>Data Type</td>
+                <td>{dataItemInfo.DataTypeFormatRuleName}</td>
+              </tr>
+              <tr>
+                <td className={styles.mmTable}>Data Item Owner</td>
+                <td>{dataItemInfo.MarketRoleDataServiceName}</td>
+              </tr>
+              <tr>
+                <td className={styles.mmTable}>Notes</td>
+                <td>{dataItemInfo.ExternalNotes}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        {dataEnumerations.length > 0 && (
+          <div className={styles.halfBoxTable}>
+            <h2 className={styles.svHeader}>The Data Enumerations</h2>
+            <table className={styles.svList}>
+              <thead>
+                <th>Enumeration Value</th>
+                <th>Enumeration Description</th>
+              </thead>
+              <tbody>
+                {dataEnumerations.map((entry) => (
+                  <tr key={entry.EnumerationValue} s>
+                    <td>{entry.EnumerationValue}</td>
+                    <td>{entry.EnumerationDescription}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+        <div
+          className={
+            dataEnumerations.length > 0 ? styles.halfBoxTable : styles.fullBoxTable
+          }
+        >
+          <h2 className={styles.svHeader}>The Market Messages</h2>
+          <table
+            className={
+              dataEnumerations.length > 0
+                ? styles.svList
+                : styles.fullWidthTable
+            }
+          >
+            <thead>
+              <th>Market Message Id</th>
+              <th>Market Message Name</th>
+            </thead>
+            <tbody>
+              {mmForDataItem.map((entry) => (
+                <Link
+                  key={entry.EnergyMarketMessageIdentifier}
+                  href={{
+                    pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[mmid]`,
+                    query: {
+                      mmid: entry.EnergyMarketMessageIdentifier
+                    }
+                  }}
+                >
+                  <tr
+                    key={entry.EnergyMarketMessageIdentifier}
+                    className={styles.pointer}
+                  >
+                    <td>{entry.EnergyMarketMessageIdentifier}</td>
+                    <td>{entry.Label}</td>
+                  </tr>
+                </Link>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }
