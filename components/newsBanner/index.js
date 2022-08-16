@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import styles from "../../styles/newsBanner.module.css";
 import AppContext from "../context/AppContext";
 
-export const NewsBanner = (latestNews) => {
+export const NewsBanner = () => {
   const newsBannerData = [
     {
       id: 1,
