@@ -135,20 +135,20 @@ function DiDetailPage({ searchResults }) {
         </thead>
         <tbody>
           {dataEnumerations.map((entry) => (
-            <Link
-              key={entry.EnumerationValue}
-              href={{
-                pathname: `/dataspec/${latestDataSpecVersion}/dataenumerations/[dienumId]`,
-                query: {
-                  dienumId: entry.DataItemEnumerationId
-                }
-              }}
-            >
-              <tr key={entry.EnumerationValue} className={styles.pointer}>
+            // <Link
+            //   key={entry.EnumerationValue}
+            //   href={{
+            //     pathname: `/dataspec/${latestDataSpecVersion}/dataenumerations/[dienumId]`,
+            //     query: {
+            //       dienumId: entry.DataItemEnumerationId
+            //     }
+            //   }}
+            // >
+              <tr key={entry.EnumerationValue}s>
                 <td>{entry.EnumerationValue}</td>
                 <td>{entry.EnumerationDescription}</td>
               </tr>
-            </Link>
+            // </Link>
           ))}
         </tbody>
       </table>
