@@ -11,6 +11,7 @@ function ButtonNavbar() {
     e.preventDefault();
     value.setChosenButton(id);
   };
+
   return (
     <div className={styles.buttonHeader}>
       {buttonHeaderOptions.map((but, i) =>

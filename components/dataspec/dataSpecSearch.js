@@ -5,12 +5,15 @@ import createSearchResults from "./createSearchResults";
 import AppContext from "../context/AppContext";
 import Head from "next/head";
 import SecondNavbar from "../layout/secondHeader";
-
-function DataSpecSearch() {
-  const [searchResults, setSearchResults] = useState();
+import { MessageFilters } from "./sourceTargetFilters";
+function DataSpecSearch(props) {
+  const value = useContext(AppContext);
+  let { latestDataSpecVersion } = value.state;
+  const [mmsv, setMMSV] = useState(props.mmsv);
+  const [dataItems, setDataItems] = useState(props.dataItems);
+  const [searchResults, setSearchResults] = useState(mmsv);
   const [clearFilter, setClearFilter] = useState();
-
-  const [searchType, setSearchType] = useState();
+  const [searchType, setSearchType] = useState("mm");
   const [errorMessage, setErrorMessage] = useState();
   const [sourceFilterValue, setSourceFilterValue] =
     useState("Filter the source:");
@@ -31,14 +34,30 @@ function DataSpecSearch() {
       );
     }
   }, [targetFilterValue]); // Only re-run the effect if count changes
-  const value = useContext(AppContext);
-  let { latestDataSpecVersion, allDataSpecVersions } = value.state;
 
   function resetFilter() {
     setTargetFilterValue("Filter the target:");
     setSourceFilterValue("Filter the source:");
     setSearchResults(clearFilter);
   }
+
+  function switchSearchResults(type) {
+    if (type == "mm" || type == "sv") {
+      setSearchResults(mmsv);
+    } else if (type == "di") {
+      setSearchResults(dataItems);
+    }
+  }
+
+  function handleButtonClick(newType, e) {
+    e.preventDefault();
+    setSearchType(newType);
+  }
+
+  useEffect(() => {
+    switchSearchResults(searchType);
+  }, [searchType]);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -60,9 +79,70 @@ function DataSpecSearch() {
           the name of the item you are searching for (Partials are also
           permitted)
         </p>
+        <div className={styles.searchTypeButtons}>
+          {searchType == "mm" ? (
+            <button
+              className={`medium_button ${styles.searchTypeButton}  ${styles.chosen}`}
+              onClick={(e) => handleButtonClick("mm", e)}
+            >
+              Market Message
+            </button>
+          ) : (
+            <button
+              className={`medium_button ${styles.searchTypeButton}`}
+              onClick={(e) => handleButtonClick("mm", e)}
+            >
+              Market Message
+            </button>
+          )}
+
+          {searchType == "sv" ? (
+            <button
+              className={`medium_button ${styles.searchTypeButton} ${styles.chosen}`}
+              onClick={(e) => handleButtonClick("sv", e)}
+            >
+              Scenario Variant
+            </button>
+          ) : (
+            <button
+              className={`medium_button ${styles.searchTypeButton}`}
+              onClick={(e) => handleButtonClick("sv", e)}
+            >
+              Scenario Variant
+            </button>
+          )}
+
+          {searchType == "di" ? (
+            <button
+              className={`medium_button ${styles.searchTypeButton}  ${styles.chosen}`}
+              onClick={(e) => handleButtonClick("di", e)}
+            >
+              Data Item
+            </button>
+          ) : (
+            <button
+              className={`medium_button ${styles.searchTypeButton}`}
+              onClick={(e) => handleButtonClick("di", e)}
+            >
+              Data Item
+            </button>
+          )}
+        </div>
+
+        {searchResults && (searchType == "mm" || searchType == "sv")
+          ? MessageFilters(
+              searchResults,
+              sourceFilterValue,
+              setSourceFilterValue,
+              targetFilterValue,
+              setTargetFilterValue,
+              resetFilter
+            )
+          : null}
+
         {SearchForm(
           setSearchResults,
-          setSearchType,
+          searchType,
           errorMessage,
           setErrorMessage,
           latestDataSpecVersion,

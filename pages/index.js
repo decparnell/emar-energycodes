@@ -13,6 +13,8 @@ function HomePage({
   items,
   latestVersionJson,
   latestNews,
+  mmsv,
+  dataItems,
 }) {
   const value = useContext(AppContext);
   let { chosenButton, chosenTab } = value.state;
@@ -62,7 +64,7 @@ function HomePage({
             versions={latestVersionJson}
           />
         ) : chosenButton == "2" && chosenTab == "2" ? (
-          <DataSpecSearch />
+          <DataSpecSearch mmsv={mmsv} dataItems={dataItems} />
         ) : null}
       </div>
     </>
@@ -92,8 +94,22 @@ export async function getServerSideProps(context) {
   );
   const latestNews = await newsData.json();
 
+  const dataSpecData = await fetch(
+    `https://prod-24.uksouth.logic.azure.com:443/workflows/dcb64fdc2eea43aa8e231cb7035ff20d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6fNJtJqCiH8TYdaftlFMPn1nuUE5KNLopKDvuU9WRV8`
+  );
+  const dataSpecDataJson = await dataSpecData.json();
+  const mmsv = dataSpecDataJson.mmsv;
+  const dataItems = dataSpecDataJson.dataitems;
   // Pass data to the page via props
   return {
-    props: { dashboards, sections, items, latestVersionJson, latestNews },
+    props: {
+      dashboards,
+      sections,
+      items,
+      latestVersionJson,
+      latestNews,
+      mmsv,
+      dataItems,
+    },
   };
 }
