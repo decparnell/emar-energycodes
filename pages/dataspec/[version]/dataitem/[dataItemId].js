@@ -5,7 +5,6 @@ import AppContext from "../../../../components/context/AppContext";
 import { useContext, useEffect } from "react";
 import Head from "next/head";
 function DiDetailPage({ searchResults }) {
-  console.log("***********************", searchResults[2]);
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
   useEffect(() => {
