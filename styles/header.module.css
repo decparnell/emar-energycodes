@@ -43,3 +43,48 @@
     font-weight: bold;
     padding: 3px;
   }
+
+  .tabHeader{
+    width:100%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .tabItem{
+    background-color: #E7F4E4;
+    width:100%;
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .chosenTab{
+    border-bottom: 3px solid #4d8934;
+  }
+
+  .buttonHeader{
+    width:100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin:3% 0;
+
+  }
+
+  .buttonItem{
+    width:20%;
+    background-color: #E7F4E4;
+    color:black;
+    cursor: pointer;
+    padding:0.3%;
+  }
+
+  .chosenButton{
+    background-color: #4d8934;
+    color:white;
+  }
+  .homeButton{
+    height:100%;
+    width:100%;
+    cursor:pointer;
+  }

@@ -4,6 +4,8 @@ import removeNullValues from "../../../../components/dataspec/functions/removeNu
 import AppContext from "../../../../components/context/AppContext";
 import { useContext, useEffect } from "react";
 import Head from "next/head";
+import SecondNavbar from "../../../../components/layout/secondHeader";
+
 function DiDetailPage({ searchResults }) {
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
@@ -24,6 +26,8 @@ function DiDetailPage({ searchResults }) {
     removeNullValues(dataItemInfo.DCUSADataItemReference);
 
   return (
+  <>
+  <SecondNavbar />
     <div className={styles.contentContainer}>
       <Head>
         <title>EMAR - {dataItemInfo.DataItemName}</title>
@@ -132,6 +136,7 @@ function DiDetailPage({ searchResults }) {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
