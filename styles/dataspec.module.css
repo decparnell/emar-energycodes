@@ -5,7 +5,6 @@
 
 .searchContainer {
   margin-left: 5%;
-  
   border-radius: 5px;
   background: white;
   color: black;
@@ -24,7 +23,6 @@
 .contentContainer {
   margin: 5%;
   border-radius: 5px;
-  background: white;
   color: black;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
 }
@@ -144,4 +142,45 @@
 .filterRow{ 
   background-color:transparent; 
   border:none;
+}
+.flexContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.halfBoxTable {
+  flex: 50%;
+  margin-bottom: 5%;
+}
+
+.fullBoxTable{
+ flex: 100%;
+}
+
+.svHeader{
+  text-align: center;
+    margin-bottom: 5%;
+
+}
+
+.searchTypeButtons{
+  width: 80%;
+  margin:3% 10% 2% 10%;
+  justify-content: space-between;
+  display:flex;
+}
+.searchTypeButton{
+  width:20%;
+  padding:0;
+  background-color: white;
+  color:black;
+  cursor: pointer;
+}
+.chosen{
+  background-color: #60935d;
+  color:white;
+}
+
+.dataSpecDropDown{
+  width:40%;
 }

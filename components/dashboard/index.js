@@ -44,6 +44,7 @@ function Dashboard(props) {
                 pathname: `${item.dashboardSectionItemsLink}`,
               }}
               className={styles.itemContainer}
+              passHref={true}
             >
               <div className={styles.itemContainer}>
                 {item.dashboardSectionItemsName}

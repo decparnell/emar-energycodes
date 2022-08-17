@@ -6,9 +6,9 @@ import { useState } from "react";
 
 export default function MyApp({ Component, pageProps }) {
   const [allDataSpecVersions, setAllDataSpecVersions] = useState([
-    { versionNumber: "2.2.1", status: "Superseeded" },
-    { versionNumber: "2.2.2", status: "Superseeded" },
-    { versionNumber: "2.3.0", status: "Superseeded" },
+    { versionNumber: "2.2.1", status: "Superseded" },
+    { versionNumber: "2.2.2", status: "Superseded" },
+    { versionNumber: "2.3.0", status: "Superseded" },
     { versionNumber: "3.0.0", status: "Live" },
     { versionNumber: "7.0.0", status: "Future" },
   ]); //
@@ -19,6 +19,8 @@ export default function MyApp({ Component, pageProps }) {
   );
 
   const [newsItems, setNewsItems] = useState();
+  const [chosenTab, setChosenTab] = useState(1);
+  const [chosenButton, setChosenButton] = useState(1);
   return (
     <AppContext.Provider
       value={{
@@ -26,10 +28,14 @@ export default function MyApp({ Component, pageProps }) {
           latestDataSpecVersion: latestDataSpecVersion,
           allDataSpecVersions: allDataSpecVersions,
           newsItems: newsItems,
+          chosenTab: chosenTab,
+          chosenButton: chosenButton,
         },
         setLatestDataSpecVersion: setLatestDataSpecVersion,
         setAllDataSpecVersions: setAllDataSpecVersions,
         setNewsItems: setNewsItems,
+        setChosenTab: setChosenTab,
+        setChosenButton: setChosenButton,
       }}
     >
       <Layout>

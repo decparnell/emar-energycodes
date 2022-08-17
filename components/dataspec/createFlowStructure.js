@@ -46,6 +46,7 @@ const CreateFlowStructure = (structure) => {
               dataItemId: dataItem.EnergyMarketDataItemIdentifier,
             },
           }}
+          passHref={true}
         >
           <tr className={styles.pointer}>
             <td></td>

@@ -11,6 +11,7 @@ function CreateChangeTable(changeHistory, schedule_id, selectedVersion) {
           query: { schedule_id: schedule_id, versionName: versionName },
         }}
         key={versionName}
+        passHref={true}
       >
         <tr
           className={`${selectedVersion == versionName ? styles.selected : ""}`}

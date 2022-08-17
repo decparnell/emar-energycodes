@@ -8,9 +8,9 @@ export const NewsBanner = (props) => {
   let [currentIndex, setCurrentIndex] = useState(0);
   const activeNewsItems = newsBannerData.filter(
     (eachItem) => eachItem.active === true
-  )
-  const value = useContext(AppContext)
-  let {latestNews} = value.state;
+  );
+  const value = useContext(AppContext);
+  let { latestNews } = value.state;
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -34,7 +34,7 @@ export const NewsBanner = (props) => {
           &nbsp;
           <span> {`${activeNewsItems[currentIndex].details}`}</span>
         </div>
-      ): null}
+      ) : null}
     </>
   );
 };
