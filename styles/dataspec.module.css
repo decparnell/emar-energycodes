@@ -143,6 +143,25 @@
   background-color:transparent; 
   border:none;
 }
+.flexContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.halfBoxTable {
+  flex: 50%;
+  margin-bottom: 5%;
+}
+
+.fullBoxTable{
+ flex: 100%;
+}
+
+.svHeader{
+  text-align: center;
+    margin-bottom: 5%;
+
+}
 
 .searchTypeButtons{
   width: 80%;
