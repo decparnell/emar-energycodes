@@ -3,10 +3,10 @@ import Head from "next/head";
 import Dashboard from "../components/dashboard";
 import { useState, useEffect, useContext } from "react";
 import AppContext from "../components/context/AppContext";
-function HomePage({ dashboards, sections, items, latestVersionJson, latestNews }) {
+import { NewsBanner } from "../components/newsBanner";
+function HomePage({ dashboards, sections, items, latestVersionJson, newsData}) {
   const value = useContext(AppContext);
-  //princess add the var that you set the api results to in the brackets below
-  value.setNewsItems(latestNews);
+  value.setNewsItems(newsData);
 
 
   const [currentDashboard, setCurrentDashboard] = useState(
@@ -36,6 +36,8 @@ function HomePage({ dashboards, sections, items, latestVersionJson, latestNews }
   }
 
   return (
+    <> 
+    <NewsBanner news = {newsData}/>
     <div className={styles.container}>
       <Head>
         <title>EMAR Dashboards</title>
@@ -68,6 +70,7 @@ function HomePage({ dashboards, sections, items, latestVersionJson, latestNews }
         versions={latestVersionJson}
       />
     </div>
+    </>
   );
 }
 
@@ -89,11 +92,14 @@ export async function getServerSideProps(context) {
   );
   const latestVersionJson = await getLatestVersions.json();
 
-  const newsData = await fetch(
+  const newsDataReq = await fetch(
     'https://prod2-21.uksouth.logic.azure.com:443/workflows/3b40d5e4e24449e187511befe44b600b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=ikzFKQ4CtAXK2-HMi8rjTZ5Is_ho1YnNGDCNg8t0HRk'
   );
-  const latestNews = await newsData.json(); 
+  const latestNewsJson = await newsDataReq.json(); 
+  const newsData = latestNewsJson.latestNews;
+
+  
 
   // Pass data to the page via props
-  return { props: { dashboards, sections, items, latestVersionJson, latestNews } };
+  return { props: { dashboards, sections, items, latestVersionJson, newsData} };
 }
