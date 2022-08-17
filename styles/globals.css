@@ -154,3 +154,6 @@ p,div{
   padding: 0.5%;
   width:15%;
 }
+.pointer{
+  cursor: pointer;
+} 
