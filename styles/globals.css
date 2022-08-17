@@ -5,6 +5,7 @@ body {
   margin: 0;
   font-family: 'Open Sans', cursive;
   background-color: #E7F4E4;
+
 }
 
 a {
@@ -24,12 +25,12 @@ table {
 }
 th {
   text-align: center;
-  background-color: #60935d;
+  background-color: #4d8934;
   color: white;
-  border: 1px solid #60935d;
+  border: 1px solid #4d8934;
 }
 td {
-  border-bottom: 1px solid #60935d;
+  border-bottom: 1px solid #4d8934;
   text-align: center;
 }
 tr {
@@ -129,7 +130,7 @@ p,div{
   font-size:16px;
 }
 .small_button{
-  background-color: #60935d;
+  background-color: #4d8934;
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -138,7 +139,7 @@ p,div{
 }
 
 .medium_button{
-  background-color: #60935d;
+  background-color: #4d8934;
   color: white;
   font-size: 18px;
   font-weight: bold;
@@ -147,10 +148,36 @@ p,div{
 }
 
 .large_button{
-  background-color: #60935d;
+  background-color: #4d8934;
   color: white;
   font-size: 24px;
   font-weight: bold;
   padding: 0.5%;
   width:15%;
+}
+.pointer{
+  cursor: pointer;
+} 
+
+/* width */
+::-webkit-scrollbar {
+  width: 20px;
+  background-color: #E7F4E4;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 5px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #4d8934; 
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #70ada3; 
 }

@@ -2,7 +2,9 @@
   background-image: linear-gradient(to right,#4d8934, #70ada3);
   height: 8vh;
   width: 100%;
-
+  position: sticky; 
+  z-index: 100;
+  top:0;
 }
 .logo {
   height: 100%;
@@ -48,6 +50,9 @@
     width:100%;
     display: flex;
     justify-content: space-evenly;
+    position: sticky; 
+    z-index: 100;
+    top: 8vh;
   }
 
   .tabItem{
@@ -55,12 +60,13 @@
     width:100%;
     text-align: center;
     font-size: x-large;
-    font-weight: bold;
     cursor: pointer;
+    border-bottom: 1px solid #4d8934;
   }
 
   .chosenTab{
-    border-bottom: 3px solid #4d8934;
+    border: 3px solid #4d8934;
+    font-weight: bold;
   }
 
   .buttonHeader{

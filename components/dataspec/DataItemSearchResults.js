@@ -25,7 +25,7 @@ export const DataItemSearchResults = (searchResults, latestDataSpecVersion) => {
         >
           <tr
             key={entry.DataItemIdentifier}
-            className={styles.searchResultsRow}
+            className={`${styles.searchResultsRow} pointer`}
           >
             <td>{entry.DataItemIdentifier}</td>
             <td>

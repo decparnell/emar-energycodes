@@ -46,10 +46,10 @@ function ScheduleDetail({
             <span></span>
           </div>
         </div>
-      <Head>
-        <title>EMAR - {docInfo.documentName}</title>
-        <meta property="og:title" content="My page title" key="title" />
-      </Head>
+        <Head>
+          <title>EMAR - {docInfo.documentName}</title>
+          <meta property="og:title" content="My page title" key="title" />
+        </Head>
 
         <div className={styles.sidebarSectionsList}>
           {sections.map((section) => {

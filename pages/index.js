@@ -6,19 +6,20 @@ import AppContext from "../components/context/AppContext";
 import TabNavbar from "../components/layout/tabHeader";
 import ButtonNavbar from "../components/layout/buttonHeader";
 import DataSpecSearch from "../components/dataspec/dataSpecSearch";
+import { NewsBanner } from "../components/newsBanner";
 
 function HomePage({
   dashboards,
   sections,
   items,
   latestVersionJson,
-  latestNews,
+  newsData,
   mmsv,
   dataItems,
 }) {
   const value = useContext(AppContext);
   let { chosenButton, chosenTab } = value.state;
-  value.setNewsItems(latestNews);
+  value.setNewsItems(newsData);
 
   const [currentDashboard, setCurrentDashboard] = useState(
     dashboards.filter((dashboard) => dashboard.dashboardOrder == 1)[0]
@@ -47,6 +48,7 @@ function HomePage({
 
   return (
     <>
+      <NewsBanner news = {newsData}/>
       <TabNavbar />
       <ButtonNavbar />
       <div className={styles.container}>
@@ -89,10 +91,11 @@ export async function getServerSideProps(context) {
   );
   const latestVersionJson = await getLatestVersions.json();
 
-  const newsData = await fetch(
-    "https://prod2-21.uksouth.logic.azure.com:443/workflows/3b40d5e4e24449e187511befe44b600b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=ikzFKQ4CtAXK2-HMi8rjTZ5Is_ho1YnNGDCNg8t0HRk"
+  const newsDataReq = await fetch(
+    'https://prod2-21.uksouth.logic.azure.com:443/workflows/3b40d5e4e24449e187511befe44b600b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=ikzFKQ4CtAXK2-HMi8rjTZ5Is_ho1YnNGDCNg8t0HRk'
   );
-  const latestNews = await newsData.json();
+  const latestNewsJson = await newsDataReq.json(); 
+  const newsData = latestNewsJson.latestNews;
 
   const dataSpecData = await fetch(
     `https://prod-24.uksouth.logic.azure.com:443/workflows/dcb64fdc2eea43aa8e231cb7035ff20d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6fNJtJqCiH8TYdaftlFMPn1nuUE5KNLopKDvuU9WRV8`
@@ -107,7 +110,7 @@ export async function getServerSideProps(context) {
       sections,
       items,
       latestVersionJson,
-      latestNews,
+      newsData,
       mmsv,
       dataItems,
     },
