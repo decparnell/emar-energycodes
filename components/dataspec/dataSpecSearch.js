@@ -44,8 +44,10 @@ function DataSpecSearch(props) {
   function switchSearchResults(type) {
     if (type == "mm" || type == "sv") {
       setSearchResults(mmsv);
+      setClearFilter(mmsv);
     } else if (type == "di") {
       setSearchResults(dataItems);
+      setClearFilter(dataItems);
     }
   }
 
