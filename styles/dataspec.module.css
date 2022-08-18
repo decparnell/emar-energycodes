@@ -33,10 +33,16 @@
   margin: 0 1%;
   text-align: center;
 }
-.svList {
+.svList{
   margin-left: 10%;
   width: 80%;
   color:black;
+}
+
+.diList{
+   margin-left: 10%;
+  width: 80%;
+  color:black; 
 }
 
 .searchForm {
@@ -163,6 +169,11 @@
 
 }
 
+.diHeader{
+  text-align: center;
+    margin-bottom: 5%;
+
+}
 .searchTypeButtons{
   width: 80%;
   margin:3% 10% 2% 10%;

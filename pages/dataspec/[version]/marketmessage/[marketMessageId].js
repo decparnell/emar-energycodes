@@ -16,12 +16,17 @@ function MmDetailPage({ searchResults }) {
   });
   const marketMessageInfo = searchResults[0];
   const svForMarketMessage = searchResults[1];
+  const dataItems = searchResults[2];
+
   const legacy =
     removeNullValues(marketMessageInfo.DTCDcode) +
     removeNullValues(marketMessageInfo.CSSMessageIdentifier) +
     removeNullValues(marketMessageInfo.LegacyRGMAMessageIdentifier) +
     removeNullValues(marketMessageInfo.LegacySPAAMessageIdentifier) +
     removeNullValues(marketMessageInfo.UNCMessageIdentifier);
+
+  const dataItemsTableHead = ["Data Item Id", "Data Item Name"];
+
   return (
     <>
       <SecondNavbar />
@@ -56,10 +61,39 @@ function MmDetailPage({ searchResults }) {
             </tr>
           </tbody>
         </table>
-        <h2 className={styles.svHeader}>
+        <div>
+          <h2 className={styles.svHeader}>The Data items message contains:</h2>
+          <table className={styles.svList}>
+            <thead>
+              {dataItemsTableHead.map((item) => (
+                <th>{item}</th>
+              ))}
+            </thead>
+            <tbody>
+              {dataItems.map((entry) => (
+                <Link
+                  key={entry.DataItemIdentifier}
+                  href={{
+                    pathname: `/dataspec/${latestDataSpecVersion}/dataitem/[di]`,
+                    query: {
+                      di: entry.DataItemIdentifier
+                    }
+                  }}
+                  passHref={true}
+                >
+                  <tr key={entry.DataItemIdentifier} className={styles.pointer}>
+                    <td>{entry.DataItemIdentifier}</td>
+                    <td>{entry.DataItemName}</td>
+                  </tr>
+                </Link>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <h2 className={styles.diHeader}>
           The Scenario Vaiants for this message are:
         </h2>
-        <table className={styles.svList}>
+        <table className={styles.diList}>
           <thead>
             <th>Variant Id</th>
             <th>SV Name</th>
@@ -73,8 +107,8 @@ function MmDetailPage({ searchResults }) {
                 href={{
                   pathname: `/dataspec/${latestDataSpecVersion}/scenario-variant/[sv]`,
                   query: {
-                    sv: entry.EnergyMarketMessageScenarioVariantIdentifier,
-                  },
+                    sv: entry.EnergyMarketMessageScenarioVariantIdentifier
+                  }
                 }}
                 passHref={true}
               >
@@ -105,7 +139,11 @@ export async function getServerSideProps(context) {
     `https://prod-00.uksouth.logic.azure.com/workflows/0b5552f9640a441891edf1f4bf678372/triggers/manual/paths/invoke/searchType/1/searchValue/${context.params.marketMessageId}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=q2SEdJOh6ncM2DVx2-YhplordGojLu-b77vRZnIJDQY`
   );
   const dataJson = await dataReq.json();
-  const searchResults = [dataJson.marketMessageInfo[0], dataJson.svList];
+  const searchResults = [
+    dataJson.marketMessageInfo[0],
+    dataJson.svList,
+    dataJson.dataItemList
+  ];
 
   // Pass data to the page via props
   return { props: { searchResults } };
