@@ -70,7 +70,11 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
           definitions
         );
       }
-      tableJsx.push(<tr>{headersJsx}</tr>);
+      tableJsx.push(
+        <thead>
+          <tr>{headersJsx}</tr>
+        </thead>
+      );
       for (const item in tableData) {
         CustomTag = `td`;
         const dataJsx = [];
