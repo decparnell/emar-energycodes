@@ -10,10 +10,6 @@ import SecondNavbar from "../../../../components/layout/secondHeader";
 function MmDetailPage({ searchResults }) {
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
-  useEffect(() => {
-    // Client-side-only code
-    value.setLatestDataSpecVersion(sessionStorage.getItem("version"));
-  });
   const marketMessageInfo = searchResults[0];
   const svForMarketMessage = searchResults[1];
   const legacy =
