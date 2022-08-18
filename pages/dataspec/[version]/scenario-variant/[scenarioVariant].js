@@ -4,13 +4,14 @@ import styles from "../../../../styles/dataspec.module.css";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import Head from "next/head";
 import SecondNavbar from "../../../../components/layout/secondHeader";
+import Link from "next/link";
 
 function ScenarioPage({ scenarioVariantInfo, structure, mmInfo }) {
   const svInfo = scenarioVariantInfo[0];
-  const marketMsgInfo = mmInfo[0]
+  const marketMsgInfo = mmInfo[0];
   const router = useRouter();
   const scenarioVariant = router.query.scenarioVariant;
-
+  const version = sessionStorage.getItem("version");
   return (
     <>
       <SecondNavbar />
@@ -35,14 +36,46 @@ function ScenarioPage({ scenarioVariantInfo, structure, mmInfo }) {
             <td className={styles.tableHearSide}>Owner</td>
             <td>{svInfo.OwnerName}</td>
           </tr>
-          <tr>
-            <td className={styles.tableHearSide}>Market Message Id</td>
-            <td>{marketMsgInfo.EnergyMarketMessageIdentifier}</td>
-          </tr>
-          <tr>
-            <td className={styles.tableHearSide}>Local Reference</td>
-            <td>{[marketMsgInfo.DTCDcode, marketMsgInfo.LegacyRGMAMessageIdentifier, marketMsgInfo.LegacySPAAMessageIdentifier, marketMsgInfo.UNCMessageIdentifier, marketMsgInfo.CSSMessageIdentifier]}</td>
-          </tr>
+          <Link
+            href={{
+              pathname: `/dataspec/${version}/marketmessage/[marketMessageId]`,
+              query: {
+                marketMessageId: marketMsgInfo.EnergyMarketMessageIdentifier,
+              },
+            }}
+            passHref={true}
+          >
+            <tr>
+              <td className={`${styles.tableHearSide} pointer`}>
+                Market Message Id
+              </td>
+              <td>{marketMsgInfo.EnergyMarketMessageIdentifier}</td>
+            </tr>
+          </Link>
+          <Link
+            href={{
+              pathname: `/dataspec/${version}/marketmessage/[marketMessageId]`,
+              query: {
+                marketMessageId: marketMsgInfo.EnergyMarketMessageIdentifier,
+              },
+            }}
+            passHref={true}
+          >
+            <tr>
+              <td className={`${styles.tableHearSide} pointer`}>
+                Local Reference
+              </td>
+              <td>
+                {[
+                  marketMsgInfo.DTCDcode,
+                  marketMsgInfo.LegacyRGMAMessageIdentifier,
+                  marketMsgInfo.LegacySPAAMessageIdentifier,
+                  marketMsgInfo.UNCMessageIdentifier,
+                  marketMsgInfo.CSSMessageIdentifier,
+                ]}
+              </td>
+            </tr>
+          </Link>
         </table>
         <div className={styles.sourcetargetContainer}>
           <div className={styles.source}>
@@ -70,7 +103,7 @@ export async function getServerSideProps(context) {
   const dataJson = await dataReq.json();
   const scenarioVariantInfo = dataJson.scenarioVariantInfo;
   const structure = dataJson.structure;
-  const mmInfo = dataJson.mmInfo; 
+  const mmInfo = dataJson.mmInfo;
 
   // Pass data to the page via props
   return { props: { scenarioVariantInfo, structure, mmInfo } };
