@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 // import styles from "../../styles/dataspec.module.css";
 // import removeNullValues from "./functions/removeNulls";
 export const CodesSchedulesSearchResults = (searchResults) => {
+  const router = useRouter();
   const tableHeader = (
     <thead>
       <th>clauseReference</th>
@@ -10,30 +12,22 @@ export const CodesSchedulesSearchResults = (searchResults) => {
       <th>text</th>
     </thead>
   );
-  console.log("searchResults", searchResults);
   const tableBody = (
     <tbody>
       {searchResults.map((entry) => (
-        <Link
+        <tr
           key={entry.componentId}
-          href={{
-            pathname: `/codes-schedules/${entry.documentId_FK}/${
-              entry.versionName
-            }${encodeURIComponent(`#${entry.componentId}`)}`,
-            // query: {
-            //   id: entry.componentId,
-            // },
-          }}
-          scroll={false}
-          passHref={true}
+          onClick={() =>
+            router.push(
+              `/codes-schedules/${entry.documentId_FK}/${entry.versionName}#${entry.componentId}`
+            )
+          }
         >
-          <tr key={entry.componentId}>
-            <td>{entry.clauseReference}</td>
-            <td>{entry.versionName}</td>
-            <td>{entry.documentName}</td>
-            <td>{entry.componentText}</td>
-          </tr>
-        </Link>
+          <td>{entry.clauseReference}</td>
+          <td>{entry.versionName}</td>
+          <td>{entry.documentName}</td>
+          <td>{entry.componentText}</td>
+        </tr>
       ))}
       {/* {searchResults.map((entry) => (
         <Link

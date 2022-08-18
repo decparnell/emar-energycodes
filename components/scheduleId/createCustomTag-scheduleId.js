@@ -46,6 +46,7 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
     const text = comp.componentText;
     const indent = comp.indent;
     const tag = comp.componentType;
+    const clauseComponentId = comp.componentId - 2;
     //create initial value for the tag and class name
     let customClassName = createIndentedText(indent);
     if (compI > 0) {
@@ -67,7 +68,8 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
           headers[header],
           CustomTag,
           customClassName,
-          definitions
+          definitions,
+          clauseComponentId
         );
       }
       tableJsx.push(<tr>{headersJsx}</tr>);
@@ -81,7 +83,8 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
             dataItems[entry],
             CustomTag,
             customClassName,
-            definitions
+            definitions,
+            clauseComponentId
           );
         }
         tableJsx.push(<tr>{dataJsx}</tr>);
@@ -96,7 +99,8 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
         text,
         CustomTag,
         customClassName,
-        definitions
+        definitions,
+        clauseComponentId
       );
     }
   }
@@ -119,12 +123,19 @@ function addLinkedComponentsToOutput(
   text,
   CustomTag,
   customClassName,
-  definitions
+  definitions,
+  clauseComponentId
 ) {
   //create an array of the text to display including all links using split text function
   const linkedText = splitTextByKeyWords(text, definitions);
   clauseJsx.push(
-    <CustomTag className={customClassName}>{linkedText}</CustomTag>
+    <CustomTag
+      className={customClassName}
+      key={`${clauseComponentId}`}
+      id={`${clauseComponentId}`}
+    >
+      {linkedText}
+    </CustomTag>
   );
 }
 
