@@ -5,13 +5,15 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import Head from "next/head";
 import SecondNavbar from "../../../../components/layout/secondHeader";
 import Link from "next/link";
-
+import AppContext from "../../../../components/context/AppContext";
+import { useContext } from "react";
 function ScenarioPage({ scenarioVariantInfo, structure, mmInfo }) {
   const svInfo = scenarioVariantInfo[0];
   const marketMsgInfo = mmInfo[0];
   const router = useRouter();
   const scenarioVariant = router.query.scenarioVariant;
-  const version = sessionStorage.getItem("version");
+  const value = useContext(AppContext);
+  let { latestDataSpecVersion } = value.state;
   return (
     <>
       <SecondNavbar />
@@ -38,7 +40,7 @@ function ScenarioPage({ scenarioVariantInfo, structure, mmInfo }) {
           </tr>
           <Link
             href={{
-              pathname: `/dataspec/${version}/marketmessage/[marketMessageId]`,
+              pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[marketMessageId]`,
               query: {
                 marketMessageId: marketMsgInfo.EnergyMarketMessageIdentifier,
               },
@@ -54,7 +56,7 @@ function ScenarioPage({ scenarioVariantInfo, structure, mmInfo }) {
           </Link>
           <Link
             href={{
-              pathname: `/dataspec/${version}/marketmessage/[marketMessageId]`,
+              pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[marketMessageId]`,
               query: {
                 marketMessageId: marketMsgInfo.EnergyMarketMessageIdentifier,
               },
