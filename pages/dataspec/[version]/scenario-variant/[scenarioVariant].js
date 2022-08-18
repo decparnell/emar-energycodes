@@ -47,10 +47,8 @@ function ScenarioPage({ scenarioVariantInfo, structure, mmInfo }) {
             }}
             passHref={true}
           >
-            <tr>
-              <td className={`${styles.tableHearSide} pointer`}>
-                Market Message Id
-              </td>
+            <tr className="pointer">
+              <td className={styles.tableHearSide}>Market Message Id</td>
               <td>{marketMsgInfo.EnergyMarketMessageIdentifier}</td>
             </tr>
           </Link>
@@ -63,10 +61,8 @@ function ScenarioPage({ scenarioVariantInfo, structure, mmInfo }) {
             }}
             passHref={true}
           >
-            <tr>
-              <td className={`${styles.tableHearSide} pointer`}>
-                Local Reference
-              </td>
+            <tr className="pointer">
+              <td className={styles.tableHearSide}>Local Reference</td>
               <td>
                 {[
                   marketMsgInfo.DTCDcode,
