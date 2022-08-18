@@ -15,8 +15,9 @@ function Dropdown(props) {
   const dropdownType = props.dropdownType;
   const setDropdownValue = props.value[1];
   const clearFilter = props.closeFilter;
-  const handleDropdownSelect = (option) => {
-    if (window) {
+
+  const handleDropdownSelect = (option, dropdownType) => {
+    if (window && dropdownType == "version") {
       sessionStorage.setItem("version", option);
       setDropdownValue(sessionStorage.getItem("version"));
       if (option != version) {
@@ -30,6 +31,8 @@ function Dropdown(props) {
           { shallow: false }
         );
       }
+    } else {
+      setDropdownValue(option);
     }
     setDropdownOpen((current) => !current);
   };
@@ -65,7 +68,9 @@ function Dropdown(props) {
                   : `${styles.option} pointer`
               }
               key={index}
-              onClick={() => handleDropdownSelect(option.versionNumber)}
+              onClick={() =>
+                handleDropdownSelect(option.versionNumber, dropdownType)
+              }
             >
               {prepareDropdownOption(option.versionNumber)} - {option.status}
             </div>
@@ -77,7 +82,7 @@ function Dropdown(props) {
             <div
               className={styles.option}
               key={index}
-              onClick={() => handleDropdownSelect(option)}
+              onClick={() => handleDropdownSelect(option, dropdownType)}
             >
               {prepareDropdownOption(option)}
             </div>
