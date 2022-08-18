@@ -103,11 +103,9 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
 
   //output is returned when this func is called.... JSX containing component, links, and numbering
   const output = (
-    <div className={componentContainer}>
+    <div className={componentContainer} key={componentId} id={componentId}>
       <div className={styles.orderNum}>{orderNumber}</div>
-      <div className={styles.textHolder} key={componentId}>
-        {clauseJsx}
-      </div>
+      <div className={styles.textHolder}>{clauseJsx}</div>
       <div className={styles.linkButton}>
         <CreatePopUp needed={needed} />
       </div>
