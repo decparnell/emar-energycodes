@@ -74,9 +74,13 @@ function ScheduleDetail({
         </div>
 
         <table id="version" className={styles.table}>
-          <th>Version</th>
-          <th>Implementation Date</th>
-          <th>Reason</th>
+          <thead>
+            <tr>
+              <th>Version</th>
+              <th>Implementation Date</th>
+              <th>Reason</th>
+            </tr>
+          </thead>
           <tbody>{CreateChangeTable(versions, schedule_id, versionName)}</tbody>
         </table>
 

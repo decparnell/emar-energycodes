@@ -1,33 +1,34 @@
 import "../styles/globals.css";
 import Layout from "../components/layout/layout";
 import AppContext from "../components/context/AppContext";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import { useState, useEffect } from "react";
-
+import Image from "next/image";
+import logo from "../public/recco_logo.PNG";
 function Loading() {
-  const router = useRouter();
+  //const router = useRouter();
 
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const handleStart = (url) => url !== router.asPath && setLoading(true);
-    const handleComplete = (url) => url === router.asPath && setLoading(false);
+    const handleStart = (url) => url !== Router.asPath && setLoading(true);
+    const handleComplete = (url) => url == Router.asPath && setLoading(false);
 
-    router.events.on("routeChangeStart", handleStart);
-    router.events.on("routeChangeComplete", handleComplete);
-    router.events.on("routeChangeError", handleComplete);
+    Router.events.on("routeChangeStart", handleStart);
+    Router.events.on("routeChangeComplete", handleComplete);
+    Router.events.on("routeChangeError", handleComplete);
 
     return () => {
-      router.events.off("routeChangeStart", handleStart);
-      router.events.off("routeChangeComplete", handleComplete);
-      router.events.off("routeChangeError", handleComplete);
+      Router.events.off("routeChangeStart", handleStart);
+      Router.events.off("routeChangeComplete", handleComplete);
+      Router.events.off("routeChangeError", handleComplete);
     };
-  });
+  }, [Router]);
 
   return (
     loading && (
       <div className="spinner-wrapper">
-        <div className="spinner"></div>
+        <Image alt="Recco logo" src={logo} className="spinner" />
       </div>
     )
   );
@@ -51,26 +52,28 @@ export default function MyApp({ Component, pageProps }) {
   const [chosenTab, setChosenTab] = useState(1);
   const [chosenButton, setChosenButton] = useState(1);
   return (
-    <AppContext.Provider
-      value={{
-        state: {
-          latestDataSpecVersion: latestDataSpecVersion,
-          allDataSpecVersions: allDataSpecVersions,
-          newsItems: newsItems,
-          chosenTab: chosenTab,
-          chosenButton: chosenButton,
-        },
-        setLatestDataSpecVersion: setLatestDataSpecVersion,
-        setAllDataSpecVersions: setAllDataSpecVersions,
-        setNewsItems: setNewsItems,
-        setChosenTab: setChosenTab,
-        setChosenButton: setChosenButton,
-      }}
-    >
-      <Layout>
-        <Loading />
-        <Component {...pageProps} />
-      </Layout>
-    </AppContext.Provider>
+    <>
+      <Loading />
+      <AppContext.Provider
+        value={{
+          state: {
+            latestDataSpecVersion: latestDataSpecVersion,
+            allDataSpecVersions: allDataSpecVersions,
+            newsItems: newsItems,
+            chosenTab: chosenTab,
+            chosenButton: chosenButton,
+          },
+          setLatestDataSpecVersion: setLatestDataSpecVersion,
+          setAllDataSpecVersions: setAllDataSpecVersions,
+          setNewsItems: setNewsItems,
+          setChosenTab: setChosenTab,
+          setChosenButton: setChosenButton,
+        }}
+      >
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </AppContext.Provider>
+    </>
   );
 }
