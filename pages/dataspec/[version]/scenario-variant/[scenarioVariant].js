@@ -5,8 +5,9 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import Head from "next/head";
 import SecondNavbar from "../../../../components/layout/secondHeader";
 
-function ScenarioPage({ scenarioVariantInfo, structure }) {
+function ScenarioPage({ scenarioVariantInfo, structure, mmInfo }) {
   const svInfo = scenarioVariantInfo[0];
+  const marketMsgInfo = mmInfo[0]
   const router = useRouter();
   const scenarioVariant = router.query.scenarioVariant;
 
@@ -33,6 +34,14 @@ function ScenarioPage({ scenarioVariantInfo, structure }) {
           <tr>
             <td className={styles.tableHearSide}>Owner</td>
             <td>{svInfo.OwnerName}</td>
+          </tr>
+          <tr>
+            <td className={styles.tableHearSide}>Market Message Id</td>
+            <td>{marketMsgInfo.EnergyMarketMessageIdentifier}</td>
+          </tr>
+          <tr>
+            <td className={styles.tableHearSide}>Local Reference</td>
+            <td>{[marketMsgInfo.DTCDcode, marketMsgInfo.LegacyRGMAMessageIdentifier, marketMsgInfo.LegacySPAAMessageIdentifier, marketMsgInfo.UNCMessageIdentifier, marketMsgInfo.CSSMessageIdentifier]}</td>
           </tr>
         </table>
         <div className={styles.sourcetargetContainer}>
@@ -61,7 +70,8 @@ export async function getServerSideProps(context) {
   const dataJson = await dataReq.json();
   const scenarioVariantInfo = dataJson.scenarioVariantInfo;
   const structure = dataJson.structure;
+  const mmInfo = dataJson.mmInfo; 
 
   // Pass data to the page via props
-  return { props: { scenarioVariantInfo, structure } };
+  return { props: { scenarioVariantInfo, structure, mmInfo } };
 }
