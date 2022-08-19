@@ -14,10 +14,10 @@
   text-align: center;
 }
 
-.fullWidthTable{
-  width:90%;
-  margin-left:5%;
-  color:black;
+.fullWidthTable {
+  width: 90%;
+  margin-left: 5%;
+  color: black;
 }
 
 .contentContainer {
@@ -29,14 +29,20 @@
 .searchBoxHeader {
   margin: 2% 1%;
 }
-.dataSpecExplainaition{
+.dataSpecExplainaition {
   margin: 0 1%;
   text-align: center;
 }
 .svList {
   margin-left: 10%;
   width: 80%;
-  color:black;
+  color: black;
+}
+
+.diList {
+  margin-left: 10%;
+  width: 80%;
+  color: black;
 }
 
 .searchForm {
@@ -45,20 +51,20 @@
 .textInput {
   margin: 0 20%;
   width: 60%;
-  margin-bottom:2%;
+  margin-bottom: 2%;
 }
 
-.radio{
-  margin-left:10%;
-  margin-bottom:2%;
+.radio {
+  margin-left: 10%;
+  margin-bottom: 2%;
 }
 
-.searchButton{
-  margin-left:15%;
+.searchButton {
+  margin-left: 15%;
 }
 
-.searchResultsRow{
-  color:black;
+.searchResultsRow {
+  color: black;
 }
 
 .titleContainer {
@@ -66,7 +72,7 @@
   height: auto;
   margin-left: 5vw;
   border-radius: 5px;
-  background: #36494E;
+  background: #36494e;
   color: white;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
 }
@@ -74,74 +80,76 @@
   text-align: center;
 }
 
-.flowStructure{
-  width:90%;
-  margin-left:5%;
+.flowStructure {
+  width: 90%;
+  margin-left: 5%;
 }
 
-.collectionRow{
-  background: #36494E;
+.collectionRow {
+  background: #36494e;
   color: white;
 }
-.collectionRow:hover{
-  background: #36494E;
+.collectionRow:hover {
+  background: #36494e;
 }
 
-.pointer{
+.pointer {
   cursor: pointer;
-  color:black;
+  color: black;
 }
 
-.tableHearSide,.mmTable{
+.tableHearSide,
+.mmTable {
   text-align: center;
-  background: #36494E;
+  background: #36494e;
   color: white;
   border: 1px solid #60935d;
   font-weight: bold;
 }
 
-.tableHearSide{
+.tableHearSide {
   background: #60935d;
   color: white;
 }
-.mmTable{
+.mmTable {
   background-color: #60935d;
 }
 
-.sourcetargetContainer{
-  width:70%;
-  margin-left:15%;
+.sourcetargetContainer {
+  width: 70%;
+  margin-left: 15%;
   margin-top: 2%;
   margin-bottom: 2%;
-  display:flex;
+  display: flex;
   justify-content: space-between;
   font-weight: bold;
   text-align: center;
 }
-.source,.target{
-  width:30%;
+.source,
+.target {
+  width: 30%;
   background: #60935d;
   color: white;
   text-align: center;
-  font-size:110%;
+  font-size: 110%;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
   border-radius: 5px;
 }
 
-.sourceArrowTarget{
-  width:5%;
-  height:1%;
-  margin:auto;
+.sourceArrowTarget {
+  width: 5%;
+  height: 1%;
+  margin: auto;
 }
 
-.errorMessage{
+.errorMessage {
   text-align: center;
   font-size: large;
   color: red;
 }
-.filterRow{ 
-  background-color:transparent; 
-  border:none;
+.filterRow {
+  background-color: transparent;
+  border: none;
 }
 .flexContainer {
   display: flex;
@@ -153,34 +161,39 @@
   margin-bottom: 5%;
 }
 
-.fullBoxTable{
- flex: 100%;
+.fullBoxTable {
+  flex: 100%;
 }
 
-.svHeader{
+.svHeader {
   text-align: center;
-    margin-bottom: 5%;
-
+  margin-top: 4%;
+  margin-bottom: 2%;
 }
 
-.searchTypeButtons{
+.diHeader {
+  text-align: center;
+  margin-top: 4%;
+  margin-bottom: 2%;
+}
+.searchTypeButtons {
   width: 80%;
-  margin:3% 10% 2% 10%;
+  margin: 3% 10% 2% 10%;
   justify-content: space-between;
-  display:flex;
+  display: flex;
 }
-.searchTypeButton{
-  width:20%;
-  padding:0;
+.searchTypeButton {
+  width: 20%;
+  padding: 0;
   background-color: white;
-  color:black;
+  color: black;
   cursor: pointer;
 }
-.chosen{
+.chosen {
   background-color: #60935d;
-  color:white;
+  color: white;
 }
 
-.dataSpecDropDown{
-  width:40%;
+.dataSpecDropDown {
+  width: 40%;
 }

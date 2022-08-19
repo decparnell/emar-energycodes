@@ -6,8 +6,6 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import logo from "../public/recco_logo.PNG";
 function Loading() {
-  //const router = useRouter();
-
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
