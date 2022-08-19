@@ -181,3 +181,46 @@ p,div{
 ::-webkit-scrollbar-thumb:hover {
   background: #70ada3; 
 }
+
+.spinner-wrapper {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #E7F4E4;
+  z-index: 9999;
+
+}
+.spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height:50%;
+  width:50%;
+  margin:0px auto;
+  -webkit-animation: rotation 0.9s infinite linear;
+  -moz-animation: rotation 0.9s infinite linear;
+  -o-animation: rotation 0.9s infinite linear;
+  animation: rotation 0.9s infinite linear;
+}
+
+@-webkit-keyframes rotation {
+  from {-webkit-transform: rotate(0deg);}
+  to {-webkit-transform: rotate(359deg);}
+}
+@-moz-keyframes rotation {
+  from {-moz-transform: rotate(0deg);}
+  to {-moz-transform: rotate(359deg);}
+}
+@-o-keyframes rotation {
+  from {-o-transform: rotate(0deg);}
+  to {-o-transform: rotate(359deg);}
+}
+@keyframes rotation {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(359deg);}
+}

@@ -39,6 +39,12 @@
   color: black;
 }
 
+.diList {
+  margin-left: 10%;
+  width: 80%;
+  color: black;
+}
+
 .searchForm {
   margin: 2% 3%;
   padding: 1em;
@@ -162,9 +168,15 @@
 
 .svHeader {
   text-align: center;
-  margin-bottom: 5%;
+  margin-top: 4%;
+  margin-bottom: 2%;
 }
 
+.diHeader {
+  text-align: center;
+  margin-top: 4%;
+  margin-bottom: 2%;
+}
 .searchTypeButtons {
   width: 80%;
   margin: 3% 10% 2% 10%;

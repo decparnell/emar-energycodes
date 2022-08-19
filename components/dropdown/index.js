@@ -8,32 +8,13 @@ import {
 import React, { useState } from "react";
 
 function Dropdown(props) {
-  const router = useRouter();
-  const { version } = router.query;
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownValue = props.value[0];
   const dropdownType = props.dropdownType;
   const setDropdownValue = props.value[1];
   const clearFilter = props.closeFilter;
-
-  const handleDropdownSelect = (option, dropdownType) => {
-    if (window && dropdownType == "version") {
-      sessionStorage.setItem("version", option);
-      setDropdownValue(sessionStorage.getItem("version"));
-      if (option != version) {
-        const query = router.query;
-        query.version = option;
-        router.push(
-          {
-            pathname: router.pathname,
-            query: query,
-          },
-          { shallow: false }
-        );
-      }
-    } else {
-      setDropdownValue(option);
-    }
+  const handleDropdownSelect = (option) => {
+    setDropdownValue(option);
     setDropdownOpen((current) => !current);
   };
 
@@ -56,39 +37,23 @@ function Dropdown(props) {
           onClick={() => setDropdownOpen((current) => !current)}
         />
       ) : (
-        <AiFillCaretUp onClick={() => setDropdownOpen((current) => !current)} />
+        <>
+          <AiFillCaretUp
+            onClick={() => setDropdownOpen((current) => !current)}
+          />
+          <div className={styles.options}>
+            {props.options.map((option, index) => (
+              <div
+                className={styles.option}
+                key={index}
+                onClick={() => handleDropdownSelect(option)}
+              >
+                {prepareDropdownOption(option)}
+              </div>
+            ))}
+          </div>
+        </>
       )}
-      {dropdownOpen && dropdownType == "version" ? (
-        <div className={styles.versionOptions}>
-          {props.options.map((option, index) => (
-            <div
-              className={
-                option.versionNumber == dropdownValue
-                  ? `${styles.option} ${styles.chosen} pointer`
-                  : `${styles.option} pointer`
-              }
-              key={index}
-              onClick={() =>
-                handleDropdownSelect(option.versionNumber, dropdownType)
-              }
-            >
-              {prepareDropdownOption(option.versionNumber)} - {option.status}
-            </div>
-          ))}
-        </div>
-      ) : dropdownOpen && dropdownType != "version" ? (
-        <div className={styles.options}>
-          {props.options.map((option, index) => (
-            <div
-              className={styles.option}
-              key={index}
-              onClick={() => handleDropdownSelect(option, dropdownType)}
-            >
-              {prepareDropdownOption(option)}
-            </div>
-          ))}
-        </div>
-      ) : null}
     </div>
   );
 }

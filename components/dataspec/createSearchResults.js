@@ -14,14 +14,12 @@ function CreateSearchResults(
   latestDataSpecVersion,
   resetFilter
 ) {
-  let tableFilters = "";
   let tableHeader = "";
   let tableBody = "";
 
   if (errorMessage) {
   } else if (searchType == "mm") {
     const mmInfo = getDistinctValuesMarketMessage(searchResults);
-    console.log(mmInfo);
     const mmSearch = MarketMessageSearchResults(mmInfo, latestDataSpecVersion);
     tableHeader = mmSearch[0];
     tableBody = mmSearch[1];

@@ -8,10 +8,6 @@ import { useContext, useEffect } from "react";
 const CreateFlowStructure = (structure) => {
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
-  useEffect(() => {
-    // Client-side-only code
-    value.setLatestDataSpecVersion(sessionStorage.getItem("version"));
-  });
   const tableRows = [];
   const collectionsObj = getUniqueDIC(structure);
 
