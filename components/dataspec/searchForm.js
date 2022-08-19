@@ -71,7 +71,10 @@ const SearchForm = (
         required
         className={styles.textInput}
       />
-      <button type="submit" className={`${styles.searchButton} medium_button`}>
+      <button
+        type="submit"
+        className={`${styles.searchButton} medium_button pointer`}
+      >
         Search
       </button>
       {errorMessage ? (
