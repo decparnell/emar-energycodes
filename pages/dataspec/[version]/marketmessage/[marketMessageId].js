@@ -61,8 +61,8 @@ function MmDetailPage({ searchResults }) {
           <h2 className={styles.svHeader}>The Data items message contains:</h2>
           <table className={styles.svList}>
             <thead>
-              {dataItemsTableHead.map((item) => (
-                <th>{item}</th>
+              {dataItemsTableHead.map((item, index) => (
+                <th key={index}>{item}</th>
               ))}
             </thead>
             <tbody>
@@ -72,8 +72,8 @@ function MmDetailPage({ searchResults }) {
                   href={{
                     pathname: `/dataspec/${latestDataSpecVersion}/dataitem/[di]`,
                     query: {
-                      di: entry.DataItemIdentifier
-                    }
+                      di: entry.DataItemIdentifier,
+                    },
                   }}
                   passHref={true}
                 >
@@ -103,8 +103,8 @@ function MmDetailPage({ searchResults }) {
                 href={{
                   pathname: `/dataspec/${latestDataSpecVersion}/scenario-variant/[sv]`,
                   query: {
-                    sv: entry.EnergyMarketMessageScenarioVariantIdentifier
-                  }
+                    sv: entry.EnergyMarketMessageScenarioVariantIdentifier,
+                  },
                 }}
                 passHref={true}
               >
@@ -138,7 +138,7 @@ export async function getServerSideProps(context) {
   const searchResults = [
     dataJson.marketMessageInfo[0],
     dataJson.svList,
-    dataJson.dataItemList
+    dataJson.dataItemList,
   ];
 
   // Pass data to the page via props
