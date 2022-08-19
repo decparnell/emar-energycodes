@@ -7,6 +7,7 @@ import TabNavbar from "../components/layout/tabHeader";
 import ButtonNavbar from "../components/layout/buttonHeader";
 import DataSpecSearch from "../components/dataspec/dataSpecSearch";
 import { NewsBanner } from "../components/newsBanner";
+import CodesSchedulesSearch from "../components/codesSchedules/codesSchedulesSearch";
 
 function HomePage({
   dashboards,
@@ -67,6 +68,8 @@ function HomePage({
           />
         ) : chosenButton == "2" && chosenTab == "2" ? (
           <DataSpecSearch mmsv={mmsv} dataItems={dataItems} />
+        ) : chosenButton == "2" && chosenTab == "1" ? (
+          <CodesSchedulesSearch />
         ) : null}
       </div>
     </>
