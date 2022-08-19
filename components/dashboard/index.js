@@ -38,18 +38,28 @@ function Dashboard(props) {
         <h2 className={styles.sectionHeader}>{section.dashboardSectionName}</h2>
         {sectionItems.map((item) => (
           <>
-            <Link
-              key={item.dashboardSectionsItemsId}
-              href={{
-                pathname: `${item.dashboardSectionItemsLink}`,
-              }}
-              className={styles.itemContainer}
-              passHref={true}
-            >
-              <div className={styles.itemContainer}>
+            {item.dashboardSectionItemsLinkType == "DOWNLOAD" ? (
+              <a
+                href={item.dashboardSectionItemsLink}
+                download={item.dashboardSectionItemsName}
+              >
                 {item.dashboardSectionItemsName}
-              </div>
-            </Link>
+              </a>
+            ) : (
+              <Link
+                key={item.dashboardSectionsItemsId}
+                href={{
+                  pathname: `${item.dashboardSectionItemsLink}`,
+                }}
+                className={styles.itemContainer}
+                passHref={true}
+              >
+                <div className={styles.itemContainer}>
+                  {item.dashboardSectionItemsName}
+                </div>
+              </Link>
+            )}
+
             <div className={styles.seperator}></div>
           </>
         ))}
