@@ -48,7 +48,7 @@ function HomePage({
 
   return (
     <>
-      <NewsBanner news = {newsData}/>
+      <NewsBanner news={newsData} />
       <TabNavbar />
       <ButtonNavbar />
       <div className={styles.container}>
@@ -92,9 +92,9 @@ export async function getServerSideProps(context) {
   const latestVersionJson = await getLatestVersions.json();
 
   const newsDataReq = await fetch(
-    'https://prod2-21.uksouth.logic.azure.com:443/workflows/3b40d5e4e24449e187511befe44b600b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=ikzFKQ4CtAXK2-HMi8rjTZ5Is_ho1YnNGDCNg8t0HRk'
+    "https://prod2-21.uksouth.logic.azure.com:443/workflows/3b40d5e4e24449e187511befe44b600b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=ikzFKQ4CtAXK2-HMi8rjTZ5Is_ho1YnNGDCNg8t0HRk"
   );
-  const latestNewsJson = await newsDataReq.json(); 
+  const latestNewsJson = await newsDataReq.json();
   const newsData = latestNewsJson.latestNews;
 
   const dataSpecData = await fetch(
