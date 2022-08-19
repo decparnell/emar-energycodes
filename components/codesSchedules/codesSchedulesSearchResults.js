@@ -1,15 +1,13 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
-// import styles from "../../styles/dataspec.module.css";
-// import removeNullValues from "./functions/removeNulls";
+import styles from "../../styles/codesSchedulesSearch.module.css";
 export const CodesSchedulesSearchResults = (searchResults) => {
   const router = useRouter();
   const tableHeader = (
     <thead>
-      <th>clauseReference</th>
-      <th>version name</th>
-      <th>Document name</th>
-      <th>text</th>
+      <th>Clause Reference</th>
+      <th>Version</th>
+      <th>Document Name</th>
+      <th>Clause Text</th>
     </thead>
   );
   const tableBody = (
@@ -22,6 +20,7 @@ export const CodesSchedulesSearchResults = (searchResults) => {
               `/codes-schedules/${entry.documentId_FK}/${entry.versionName}#${entry.componentId}`
             )
           }
+          className={`${styles.searchResultsRow} pointer`}
         >
           <td>{entry.clauseReference}</td>
           <td>{entry.versionName}</td>
@@ -29,34 +28,6 @@ export const CodesSchedulesSearchResults = (searchResults) => {
           <td>{entry.componentText}</td>
         </tr>
       ))}
-      {/* {searchResults.map((entry) => (
-        <Link
-          key={entry.DataItemIdentifier}
-          href={{
-            pathname: `/dataspec/${latestDataSpecVersion}/dataitem/[dataItemId]`,
-            query: {
-              dataItemId: entry.DataItemIdentifier,
-            },
-          }}
-          passHref={true}
-        >
-          <tr
-            key={entry.DataItemIdentifier}
-            className={`${styles.searchResultsRow} pointer`}
-          >
-            <td>{entry.DataItemIdentifier}</td>
-            <td>
-              {removeNullValues(entry.DTCLegacyReference) +
-                removeNullValues(entry.SPAALegacyReference) +
-                removeNullValues(entry.RGMALegacyReference) +
-                removeNullValues(entry.UNCDataItemReference) +
-                removeNullValues(entry.IUCDataItemReference) +
-                removeNullValues(entry.DCUSADataItemReference)}
-            </td>
-            <td>{entry.DataItemName}</td>
-          </tr>
-        </Link>
-      ))} */}
     </tbody>
   );
 

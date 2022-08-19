@@ -1,7 +1,4 @@
-// import styles from "../../styles/dataspec.module.css";
-// import { getDistinctValuesMarketMessage } from "./functions/getDistinctValues";
-// import { MarketMessageSearchResults } from "./marketMessageSearchResults";
-// import { ScenarioVariantSearchResults } from "./scenarioVariantSearchResults";
+import styles from "../../styles/codesSchedulesSearch.module.css";
 import { CodesSchedulesSearchResults } from "./codesSchedulesSearchResults";
 function CreateCSSearchResults(
   searchResults,
@@ -14,16 +11,16 @@ function CreateCSSearchResults(
   if (errorMessage) {
   } else {
     const codesSchedulesSearch = CodesSchedulesSearchResults(
-      searchResults
-      //   latestDataSpecVersion,
+      searchResults,
+      latestDataSpecVersion
     );
     tableHeader = codesSchedulesSearch[0];
     tableBody = codesSchedulesSearch[1];
   }
   console.log("tableHeader", tableHeader);
   return (
-    <div>
-      <table>
+    <div className={styles.contentContainer}>
+      <table className={styles.resultsTable}>
         {tableHeader}
         {tableBody}
       </table>

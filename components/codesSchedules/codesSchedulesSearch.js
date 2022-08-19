@@ -1,4 +1,4 @@
-// import styles from "../../styles/dataspec.module.css";
+import styles from "../../styles/codesSchedulesSearch.module.css";
 import { useState, useContext, useEffect } from "react";
 import CodesSchedulesSearchForm from "./codesSchedulesSearchForm";
 import createCSSearchResults from "./createCSSearchResults";
@@ -11,28 +11,17 @@ function CodesSchedulesSearch(props) {
   const { latestScheduleVersion } = value.state;
   const [searchResults, setSearchResults] = useState("");
   const [errorMessage, setErrorMessage] = useState();
-  // const [sourceFilterValue, setSourceFilterValue] =
-  //   useState("Filter the source:");
-
-  // function handleButtonClick(newType, e) {
-  //   e.preventDefault();
-  //   setSearchType(newType);
-  // }
-
-  //   useEffect(() => {
-  //     switchSearchResults(searchType);
-  //   }, [searchType]);
 
   return (
-    <div className="">
+    <div className={styles.container}>
       <Head>
-        <title>EMAR Data Specification</title>
+        <title>EMAR Codes Schedules</title>
         <meta property="og:title" content="My page title" key="title" />
       </Head>
-      <div>
+      <div className={styles.searchContainer}>
         <SecondNavbar />
-        <h1 className="">Codes Schedules Search</h1>
-
+        <h1 className={styles.searchBoxHeader}>Codes Schedules Search</h1>
+        <p>Here you can search for Codes Schedules</p>
         {CodesSchedulesSearchForm(
           setSearchResults,
           errorMessage,

@@ -1,5 +1,4 @@
-// import styles from "../../styles/dataspec.module.css";
-import { useState } from "react";
+import styles from "../../styles/codesSchedulesSearch.module.css";
 const CodesSchedulesSearchForm = (
   setSearchResults,
   errorMessage,
@@ -24,7 +23,7 @@ const CodesSchedulesSearchForm = (
   };
 
   return (
-    <form onSubmit={completeSearch}>
+    <form className={styles.searchForm} onSubmit={completeSearch}>
       <input
         id="searchPhrase"
         name="searchPhrase"
@@ -32,9 +31,14 @@ const CodesSchedulesSearchForm = (
         placeholder="Text Search"
         autoComplete="on"
         required
-        // className={styles.textInput}
+        className={styles.textInput}
       />
-      <button type="submit">Search</button>
+      <button
+        type="submit"
+        className={`${styles.searchButton} medium_button pointer`}
+      >
+        Search
+      </button>
       {errorMessage ? <p>{errorMessage}</p> : null}
     </form>
   );
