@@ -9,6 +9,7 @@ import SecondNavbar from "../layout/secondHeader";
 function CodesSchedulesSearch(props) {
   const value = useContext(AppContext);
   const { latestScheduleVersion } = value.state;
+  const [searchPhrase, setSearchPhrase] = useState("yo");
   const [searchResults, setSearchResults] = useState("");
   const [errorMessage, setErrorMessage] = useState();
 
@@ -25,11 +26,17 @@ function CodesSchedulesSearch(props) {
         {CodesSchedulesSearchForm(
           setSearchResults,
           errorMessage,
-          setErrorMessage
+          setErrorMessage,
+          setSearchPhrase
         )}
       </div>
       {searchResults
-        ? createCSSearchResults(searchResults, errorMessage)
+        ? createCSSearchResults(
+            searchResults,
+            errorMessage,
+            latestScheduleVersion,
+            searchPhrase
+          )
         : null}
     </div>
   );
