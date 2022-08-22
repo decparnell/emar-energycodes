@@ -4,9 +4,9 @@ export const CodesSchedulesSearchResults = (searchResults) => {
   const router = useRouter();
   const tableHeader = (
     <thead>
-      <th>Clause Reference</th>
       <th>Version</th>
       <th>Document Name</th>
+      <th>Clause Reference</th>
       <th>Clause Text</th>
     </thead>
   );
@@ -22,9 +22,9 @@ export const CodesSchedulesSearchResults = (searchResults) => {
           }
           className={`${styles.searchResultsRow} pointer`}
         >
-          <td>{entry.clauseReference}</td>
           <td>{entry.versionName}</td>
           <td>{entry.documentName}</td>
+          <td>{entry.clauseReference}</td>
           <td>{entry.componentText}</td>
         </tr>
       ))}
