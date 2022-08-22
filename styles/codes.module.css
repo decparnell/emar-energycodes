@@ -8,8 +8,8 @@
   padding-left: 3%;
   padding-right: 5%;
   border-radius: 5px;
-  background: #36494e;
-  color: white;
+  background: #E7F4E4;
+  color: black;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
 }
 .scheduleContentContainer {
@@ -21,8 +21,8 @@
   height: auto;
   margin-left: 5vw;
   border-radius: 5px;
-  background: #36494e;
-  color: white;
+  background: #E7F4E4;
+  color: black;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
 }
 .contentTitle {
@@ -40,8 +40,8 @@
   height: auto;
   padding: 20px;
   border-radius: 5px;
-  background: #36494e;
-  color: white;
+  background: #E7F4E4;
+  color: black;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
 }
 
@@ -220,4 +220,13 @@
   top: 9px;
   width: 0%;
   left: 50%;
+}
+
+.definitionText{
+  border-top:1px solid #36494e;
+  padding-top:2%;
+  margin-left:5%;
+  margin-right:5%;
+  padding-bottom:2%;
+  font-size: 20px;
 }

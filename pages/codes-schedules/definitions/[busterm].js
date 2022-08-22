@@ -1,14 +1,20 @@
 import { useRouter } from "next/router";
-
+import styles from "../../../styles/codes.module.css";
+import Head from "next/head";
 function definitions({ versions, parts, sections, components, document }) {
   const docInfo = document[0];
   const partInfo = parts[0];
   const componentInfo = components[0];
 
   return (
-    <div>
-      <h1>{docInfo.documentName}</h1> <h2>{partInfo.sectionName}</h2>
-      <p>{componentInfo.componentText}</p>
+    <div className={styles.scheduleContainer}>
+      <Head>
+        <title>{docInfo.documentName} Definition</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
+      <h1 className={styles.contentTitle}>{docInfo.documentName} Definition</h1>{" "}
+      <h2>{partInfo.sectionName}</h2>
+      <p className={styles.definitionText}>{componentInfo.componentText}</p>
     </div>
   );
 }
