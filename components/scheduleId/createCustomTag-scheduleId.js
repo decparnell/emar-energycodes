@@ -181,6 +181,7 @@ function splitTextByKeyWords(text, definitions) {
               linkInfo["linkForwardUrl"]
             )}`}
             target="_blank"
+            rel="noreferrer"
           >
             {linkingWord}
           </a>
