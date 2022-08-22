@@ -23,7 +23,16 @@ function ScenarioPage({ scenarioVariantInfo, structure, mmInfo }) {
           <meta property="og:title" content="My page title" key="title" />
         </Head>
         <h1 className={styles.contentTitle}>
-          {scenarioVariant} - {svInfo.EnergyMarketMessageScenarioVariantName}
+          {scenarioVariant} - {svInfo.EnergyMarketMessageScenarioVariantName} (
+          {marketMsgInfo.EnergyMarketMessageIdentifier} -{" "}
+          {[
+            marketMsgInfo.DTCDcode,
+            marketMsgInfo.LegacyRGMAMessageIdentifier,
+            marketMsgInfo.LegacySPAAMessageIdentifier,
+            marketMsgInfo.UNCMessageIdentifier,
+            marketMsgInfo.CSSMessageIdentifier,
+          ]}
+          )
         </h1>
         <table className={styles.fullWidthTable}>
           <tr>
