@@ -49,6 +49,8 @@ export default function MyApp({ Component, pageProps }) {
   const [newsItems, setNewsItems] = useState();
   const [chosenTab, setChosenTab] = useState(1);
   const [chosenButton, setChosenButton] = useState(1);
+
+  const [errorLog, setErrorLog] = useState();
   return (
     <>
       <Loading />
@@ -60,12 +62,14 @@ export default function MyApp({ Component, pageProps }) {
             newsItems: newsItems,
             chosenTab: chosenTab,
             chosenButton: chosenButton,
+            errorLog: errorLog,
           },
           setLatestDataSpecVersion: setLatestDataSpecVersion,
           setAllDataSpecVersions: setAllDataSpecVersions,
           setNewsItems: setNewsItems,
           setChosenTab: setChosenTab,
           setChosenButton: setChosenButton,
+          setErrorLog: setErrorLog,
         }}
       >
         <Layout>
