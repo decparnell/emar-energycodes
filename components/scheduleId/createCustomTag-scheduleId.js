@@ -180,6 +180,7 @@ function splitTextByKeyWords(text, definitions) {
             href={`/codes-schedules/definitions/${encodeURIComponent(
               linkInfo["linkForwardUrl"]
             )}`}
+            target="_blank"
           >
             {linkingWord}
           </a>

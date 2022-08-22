@@ -71,20 +71,22 @@ function ScheduleDetail({
       >
         <div className={styles.scheduleContainer}>
           <h1 className={styles.contentTitle}>{docInfo.documentName}</h1>
+
+          <table id="version" className={styles.table}>
+            <thead>
+              <tr>
+                <th>Version</th>
+                <th>Implementation Date</th>
+                <th>Reason</th>
+              </tr>
+            </thead>
+            <tbody>
+              {CreateChangeTable(versions, schedule_id, versionName)}
+            </tbody>
+          </table>
+
+          {createContent(parts, sections, components, definitions)}
         </div>
-
-        <table id="version" className={styles.table}>
-          <thead>
-            <tr>
-              <th>Version</th>
-              <th>Implementation Date</th>
-              <th>Reason</th>
-            </tr>
-          </thead>
-          <tbody>{CreateChangeTable(versions, schedule_id, versionName)}</tbody>
-        </table>
-
-        {createContent(parts, sections, components, definitions)}
       </div>
     </>
   );
