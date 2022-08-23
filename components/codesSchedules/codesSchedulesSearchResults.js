@@ -7,34 +7,31 @@ export const CodesSchedulesSearchResults = (
 ) => {
   const router = useRouter();
 
+  function escapeRegex(string) {
+    return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+  }
+
+  const formatSearchPhrase = (entry, searchPhrase) => {
+    const regex = new RegExp(escapeRegex(searchPhrase), "ig");
+    const matches = Array.from(entry.matchAll(regex));
+    return entry.split(regex).flatMap((e, index) => [
+      e,
+      <span key={index} className={styles.color}>
+        {matches[index]?.[0]}
+      </span>,
+    ]);
+  };
+
   const tableHeader = (
     <thead>
       <th>Version</th>
       <th>Document Name</th>
       <th>Clause Reference</th>
       <th>Clause Text</th>
-      <th>searchPhrase</th>
     </thead>
   );
   const tableBody = (
     <tbody>
-      {/* {searchResults.map((entry) => (
-        <tr
-          key={entry.componentId}
-          onClick={() =>
-            router.push(
-              `/codes-schedules/${entry.documentId_FK}/${entry.versionName}#${entry.componentId}`
-            )
-          }
-          className={`${styles.searchResultsRow} pointer`}
-        >
-          <td>{entry.versionName}</td>
-          <td>{entry.documentName}</td>
-          <td>{entry.clauseReference}</td>
-          <td>{entry.componentText}</td>
-        </tr>
-      ))} */}
-
       {searchResults.map((entry) => {
         return (
           <tr
@@ -46,25 +43,10 @@ export const CodesSchedulesSearchResults = (
             }
             className={`${styles.searchResultsRow} pointer`}
           >
-            <td>{entry.clauseReference}</td>
             <td>{entry.versionName}</td>
-            <td>
-              <i>{entry.documentName}</i>
-            </td>
-            <td>
-              {entry.componentText.replaceAll(
-                searchPhrase,
-                `<i>${searchPhrase}</i>`
-              )}
-            </td>
-            {/* <td>
-              {entry.componentText
-                .split(searchPhrase)
-                .join("<i>" + searchPhrase + "</i>")}
-            </td> */}
-            <td>
-              <b className={styles.color}>{searchPhrase}</b>
-            </td>
+            <td>{entry.documentName}</td>
+            <td>{entry.clauseReference}</td>
+            <td>{formatSearchPhrase(entry.componentText, searchPhrase)}</td>
           </tr>
         );
       })}
