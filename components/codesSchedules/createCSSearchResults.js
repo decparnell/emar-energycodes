@@ -3,7 +3,8 @@ import { CodesSchedulesSearchResults } from "./codesSchedulesSearchResults";
 function CreateCSSearchResults(
   searchResults,
   errorMessage,
-  latestDataSpecVersion
+  latestDataSpecVersion,
+  searchPhrase
 ) {
   let tableHeader = "";
   let tableBody = "";
@@ -12,12 +13,12 @@ function CreateCSSearchResults(
   } else {
     const codesSchedulesSearch = CodesSchedulesSearchResults(
       searchResults,
-      latestDataSpecVersion
+      latestDataSpecVersion,
+      searchPhrase
     );
     tableHeader = codesSchedulesSearch[0];
     tableBody = codesSchedulesSearch[1];
   }
-  console.log("tableHeader", tableHeader);
   return (
     <div className={styles.contentContainer}>
       <table className={styles.resultsTable}>
