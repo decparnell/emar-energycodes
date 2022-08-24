@@ -50,7 +50,7 @@ export default function MyApp({ Component, pageProps }) {
   const [chosenTab, setChosenTab] = useState(1);
   const [chosenButton, setChosenButton] = useState(1);
 
-  const [errorLog, setErrorLog] = useState();
+  const [errorLog, setErrorLog] = useState([]);
   return (
     <>
       <Loading />

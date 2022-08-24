@@ -16,11 +16,13 @@ function HomePage({
   latestVersionJson,
   newsData,
   mmsv,
-  dataItems,
+  dataItems
 }) {
   const value = useContext(AppContext);
-  let { chosenButton, chosenTab } = value.state;
+  let { chosenButton, chosenTab, errorLog } = value.state;
+  // let { setErrorLog } = value;
   value.setNewsItems(newsData);
+  // const [error, setError] = useState({})
 
   const [currentDashboard, setCurrentDashboard] = useState(
     dashboards.filter((dashboard) => dashboard.dashboardOrder == 1)[0]
@@ -31,6 +33,35 @@ function HomePage({
       (section) => section.dashboardId_FK == currentDashboard.dashboardId
     )
   );
+  const x = undefined;
+  const apiVarList = [
+    { obj: x, name: "dashboards" }
+    // sections,
+    // items,
+    // latestVersionJson,
+    // newsData,
+    // mmsv,
+    // dataItems,
+    // negin
+  ];
+  // console.log(")))))", errorLog);
+
+  const checkIfVariablesAreAvailable = (array) => {
+    value.setErrorLog(["none"]);
+
+    array.map((eachItem) => {
+      !eachItem.obj &&
+        value.setErrorLog((current) => [
+          ...current,
+          `ERROR MESSAGE: ${eachItem.name} is not defined`
+        ]);
+      // console.log("*****", errorLog);
+    });
+  };
+
+  const Neginlog = checkIfVariablesAreAvailable(apiVarList);
+  // console.log("*****",log);
+  // setErrorLog((current) => [...current, "ERROR MESSAGE: varName not defined"]);
 
   useEffect(() => {
     const newDashboard = dashboards.filter(
@@ -99,7 +130,7 @@ export async function getServerSideProps(context) {
   );
   const latestNewsJson = await newsDataReq.json();
   const newsData = latestNewsJson.latestNews;
-
+  // const newsData = undefined;
   const dataSpecData = await fetch(
     `https://prod-24.uksouth.logic.azure.com:443/workflows/dcb64fdc2eea43aa8e231cb7035ff20d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6fNJtJqCiH8TYdaftlFMPn1nuUE5KNLopKDvuU9WRV8`
   );
@@ -115,7 +146,7 @@ export async function getServerSideProps(context) {
       latestVersionJson,
       newsData,
       mmsv,
-      dataItems,
-    },
+      dataItems
+    }
   };
 }
