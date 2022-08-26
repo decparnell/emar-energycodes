@@ -5,6 +5,7 @@ import Router from "next/router";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import logo from "../public/recco_logo.PNG";
+import Script from "next/script";
 function Loading() {
   const [loading, setLoading] = useState(false);
 
@@ -53,6 +54,22 @@ export default function MyApp({ Component, pageProps }) {
   const [errorLog, setErrorLog] = useState([]);
   return (
     <>
+      <Script
+        id="Gscript1"
+        strategy="lazyOnload"
+        src={`https://www.googletagmanager.com/gtag/js?id=G-V6P5LWX5R8`}
+      />
+
+      <Script strategy="lazyOnload" id="Gscript2">
+        {`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-V6P5LWX5R8', {
+        page_path: window.location.pathname,
+        });
+    `}
+      </Script>
       <Loading />
       <AppContext.Provider
         value={{
