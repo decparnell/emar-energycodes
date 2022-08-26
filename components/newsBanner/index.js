@@ -3,7 +3,7 @@ import styles from "../../styles/newsBanner.module.css";
 import AppContext from "../context/AppContext";
 
 export const NewsBanner = (props) => {
-  const newsBannerData = props.news
+  const newsBannerData = props.news;
 
   let [currentIndex, setCurrentIndex] = useState(0);
   const activeNewsItems = newsBannerData.filter(
