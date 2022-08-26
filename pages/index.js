@@ -19,7 +19,6 @@ function HomePage({
   mmsv,
   dataItems
 }) {
-  const x = undefined;
 
   const apiVarList = [
     { obj: newsData, name: "newsData" },
@@ -31,44 +30,26 @@ function HomePage({
     { obj: dataItems, name: "dataItems" }
   ];
   const value = useContext(AppContext);
-  let { chosenButton, chosenTab, errorLog } = value.state;
+  let { chosenButton, chosenTab } = value.state;
   value.setNewsItems(newsData);
 
-  // value.setErrorLog(checkIfVariablesAreAvailable(apiVarList));
-  const temp = checkIfVariablesAreAvailable(apiVarList);
-
-  // const [currentDashboard, setCurrentDashboard] = useState();
-  // if (temp.indexOf("dashboards") === -1) {
-  //   setCurrentDashboard(
-  //     dashboards.filter((dashboard) => dashboard.dashboardOrder == 1)[0]
-  //   );
-  // }
-
-  // const [currentDashboard, setCurrentDashboard] = useState(
-  //   dashboards.filter((dashboard) => dashboard.dashboardOrder == 1)[0]
-  // );
+  const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
   const [currentDashboard, setCurrentDashboard] = useState(() => {
-    if (temp.indexOf("dashboards") === -1) {
+    if (internalErrorLog.indexOf("dashboards") === -1) {
       return dashboards.filter((dashboard) => dashboard.dashboardOrder == 1)[0];
     }
   });
 
-  // const [currentSections, setCurrentSections] = useState(
-  //   sections.filter(
-  //     (section) => section.dashboardId_FK == currentDashboard.dashboardId
-  //   )
-  // );
-
   const [currentSections, setCurrentSections] = useState(() => {
-    if (temp.indexOf("dashboards") === -1 && temp.indexOf("sections")) {
+    if (internalErrorLog.indexOf("dashboards") === -1 && internalErrorLog.indexOf("sections")) {
       return sections.filter(
         (section) => section.dashboardId_FK == currentDashboard.dashboardId
       );
     }
   });
   useEffect(() => {
-    if (temp.indexOf("dashboards") === -1) {
+    if (internalErrorLog.indexOf("dashboards") === -1) {
       const newDashboard = dashboards.filter(
         (dashboard) => dashboard.dashboardId == chosenTab
       )[0];
@@ -77,7 +58,7 @@ function HomePage({
   }, [chosenTab]);
 
   useEffect(() => {
-     if (temp.indexOf("dashboards") === -1 && temp.indexOf("sections")) {
+     if (internalErrorLog.indexOf("dashboards") === -1 && internalErrorLog.indexOf("sections")) {
        setCurrentSections(
          sections.filter(
            (section) => section.dashboardId_FK == currentDashboard.dashboardId
@@ -89,7 +70,7 @@ function HomePage({
 
   return (
     <>
-      {temp.indexOf("newsData") === -1 ? <NewsBanner news={newsData} /> : null}
+      {internalErrorLog.indexOf("newsData") === -1 ? <NewsBanner news={newsData} /> : null}
       <TabNavbar />
       <ButtonNavbar />
       <div className={styles.container}>
@@ -98,9 +79,9 @@ function HomePage({
           <meta property="og:title" content="My page title" key="title" />
         </Head>
         {chosenButton == "1" &&
-        temp.indexOf("dashboards") === -1 &&
-        temp.indexOf("items") === -1 &&
-        temp.indexOf("latestVersionJson") === -1 ? (
+        internalErrorLog.indexOf("dashboards") === -1 &&
+        internalErrorLog.indexOf("items") === -1 &&
+        internalErrorLog.indexOf("latestVersionJson") === -1 ? (
           <Dashboard
             name={currentDashboard.dashboardName}
             columns={currentDashboard.dashboardColumns}
@@ -110,8 +91,8 @@ function HomePage({
           />
         ) : chosenButton == "2" &&
           chosenTab == "2" &&
-          temp.indexOf("mmsv") === -1 &&
-          temp.indexOf("dataItems") === -1 ? (
+          internalErrorLog.indexOf("mmsv") === -1 &&
+          internalErrorLog.indexOf("dataItems") === -1 ? (
           <DataSpecSearch mmsv={mmsv} dataItems={dataItems} />
         ) : chosenButton == "2" && chosenTab == "1" ? (
           <CodesSchedulesSearch />
