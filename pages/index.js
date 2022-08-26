@@ -8,6 +8,7 @@ import ButtonNavbar from "../components/layout/buttonHeader";
 import DataSpecSearch from "../components/dataspec/dataSpecSearch";
 import { NewsBanner } from "../components/newsBanner";
 import CodesSchedulesSearch from "../components/codesSchedules/codesSchedulesSearch";
+import { checkIfVariablesAreAvailable } from "../components/helperFunctions";
 
 function HomePage({
   dashboards,
@@ -18,69 +19,77 @@ function HomePage({
   mmsv,
   dataItems
 }) {
+  const x = undefined;
+
+  const apiVarList = [
+    { obj: newsData, name: "newsData" },
+    { obj: items, name: "items" },
+    { obj: latestVersionJson, name: "latestVersionJson" },
+    { obj: mmsv, name: "mmsv" },
+    { obj: dashboards, name: "dashboards" },
+    { obj: sections, name: "sections" },
+    { obj: dataItems, name: "dataItems" }
+  ];
   const value = useContext(AppContext);
   let { chosenButton, chosenTab, errorLog } = value.state;
-  // let { setErrorLog } = value;
   value.setNewsItems(newsData);
-  // const [error, setError] = useState({})
 
-  const [currentDashboard, setCurrentDashboard] = useState(
-    dashboards.filter((dashboard) => dashboard.dashboardOrder == 1)[0]
-  );
+  // value.setErrorLog(checkIfVariablesAreAvailable(apiVarList));
+  const temp = checkIfVariablesAreAvailable(apiVarList);
 
-  const [currentSections, setCurrentSections] = useState(
-    sections.filter(
-      (section) => section.dashboardId_FK == currentDashboard.dashboardId
-    )
-  );
-  const x = undefined;
-  const apiVarList = [
-    { obj: x, name: "dashboards" }
-    // sections,
-    // items,
-    // latestVersionJson,
-    // newsData,
-    // mmsv,
-    // dataItems,
-    // negin
-  ];
-  // console.log(")))))", errorLog);
+  // const [currentDashboard, setCurrentDashboard] = useState();
+  // if (temp.indexOf("dashboards") === -1) {
+  //   setCurrentDashboard(
+  //     dashboards.filter((dashboard) => dashboard.dashboardOrder == 1)[0]
+  //   );
+  // }
 
-  const checkIfVariablesAreAvailable = (array) => {
-    value.setErrorLog(["none"]);
+  // const [currentDashboard, setCurrentDashboard] = useState(
+  //   dashboards.filter((dashboard) => dashboard.dashboardOrder == 1)[0]
+  // );
 
-    array.map((eachItem) => {
-      !eachItem.obj &&
-        value.setErrorLog((current) => [
-          ...current,
-          `ERROR MESSAGE: ${eachItem.name} is not defined`
-        ]);
-      // console.log("*****", errorLog);
-    });
-  };
+  const [currentDashboard, setCurrentDashboard] = useState(() => {
+    if (temp.indexOf("dashboards") === -1) {
+      return dashboards.filter((dashboard) => dashboard.dashboardOrder == 1)[0];
+    }
+  });
 
-  const Neginlog = checkIfVariablesAreAvailable(apiVarList);
-  // console.log("*****",log);
-  // setErrorLog((current) => [...current, "ERROR MESSAGE: varName not defined"]);
+  // const [currentSections, setCurrentSections] = useState(
+  //   sections.filter(
+  //     (section) => section.dashboardId_FK == currentDashboard.dashboardId
+  //   )
+  // );
 
+  const [currentSections, setCurrentSections] = useState(() => {
+    if (temp.indexOf("dashboards") === -1 && temp.indexOf("sections")) {
+      return sections.filter(
+        (section) => section.dashboardId_FK == currentDashboard.dashboardId
+      );
+    }
+  });
   useEffect(() => {
-    const newDashboard = dashboards.filter(
-      (dashboard) => dashboard.dashboardId == chosenTab
-    )[0];
-    setCurrentDashboard(newDashboard);
+    if (temp.indexOf("dashboards") === -1) {
+      const newDashboard = dashboards.filter(
+        (dashboard) => dashboard.dashboardId == chosenTab
+      )[0];
+      setCurrentDashboard(newDashboard);
+    }
   }, [chosenTab]);
 
   useEffect(() => {
-    setCurrentSections(
-      sections.filter(
-        (section) => section.dashboardId_FK == currentDashboard.dashboardId
-      )
-    );
+     if (temp.indexOf("dashboards") === -1 && temp.indexOf("sections")) {
+       setCurrentSections(
+         sections.filter(
+           (section) => section.dashboardId_FK == currentDashboard.dashboardId
+         )
+       );
+     }
+    
   }, [currentDashboard]);
 
   return (
     <>
-      <NewsBanner news={newsData} />
+      {temp.indexOf("newsData") === -1 ? <NewsBanner news={newsData} /> : null}
       <TabNavbar />
       <ButtonNavbar />
       <div className={styles.container}>
@@ -88,8 +97,10 @@ function HomePage({
           <title>EMAR Dashboards</title>
           <meta property="og:title" content="My page title" key="title" />
         </Head>
-
-        {chosenButton == "1" ? (
+        {chosenButton == "1" &&
+        temp.indexOf("dashboards") === -1 &&
+        temp.indexOf("items") === -1 &&
+        temp.indexOf("latestVersionJson") === -1 ? (
           <Dashboard
             name={currentDashboard.dashboardName}
             columns={currentDashboard.dashboardColumns}
@@ -97,7 +108,10 @@ function HomePage({
             items={items}
             versions={latestVersionJson}
           />
-        ) : chosenButton == "2" && chosenTab == "2" ? (
+        ) : chosenButton == "2" &&
+          chosenTab == "2" &&
+          temp.indexOf("mmsv") === -1 &&
+          temp.indexOf("dataItems") === -1 ? (
           <DataSpecSearch mmsv={mmsv} dataItems={dataItems} />
         ) : chosenButton == "2" && chosenTab == "1" ? (
           <CodesSchedulesSearch />
@@ -130,7 +144,6 @@ export async function getServerSideProps(context) {
   );
   const latestNewsJson = await newsDataReq.json();
   const newsData = latestNewsJson.latestNews;
-  // const newsData = undefined;
   const dataSpecData = await fetch(
     `https://prod-24.uksouth.logic.azure.com:443/workflows/dcb64fdc2eea43aa8e231cb7035ff20d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6fNJtJqCiH8TYdaftlFMPn1nuUE5KNLopKDvuU9WRV8`
   );
