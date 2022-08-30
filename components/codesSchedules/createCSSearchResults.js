@@ -3,8 +3,11 @@ import { CodesSchedulesSearchResults } from "./codesSchedulesSearchResults";
 function CreateCSSearchResults(
   searchResults,
   errorMessage,
-  latestDataSpecVersion,
-  searchPhrase
+  latestScheduleVersion,
+  searchPhrase,
+  schedulesFilterValue,
+  setSchedulesFilterValue,
+  resetFilter
 ) {
   let tableHeader = "";
   let tableBody = "";
@@ -13,8 +16,11 @@ function CreateCSSearchResults(
   } else {
     const codesSchedulesSearch = CodesSchedulesSearchResults(
       searchResults,
-      latestDataSpecVersion,
+      // latestScheduleVersion,
       searchPhrase
+      // schedulesFilterValue,
+      // setSchedulesFilterValue,
+      // resetFilter
     );
     tableHeader = codesSchedulesSearch[0];
     tableBody = codesSchedulesSearch[1];

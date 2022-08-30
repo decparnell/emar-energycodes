@@ -2,8 +2,11 @@ import { useRouter } from "next/router";
 import styles from "../../styles/codesSchedulesSearch.module.css";
 export const CodesSchedulesSearchResults = (
   searchResults,
-  latestDataSpecVersion,
+  // latestScheduleVersion,
   searchPhrase
+  // schedulesFilterValue,
+  // setSchedulesFilterValue,
+  // resetFilter
 ) => {
   const router = useRouter();
 
@@ -30,6 +33,7 @@ export const CodesSchedulesSearchResults = (
       <th>Clause Text</th>
     </thead>
   );
+
   const tableBody = (
     <tbody>
       {searchResults.map((entry) => {
