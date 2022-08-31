@@ -7,13 +7,13 @@ import { useContext, useEffect } from "react";
 import Head from "next/head";
 import SecondNavbar from "../../../../components/layout/secondHeader";
 import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable";
+import { logError } from "../../../../components/helperFunctions/logError";
 
 function MmDetailPage({ searchResults }) {
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
 
-  const x = undefined;
-  const apiVarList = [{ obj: x, name: "searchResults" }];
+  const apiVarList = [{ obj: searchResults, name: "searchResults" }];
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
   const marketMessageInfo =
@@ -37,7 +37,7 @@ function MmDetailPage({ searchResults }) {
   return (
     <>
       <SecondNavbar />
-      {internalErrorLog.indexOf("searchResults") === -1 && (
+      {internalErrorLog.indexOf("searchResults") === -1 ? (
         <div className={styles.contentContainer}>
           <div>
             <Head>
@@ -145,6 +145,8 @@ function MmDetailPage({ searchResults }) {
             </table>
           </div>
         </div>
+      ) : (
+        <div className={styles.errorBox}>{logError("Market Message", "is not available")}</div>
       )}
     </>
   );
