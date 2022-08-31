@@ -1,14 +1,6 @@
 import styles from "../../styles/codesSchedulesSearch.module.css";
 import { CodesSchedulesSearchResults } from "./codesSchedulesSearchResults";
-function CreateCSSearchResults(
-  searchResults,
-  errorMessage,
-  latestScheduleVersion,
-  searchPhrase,
-  schedulesFilterValue,
-  setSchedulesFilterValue,
-  resetFilter
-) {
+function CreateCSSearchResults(searchResults, errorMessage, searchPhrase) {
   let tableHeader = "";
   let tableBody = "";
 
@@ -16,11 +8,7 @@ function CreateCSSearchResults(
   } else {
     const codesSchedulesSearch = CodesSchedulesSearchResults(
       searchResults,
-      // latestScheduleVersion,
       searchPhrase
-      // schedulesFilterValue,
-      // setSchedulesFilterValue,
-      // resetFilter
     );
     tableHeader = codesSchedulesSearch[0];
     tableBody = codesSchedulesSearch[1];

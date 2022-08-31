@@ -1,24 +1,19 @@
 import { getDistinctValuesSchedules } from "../dataspec/functions/getDistinctValues";
 import styles from "../../styles/codes.module.css";
-import Dropdown from "../dropdown";
+import ScheduleDropdown from "../dropdown/schedule";
 
 export const MessageFilters = (
-  searchResults,
+  scheduleList,
   schedulesFilterValue,
-  setSchedulesFilterValue,
-  resetFilter
+  setSchedulesFilterValue
 ) => {
-  const schedulesOptions = getDistinctValuesSchedules(searchResults);
-
   return (
     <div className={styles.sourcetargetContainer}>
-      <Dropdown
+      <ScheduleDropdown
         style={styles.dropdown}
-        options={schedulesOptions}
+        options={scheduleList}
         value={[schedulesFilterValue, setSchedulesFilterValue]}
         version={false}
-        dropdownType="filter"
-        closeFilter={resetFilter}
       />
     </div>
   );

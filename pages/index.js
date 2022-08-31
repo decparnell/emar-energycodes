@@ -23,8 +23,6 @@ function HomePage({
   let { chosenButton, chosenTab } = value.state;
   value.setNewsItems(newsData);
 
-  console.log("codesSchedulesDataJson", codesSchedulesDataJson);
-
   const [currentDashboard, setCurrentDashboard] = useState(
     dashboards.filter((dashboard) => dashboard.dashboardOrder == 1)[0]
   );
@@ -73,7 +71,6 @@ function HomePage({
           <DataSpecSearch mmsv={mmsv} dataItems={dataItems} />
         ) : chosenButton == "2" && chosenTab == "1" ? (
           <CodesSchedulesSearch
-            items={items}
             codesSchedulesDataJson={codesSchedulesDataJson}
           />
         ) : null}

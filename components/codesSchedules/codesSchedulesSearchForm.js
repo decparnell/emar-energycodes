@@ -4,15 +4,12 @@ const CodesSchedulesSearchForm = (
   setSearchResults,
   errorMessage,
   setErrorMessage,
-  setSearchPhrase,
-  setSchedulesFilterValue,
-  setClearFilter
+  setSearchPhrase
 ) => {
   const completeSearch = async (event) => {
     setSearchResults(null);
     setErrorMessage(null);
     event.preventDefault(); // don't redirect the page
-    setSchedulesFilterValue("Filter schedules:");
     const searchPhrase = event.target.searchPhrase.value;
 
     try {
@@ -22,7 +19,6 @@ const CodesSchedulesSearchForm = (
       const dataJson = await dataReq.json();
       setSearchPhrase(searchPhrase);
       setSearchResults(dataJson);
-      setClearFilter(dataJson);
     } catch (err) {
       setErrorMessage("There has been an error with your search");
     }
