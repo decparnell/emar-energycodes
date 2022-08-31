@@ -8,7 +8,7 @@ import ButtonNavbar from "../components/layout/buttonHeader";
 import DataSpecSearch from "../components/dataspec/dataSpecSearch";
 import { NewsBanner } from "../components/newsBanner";
 import CodesSchedulesSearch from "../components/codesSchedules/codesSchedulesSearch";
-import { checkIfVariablesAreAvailable } from "../components/helperFunctions";
+import { checkIfVariablesAreAvailable } from "../components/helperFunctions/checkIfVariablesAreAvailable";
 
 function HomePage({
   dashboards,
