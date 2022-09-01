@@ -9,22 +9,40 @@ import SecondNavbar from "../../../../components/layout/secondHeader";
 import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable";
 import { logError } from "../../../../components/helperFunctions/logError";
 
-function MmDetailPage({ searchResults }) {
+function MmDetailPage({
+   searchResults }) {
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
-
-  const apiVarList = [{ obj: searchResults, name: "searchResults" }];
+  const x = undefined;
+  const apiVarList = [
+    {
+      obj: searchResults,
+      name: "searchResults"
+    },
+    { obj: searchResults[0], name: "marketMessageInfo" },
+    { obj: searchResults[1], name: "svForMarketMessage" },
+    { obj: searchResults[2], name: "dataItems" }
+  ];
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
-
   const marketMessageInfo =
-    internalErrorLog.indexOf("searchResults") === -1 ? searchResults[0] : null;
+    internalErrorLog.indexOf("searchResults") === -1 &&
+    internalErrorLog.indexOf("marketMessageInfo") === -1
+      ? searchResults[0]
+      : null;
   const svForMarketMessage =
-    internalErrorLog.indexOf("searchResults") === -1 ? searchResults[1] : null;
+    internalErrorLog.indexOf("searchResults") === -1 &&
+    internalErrorLog.indexOf("svForMarketMessage") === -1
+      ? searchResults[1]
+      : null;
   const dataItems =
-    internalErrorLog.indexOf("searchResults") === -1 ? searchResults[2] : null;
+    internalErrorLog.indexOf("searchResults") === -1 &&
+    internalErrorLog.indexOf("dataItems") === -1
+      ? searchResults[2]
+      : null;
 
   const legacy =
-    internalErrorLog.indexOf("searchResults") === -1
+    internalErrorLog.indexOf("searchResults") === -1 &&
+    internalErrorLog.indexOf("marketMessageInfo") === -1
       ? removeNullValues(marketMessageInfo.DTCDcode) +
         removeNullValues(marketMessageInfo.CSSMessageIdentifier) +
         removeNullValues(marketMessageInfo.LegacyRGMAMessageIdentifier) +
@@ -33,21 +51,30 @@ function MmDetailPage({ searchResults }) {
       : null;
 
   const dataItemsTableHead = ["Data Item Id", "Data Item Name"];
+  console.log(internalErrorLog);
 
   return (
     <>
       <SecondNavbar />
       {internalErrorLog.indexOf("searchResults") === -1 ? (
         <div className={styles.contentContainer}>
-          <div>
-            <Head>
-              <title>EMAR - {marketMessageInfo.Label}</title>
-              <meta property="og:title" content="My page title" key="title" />
-            </Head>
-            <h1 className={styles.contentTitle}>
-              {marketMessageInfo.EnergyMarketMessageIdentifier} -{" "}
-              {marketMessageInfo.Label}
-            </h1>
+          {internalErrorLog.indexOf("marketMessageInfo") === -1 ? (
+            <div>
+              <Head>
+                <title>EMAR - {marketMessageInfo.Label}</title>
+                <meta property="og:title" content="My page title" key="title" />
+              </Head>
+              <h1 className={styles.contentTitle}>
+                {marketMessageInfo.EnergyMarketMessageIdentifier} -{" "}
+                {marketMessageInfo.Label}
+              </h1>
+            </div>
+          ) : (
+            <div className={styles.errorBox}>
+              {logError("Market Message Info", "is not available")}
+            </div>
+          )}
+          {internalErrorLog.indexOf("marketMessageInfo") === -1 && (
             <table className={styles.fullWidthTable}>
               <tbody>
                 <tr>
@@ -72,6 +99,8 @@ function MmDetailPage({ searchResults }) {
                 </tr>
               </tbody>
             </table>
+          )}
+          {internalErrorLog.indexOf("dataItems") === -1 ? (
             <div>
               <h2 className={styles.svHeader}>
                 The Data items message contains:
@@ -106,47 +135,68 @@ function MmDetailPage({ searchResults }) {
                 </tbody>
               </table>
             </div>
-            <h2 className={styles.diHeader}>
-              The Scenario Vaiants for this message are:
-            </h2>
-            <table className={styles.diList}>
-              <thead>
-                <th>Variant Id</th>
-                <th>SV Name</th>
-                <th>Source</th>
-                <th>Target</th>
-              </thead>
-              <tbody>
+          ) : (
+            <div className={styles.errorBox}>
+              {logError(
+                "Data Item for this Market Message",
+                "is not available"
+              )}
+            </div>
+          )}
+
+          {internalErrorLog.indexOf("svForMarketMessage") === -1 ? (
+            <div>
+              <h2 className={styles.diHeader}>
+                The Scenario Vaiants for this message are:
+              </h2>
+              <table className={styles.diList}>
+                <thead>
+                  <th>Variant Id</th>
+                  <th>SV Name</th>
+                  <th>Source</th>
+                  <th>Target</th>
+                </thead>
                 {svForMarketMessage.map((entry) => (
-                  <Link
-                    key={entry.EnergyMarketMessageScenarioVariantIdentifier}
-                    href={{
-                      pathname: `/dataspec/${latestDataSpecVersion}/scenario-variant/[sv]`,
-                      query: {
-                        sv: entry.EnergyMarketMessageScenarioVariantIdentifier
-                      }
-                    }}
-                    passHref={true}
-                  >
-                    <tr
+                  <tbody>
+                    <Link
                       key={entry.EnergyMarketMessageScenarioVariantIdentifier}
-                      className={styles.pointer}
+                      href={{
+                        pathname: `/dataspec/${latestDataSpecVersion}/scenario-variant/[sv]`,
+                        query: {
+                          sv: entry.EnergyMarketMessageScenarioVariantIdentifier
+                        }
+                      }}
+                      passHref={true}
                     >
-                      <td>
-                        {entry.EnergyMarketMessageScenarioVariantIdentifier}
-                      </td>
-                      <td>{entry.EnergyMarketMessageScenarioVariantName}</td>
-                      <td>{entry.SourceMarketDataServiceName}</td>
-                      <td>{entry.TargetMarketDataServiceName}</td>
-                    </tr>
-                  </Link>
+                      <tr
+                        key={entry.EnergyMarketMessageScenarioVariantIdentifier}
+                        className={styles.pointer}
+                      >
+                        <td>
+                          {entry.EnergyMarketMessageScenarioVariantIdentifier}
+                        </td>
+                        <td>{entry.EnergyMarketMessageScenarioVariantName}</td>
+                        <td>{entry.SourceMarketDataServiceName}</td>
+                        <td>{entry.TargetMarketDataServiceName}</td>
+                      </tr>
+                    </Link>
+                  </tbody>
                 ))}
-              </tbody>
-            </table>
-          </div>
+              </table>
+            </div>
+          ) : (
+            <div className={styles.errorBox}>
+              {logError(
+                "Scenario Varient for this MarketMessage",
+                "is not available"
+              )}
+            </div>
+          )}
         </div>
       ) : (
-        <div className={styles.errorBox}>{logError("Market Message", "is not available")}</div>
+        <div className={styles.errorBox}>
+          {logError("Market Message Info", "is not available")}
+        </div>
       )}
     </>
   );
