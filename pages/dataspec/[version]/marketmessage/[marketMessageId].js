@@ -16,7 +16,6 @@ function MmDetailPage(
 ) {
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
-  // const x = undefined;
 
   let apiVarList = [];
   const checkIfsearchResultsAvailable = () => {
@@ -70,7 +69,6 @@ function MmDetailPage(
       : null;
 
   const dataItemsTableHead = ["Data Item Id", "Data Item Name"];
-  console.log(internalErrorLog);
 
   return (
     <>
