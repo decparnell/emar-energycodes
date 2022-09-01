@@ -9,21 +9,40 @@ import SecondNavbar from "../../../../components/layout/secondHeader";
 import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable";
 import { logError } from "../../../../components/helperFunctions/logError";
 
-function MmDetailPage({
-   searchResults }) {
+function MmDetailPage(
+  {
+     searchResults
+  }
+) {
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
-  const x = undefined;
-  const apiVarList = [
-    {
-      obj: searchResults,
-      name: "searchResults"
-    },
-    { obj: searchResults[0], name: "marketMessageInfo" },
-    { obj: searchResults[1], name: "svForMarketMessage" },
-    { obj: searchResults[2], name: "dataItems" }
-  ];
+  // const x = undefined;
+
+  let apiVarList = [];
+  const checkIfsearchResultsAvailable = () => {
+    if (searchResults) {
+      apiVarList = [
+        {
+          obj: searchResults,
+          name: "searchResults"
+        },
+        { obj: searchResults[0], name: "marketMessageInfo" },
+        { obj: searchResults[1], name: "svForMarketMessage" },
+        { obj: searchResults[2], name: "dataItems" }
+      ];
+    } else {
+      apiVarList = [
+        {
+          obj: searchResults,
+          name: "searchResults"
+        }
+      ];
+    }
+  };
+
+  checkIfsearchResultsAvailable();
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
+
   const marketMessageInfo =
     internalErrorLog.indexOf("searchResults") === -1 &&
     internalErrorLog.indexOf("marketMessageInfo") === -1
