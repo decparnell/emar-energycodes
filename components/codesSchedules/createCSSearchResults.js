@@ -1,11 +1,6 @@
 import styles from "../../styles/codesSchedulesSearch.module.css";
 import { CodesSchedulesSearchResults } from "./codesSchedulesSearchResults";
-function CreateCSSearchResults(
-  searchResults,
-  errorMessage,
-  latestDataSpecVersion,
-  searchPhrase
-) {
+function CreateCSSearchResults(searchResults, errorMessage, searchPhrase) {
   let tableHeader = "";
   let tableBody = "";
 
@@ -13,7 +8,6 @@ function CreateCSSearchResults(
   } else {
     const codesSchedulesSearch = CodesSchedulesSearchResults(
       searchResults,
-      latestDataSpecVersion,
       searchPhrase
     );
     tableHeader = codesSchedulesSearch[0];
