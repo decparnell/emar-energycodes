@@ -32,6 +32,12 @@
 .partName {
   margin-left: 2vw;
 }
+
+.sidebarPartName {
+  margin: 1em auto 0.3em auto;
+  padding: 0;
+}
+
 .section {
   width: 90%;
   margin-left: 5vw;
@@ -128,7 +134,7 @@
   overflow-x: hidden;
   transition: 0.5s;
   color: white;
-  /* padding: 2em; */
+  padding-bottom: 2em;
 }
 
 .sidebarSectionsList {

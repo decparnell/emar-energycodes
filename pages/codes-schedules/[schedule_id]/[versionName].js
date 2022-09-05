@@ -52,13 +52,7 @@ function ScheduleDetail({
         </Head>
 
         <div className={styles.sidebarSectionsList}>
-          {sections.map((section) => {
-            return (
-              <a key={section.sectionId} href={`#${section.sectionId}`}>
-                {section.sectionOrder}. {section.sectionName}
-              </a>
-            );
-          })}
+          {createSidebarContent(parts, sections)}
         </div>
       </aside>
       <div
@@ -93,6 +87,31 @@ function ScheduleDetail({
 }
 
 export default ScheduleDetail;
+
+const createSidebarContent = (parts, sections) => {
+  let content = [];
+
+  for (const part of parts) {
+    content.push(
+      <h5 className={styles.sidebarPartName}>
+        <a>{part.partName}</a>
+      </h5>
+    );
+    let sectionsInPart = sections.filter((sec) => {
+      return sec.partId_FK === part.partId;
+    });
+
+    for (const section of sectionsInPart) {
+      content.push(
+        <a key={section.sectionId} href={`#${section.sectionId}`}>
+          {section.sectionOrder}. {section.sectionName}
+        </a>
+      );
+    }
+  }
+
+  return <div>{content}</div>;
+};
 
 function createContent(parts, sections, components, definitions) {
   let content = [];

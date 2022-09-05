@@ -8,6 +8,7 @@ import ButtonNavbar from "../components/layout/buttonHeader";
 import DataSpecSearch from "../components/dataspec/dataSpecSearch";
 import { NewsBanner } from "../components/newsBanner";
 import CodesSchedulesSearch from "../components/codesSchedules/codesSchedulesSearch";
+import { checkIfVariablesAreAvailable } from "../components/helperFunctions";
 
 function HomePage({
   dashboards,
@@ -19,38 +20,58 @@ function HomePage({
   dataItems,
   codesSchedulesDataJson,
 }) {
+
+  const apiVarList = [
+    { obj: newsData, name: "newsData" },
+    { obj: items, name: "items" },
+    { obj: latestVersionJson, name: "latestVersionJson" },
+    { obj: mmsv, name: "mmsv" },
+    { obj: dashboards, name: "dashboards" },
+    { obj: sections, name: "sections" },
+    { obj: dataItems, name: "dataItems" }
+  ];
   const value = useContext(AppContext);
   let { chosenButton, chosenTab } = value.state;
   value.setNewsItems(newsData);
 
-  const [currentDashboard, setCurrentDashboard] = useState(
-    dashboards.filter((dashboard) => dashboard.dashboardOrder == 1)[0]
-  );
+  const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
-  const [currentSections, setCurrentSections] = useState(
-    sections.filter(
-      (section) => section.dashboardId_FK == currentDashboard.dashboardId
-    )
-  );
+  const [currentDashboard, setCurrentDashboard] = useState(() => {
+    if (internalErrorLog.indexOf("dashboards") === -1) {
+      return dashboards.filter((dashboard) => dashboard.dashboardOrder == 1)[0];
+    }
+  });
 
+  const [currentSections, setCurrentSections] = useState(() => {
+    if (internalErrorLog.indexOf("dashboards") === -1 && internalErrorLog.indexOf("sections")) {
+      return sections.filter(
+        (section) => section.dashboardId_FK == currentDashboard.dashboardId
+      );
+    }
+  });
   useEffect(() => {
-    const newDashboard = dashboards.filter(
-      (dashboard) => dashboard.dashboardId == chosenTab
-    )[0];
-    setCurrentDashboard(newDashboard);
+    if (internalErrorLog.indexOf("dashboards") === -1) {
+      const newDashboard = dashboards.filter(
+        (dashboard) => dashboard.dashboardId == chosenTab
+      )[0];
+      setCurrentDashboard(newDashboard);
+    }
   }, [chosenTab]);
 
   useEffect(() => {
-    setCurrentSections(
-      sections.filter(
-        (section) => section.dashboardId_FK == currentDashboard.dashboardId
-      )
-    );
+     if (internalErrorLog.indexOf("dashboards") === -1 && internalErrorLog.indexOf("sections")) {
+       setCurrentSections(
+         sections.filter(
+           (section) => section.dashboardId_FK == currentDashboard.dashboardId
+         )
+       );
+     }
+    
   }, [currentDashboard]);
 
   return (
     <>
-      <NewsBanner news={newsData} />
+      {internalErrorLog.indexOf("newsData") === -1 ? <NewsBanner news={newsData} /> : null}
       <TabNavbar />
       <ButtonNavbar />
       <div className={styles.container}>
@@ -58,8 +79,10 @@ function HomePage({
           <title>EMAR Dashboards</title>
           <meta property="og:title" content="My page title" key="title" />
         </Head>
-
-        {chosenButton == "1" ? (
+        {chosenButton == "1" &&
+        internalErrorLog.indexOf("dashboards") === -1 &&
+        internalErrorLog.indexOf("items") === -1 &&
+        internalErrorLog.indexOf("latestVersionJson") === -1 ? (
           <Dashboard
             name={currentDashboard.dashboardName}
             columns={currentDashboard.dashboardColumns}
@@ -67,7 +90,10 @@ function HomePage({
             items={items}
             versions={latestVersionJson}
           />
-        ) : chosenButton == "2" && chosenTab == "2" ? (
+        ) : chosenButton == "2" &&
+          chosenTab == "2" &&
+          internalErrorLog.indexOf("mmsv") === -1 &&
+          internalErrorLog.indexOf("dataItems") === -1 ? (
           <DataSpecSearch mmsv={mmsv} dataItems={dataItems} />
         ) : chosenButton == "2" && chosenTab == "1" ? (
           <CodesSchedulesSearch
