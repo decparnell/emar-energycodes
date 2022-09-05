@@ -17,7 +17,8 @@ function HomePage({
   latestVersionJson,
   newsData,
   mmsv,
-  dataItems
+  dataItems,
+  codesSchedulesDataJson,
 }) {
 
   const apiVarList = [
@@ -95,7 +96,9 @@ function HomePage({
           internalErrorLog.indexOf("dataItems") === -1 ? (
           <DataSpecSearch mmsv={mmsv} dataItems={dataItems} />
         ) : chosenButton == "2" && chosenTab == "1" ? (
-          <CodesSchedulesSearch />
+          <CodesSchedulesSearch
+            codesSchedulesDataJson={codesSchedulesDataJson}
+          />
         ) : null}
       </div>
     </>
@@ -125,6 +128,11 @@ export async function getServerSideProps(context) {
   );
   const latestNewsJson = await newsDataReq.json();
   const newsData = latestNewsJson.latestNews;
+
+  const codesSchedulesDataReq = await fetch(
+    `https://prod-21.uksouth.logic.azure.com:443/workflows/08cc6cb613f24c20b8b7d61e707852ed/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Lu9fcr6ePmGgjIEsHIwQ8y64Xewe1lsErD-FDxYKSCM`
+  );
+  const codesSchedulesDataJson = await codesSchedulesDataReq.json();
   const dataSpecData = await fetch(
     `https://prod-24.uksouth.logic.azure.com:443/workflows/dcb64fdc2eea43aa8e231cb7035ff20d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6fNJtJqCiH8TYdaftlFMPn1nuUE5KNLopKDvuU9WRV8`
   );
@@ -140,7 +148,8 @@ export async function getServerSideProps(context) {
       latestVersionJson,
       newsData,
       mmsv,
-      dataItems
-    }
+      dataItems,
+      codesSchedulesDataJson,
+    },
   };
 }

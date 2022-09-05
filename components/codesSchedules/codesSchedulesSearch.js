@@ -4,14 +4,15 @@ import CodesSchedulesSearchForm from "./codesSchedulesSearchForm";
 import createCSSearchResults from "./createCSSearchResults";
 import AppContext from "../context/AppContext";
 import Head from "next/head";
-import SecondNavbar from "../layout/secondHeader";
+import { MessageFilters } from "./codesSchedulesFilter";
+// import { getDistinctValuesSchedules } from "../dataspec/functions/getDistinctValues";
 
 function CodesSchedulesSearch(props) {
-  const value = useContext(AppContext);
-  const { latestScheduleVersion } = value.state;
-  const [searchPhrase, setSearchPhrase] = useState("yo");
+  const [searchPhrase, setSearchPhrase] = useState("");
   const [searchResults, setSearchResults] = useState("");
   const [errorMessage, setErrorMessage] = useState();
+  const [schedulesFilterValue, setSchedulesFilterValue] =
+    useState("Filter Schedules:");
 
   return (
     <div className={styles.container}>
@@ -20,23 +21,24 @@ function CodesSchedulesSearch(props) {
         <meta property="og:title" content="My page title" key="title" />
       </Head>
       <div className={styles.searchContainer}>
-        <SecondNavbar />
         <h1 className={styles.searchBoxHeader}>Codes Schedules Search</h1>
         <p>Here you can search for Codes Schedules</p>
+        {MessageFilters(
+          props.codesSchedulesDataJson,
+          schedulesFilterValue,
+          setSchedulesFilterValue
+        )}
+
         {CodesSchedulesSearchForm(
           setSearchResults,
           errorMessage,
           setErrorMessage,
-          setSearchPhrase
+          setSearchPhrase,
+          schedulesFilterValue
         )}
       </div>
       {searchResults
-        ? createCSSearchResults(
-            searchResults,
-            errorMessage,
-            latestScheduleVersion,
-            searchPhrase
-          )
+        ? createCSSearchResults(searchResults, errorMessage, searchPhrase)
         : null}
     </div>
   );
