@@ -1,6 +1,7 @@
 import styles from "../../styles/codes.module.css";
 import Link from "next/link";
 import Popup from "reactjs-popup";
+import Image from "next/image";
 
 function CreateCustomTag(clauseReference, clauseComponents, definitions) {
   const clauseJsx = [];
@@ -37,6 +38,9 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
     componentContainer = `${styles.subHeading}`;
   } else if (style === "table") {
     CustomTag = `table`;
+  }
+  else if (style === "image") {
+    CustomTag = 'Image';
   }
 
   //LOOP OVER EACH COMPONENT IN THE CLAUSE AND ADD IT TO THE SAME BOX (mainly ofr lists.)
@@ -131,6 +135,14 @@ function addLinkedComponentsToOutput(
   clauseComponentId
 ) {
   //create an array of the text to display including all links using split text function
+  if (CustomTag === 'Image'){
+    clauseJsx.push(
+      <Image alt="schedule image" src={text} 
+      className = 'scheduleImage' 
+      width = '550%'
+      height = '600%' />
+    )
+  } else {
   const linkedText = splitTextByKeyWords(text, definitions);
   clauseJsx.push(
     <CustomTag
@@ -140,7 +152,7 @@ function addLinkedComponentsToOutput(
     >
       {linkedText}
     </CustomTag>
-  );
+  ); }
 }
 
 function createIndentedText(indent) {
