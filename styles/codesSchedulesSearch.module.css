@@ -47,3 +47,14 @@
 .color {
   background-color: #e7ab00;
 }
+
+.searchResultsTableRow {
+  width:90%;
+  margin-left:5%;
+  border:none;
+  border-collapse: collapse;
+}
+
+.searchResultsTableRow td {
+  border: 1px solid #000;
+}

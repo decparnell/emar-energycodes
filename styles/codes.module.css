@@ -8,7 +8,7 @@
   padding-left: 3%;
   padding-right: 5%;
   border-radius: 5px;
-  background: #E7F4E4;
+  background: #e7f4e4;
   color: black;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
 }
@@ -21,7 +21,7 @@
   height: auto;
   margin-left: 5vw;
   border-radius: 5px;
-  background: #E7F4E4;
+  background: #e7f4e4;
   color: black;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
 }
@@ -32,6 +32,12 @@
 .partName {
   margin-left: 2vw;
 }
+
+.sidebarPartName {
+  margin: 1em auto 0.3em auto;
+  padding: 0;
+}
+
 .section {
   width: 90%;
   margin-left: 5vw;
@@ -40,7 +46,7 @@
   height: auto;
   padding: 20px;
   border-radius: 5px;
-  background: #E7F4E4;
+  background: #e7f4e4;
   color: black;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
 }
@@ -128,7 +134,7 @@
   overflow-x: hidden;
   transition: 0.5s;
   color: white;
-  /* padding: 2em; */
+  padding-bottom: 2em;
 }
 
 .sidebarSectionsList {
@@ -222,12 +228,12 @@
   left: 50%;
 }
 
-.definitionText{
-  border-top:1px solid #36494e;
-  padding-top:2%;
-  margin-left:5%;
-  margin-right:5%;
-  padding-bottom:2%;
+.definitionText {
+  border-top: 1px solid #36494e;
+  padding-top: 2%;
+  margin-left: 5%;
+  margin-right: 5%;
+  padding-bottom: 2%;
   font-size: 20px;
 }
 .errorBox {
@@ -236,4 +242,9 @@
   color: white;
   margin: 25px;
   text-align: center;
+}
+
+.dropdown {
+  width: 20%;
+  margin: 0 auto;
 }
