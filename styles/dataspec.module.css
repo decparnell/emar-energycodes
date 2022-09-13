@@ -198,3 +198,11 @@
 .dataSpecDropDown {
   width: 40%;
 }
+
+.errorBox {
+  padding: 20px;
+  background-color: #e7ab00;
+  color: white;
+  margin: 25px;
+  text-align: center;
+}
