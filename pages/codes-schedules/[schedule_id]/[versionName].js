@@ -5,7 +5,7 @@ import CreateCustomTag from "../../../components/scheduleId/createCustomTag-sche
 import CreateChangeTable from "../../../components/scheduleId/createChangeTable";
 import { listItemsToIgnore, listHeaders } from "../../../components/settings";
 import Head from "next/head";
-import { checkIfVariablesAreAvailable } from "../../../components/helperFunctions";
+import { checkIfVariablesAreAvailable } from "../../../components/helperFunctions/checkIfVariablesAreAvailable";
 import { logError } from "../../../components/helperFunctions/logError";
 
 function ScheduleDetail({
@@ -14,16 +14,15 @@ function ScheduleDetail({
   sections,
   components,
   document,
-  definitions
+  definitions,
 }) {
-
   const apiVarList = [
     { obj: versions, name: "versions" },
     { obj: parts, name: "parts" },
     { obj: sections, name: "sections" },
     { obj: components, name: "components" },
     { obj: document, name: "document" },
-    { obj: definitions, name: "definitions" }
+    { obj: definitions, name: "definitions" },
   ];
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
   const docInfo =
@@ -43,7 +42,7 @@ function ScheduleDetail({
       <aside
         className={[
           isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed,
-          styles.sidebar
+          styles.sidebar,
         ].join(" ")}
       >
         <div className={styles.hamburger}>
@@ -78,7 +77,7 @@ function ScheduleDetail({
           isSidebarOpen
             ? styles.contentWithSidebar
             : styles.contentWithoutSidebar,
-          styles.content
+          styles.content,
         ].join(" ")}
       >
         {internalErrorLog.indexOf("document") === -1 ? (
@@ -160,7 +159,7 @@ function createContent(parts, sections, components, definitions) {
     { obj: parts, name: "parts" },
     { obj: sections, name: "sections" },
     { obj: components, name: "components" },
-    { obj: definitions, name: "definitions" }
+    { obj: definitions, name: "definitions" },
   ];
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
@@ -172,72 +171,57 @@ function createContent(parts, sections, components, definitions) {
         let sectionsInPart = sections.filter((sec) => {
           return sec.partId_FK === part.partId;
         });
-              if (internalErrorLog.indexOf("components") === -1) {
-                      for (const section of sectionsInPart) {
-                        let componentsInSection = components.filter(function (
-                          el2
-                        ) {
-                          return el2.sectionId_FK === section.sectionId;
-                        });
-                        const clauses = componentsInSection.filter(function (
-                          el2
-                        ) {
-                          return (
-                            listItemsToIgnore.indexOf(el2.componentType) == -1
-                          );
-                        });
-                        const componentsJsx = [];
-                        const clausesProcessed = [];
-                        for (const clauseI in clauses) {
-                          const clause = clauses[clauseI];
-                          if (
-                            clausesProcessed.indexOf(clause.clauseReference) ==
-                            -1
-                          ) {
-                            clausesProcessed.push(clause.clauseReference);
-                            let clauseComponents = [];
-                            if (clause.componentType == "title") {
-                              clauseComponents.push(clause);
-                            } else {
-                              clauseComponents = componentsInSection.filter(
-                                function (el2) {
-                                  return (
-                                    el2.clauseReference ===
-                                    clause.clauseReference
-                                  );
-                                }
-                              );
-                            }
-                            componentsJsx.push(
-                              CreateCustomTag(
-                                clause.clauseReference,
-                                clauseComponents,
-                                definitions
-                              )
-                            );
-                          }
-                        }
-                        content.push(
-                          <div
-                            id={section.sectionId}
-                            key={section.sectionName}
-                            className={styles.section}
-                          >
-                            <h3>
-                              ({section.sectionOrder}) {section.sectionName}
-                            </h3>
-                            {componentsJsx}
-                          </div>
-                        );
-                      }
-              } else{
-                return (
-                  <div className={styles.errorBox}>
-                    {logError("Components", "is not available")}
-                  </div>
+        if (internalErrorLog.indexOf("components") === -1) {
+          for (const section of sectionsInPart) {
+            let componentsInSection = components.filter(function (el2) {
+              return el2.sectionId_FK === section.sectionId;
+            });
+            const clauses = componentsInSection.filter(function (el2) {
+              return listItemsToIgnore.indexOf(el2.componentType) == -1;
+            });
+            const componentsJsx = [];
+            const clausesProcessed = [];
+            for (const clauseI in clauses) {
+              const clause = clauses[clauseI];
+              if (clausesProcessed.indexOf(clause.clauseReference) == -1) {
+                clausesProcessed.push(clause.clauseReference);
+                let clauseComponents = [];
+                if (clause.componentType == "title") {
+                  clauseComponents.push(clause);
+                } else {
+                  clauseComponents = componentsInSection.filter(function (el2) {
+                    return el2.clauseReference === clause.clauseReference;
+                  });
+                }
+                componentsJsx.push(
+                  CreateCustomTag(
+                    clause.clauseReference,
+                    clauseComponents,
+                    definitions
+                  )
                 );
               }
-  
+            }
+            content.push(
+              <div
+                id={section.sectionId}
+                key={section.sectionName}
+                className={styles.section}
+              >
+                <h3>
+                  ({section.sectionOrder}) {section.sectionName}
+                </h3>
+                {componentsJsx}
+              </div>
+            );
+          }
+        } else {
+          return (
+            <div className={styles.errorBox}>
+              {logError("Components", "is not available")}
+            </div>
+          );
+        }
       } else {
         return (
           <div className={styles.errorBox}>
@@ -277,6 +261,6 @@ export async function getServerSideProps(context) {
   const definitionsJson = await definitionsReq.json();
   const definitions = definitionsJson.definitions;
   return {
-    props: { versions, parts, sections, components, document, definitions }
+    props: { versions, parts, sections, components, document, definitions },
   };
 }
