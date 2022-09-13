@@ -21,27 +21,11 @@ function definitions({ versions, parts, sections, components, document }) {
 
 export default definitions;
 
-export async function getStaticPaths() {
-  const data = await fetch(
-    "https://prod-24.uksouth.logic.azure.com:443/workflows/79207991a2b342fb928f63dcd5cbbd96/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=tC7JNi24oUQL4quKMQaZk2W10fSwt0Jb73gD0tljFqg"
-  );
-  const schedules = await data.json();
-  return {
-    paths: schedules.map((schedule) => {
-      return {
-        params: {
-          busterm: String(schedule.documentId),
-        },
-      };
-    }),
-    fallback: false,
-  };
-}
-
-export async function getStaticProps({ params }) {
-  //return the info about the latest version
+// This gets called on every request
+export async function getServerSideProps(context) {
+  // Fetch data from external API
   const dataReq = await fetch(
-    `https://prod-24.uksouth.logic.azure.com/workflows/c33b5eaa44fa46e9937c34b52091467b/triggers/manual/paths/invoke/${params.busterm}/definition?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xtAmkWUamwr-8PSmPnraMtCqA6mgxiAXrCqqZPf06OI`
+    `https://prod-24.uksouth.logic.azure.com/workflows/c33b5eaa44fa46e9937c34b52091467b/triggers/manual/paths/invoke/${context.params.busterm}/definition?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xtAmkWUamwr-8PSmPnraMtCqA6mgxiAXrCqqZPf06OI`
   );
   const dataJson = await dataReq.json();
   const parts = dataJson.parts;
