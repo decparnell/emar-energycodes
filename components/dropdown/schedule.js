@@ -27,17 +27,26 @@ function ScheduleDropdown(props) {
     }
   };
 
+  const checkIfObject = (value) => {
+    if (typeof value == "object") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <div
       className={`${props.style} ${styles.dropdown} pointer`}
       onClick={() => setDropdownOpen((current) => !current)}
     >
-      {typeof dropdownValue == "object"
+      {checkIfObject(dropdownValue)
         ? dropdownValue.documentName
         : dropdownValue}
-      {dropdownType == "filter" && !dropdownValue.includes("Filter") ? (
+      {checkIfObject(dropdownValue) ? (
         <AiFillCloseSquare onClick={() => clearFilter()} />
       ) : null}
+
       {dropdownOpen == false ? (
         <AiFillCaretDown />
       ) : (
