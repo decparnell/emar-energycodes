@@ -80,7 +80,7 @@ function HomePage({
         <NewsBanner news={newsData} />
       ) : (
         <div className={styles.errorBox}>
-          {logError("News Data", "is not available")}
+          {logError("News Data")}
         </div>
       )}
       <TabNavbar />
@@ -113,7 +113,7 @@ function HomePage({
           />
         ) : (
           <div className={styles.errorBox}>
-            {logError("Item", "is not available")}
+            {logError("Dashboard")}
           </div>
         )}
       </div>
