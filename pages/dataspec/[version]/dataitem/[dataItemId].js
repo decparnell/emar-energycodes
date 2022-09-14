@@ -128,7 +128,7 @@ function DiDetailPage({ searchResults }) {
             </div>
           ) : (
             <div className={styles.errorBox}>
-              {logError("Data Item Info", "is not available")}
+              {logError("Data Item Info")}
             </div>
           )}
           {checkIfItemsAvailableInArray(internalErrorLog, "dataEnumerations") &&
@@ -152,7 +152,7 @@ function DiDetailPage({ searchResults }) {
             </div>
           ) : (
             <div className={styles.errorBox}>
-              {logError("Data Enumeration Value", "is not available")}
+              {logError("Data Enumeration Value")}
             </div>
           )}
           {checkIfItemsAvailableInArray(internalErrorLog, "mmForDataItem") &&
@@ -207,13 +207,13 @@ function DiDetailPage({ searchResults }) {
             </div>
           ) : (
             <div className={styles.errorBox}>
-              {logError("Market Message Info", "is not available")}
+              {logError("Market Message Info")}
             </div>
           )}
         </div>
       ) : (
         <div className={styles.errorBox}>
-          {logError("searchResults", "is not available")}
+          {logError("Search Results")}
         </div>
       )}
     </>
