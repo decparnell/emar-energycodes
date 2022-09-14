@@ -32,7 +32,7 @@ export const ScenarioVariantSearchResults = (
 
   const tableBody = (
     <tbody>
-      {searchResults.map((entry) => {
+      {searchResults.map((entry) => (
         <Link
           key={entry.EnergyMarketMessageScenarioVariantIdentifier}
           href={{
@@ -57,8 +57,8 @@ export const ScenarioVariantSearchResults = (
               <span className={styles.wordWrap}>{entry.ApiRoute}</span>
             </td>
           </tr>
-        </Link>;
-      })}
+        </Link>
+      ))}
     </tbody>
   );
 
