@@ -70,9 +70,7 @@ function ScheduleDetail({
             {createSidebarContent(parts, sections)}
           </div>
         ) : (
-          <div className={styles.errorBox}>
-            {logError("Sections", "is not available")}
-          </div>
+          <div className={styles.errorBox}>{logError("Sections")}</div>
         )}
       </aside>
       <div
@@ -109,9 +107,7 @@ function ScheduleDetail({
                 ) : null}
               </table>
             ) : (
-              <div className={styles.errorBox}>
-                {logError("Versions", "is not available")}
-              </div>
+              <div className={styles.errorBox}>{logError("Versions")}</div>
             )}
             {checkIfItemsAvailableInArray(internalErrorLog, "parts") &&
             checkIfItemsAvailableInArray(internalErrorLog, "sections") &&
@@ -119,15 +115,11 @@ function ScheduleDetail({
             checkIfItemsAvailableInArray(internalErrorLog, "definitions") ? (
               createContent(parts, sections, components, definitions)
             ) : (
-              <div className={styles.errorBox}>
-                {logError("Item", "is not available")}
-              </div>
+              <div className={styles.errorBox}>{logError("Schedule")}</div>
             )}
           </div>
         ) : (
-          <div className={styles.errorBox}>
-            {logError("Document", "is not available")}
-          </div>
+          <div className={styles.errorBox}>{logError("Document")}</div>
         )}
       </div>
     </>
@@ -225,14 +217,14 @@ function createContent(parts, sections, components, definitions) {
         } else {
           return (
             <div className={styles.errorBox}>
-              {logError("Components", "is not available")}
+              {logError("Components")}
             </div>
           );
         }
       } else {
         return (
           <div className={styles.errorBox}>
-            {logError("Sections", "is not available")}
+            {logError("Sections")}
           </div>
         );
       }
