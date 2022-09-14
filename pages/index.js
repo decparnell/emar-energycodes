@@ -23,7 +23,7 @@ function HomePage({
   codesSchedulesDataJson
 }) {
   const apiVarList = [
-    { obj: newsData, name: "newsData" },
+    { obj: undefined, name: "newsData" },
     { obj: items, name: "items" },
     { obj: latestVersionJson, name: "latestVersionJson" },
     { obj: mmsv, name: "mmsv" },
@@ -81,7 +81,7 @@ function HomePage({
         <NewsBanner news={newsData} />
       ) : (
         <div className={styles.errorBox}>
-          {logError("News Data", "is not available")}
+          {logError("News Data")}
         </div>
       )}
       <TabNavbar />
@@ -114,7 +114,7 @@ function HomePage({
           />
         ) : (
           <div className={styles.errorBox}>
-            {logError("Dashboard", "is not available")}
+            {logError("Dashboard")}
           </div>
         )}
       </div>
