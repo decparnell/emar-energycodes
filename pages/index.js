@@ -9,6 +9,8 @@ import DataSpecSearch from "../components/dataspec/dataSpecSearch";
 import { NewsBanner } from "../components/newsBanner";
 import CodesSchedulesSearch from "../components/codesSchedules/codesSchedulesSearch";
 import { checkIfVariablesAreAvailable } from "../components/helperFunctions/checkIfVariablesAreAvailable";
+import { logError } from "../components/helperFunctions/logError";
+
 
 function HomePage({
   dashboards,
@@ -18,9 +20,8 @@ function HomePage({
   newsData,
   mmsv,
   dataItems,
-  codesSchedulesDataJson,
+  codesSchedulesDataJson
 }) {
-
   const apiVarList = [
     { obj: newsData, name: "newsData" },
     { obj: items, name: "items" },
@@ -43,7 +44,10 @@ function HomePage({
   });
 
   const [currentSections, setCurrentSections] = useState(() => {
-    if (internalErrorLog.indexOf("dashboards") === -1 && internalErrorLog.indexOf("sections")) {
+    if (
+      internalErrorLog.indexOf("dashboards") === -1 &&
+      internalErrorLog.indexOf("sections")
+    ) {
       return sections.filter(
         (section) => section.dashboardId_FK == currentDashboard.dashboardId
       );
@@ -59,19 +63,27 @@ function HomePage({
   }, [chosenTab]);
 
   useEffect(() => {
-     if (internalErrorLog.indexOf("dashboards") === -1 && internalErrorLog.indexOf("sections")) {
-       setCurrentSections(
-         sections.filter(
-           (section) => section.dashboardId_FK == currentDashboard.dashboardId
-         )
-       );
-     }
-    
+    if (
+      internalErrorLog.indexOf("dashboards") === -1 &&
+      internalErrorLog.indexOf("sections")
+    ) {
+      setCurrentSections(
+        sections.filter(
+          (section) => section.dashboardId_FK == currentDashboard.dashboardId
+        )
+      );
+    }
   }, [currentDashboard]);
 
   return (
     <>
-      {internalErrorLog.indexOf("newsData") === -1 ? <NewsBanner news={newsData} /> : null}
+      {internalErrorLog.indexOf("newsData") === -1 ? (
+        <NewsBanner news={newsData} />
+      ) : (
+        <div className={styles.errorBox}>
+          {logError("News Data", "is not available")}
+        </div>
+      )}
       <TabNavbar />
       <ButtonNavbar />
       <div className={styles.container}>
@@ -82,7 +94,8 @@ function HomePage({
         {chosenButton == "1" &&
         internalErrorLog.indexOf("dashboards") === -1 &&
         internalErrorLog.indexOf("items") === -1 &&
-        internalErrorLog.indexOf("latestVersionJson") === -1 ? (
+        internalErrorLog.indexOf("latestVersionJson") === -1 &&
+        internalErrorLog.indexOf("sections") === -1 ? (
           <Dashboard
             name={currentDashboard.dashboardName}
             columns={currentDashboard.dashboardColumns}
@@ -99,7 +112,11 @@ function HomePage({
           <CodesSchedulesSearch
             codesSchedulesDataJson={codesSchedulesDataJson}
           />
-        ) : null}
+        ) : (
+          <div className={styles.errorBox}>
+            {logError("Item", "is not available")}
+          </div>
+        )}
       </div>
     </>
   );
@@ -149,7 +166,7 @@ export async function getServerSideProps(context) {
       newsData,
       mmsv,
       dataItems,
-      codesSchedulesDataJson,
-    },
+      codesSchedulesDataJson
+    }
   };
 }
