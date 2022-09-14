@@ -107,6 +107,7 @@ function DiDetailPage({ searchResults }) {
             >
               <thead>
                 <th>Market Message Id</th>
+                <th>Local Catalogue Reference</th>
                 <th>Market Message Name</th>
               </thead>
               <tbody>
@@ -125,6 +126,13 @@ function DiDetailPage({ searchResults }) {
                       className={styles.pointer}
                     >
                       <td>{entry.EnergyMarketMessageIdentifier}</td>
+                      <td>
+                        {removeNullValues(entry.DTCDcode) +
+                          removeNullValues(entry.LegacyRGMAMessageIdentifier) +
+                          removeNullValues(entry.LegacySPAAMessageIdentifier) +
+                          removeNullValues(entry.UNCMessageIdentifier) +
+                          removeNullValues(entry.CSSMessageIdentifier)}
+                      </td>
                       <td>{entry.Label}</td>
                     </tr>
                   </Link>
