@@ -7,6 +7,7 @@ import Head from "next/head";
 import SecondNavbar from "../../../../components/layout/secondHeader";
 import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable/index";
 import { logError } from "../../../../components/helperFunctions/logError";
+import { checkIfItemsAvailableInArray } from "../../../../components/helperFunctions/checkIfItemsAvailableInArray/index";
 
 function DiDetailPage({ searchResults }) {
   let apiVarList = [];
@@ -38,26 +39,26 @@ function DiDetailPage({ searchResults }) {
   let { latestDataSpecVersion } = value.state;
 
   const dataItemInfo =
-    internalErrorLog.indexOf("searchResults") === -1 &&
-    internalErrorLog.indexOf("dataItemInfo") === -1
+    checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo")
       ? searchResults[0]
       : null;
 
   const mmForDataItem =
-    internalErrorLog.indexOf("searchResults") === -1 &&
-    internalErrorLog.indexOf("mmForDataItem") === -1
+    checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog, "mmForDataItem")
       ? searchResults[1]
       : null;
 
   const dataEnumerations =
-    internalErrorLog.indexOf("searchResults") === -1 &&
-    internalErrorLog.indexOf("dataEnumerations") === -1
+    checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog, "dataEnumerations")
       ? searchResults[2]
       : null;
 
   const legacy =
-    internalErrorLog.indexOf("searchResults") === -1 &&
-    internalErrorLog.indexOf("dataItemInfo") === -1
+    checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo")
       ? removeNullValues(dataItemInfo.DTCLegacyReference) +
         removeNullValues(dataItemInfo.SPAALegacyReference) +
         removeNullValues(dataItemInfo.RGMALegacyReference) +
@@ -65,13 +66,12 @@ function DiDetailPage({ searchResults }) {
         removeNullValues(dataItemInfo.IUCDataItemReference) +
         removeNullValues(dataItemInfo.DCUSADataItemReference)
       : null;
-
   return (
     <>
       <SecondNavbar />
-      {internalErrorLog.indexOf("searchResults") === -1 ? (
+      {checkIfItemsAvailableInArray(internalErrorLog, "searchResults") ? (
         <div className={styles.contentContainer}>
-          {internalErrorLog.indexOf("dataItemInfo") === -1 ? (
+          {checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo") ? (
             <div>
               <Head>
                 <title>EMAR - {dataItemInfo.DataItemName}</title>
@@ -131,7 +131,7 @@ function DiDetailPage({ searchResults }) {
               {logError("Data Item Info", "is not available")}
             </div>
           )}
-          {internalErrorLog.indexOf("dataEnumerations") === -1 &&
+          {checkIfItemsAvailableInArray(internalErrorLog, "dataEnumerations") &&
           dataEnumerations.length > 0 ? (
             <div className={styles.halfBoxTable}>
               <h2 className={styles.svHeader}>The Data Enumerations</h2>
@@ -155,11 +155,14 @@ function DiDetailPage({ searchResults }) {
               {logError("Data Enumeration Value", "is not available")}
             </div>
           )}
-          {internalErrorLog.indexOf("mmForDataItem") === -1 &&
+          {checkIfItemsAvailableInArray(internalErrorLog, "mmForDataItem") &&
           mmForDataItem.length > 0 ? (
             <div
               className={
-                internalErrorLog.indexOf("dataEnumerations") === -1
+                checkIfItemsAvailableInArray(
+                  internalErrorLog,
+                  "dataEnumerations"
+                )
                   ? styles.halfBoxTable
                   : styles.fullBoxTable
               }
@@ -167,7 +170,10 @@ function DiDetailPage({ searchResults }) {
               <h2 className={styles.svHeader}>The Market Messages</h2>
               <table
                 className={
-                  internalErrorLog.indexOf("dataEnumerations") === -1
+                  checkIfItemsAvailableInArray(
+                    internalErrorLog,
+                    "dataEnumerations"
+                  )
                     ? styles.svList
                     : styles.fullWidthTable
                 }
