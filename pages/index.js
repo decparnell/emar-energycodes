@@ -23,7 +23,7 @@ function HomePage({
   codesSchedulesDataJson
 }) {
   const apiVarList = [
-    { obj: undefined, name: "newsData" },
+    { obj: newsData, name: "newsData" },
     { obj: items, name: "items" },
     { obj: latestVersionJson, name: "latestVersionJson" },
     { obj: mmsv, name: "mmsv" },
