@@ -9,11 +9,7 @@ import SecondNavbar from "../../../../components/layout/secondHeader";
 import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable";
 import { logError } from "../../../../components/helperFunctions/logError";
 
-function MmDetailPage(
-  {
-     searchResults
-  }
-) {
+function MmDetailPage({ searchResults }) {
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
 
@@ -23,18 +19,18 @@ function MmDetailPage(
       apiVarList = [
         {
           obj: searchResults,
-          name: "searchResults"
+          name: "searchResults",
         },
         { obj: searchResults[0], name: "marketMessageInfo" },
         { obj: searchResults[1], name: "svForMarketMessage" },
-        { obj: searchResults[2], name: "dataItems" }
+        { obj: searchResults[2], name: "dataItems" },
       ];
     } else {
       apiVarList = [
         {
           obj: searchResults,
-          name: "searchResults"
-        }
+          name: "searchResults",
+        },
       ];
     }
   };
@@ -69,6 +65,8 @@ function MmDetailPage(
       : null;
 
   const dataItemsTableHead = ["Data Item Id", "Data Item Name"];
+  const showApiColumns =
+    svForMarketMessage.find((el) => el.ApiMethod || el.ApiRoute) !== undefined;
 
   return (
     <>
@@ -135,8 +133,8 @@ function MmDetailPage(
                       href={{
                         pathname: `/dataspec/${latestDataSpecVersion}/dataitem/[di]`,
                         query: {
-                          di: entry.DataItemIdentifier
-                        }
+                          di: entry.DataItemIdentifier,
+                        },
                       }}
                       passHref={true}
                     >
@@ -172,16 +170,22 @@ function MmDetailPage(
                   <th>SV Name</th>
                   <th>Source</th>
                   <th>Target</th>
+                  {showApiColumns ? (
+                    <>
+                      <th>API Method</th>
+                      <th>API Route</th>
+                    </>
+                  ) : null}
                 </thead>
                 {svForMarketMessage.map((entry) => (
-                  <tbody>
+                  <tbody key="">
                     <Link
                       key={entry.EnergyMarketMessageScenarioVariantIdentifier}
                       href={{
                         pathname: `/dataspec/${latestDataSpecVersion}/scenario-variant/[sv]`,
                         query: {
-                          sv: entry.EnergyMarketMessageScenarioVariantIdentifier
-                        }
+                          sv: entry.EnergyMarketMessageScenarioVariantIdentifier,
+                        },
                       }}
                       passHref={true}
                     >
@@ -195,6 +199,8 @@ function MmDetailPage(
                         <td>{entry.EnergyMarketMessageScenarioVariantName}</td>
                         <td>{entry.SourceMarketDataServiceName}</td>
                         <td>{entry.TargetMarketDataServiceName}</td>
+                        {entry.ApiMethod ? <td>{entry.ApiMethod}</td> : null}
+                        {entry.ApiRoute ? <td>{entry.ApiRoute}</td> : null}
                       </tr>
                     </Link>
                   </tbody>
@@ -231,7 +237,7 @@ export async function getServerSideProps(context) {
   const searchResults = [
     dataJson.marketMessageInfo[0],
     dataJson.svList,
-    dataJson.dataItemList
+    dataJson.dataItemList,
   ];
 
   // Pass data to the page via props

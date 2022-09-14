@@ -206,3 +206,8 @@
   margin: 25px;
   text-align: center;
 }
+
+.wordWrap {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}

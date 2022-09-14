@@ -24,13 +24,15 @@ export const ScenarioVariantSearchResults = (
         <th>Scenario Variant Name</th>
         <th>Source</th>
         <th>Target</th>
+        <th>API Method</th>
+        <th>API Route</th>
       </thead>
     </>
   );
 
   const tableBody = (
     <tbody>
-      {searchResults.map((entry) => (
+      {searchResults.map((entry) => {
         <Link
           key={entry.EnergyMarketMessageScenarioVariantIdentifier}
           href={{
@@ -50,9 +52,13 @@ export const ScenarioVariantSearchResults = (
             <td>{entry.EnergyMarketMessageScenarioVariantName}</td>
             <td>{entry.SourceName}</td>
             <td>{entry.TargetName}</td>
+            <td>{entry.ApiMethod}</td>
+            <td>
+              <span className={styles.wordWrap}>{entry.ApiRoute}</span>
+            </td>
           </tr>
-        </Link>
-      ))}
+        </Link>;
+      })}
     </tbody>
   );
 

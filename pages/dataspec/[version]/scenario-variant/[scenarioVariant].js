@@ -10,12 +10,7 @@ import { useContext } from "react";
 import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable";
 import { logError } from "../../../../components/helperFunctions/logError";
 
-function ScenarioPage({
-  scenarioVariantInfo,
-  structure
-  , mmInfo
-}) {
-
+function ScenarioPage({ scenarioVariantInfo, structure, mmInfo }) {
   const svInfo = scenarioVariantInfo ? scenarioVariantInfo[0] : null;
   const marketMsgInfo = mmInfo ? mmInfo[0] : null;
   const router = useRouter();
@@ -26,7 +21,7 @@ function ScenarioPage({
   const apiVarList = [
     { obj: scenarioVariantInfo, name: "scenarioVariantInfo" },
     { obj: structure, name: "structure" },
-    { obj: mmInfo, name: "mmInfo" }
+    { obj: mmInfo, name: "mmInfo" },
   ];
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
@@ -52,7 +47,7 @@ function ScenarioPage({
                   marketMsgInfo.LegacyRGMAMessageIdentifier,
                   marketMsgInfo.LegacySPAAMessageIdentifier,
                   marketMsgInfo.UNCMessageIdentifier,
-                  marketMsgInfo.CSSMessageIdentifier
+                  marketMsgInfo.CSSMessageIdentifier,
                 ]}
                 )
               </h1>
@@ -76,8 +71,8 @@ function ScenarioPage({
                     pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[marketMessageId]`,
                     query: {
                       marketMessageId:
-                        marketMsgInfo.EnergyMarketMessageIdentifier
-                    }
+                        marketMsgInfo.EnergyMarketMessageIdentifier,
+                    },
                   }}
                   passHref={true}
                 >
@@ -91,8 +86,8 @@ function ScenarioPage({
                     pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[marketMessageId]`,
                     query: {
                       marketMessageId:
-                        marketMsgInfo.EnergyMarketMessageIdentifier
-                    }
+                        marketMsgInfo.EnergyMarketMessageIdentifier,
+                    },
                   }}
                   passHref={true}
                 >
@@ -104,11 +99,26 @@ function ScenarioPage({
                         marketMsgInfo.LegacyRGMAMessageIdentifier,
                         marketMsgInfo.LegacySPAAMessageIdentifier,
                         marketMsgInfo.UNCMessageIdentifier,
-                        marketMsgInfo.CSSMessageIdentifier
+                        marketMsgInfo.CSSMessageIdentifier,
                       ]}
                     </td>
                   </tr>
                 </Link>
+                {svInfo.ApiMethod ? (
+                  <tr>
+                    <td className={styles.tableHearSide}>API Method</td>
+                    <td>{svInfo.ApiMethod}</td>
+                  </tr>
+                ) : null}
+
+                {svInfo.ApiRoute ? (
+                  <tr>
+                    <td className={styles.tableHearSide}>
+                      <span className={styles.wordWrap}>API Route</span>
+                    </td>
+                    <td>{svInfo.ApiRoute}</td>
+                  </tr>
+                ) : null}
               </table>
             </div>
           ) : (
