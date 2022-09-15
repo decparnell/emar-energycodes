@@ -12,7 +12,9 @@ function ScheduleDropdown(props) {
   const dropdownType = props.dropdownType;
   const setDropdownValue = props.value[1];
   const clearFilter = props.closeFilter;
+
   const handleDropdownSelect = (option) => {
+    setDropdownOpen((current) => !current);
     setDropdownValue(option);
     setDropdownOpen((current) => !current);
   };
@@ -25,23 +27,31 @@ function ScheduleDropdown(props) {
     }
   };
 
+  const checkIfObject = (value) => {
+    if (typeof value == "object") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
-    <div className={`${props.style} ${styles.dropdown} pointer`}>
-      {typeof dropdownValue == "object"
+    <div
+      className={`${props.style} ${styles.dropdown} pointer`}
+      onClick={() => setDropdownOpen((current) => !current)}
+    >
+      {checkIfObject(dropdownValue)
         ? dropdownValue.documentName
         : dropdownValue}
-      {dropdownType == "filter" && !dropdownValue.includes("Filter") ? (
+      {checkIfObject(dropdownValue) ? (
         <AiFillCloseSquare onClick={() => clearFilter()} />
       ) : null}
+
       {dropdownOpen == false ? (
-        <AiFillCaretDown
-          onClick={() => setDropdownOpen((current) => !current)}
-        />
+        <AiFillCaretDown />
       ) : (
         <>
-          <AiFillCaretUp
-            onClick={() => setDropdownOpen((current) => !current)}
-          />
+          <AiFillCaretUp />
           <div className={styles.options}>
             {props.options.map((option, index) => (
               <div
