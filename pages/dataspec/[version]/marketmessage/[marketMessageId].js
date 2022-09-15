@@ -92,7 +92,7 @@ function MmDetailPage(
             </div>
           ) : (
             <div className={styles.errorBox}>
-              {logError("Market Message Info", "is not available")}
+              {logError("Market Message Info")}
             </div>
           )}
           {checkIfItemsAvailableInArray(
@@ -162,8 +162,7 @@ function MmDetailPage(
           ) : (
             <div className={styles.errorBox}>
               {logError(
-                "Data Item for this Market Message",
-                "is not available"
+                "Data Item"
               )}
             </div>
           )}
@@ -213,15 +212,14 @@ function MmDetailPage(
           ) : (
             <div className={styles.errorBox}>
               {logError(
-                "Scenario Varient for this MarketMessage",
-                "is not available"
+                "Scenario Variant",
               )}
             </div>
           )}
         </div>
       ) : (
         <div className={styles.errorBox}>
-          {logError("Market Message Info", "is not available")}
+          {logError("Market Message Info")}
         </div>
       )}
     </>
