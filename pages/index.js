@@ -10,7 +10,7 @@ import { NewsBanner } from "../components/newsBanner";
 import CodesSchedulesSearch from "../components/codesSchedules/codesSchedulesSearch";
 import { checkIfVariablesAreAvailable } from "../components/helperFunctions/checkIfVariablesAreAvailable";
 import { logError } from "../components/helperFunctions/logError";
-
+import { checkIfItemsAvailableInArray } from "../components/helperFunctions/checkIfItemsAvailableInArray/";
 
 function HomePage({
   dashboards,
@@ -38,15 +38,15 @@ function HomePage({
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
   const [currentDashboard, setCurrentDashboard] = useState(() => {
-    if (internalErrorLog.indexOf("dashboards") === -1) {
+    if (checkIfItemsAvailableInArray(internalErrorLog, "dashboards")) {
       return dashboards.filter((dashboard) => dashboard.dashboardOrder == 1)[0];
     }
   });
 
   const [currentSections, setCurrentSections] = useState(() => {
     if (
-      internalErrorLog.indexOf("dashboards") === -1 &&
-      internalErrorLog.indexOf("sections")
+      checkIfItemsAvailableInArray(internalErrorLog, "dashboards") &&
+      checkIfItemsAvailableInArray(internalErrorLog, "sections")
     ) {
       return sections.filter(
         (section) => section.dashboardId_FK == currentDashboard.dashboardId
@@ -54,7 +54,7 @@ function HomePage({
     }
   });
   useEffect(() => {
-    if (internalErrorLog.indexOf("dashboards") === -1) {
+    if (checkIfItemsAvailableInArray(internalErrorLog, "dashboards")) {
       const newDashboard = dashboards.filter(
         (dashboard) => dashboard.dashboardId == chosenTab
       )[0];
@@ -64,8 +64,8 @@ function HomePage({
 
   useEffect(() => {
     if (
-      internalErrorLog.indexOf("dashboards") === -1 &&
-      internalErrorLog.indexOf("sections")
+      checkIfItemsAvailableInArray(internalErrorLog, "dashboards") &&
+      checkIfItemsAvailableInArray(internalErrorLog, "sections")
     ) {
       setCurrentSections(
         sections.filter(
@@ -74,14 +74,13 @@ function HomePage({
       );
     }
   }, [currentDashboard]);
-
   return (
     <>
-      {internalErrorLog.indexOf("newsData") === -1 ? (
+      {checkIfItemsAvailableInArray(internalErrorLog, "newsData") ? (
         <NewsBanner news={newsData} />
       ) : (
         <div className={styles.errorBox}>
-          {logError("News Data", "is not available")}
+          {logError("News Data")}
         </div>
       )}
       <TabNavbar />
@@ -92,10 +91,10 @@ function HomePage({
           <meta property="og:title" content="My page title" key="title" />
         </Head>
         {chosenButton == "1" &&
-        internalErrorLog.indexOf("dashboards") === -1 &&
-        internalErrorLog.indexOf("items") === -1 &&
-        internalErrorLog.indexOf("latestVersionJson") === -1 &&
-        internalErrorLog.indexOf("sections") === -1 ? (
+        checkIfItemsAvailableInArray(internalErrorLog, "dashboards") &&
+        checkIfItemsAvailableInArray(internalErrorLog, "items") &&
+        checkIfItemsAvailableInArray(internalErrorLog, "latestVersionJson") &&
+        checkIfItemsAvailableInArray(internalErrorLog, "sections") ? (
           <Dashboard
             name={currentDashboard.dashboardName}
             columns={currentDashboard.dashboardColumns}
@@ -105,8 +104,8 @@ function HomePage({
           />
         ) : chosenButton == "2" &&
           chosenTab == "2" &&
-          internalErrorLog.indexOf("mmsv") === -1 &&
-          internalErrorLog.indexOf("dataItems") === -1 ? (
+          checkIfItemsAvailableInArray(internalErrorLog, "mmsv") &&
+          checkIfItemsAvailableInArray(internalErrorLog, "dataItems") ? (
           <DataSpecSearch mmsv={mmsv} dataItems={dataItems} />
         ) : chosenButton == "2" && chosenTab == "1" ? (
           <CodesSchedulesSearch
@@ -114,7 +113,7 @@ function HomePage({
           />
         ) : (
           <div className={styles.errorBox}>
-            {logError("Item", "is not available")}
+            {logError("Dashboard")}
           </div>
         )}
       </div>
