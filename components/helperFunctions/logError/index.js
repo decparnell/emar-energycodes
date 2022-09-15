@@ -1,3 +1,3 @@
-export const logError = (variableName, message) => {
-  return `${variableName} ${message}`;
+export const logError = (ItemName) => {
+  return `${ItemName} Not Available`;
 };

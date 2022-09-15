@@ -117,7 +117,7 @@ function ScenarioPage({ scenarioVariantInfo, structure, mmInfo }) {
             </div>
           ) : (
             <div className={styles.errorBox}>
-              {logError("Market Message Info", "is not available")}
+              {logError("Market Message Info")}
             </div>
           )}
           <div className={styles.sourcetargetContainer}>
@@ -133,13 +133,13 @@ function ScenarioPage({ scenarioVariantInfo, structure, mmInfo }) {
             CreateFlowStructure(structure)
           ) : (
             <div className={styles.errorBox}>
-              {logError("Structure", "is not available")}
+              {logError("Structure")}
             </div>
           )}
         </div>
       ) : (
         <div className={styles.errorBox}>
-          {logError("Scenario Variant Info", "is not available")}
+          {logError("Scenario Variant Info")}
         </div>
       )}
     </>
