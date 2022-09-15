@@ -16,18 +16,18 @@ function DiDetailPage({ searchResults }) {
       apiVarList = [
         {
           obj: searchResults,
-          name: "searchResults"
+          name: "searchResults",
         },
         { obj: searchResults[0], name: "dataItemInfo" },
         { obj: searchResults[1], name: "mmForDataItem" },
-        { obj: searchResults[2], name: "dataEnumerations" }
+        { obj: searchResults[2], name: "dataEnumerations" },
       ];
     } else {
       apiVarList = [
         {
           obj: searchResults,
-          name: "searchResults"
-        }
+          name: "searchResults",
+        },
       ];
     }
   };
@@ -127,9 +127,7 @@ function DiDetailPage({ searchResults }) {
               </div>
             </div>
           ) : (
-            <div className={styles.errorBox}>
-              {logError("Data Item Info")}
-            </div>
+            <div className={styles.errorBox}>{logError("Data Item Info")}</div>
           )}
           {checkIfItemsAvailableInArray(internalErrorLog, "dataEnumerations") &&
           dataEnumerations.length > 0 ? (
@@ -150,7 +148,7 @@ function DiDetailPage({ searchResults }) {
                 </tbody>
               </table>
             </div>
-          ) : (
+          ) : dataEnumerations.length == 0 ? null : (
             <div className={styles.errorBox}>
               {logError("Data Enumeration Value")}
             </div>
@@ -167,7 +165,7 @@ function DiDetailPage({ searchResults }) {
                   : styles.fullBoxTable
               }
             >
-<h2 className={styles.svHeader}>The Market Messages</h2>
+              <h2 className={styles.svHeader}>The Market Messages</h2>
               <table
                 className={
                   checkIfItemsAvailableInArray(
@@ -178,41 +176,45 @@ function DiDetailPage({ searchResults }) {
                     : styles.fullWidthTable
                 }
               >
-              <thead>
-                <th>Market Message Id</th>
-                <th>Local Catalogue Reference</th>
-                <th>Market Message Name</th>
-              </thead>
-              <tbody>
-                {mmForDataItem.map((entry) => (
-                  <Link
-                    key={entry.EnergyMarketMessageIdentifier}
-                    href={{
-                      pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[mmid]`,
-                      query: {
-                        mmid: entry.EnergyMarketMessageIdentifier,
-                      },
-                    }}
-                  >
-                    <tr
+                <thead>
+                  <th>Market Message Id</th>
+                  <th>Local Catalogue Reference</th>
+                  <th>Market Message Name</th>
+                </thead>
+                <tbody>
+                  {mmForDataItem.map((entry) => (
+                    <Link
+                      key={entry.EnergyMarketMessageIdentifier}
+                      href={{
+                        pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[mmid]`,
+                        query: {
+                          mmid: entry.EnergyMarketMessageIdentifier,
+                        },
+                      }}
+                    >
+                      <tr
                         key={entry.EnergyMarketMessageIdentifier}
                         className={styles.pointer}
                       >
-                      <td>{entry.EnergyMarketMessageIdentifier}</td>
-                      <td>
-                        {removeNullValues(entry.DTCDcode) +
-                          removeNullValues(entry.LegacyRGMAMessageIdentifier) +
-                          removeNullValues(entry.LegacySPAAMessageIdentifier) +
-                          removeNullValues(entry.UNCMessageIdentifier) +
-                          removeNullValues(entry.CSSMessageIdentifier)}
-                      </td>
-                      <td>{entry.Label}</td>
-                    </tr>
-                  </Link>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                        <td>{entry.EnergyMarketMessageIdentifier}</td>
+                        <td>
+                          {removeNullValues(entry.DTCDcode) +
+                            removeNullValues(
+                              entry.LegacyRGMAMessageIdentifier
+                            ) +
+                            removeNullValues(
+                              entry.LegacySPAAMessageIdentifier
+                            ) +
+                            removeNullValues(entry.UNCMessageIdentifier) +
+                            removeNullValues(entry.CSSMessageIdentifier)}
+                        </td>
+                        <td>{entry.Label}</td>
+                      </tr>
+                    </Link>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           ) : (
             <div className={styles.errorBox}>
               {logError("Market Message Info")}
@@ -220,9 +222,7 @@ function DiDetailPage({ searchResults }) {
           )}
         </div>
       ) : (
-        <div className={styles.errorBox}>
-          {logError("Search Results")}
-        </div>
+        <div className={styles.errorBox}>{logError("Search Results")}</div>
       )}
     </>
   );
@@ -240,7 +240,7 @@ export async function getServerSideProps(context) {
   const searchResults = [
     dataJson.dataItemInfo[0],
     dataJson.mmList,
-    dataJson.enumerations
+    dataJson.enumerations,
   ];
 
   // Pass data to the page via props
