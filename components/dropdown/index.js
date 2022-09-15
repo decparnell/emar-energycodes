@@ -13,7 +13,9 @@ function Dropdown(props) {
   const dropdownType = props.dropdownType;
   const setDropdownValue = props.value[1];
   const clearFilter = props.closeFilter;
+
   const handleDropdownSelect = (option) => {
+    setDropdownOpen((current) => !current);
     setDropdownValue(option);
     setDropdownOpen((current) => !current);
   };
@@ -27,20 +29,19 @@ function Dropdown(props) {
   };
 
   return (
-    <div className={`${props.style} ${styles.dropdown} pointer`}>
+    <div
+      className={`${props.style} ${styles.dropdown} pointer`}
+      onClick={() => setDropdownOpen((current) => !current)}
+    >
       {dropdownValue}
       {dropdownType == "filter" && !dropdownValue.includes("Filter") ? (
         <AiFillCloseSquare onClick={() => clearFilter()} />
       ) : null}
       {dropdownOpen == false ? (
-        <AiFillCaretDown
-          onClick={() => setDropdownOpen((current) => !current)}
-        />
+        <AiFillCaretDown />
       ) : (
         <>
-          <AiFillCaretUp
-            onClick={() => setDropdownOpen((current) => !current)}
-          />
+          <AiFillCaretUp />
           <div className={styles.options}>
             {props.options.map((option, index) => (
               <div

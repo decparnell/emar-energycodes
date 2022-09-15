@@ -9,12 +9,15 @@ import AppContext from "../../../../components/context/AppContext";
 import { useContext } from "react";
 import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable";
 import { logError } from "../../../../components/helperFunctions/logError";
+import { checkIfItemsAvailableInArray } from "../../../../components/helperFunctions/checkIfItemsAvailableInArray";
 
-function ScenarioPage({
-  scenarioVariantInfo,
-  structure
-  , mmInfo
-}) {
+function ScenarioPage({ scenarioVariantInfo, structure, mmInfo }) {
+    const apiVarList = [
+    { obj: scenarioVariantInfo, name: "scenarioVariantInfo" },
+    { obj: structure, name: "structure" },
+    { obj: mmInfo, name: "mmInfo" }
+  ];
+  const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
   const svInfo = scenarioVariantInfo ? scenarioVariantInfo[0] : null;
   const marketMsgInfo = mmInfo ? mmInfo[0] : null;
@@ -23,17 +26,10 @@ function ScenarioPage({
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
 
-  const apiVarList = [
-    { obj: scenarioVariantInfo, name: "scenarioVariantInfo" },
-    { obj: structure, name: "structure" },
-    { obj: mmInfo, name: "mmInfo" }
-  ];
-  const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
-
   return (
     <>
       <SecondNavbar />
-      {internalErrorLog.indexOf("scenarioVariantInfo") === -1 ? (
+      {checkIfItemsAvailableInArray(internalErrorLog, "scenarioVariantInfo") ? (
         <div className={styles.contentContainer}>
           <Head>
             <title>
@@ -41,7 +37,7 @@ function ScenarioPage({
             </title>
             <meta property="og:title" content="My page title" key="title" />
           </Head>
-          {internalErrorLog.indexOf("mmInfo") === -1 ? (
+          {checkIfItemsAvailableInArray(internalErrorLog, "mmInfo") ? (
             <div>
               <h1 className={styles.contentTitle}>
                 {scenarioVariant} -{" "}
@@ -52,7 +48,7 @@ function ScenarioPage({
                   marketMsgInfo.LegacyRGMAMessageIdentifier,
                   marketMsgInfo.LegacySPAAMessageIdentifier,
                   marketMsgInfo.UNCMessageIdentifier,
-                  marketMsgInfo.CSSMessageIdentifier
+                  marketMsgInfo.CSSMessageIdentifier,
                 ]}
                 )
               </h1>
@@ -76,8 +72,8 @@ function ScenarioPage({
                     pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[marketMessageId]`,
                     query: {
                       marketMessageId:
-                        marketMsgInfo.EnergyMarketMessageIdentifier
-                    }
+                        marketMsgInfo.EnergyMarketMessageIdentifier,
+                    },
                   }}
                   passHref={true}
                 >
@@ -91,8 +87,8 @@ function ScenarioPage({
                     pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[marketMessageId]`,
                     query: {
                       marketMessageId:
-                        marketMsgInfo.EnergyMarketMessageIdentifier
-                    }
+                        marketMsgInfo.EnergyMarketMessageIdentifier,
+                    },
                   }}
                   passHref={true}
                 >
@@ -104,16 +100,31 @@ function ScenarioPage({
                         marketMsgInfo.LegacyRGMAMessageIdentifier,
                         marketMsgInfo.LegacySPAAMessageIdentifier,
                         marketMsgInfo.UNCMessageIdentifier,
-                        marketMsgInfo.CSSMessageIdentifier
+                        marketMsgInfo.CSSMessageIdentifier,
                       ]}
                     </td>
                   </tr>
                 </Link>
+                {svInfo.ApiMethod ? (
+                  <tr>
+                    <td className={styles.tableHearSide}>API Method</td>
+                    <td>{svInfo.ApiMethod}</td>
+                  </tr>
+                ) : null}
+
+                {svInfo.ApiRoute ? (
+                  <tr>
+                    <td className={styles.tableHearSide}>
+                      <span className={styles.wordWrap}>API Route</span>
+                    </td>
+                    <td>{svInfo.ApiRoute}</td>
+                  </tr>
+                ) : null}
               </table>
             </div>
           ) : (
             <div className={styles.errorBox}>
-              {logError("Market Message Info", "is not available")}
+              {logError("Market Message Info")}
             </div>
           )}
           <div className={styles.sourcetargetContainer}>
@@ -125,17 +136,17 @@ function ScenarioPage({
               <p>{svInfo.TargetName}</p>
             </div>
           </div>
-          {internalErrorLog.indexOf("structure") === -1 ? (
+          {checkIfItemsAvailableInArray(internalErrorLog, "structure") ? (
             CreateFlowStructure(structure)
           ) : (
             <div className={styles.errorBox}>
-              {logError("Structure", "is not available")}
+              {logError("Structure")}
             </div>
           )}
         </div>
       ) : (
         <div className={styles.errorBox}>
-          {logError("Scenario Variant Info", "is not available")}
+          {logError("Scenario Variant Info")}
         </div>
       )}
     </>

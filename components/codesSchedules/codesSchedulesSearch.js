@@ -14,6 +14,9 @@ function CodesSchedulesSearch(props) {
   const [schedulesFilterValue, setSchedulesFilterValue] =
     useState("Filter Schedules:");
 
+  const clearFilter = () => {
+    setSchedulesFilterValue("Filter Schedules:");
+  };
   return (
     <div className={styles.container}>
       <Head>
@@ -26,7 +29,8 @@ function CodesSchedulesSearch(props) {
         {MessageFilters(
           props.codesSchedulesDataJson,
           schedulesFilterValue,
-          setSchedulesFilterValue
+          setSchedulesFilterValue,
+          clearFilter
         )}
 
         {CodesSchedulesSearchForm(

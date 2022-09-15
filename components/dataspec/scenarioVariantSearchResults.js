@@ -24,6 +24,8 @@ export const ScenarioVariantSearchResults = (
         <th>Scenario Variant Name</th>
         <th>Source</th>
         <th>Target</th>
+        <th>API Method</th>
+        <th>API Route</th>
       </thead>
     </>
   );
@@ -50,6 +52,10 @@ export const ScenarioVariantSearchResults = (
             <td>{entry.EnergyMarketMessageScenarioVariantName}</td>
             <td>{entry.SourceName}</td>
             <td>{entry.TargetName}</td>
+            <td>{entry.ApiMethod}</td>
+            <td>
+              <span className={styles.wordWrap}>{entry.ApiRoute}</span>
+            </td>
           </tr>
         </Link>
       ))}

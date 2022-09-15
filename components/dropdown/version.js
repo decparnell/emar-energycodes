@@ -14,6 +14,7 @@ function VersionDropDown() {
   const setDropdownValue = value.setLatestDataSpecVersion;
 
   const handleDropdownSelect = (option) => {
+    setDropdownOpen((current) => !current);
     setDropdownValue(option);
     setDropdownOpen((current) => !current);
     if (option != version) {
@@ -40,17 +41,14 @@ function VersionDropDown() {
   return (
     <div
       className={`${stylesHead.dataSpecDropDown} ${styles.dropdown} pointer`}
+      onClick={() => setDropdownOpen((current) => !current)}
     >
       {dropdownValue}
       {dropdownOpen == false ? (
-        <AiFillCaretDown
-          onClick={() => setDropdownOpen((current) => !current)}
-        />
+        <AiFillCaretDown />
       ) : (
         <>
-          <AiFillCaretUp
-            onClick={() => setDropdownOpen((current) => !current)}
-          />
+          <AiFillCaretUp />
           <div className={styles.versionOptions}>
             {allDataSpecVersions.map((option, index) => (
               <div
