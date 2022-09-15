@@ -8,8 +8,10 @@ import Head from "next/head";
 import SecondNavbar from "../../../../components/layout/secondHeader";
 import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable";
 import { logError } from "../../../../components/helperFunctions/logError";
+import { checkIfItemsAvailableInArray } from "../../../../components/helperFunctions/checkIfItemsAvailableInArray";
 
 function MmDetailPage({ searchResults }) {
+
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
 
@@ -39,24 +41,24 @@ function MmDetailPage({ searchResults }) {
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
   const marketMessageInfo =
-    internalErrorLog.indexOf("searchResults") === -1 &&
-    internalErrorLog.indexOf("marketMessageInfo") === -1
+    checkIfItemsAvailableInArray(internalErrorLog,"searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog,"marketMessageInfo")
       ? searchResults[0]
       : null;
   const svForMarketMessage =
-    internalErrorLog.indexOf("searchResults") === -1 &&
-    internalErrorLog.indexOf("svForMarketMessage") === -1
+    checkIfItemsAvailableInArray(internalErrorLog,"searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog,"svForMarketMessage")
       ? searchResults[1]
       : null;
   const dataItems =
-    internalErrorLog.indexOf("searchResults") === -1 &&
-    internalErrorLog.indexOf("dataItems") === -1
+    checkIfItemsAvailableInArray(internalErrorLog,"searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog,"dataItems")
       ? searchResults[2]
       : null;
 
   const legacy =
-    internalErrorLog.indexOf("searchResults") === -1 &&
-    internalErrorLog.indexOf("marketMessageInfo") === -1
+    checkIfItemsAvailableInArray(internalErrorLog,"searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog,"marketMessageInfo")
       ? removeNullValues(marketMessageInfo.DTCDcode) +
         removeNullValues(marketMessageInfo.CSSMessageIdentifier) +
         removeNullValues(marketMessageInfo.LegacyRGMAMessageIdentifier) +
@@ -73,9 +75,12 @@ function MmDetailPage({ searchResults }) {
   return (
     <>
       <SecondNavbar />
-      {internalErrorLog.indexOf("searchResults") === -1 ? (
+      {checkIfItemsAvailableInArray(internalErrorLog, "searchResults") ? (
         <div className={styles.contentContainer}>
-          {internalErrorLog.indexOf("marketMessageInfo") === -1 ? (
+          {checkIfItemsAvailableInArray(
+            internalErrorLog,
+            "marketMessageInfo"
+          ) ? (
             <div>
               <Head>
                 <title>EMAR - {marketMessageInfo.Label}</title>
@@ -88,10 +93,13 @@ function MmDetailPage({ searchResults }) {
             </div>
           ) : (
             <div className={styles.errorBox}>
-              {logError("Market Message Info", "is not available")}
+              {logError("Market Message Info")}
             </div>
           )}
-          {internalErrorLog.indexOf("marketMessageInfo") === -1 && (
+          {checkIfItemsAvailableInArray(
+            internalErrorLog,
+            "marketMessageInfo"
+          ) && (
             <table className={styles.fullWidthTable}>
               <tbody>
                 <tr>
@@ -117,7 +125,7 @@ function MmDetailPage({ searchResults }) {
               </tbody>
             </table>
           )}
-          {internalErrorLog.indexOf("dataItems") === -1 ? (
+          {checkIfItemsAvailableInArray(internalErrorLog, "dataItems") ? (
             <div>
               <h2 className={styles.svHeader}>
                 The Data items message contains:
@@ -160,13 +168,14 @@ function MmDetailPage({ searchResults }) {
           ) : (
             <div className={styles.errorBox}>
               {logError(
-                "Data Item for this Market Message",
-                "is not available"
+                "Data Item"
               )}
             </div>
           )}
-
-          {internalErrorLog.indexOf("svForMarketMessage") === -1 ? (
+          {checkIfItemsAvailableInArray(
+            internalErrorLog,
+            "svForMarketMessage"
+          ) ? (
             <div>
               <h2 className={styles.diHeader}>
                 The Scenario Vaiants for this message are:
@@ -209,15 +218,14 @@ function MmDetailPage({ searchResults }) {
           ) : (
             <div className={styles.errorBox}>
               {logError(
-                "Scenario Varient for this MarketMessage",
-                "is not available"
+                "Scenario Variant",
               )}
             </div>
           )}
         </div>
       ) : (
         <div className={styles.errorBox}>
-          {logError("Market Message Info", "is not available")}
+          {logError("Market Message Info")}
         </div>
       )}
     </>
