@@ -5,73 +5,134 @@ import AppContext from "../../../../components/context/AppContext";
 import { useContext, useEffect } from "react";
 import Head from "next/head";
 import SecondNavbar from "../../../../components/layout/secondHeader";
+import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable/index";
+import { logError } from "../../../../components/helperFunctions/logError";
+import { checkIfItemsAvailableInArray } from "../../../../components/helperFunctions/checkIfItemsAvailableInArray/index";
 
 function DiDetailPage({ searchResults }) {
+  let apiVarList = [];
+  const checkIfsearchResultsAvailable = () => {
+    if (searchResults) {
+      apiVarList = [
+        {
+          obj: searchResults,
+          name: "searchResults"
+        },
+        { obj: searchResults[0], name: "dataItemInfo" },
+        { obj: searchResults[1], name: "mmForDataItem" },
+        { obj: searchResults[2], name: "dataEnumerations" }
+      ];
+    } else {
+      apiVarList = [
+        {
+          obj: searchResults,
+          name: "searchResults"
+        }
+      ];
+    }
+  };
+
+  checkIfsearchResultsAvailable();
+  const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
+
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
-  const dataItemInfo = searchResults[0];
-  const mmForDataItem = searchResults[1];
-  const dataEnumerations = searchResults[2];
+
+  const dataItemInfo =
+    checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo")
+      ? searchResults[0]
+      : null;
+
+  const mmForDataItem =
+    checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog, "mmForDataItem")
+      ? searchResults[1]
+      : null;
+
+  const dataEnumerations =
+    checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog, "dataEnumerations")
+      ? searchResults[2]
+      : null;
 
   const legacy =
-    removeNullValues(dataItemInfo.DTCLegacyReference) +
-    removeNullValues(dataItemInfo.SPAALegacyReference) +
-    removeNullValues(dataItemInfo.RGMALegacyReference) +
-    removeNullValues(dataItemInfo.UNCDataItemReference) +
-    removeNullValues(dataItemInfo.IUCDataItemReference) +
-    removeNullValues(dataItemInfo.DCUSADataItemReference);
-
+    checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo")
+      ? removeNullValues(dataItemInfo.DTCLegacyReference) +
+        removeNullValues(dataItemInfo.SPAALegacyReference) +
+        removeNullValues(dataItemInfo.RGMALegacyReference) +
+        removeNullValues(dataItemInfo.UNCDataItemReference) +
+        removeNullValues(dataItemInfo.IUCDataItemReference) +
+        removeNullValues(dataItemInfo.DCUSADataItemReference)
+      : null;
   return (
     <>
       <SecondNavbar />
-      <div className={styles.contentContainer}>
-        <Head>
-          <title>EMAR - {dataItemInfo.DataItemName}</title>
-          <meta property="og:title" content="My page title" key="title" />
-        </Head>
-        <div className={styles.flexContainer}>
-          <div className={styles.fullBoxTable}>
-            <h1 className={styles.contentTitle}>
-              {dataItemInfo.DataItemIdentifier} - {dataItemInfo.DataItemName}
-            </h1>
-            <table className={styles.fullWidthTable}>
-              <tbody>
-                <tr>
-                  <td className={styles.mmTable}>Local Catalogue Reference</td>
-                  <td>{removeNullValues(legacy)}</td>
-                </tr>
-                <tr>
-                  <td className={styles.mmTable}>Description</td>
-                  <td>{dataItemInfo.DataItemDefinition}</td>
-                </tr>
-                <tr>
-                  <td className={styles.mmTable}>Logical Length</td>
-                  <td>{dataItemInfo.DataItemLogicalLength}</td>
-                </tr>
-                <tr>
-                  <td className={styles.mmTable}>Logical Decimal Length</td>
-                  <td>{dataItemInfo.DataItemLogicalDecimalLength}</td>
-                </tr>
-                <tr>
-                  <td className={styles.mmTable}>Physical Length</td>
-                  <td>{dataItemInfo.DataItemPhysicalLength}</td>
-                </tr>
-                <tr>
-                  <td className={styles.mmTable}>Data Type</td>
-                  <td>{dataItemInfo.DataTypeFormatRuleName}</td>
-                </tr>
-                <tr>
-                  <td className={styles.mmTable}>Data Item Owner</td>
-                  <td>{dataItemInfo.MarketRoleDataServiceName}</td>
-                </tr>
-                <tr>
-                  <td className={styles.mmTable}>Notes</td>
-                  <td>{dataItemInfo.ExternalNotes}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          {dataEnumerations.length > 0 && (
+      {checkIfItemsAvailableInArray(internalErrorLog, "searchResults") ? (
+        <div className={styles.contentContainer}>
+          {checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo") ? (
+            <div>
+              <Head>
+                <title>EMAR - {dataItemInfo.DataItemName}</title>
+                <meta property="og:title" content="My page title" key="title" />
+              </Head>
+              <div className={styles.flexContainer}>
+                <div className={styles.fullBoxTable}>
+                  <h1 className={styles.contentTitle}>
+                    {dataItemInfo.DataItemIdentifier} -{" "}
+                    {dataItemInfo.DataItemName}
+                  </h1>
+                  <table className={styles.fullWidthTable}>
+                    <tbody>
+                      <tr>
+                        <td className={styles.mmTable}>
+                          Local Catalogue Reference
+                        </td>
+                        <td>{removeNullValues(legacy)}</td>
+                      </tr>
+                      <tr>
+                        <td className={styles.mmTable}>Description</td>
+                        <td>{dataItemInfo.DataItemDefinition}</td>
+                      </tr>
+                      <tr>
+                        <td className={styles.mmTable}>Logical Length</td>
+                        <td>{dataItemInfo.DataItemLogicalLength}</td>
+                      </tr>
+                      <tr>
+                        <td className={styles.mmTable}>
+                          Logical Decimal Length
+                        </td>
+                        <td>{dataItemInfo.DataItemLogicalDecimalLength}</td>
+                      </tr>
+                      <tr>
+                        <td className={styles.mmTable}>Physical Length</td>
+                        <td>{dataItemInfo.DataItemPhysicalLength}</td>
+                      </tr>
+                      <tr>
+                        <td className={styles.mmTable}>Data Type</td>
+                        <td>{dataItemInfo.DataTypeFormatRuleName}</td>
+                      </tr>
+                      <tr>
+                        <td className={styles.mmTable}>Data Item Owner</td>
+                        <td>{dataItemInfo.MarketRoleDataServiceName}</td>
+                      </tr>
+                      <tr>
+                        <td className={styles.mmTable}>Notes</td>
+                        <td>{dataItemInfo.ExternalNotes}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className={styles.errorBox}>
+              {logError("Data Item Info")}
+            </div>
+          )}
+          {checkIfItemsAvailableInArray(internalErrorLog, "dataEnumerations") &&
+          dataEnumerations.length > 0 ? (
             <div className={styles.halfBoxTable}>
               <h2 className={styles.svHeader}>The Data Enumerations</h2>
               <table className={styles.svList}>
@@ -89,51 +150,72 @@ function DiDetailPage({ searchResults }) {
                 </tbody>
               </table>
             </div>
+          ) : (
+            <div className={styles.errorBox}>
+              {logError("Data Enumeration Value")}
+            </div>
           )}
-          <div
-            className={
-              dataEnumerations.length > 0
-                ? styles.halfBoxTable
-                : styles.fullBoxTable
-            }
-          >
-            <h2 className={styles.svHeader}>The Market Messages</h2>
-            <table
+          {checkIfItemsAvailableInArray(internalErrorLog, "mmForDataItem") &&
+          mmForDataItem.length > 0 ? (
+            <div
               className={
-                dataEnumerations.length > 0
-                  ? styles.svList
-                  : styles.fullWidthTable
+                checkIfItemsAvailableInArray(
+                  internalErrorLog,
+                  "dataEnumerations"
+                )
+                  ? styles.halfBoxTable
+                  : styles.fullBoxTable
               }
             >
-              <thead>
-                <th>Market Message Id</th>
-                <th>Market Message Name</th>
-              </thead>
-              <tbody>
-                {mmForDataItem.map((entry) => (
-                  <Link
-                    key={entry.EnergyMarketMessageIdentifier}
-                    href={{
-                      pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[mmid]`,
-                      query: {
-                        mmid: entry.EnergyMarketMessageIdentifier,
-                      },
-                    }}
-                  >
-                    <tr
+              <h2 className={styles.svHeader}>The Market Messages</h2>
+              <table
+                className={
+                  checkIfItemsAvailableInArray(
+                    internalErrorLog,
+                    "dataEnumerations"
+                  )
+                    ? styles.svList
+                    : styles.fullWidthTable
+                }
+              >
+                <thead>
+                  <th>Market Message Id</th>
+                  <th>Market Message Name</th>
+                </thead>
+                <tbody>
+                  {mmForDataItem.map((entry) => (
+                    <Link
                       key={entry.EnergyMarketMessageIdentifier}
-                      className={styles.pointer}
+                      href={{
+                        pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[mmid]`,
+                        query: {
+                          mmid: entry.EnergyMarketMessageIdentifier
+                        }
+                      }}
                     >
-                      <td>{entry.EnergyMarketMessageIdentifier}</td>
-                      <td>{entry.Label}</td>
-                    </tr>
-                  </Link>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                      <tr
+                        key={entry.EnergyMarketMessageIdentifier}
+                        className={styles.pointer}
+                      >
+                        <td>{entry.EnergyMarketMessageIdentifier}</td>
+                        <td>{entry.Label}</td>
+                      </tr>
+                    </Link>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div className={styles.errorBox}>
+              {logError("Market Message Info")}
+            </div>
+          )}
         </div>
-      </div>
+      ) : (
+        <div className={styles.errorBox}>
+          {logError("Search Results")}
+        </div>
+      )}
     </>
   );
 }
@@ -150,7 +232,7 @@ export async function getServerSideProps(context) {
   const searchResults = [
     dataJson.dataItemInfo[0],
     dataJson.mmList,
-    dataJson.enumerations,
+    dataJson.enumerations
   ];
 
   // Pass data to the page via props
