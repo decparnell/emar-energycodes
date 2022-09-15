@@ -167,7 +167,7 @@ function DiDetailPage({ searchResults }) {
                   : styles.fullBoxTable
               }
             >
-              <h2 className={styles.svHeader}>The Market Messages</h2>
+<h2 className={styles.svHeader}>The Market Messages</h2>
               <table
                 className={
                   checkIfItemsAvailableInArray(
@@ -178,33 +178,41 @@ function DiDetailPage({ searchResults }) {
                     : styles.fullWidthTable
                 }
               >
-                <thead>
-                  <th>Market Message Id</th>
-                  <th>Market Message Name</th>
-                </thead>
-                <tbody>
-                  {mmForDataItem.map((entry) => (
-                    <Link
-                      key={entry.EnergyMarketMessageIdentifier}
-                      href={{
-                        pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[mmid]`,
-                        query: {
-                          mmid: entry.EnergyMarketMessageIdentifier
-                        }
-                      }}
-                    >
-                      <tr
+              <thead>
+                <th>Market Message Id</th>
+                <th>Local Catalogue Reference</th>
+                <th>Market Message Name</th>
+              </thead>
+              <tbody>
+                {mmForDataItem.map((entry) => (
+                  <Link
+                    key={entry.EnergyMarketMessageIdentifier}
+                    href={{
+                      pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[mmid]`,
+                      query: {
+                        mmid: entry.EnergyMarketMessageIdentifier,
+                      },
+                    }}
+                  >
+                    <tr
                         key={entry.EnergyMarketMessageIdentifier}
                         className={styles.pointer}
                       >
-                        <td>{entry.EnergyMarketMessageIdentifier}</td>
-                        <td>{entry.Label}</td>
-                      </tr>
-                    </Link>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                      <td>{entry.EnergyMarketMessageIdentifier}</td>
+                      <td>
+                        {removeNullValues(entry.DTCDcode) +
+                          removeNullValues(entry.LegacyRGMAMessageIdentifier) +
+                          removeNullValues(entry.LegacySPAAMessageIdentifier) +
+                          removeNullValues(entry.UNCMessageIdentifier) +
+                          removeNullValues(entry.CSSMessageIdentifier)}
+                      </td>
+                      <td>{entry.Label}</td>
+                    </tr>
+                  </Link>
+                ))}
+              </tbody>
+            </table>
+          </div>
           ) : (
             <div className={styles.errorBox}>
               {logError("Market Message Info")}
