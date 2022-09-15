@@ -11,7 +11,6 @@ import { logError } from "../../../../components/helperFunctions/logError";
 import { checkIfItemsAvailableInArray } from "../../../../components/helperFunctions/checkIfItemsAvailableInArray";
 
 function MmDetailPage({ searchResults }) {
-
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
 
@@ -66,11 +65,13 @@ function MmDetailPage({ searchResults }) {
         removeNullValues(marketMessageInfo.UNCMessageIdentifier)
       : null;
 
-  const dataItemsTableHead = [
+ const dataItemsTableHead = [
     "Data Item Id",
     "Local Catalogue Reference",
     "Data Item Name",
   ];
+  const showApiColumns =
+    svForMarketMessage.find((el) => el.ApiMethod || el.ApiRoute) !== undefined;
 
   return (
     <>
@@ -186,6 +187,12 @@ function MmDetailPage({ searchResults }) {
                   <th>SV Name</th>
                   <th>Source</th>
                   <th>Target</th>
+                  {showApiColumns ? (
+                    <>
+                      <th>API Method</th>
+                      <th>API Route</th>
+                    </>
+                  ) : null}
                 </thead>
                 <tbody>
                   {svForMarketMessage.map((entry) => (
@@ -209,6 +216,8 @@ function MmDetailPage({ searchResults }) {
                         <td>{entry.EnergyMarketMessageScenarioVariantName}</td>
                         <td>{entry.SourceMarketDataServiceName}</td>
                         <td>{entry.TargetMarketDataServiceName}</td>
+                        {entry.ApiMethod ? <td>{entry.ApiMethod}</td> : null}
+                        {entry.ApiRoute ? <td>{entry.ApiRoute}</td> : null}
                       </tr>
                     </Link>
                   ))}
