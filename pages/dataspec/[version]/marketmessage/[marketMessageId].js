@@ -64,7 +64,11 @@ function MmDetailPage({ searchResults }) {
         removeNullValues(marketMessageInfo.UNCMessageIdentifier)
       : null;
 
-  const dataItemsTableHead = ["Data Item Id", "Data Item Name"];
+  const dataItemsTableHead = [
+    "Data Item Id",
+    "Local Catalogue Reference",
+    "Data Item Name",
+  ];
 
   return (
     <>
@@ -138,6 +142,14 @@ function MmDetailPage({ searchResults }) {
                     >
                       <tr className={styles.pointer}>
                         <td>{entry.DataItemIdentifier}</td>
+                        <td>
+                          {removeNullValues(entry.DTCLegacyReference) +
+                            removeNullValues(entry.SPAALegacyReference) +
+                            removeNullValues(entry.RGMALegacyReference) +
+                            removeNullValues(entry.UNCDataItemReference) +
+                            removeNullValues(entry.IUCDataItemReference) +
+                            removeNullValues(entry.DCUSADataItemReference)}
+                        </td>
                         <td>{entry.DataItemName}</td>
                       </tr>
                     </Link>
