@@ -52,7 +52,10 @@ function Dashboard(props) {
                 {item.dashboardSectionItemsName}
               </a>
             ) : item.dashboardSectionItemsLinkType == "EXTERNAL" ? (
-              <a href={item.dashboardSectionItemsLink}>
+              <a
+                href={item.dashboardSectionItemsLink}
+                className={styles.itemContainer}
+              >
                 {item.dashboardSectionItemsName}
               </a>
             ) : (
