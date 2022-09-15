@@ -46,6 +46,7 @@ function Dashboard(props) {
           <>
             {item.dashboardSectionItemsLinkType == "DOWNLOAD" ? (
               <a
+                className={styles.itemContainer}
                 href={item.dashboardSectionItemsLink}
                 download={item.dashboardSectionItemsName}
               >
