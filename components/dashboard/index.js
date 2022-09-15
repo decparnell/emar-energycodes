@@ -12,9 +12,15 @@ function Dashboard(props) {
   const sectionsJSX = [];
 
   function CreateSection(section) {
-    const sectionItems = items.filter(
-      (item) => item.dashboardSectionId_FK == section.dashboardSectionId
-    );
+    const sectionItems = items
+      .filter(
+        (item) => item.dashboardSectionId_FK == section.dashboardSectionId
+      )
+      .sort(
+        (firstItem, secondItem) =>
+          firstItem.dashboardSectionItemsOrder -
+          secondItem.dashboardSectionItemsOrder
+      );
     sectionItems.forEach((item, index) => {
       if (
         item.dashboardSectionItemsLinkType == "SCHEDULE" &&
@@ -46,7 +52,10 @@ function Dashboard(props) {
                 {item.dashboardSectionItemsName}
               </a>
             ) : item.dashboardSectionItemsLinkType == "EXTERNAL" ? (
-              <a href={item.dashboardSectionItemsLink}>
+              <a
+                href={item.dashboardSectionItemsLink}
+                className={styles.itemContainer}
+              >
                 {item.dashboardSectionItemsName}
               </a>
             ) : (

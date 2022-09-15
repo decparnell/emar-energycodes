@@ -5,6 +5,9 @@ import CreateCustomTag from "../../../components/scheduleId/createCustomTag-sche
 import CreateChangeTable from "../../../components/scheduleId/createChangeTable";
 import { listItemsToIgnore, listHeaders } from "../../../components/settings";
 import Head from "next/head";
+import { checkIfVariablesAreAvailable } from "../../../components/helperFunctions/checkIfVariablesAreAvailable";
+import { logError } from "../../../components/helperFunctions/logError";
+import { checkIfItemsAvailableInArray } from "../../../components/helperFunctions/checkIfItemsAvailableInArray";
 
 function ScheduleDetail({
   versions,
@@ -13,8 +16,20 @@ function ScheduleDetail({
   components,
   document,
   definitions,
-}) {
-  const docInfo = document[0];
+}) {  
+
+  const apiVarList = [
+    { obj: versions, name: "versions" },
+    { obj: parts, name: "parts" },
+    { obj: sections, name: "sections" },
+    { obj: components, name: "components" },
+    { obj: document, name: "document" },
+    { obj: definitions, name: "definitions" },
+  ];
+  const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
+  const docInfo = checkIfItemsAvailableInArray(internalErrorLog, "document")
+    ? document[0]
+    : null;
   const router = useRouter();
   const schedule_id = router.query.schedule_id;
   const versionName = router.query.versionName;
@@ -47,13 +62,16 @@ function ScheduleDetail({
           </div>
         </div>
         <Head>
-          <title>EMAR - {docInfo.documentName}</title>
+          <title>EMAR - {docInfo ? docInfo.documentName : null}</title>
           <meta property="og:title" content="My page title" key="title" />
         </Head>
-
-        <div className={styles.sidebarSectionsList}>
-          {createSidebarContent(parts, sections)}
-        </div>
+        {checkIfItemsAvailableInArray(internalErrorLog, "sections") ? (
+          <div className={styles.sidebarSectionsList}>
+            {createSidebarContent(parts, sections)}
+          </div>
+        ) : (
+          <div className={styles.errorBox}>{logError("Sections")}</div>
+        )}
       </aside>
       <div
         className={[
@@ -63,24 +81,46 @@ function ScheduleDetail({
           styles.content,
         ].join(" ")}
       >
-        <div className={styles.scheduleContainer}>
-          <h1 className={styles.contentTitle}>{docInfo.documentName}</h1>
-
-          <table id="version" className={styles.table}>
-            <thead>
-              <tr>
-                <th>Version</th>
-                <th>Implementation Date</th>
-                <th>Reason</th>
-              </tr>
-            </thead>
-            <tbody>
-              {CreateChangeTable(versions, schedule_id, versionName)}
-            </tbody>
-          </table>
-
-          {createContent(parts, sections, components, definitions)}
-        </div>
+        {checkIfItemsAvailableInArray(internalErrorLog, "document") ? (
+          <div className={styles.scheduleContainer}>
+            <h1 className={styles.contentTitle}>{docInfo.documentName}</h1>
+            {checkIfItemsAvailableInArray(internalErrorLog, "versions") ? (
+              <table id="version" className={styles.table}>
+                <thead>
+                  <tr>
+                    <th>Version</th>
+                    <th>Implementation Date</th>
+                    <th>Reason</th>
+                  </tr>
+                </thead>
+                {checkIfItemsAvailableInArray(
+                  internalErrorLog,
+                  "schedule_id"
+                ) &&
+                checkIfItemsAvailableInArray(
+                  internalErrorLog,
+                  "versionName"
+                ) ? (
+                  <tbody>
+                    {CreateChangeTable(versions, schedule_id, versionName)}
+                  </tbody>
+                ) : null}
+              </table>
+            ) : (
+              <div className={styles.errorBox}>{logError("Versions")}</div>
+            )}
+            {checkIfItemsAvailableInArray(internalErrorLog, "parts") &&
+            checkIfItemsAvailableInArray(internalErrorLog, "sections") &&
+            checkIfItemsAvailableInArray(internalErrorLog, "components") &&
+            checkIfItemsAvailableInArray(internalErrorLog, "definitions") ? (
+              createContent(parts, sections, components, definitions)
+            ) : (
+              <div className={styles.errorBox}>{logError("Schedule")}</div>
+            )}
+          </div>
+        ) : (
+          <div className={styles.errorBox}>{logError("Document")}</div>
+        )}
       </div>
     </>
   );
@@ -114,58 +154,92 @@ const createSidebarContent = (parts, sections) => {
 };
 
 function createContent(parts, sections, components, definitions) {
-  let content = [];
+  const apiVarList = [
+    { obj: parts, name: "parts" },
+    { obj: sections, name: "sections" },
+    { obj: components, name: "components" },
+    { obj: definitions, name: "definitions" },
+  ];
+  const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
-  for (const part of parts) {
-    content.push(<h2 className={styles.partName}>{part.partName}</h2>);
-    let sectionsInPart = sections.filter((sec) => {
-      return sec.partId_FK === part.partId;
-    });
-    for (const section of sectionsInPart) {
-      let componentsInSection = components.filter(function (el2) {
-        return el2.sectionId_FK === section.sectionId;
-      });
-      const clauses = componentsInSection.filter(function (el2) {
-        return listItemsToIgnore.indexOf(el2.componentType) == -1;
-      });
-      const componentsJsx = [];
-      const clausesProcessed = [];
-      for (const clauseI in clauses) {
-        const clause = clauses[clauseI];
-        if (clausesProcessed.indexOf(clause.clauseReference) == -1) {
-          clausesProcessed.push(clause.clauseReference);
-          let clauseComponents = [];
-          if (clause.componentType == "title") {
-            clauseComponents.push(clause);
-          } else {
-            clauseComponents = componentsInSection.filter(function (el2) {
-              return el2.clauseReference === clause.clauseReference;
+  let content = [];
+  if (checkIfItemsAvailableInArray(internalErrorLog, "parts")) {
+    for (const part of parts) {
+      content.push(<h2 className={styles.partName}>{part.partName}</h2>);
+      if (checkIfItemsAvailableInArray(internalErrorLog, "sections")) {
+        let sectionsInPart = sections.filter((sec) => {
+          return sec.partId_FK === part.partId;
+        });
+
+        if (checkIfItemsAvailableInArray(internalErrorLog, "components")) {
+          for (const section of sectionsInPart) {
+            let componentsInSection = components.filter(function (el2) {
+              return el2.sectionId_FK === section.sectionId;
             });
+            const clauses = componentsInSection.filter(function (el2) {
+              return listItemsToIgnore.indexOf(el2.componentType) == -1;
+            });
+            const componentsJsx = [];
+            const clausesProcessed = [];
+            for (const clauseI in clauses) {
+              const clause = clauses[clauseI];
+              if (clausesProcessed.indexOf(clause.clauseReference) == -1) {
+                clausesProcessed.push(clause.clauseReference);
+                let clauseComponents = [];
+                if (clause.componentType == "title") {
+                  clauseComponents.push(clause);
+                } else {
+                  clauseComponents = componentsInSection.filter(function (el2) {
+                    return el2.clauseReference === clause.clauseReference;
+                  });
+                }
+                componentsJsx.push(
+                  CreateCustomTag(
+                    clause.clauseReference,
+                    clauseComponents,
+                    definitions
+                  )
+                );
+              }
+            }
+            content.push(
+              <div
+                id={section.sectionId}
+                key={section.sectionName}
+                className={styles.section}
+              >
+                <h3>
+                  ({section.sectionOrder}) {section.sectionName}
+                </h3>
+                {componentsJsx}
+              </div>
+            );
           }
-          componentsJsx.push(
-            CreateCustomTag(
-              clause.clauseReference,
-              clauseComponents,
-              definitions
-            )
+        } else {
+          return (
+            <div className={styles.errorBox}>
+              {logError("Components")}
+            </div>
           );
         }
+      } else {
+        return (
+          <div className={styles.errorBox}>
+            {logError("Sections")}
+          </div>
+        );
       }
-      content.push(
-        <div
-          id={section.sectionId}
-          key={section.sectionName}
-          className={styles.section}
-        >
-          <h3>
-            ({section.sectionOrder}) {section.sectionName}
-          </h3>
-          {componentsJsx}
-        </div>
-      );
     }
   }
-  return <div className={styles.scheduleContentContainer}>{content}</div>;
+  if (checkIfItemsAvailableInArray(internalErrorLog, "parts")) {
+    return <div className={styles.scheduleContentContainer}>{content}</div>;
+  } else {
+    return (
+      <div className={styles.errorBox}>
+        {logError("Parts", "is not available")}
+      </div>
+    );
+  }
 }
 
 // This gets called on every request

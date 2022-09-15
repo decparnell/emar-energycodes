@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import styles from "../../styles/dropdown.module.css";
 import {
   AiFillCaretUp,
@@ -7,7 +6,7 @@ import {
 } from "react-icons/ai";
 import React, { useState } from "react";
 
-function Dropdown(props) {
+function ScheduleDropdown(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownValue = props.value[0];
   const dropdownType = props.dropdownType;
@@ -28,15 +27,26 @@ function Dropdown(props) {
     }
   };
 
+  const checkIfObject = (value) => {
+    if (typeof value == "object") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <div
       className={`${props.style} ${styles.dropdown} pointer`}
       onClick={() => setDropdownOpen((current) => !current)}
     >
-      {dropdownValue}
-      {dropdownType == "filter" && !dropdownValue.includes("Filter") ? (
+      {checkIfObject(dropdownValue)
+        ? dropdownValue.documentName
+        : dropdownValue}
+      {checkIfObject(dropdownValue) ? (
         <AiFillCloseSquare onClick={() => clearFilter()} />
       ) : null}
+
       {dropdownOpen == false ? (
         <AiFillCaretDown />
       ) : (
@@ -49,7 +59,7 @@ function Dropdown(props) {
                 key={index}
                 onClick={() => handleDropdownSelect(option)}
               >
-                {prepareDropdownOption(option)}
+                {prepareDropdownOption(option.documentName)}
               </div>
             ))}
           </div>
@@ -59,4 +69,4 @@ function Dropdown(props) {
   );
 }
 
-export default Dropdown;
+export default ScheduleDropdown;

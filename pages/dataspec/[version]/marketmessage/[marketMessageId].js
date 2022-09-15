@@ -10,11 +10,8 @@ import { checkIfVariablesAreAvailable } from "../../../../components/helperFunct
 import { logError } from "../../../../components/helperFunctions/logError";
 import { checkIfItemsAvailableInArray } from "../../../../components/helperFunctions/checkIfItemsAvailableInArray";
 
-function MmDetailPage(
-  {
-    searchResults
-  }
-) {
+function MmDetailPage({ searchResults }) {
+
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
 
@@ -24,18 +21,18 @@ function MmDetailPage(
       apiVarList = [
         {
           obj: searchResults,
-          name: "searchResults"
+          name: "searchResults",
         },
         { obj: searchResults[0], name: "marketMessageInfo" },
         { obj: searchResults[1], name: "svForMarketMessage" },
-        { obj: searchResults[2], name: "dataItems" }
+        { obj: searchResults[2], name: "dataItems" },
       ];
     } else {
       apiVarList = [
         {
           obj: searchResults,
-          name: "searchResults"
-        }
+          name: "searchResults",
+        },
       ];
     }
   };
@@ -69,7 +66,11 @@ function MmDetailPage(
         removeNullValues(marketMessageInfo.UNCMessageIdentifier)
       : null;
 
-  const dataItemsTableHead = ["Data Item Id", "Data Item Name"];
+  const dataItemsTableHead = [
+    "Data Item Id",
+    "Local Catalogue Reference",
+    "Data Item Name",
+  ];
 
   return (
     <>
@@ -142,16 +143,21 @@ function MmDetailPage(
                       href={{
                         pathname: `/dataspec/${latestDataSpecVersion}/dataitem/[di]`,
                         query: {
-                          di: entry.DataItemIdentifier
-                        }
+                          di: entry.DataItemIdentifier,
+                        },
                       }}
                       passHref={true}
                     >
-                      <tr
-                        key={entry.DataItemIdentifier}
-                        className={styles.pointer}
-                      >
+                      <tr className={styles.pointer}>
                         <td>{entry.DataItemIdentifier}</td>
+                        <td>
+                          {removeNullValues(entry.DTCLegacyReference) +
+                            removeNullValues(entry.SPAALegacyReference) +
+                            removeNullValues(entry.RGMALegacyReference) +
+                            removeNullValues(entry.UNCDataItemReference) +
+                            removeNullValues(entry.IUCDataItemReference) +
+                            removeNullValues(entry.DCUSADataItemReference)}
+                        </td>
                         <td>{entry.DataItemName}</td>
                       </tr>
                     </Link>
@@ -181,15 +187,15 @@ function MmDetailPage(
                   <th>Source</th>
                   <th>Target</th>
                 </thead>
-                {svForMarketMessage.map((entry) => (
-                  <tbody>
+                <tbody>
+                  {svForMarketMessage.map((entry) => (
                     <Link
                       key={entry.EnergyMarketMessageScenarioVariantIdentifier}
                       href={{
                         pathname: `/dataspec/${latestDataSpecVersion}/scenario-variant/[sv]`,
                         query: {
-                          sv: entry.EnergyMarketMessageScenarioVariantIdentifier
-                        }
+                          sv: entry.EnergyMarketMessageScenarioVariantIdentifier,
+                        },
                       }}
                       passHref={true}
                     >
@@ -205,8 +211,8 @@ function MmDetailPage(
                         <td>{entry.TargetMarketDataServiceName}</td>
                       </tr>
                     </Link>
-                  </tbody>
-                ))}
+                  ))}
+                </tbody>
               </table>
             </div>
           ) : (
@@ -238,7 +244,7 @@ export async function getServerSideProps(context) {
   const searchResults = [
     dataJson.marketMessageInfo[0],
     dataJson.svList,
-    dataJson.dataItemList
+    dataJson.dataItemList,
   ];
 
   // Pass data to the page via props

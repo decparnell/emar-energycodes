@@ -41,3 +41,14 @@ export function getDistinctValuesMarketMessage(array) {
   }
   return distinct;
 }
+
+export const getDistinctValuesSchedules = (array) => {
+  const distinct = [];
+  for (var i = 0; i < array.length; i++) {
+    const value = array[i].documentName;
+    if (distinct.indexOf(value) == -1) {
+      distinct.push(value);
+    }
+  }
+  return distinct;
+};

@@ -9,6 +9,8 @@ import DataSpecSearch from "../components/dataspec/dataSpecSearch";
 import { NewsBanner } from "../components/newsBanner";
 import CodesSchedulesSearch from "../components/codesSchedules/codesSchedulesSearch";
 import { checkIfVariablesAreAvailable } from "../components/helperFunctions/checkIfVariablesAreAvailable";
+import { logError } from "../components/helperFunctions/logError";
+import { checkIfItemsAvailableInArray } from "../components/helperFunctions/checkIfItemsAvailableInArray/";
 
 function HomePage({
   dashboards,
@@ -17,9 +19,9 @@ function HomePage({
   latestVersionJson,
   newsData,
   mmsv,
-  dataItems
+  dataItems,
+  codesSchedulesDataJson
 }) {
-
   const apiVarList = [
     { obj: newsData, name: "newsData" },
     { obj: items, name: "items" },
@@ -36,20 +38,23 @@ function HomePage({
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
   const [currentDashboard, setCurrentDashboard] = useState(() => {
-    if (internalErrorLog.indexOf("dashboards") === -1) {
+    if (checkIfItemsAvailableInArray(internalErrorLog, "dashboards")) {
       return dashboards.filter((dashboard) => dashboard.dashboardOrder == 1)[0];
     }
   });
 
   const [currentSections, setCurrentSections] = useState(() => {
-    if (internalErrorLog.indexOf("dashboards") === -1 && internalErrorLog.indexOf("sections")) {
+    if (
+      checkIfItemsAvailableInArray(internalErrorLog, "dashboards") &&
+      checkIfItemsAvailableInArray(internalErrorLog, "sections")
+    ) {
       return sections.filter(
         (section) => section.dashboardId_FK == currentDashboard.dashboardId
       );
     }
   });
   useEffect(() => {
-    if (internalErrorLog.indexOf("dashboards") === -1) {
+    if (checkIfItemsAvailableInArray(internalErrorLog, "dashboards")) {
       const newDashboard = dashboards.filter(
         (dashboard) => dashboard.dashboardId == chosenTab
       )[0];
@@ -58,19 +63,26 @@ function HomePage({
   }, [chosenTab]);
 
   useEffect(() => {
-     if (internalErrorLog.indexOf("dashboards") === -1 && internalErrorLog.indexOf("sections")) {
-       setCurrentSections(
-         sections.filter(
-           (section) => section.dashboardId_FK == currentDashboard.dashboardId
-         )
-       );
-     }
-    
+    if (
+      checkIfItemsAvailableInArray(internalErrorLog, "dashboards") &&
+      checkIfItemsAvailableInArray(internalErrorLog, "sections")
+    ) {
+      setCurrentSections(
+        sections.filter(
+          (section) => section.dashboardId_FK == currentDashboard.dashboardId
+        )
+      );
+    }
   }, [currentDashboard]);
-
   return (
     <>
-      {internalErrorLog.indexOf("newsData") === -1 ? <NewsBanner news={newsData} /> : null}
+      {checkIfItemsAvailableInArray(internalErrorLog, "newsData") ? (
+        <NewsBanner news={newsData} />
+      ) : (
+        <div className={styles.errorBox}>
+          {logError("News Data")}
+        </div>
+      )}
       <TabNavbar />
       <ButtonNavbar />
       <div className={styles.container}>
@@ -79,9 +91,10 @@ function HomePage({
           <meta property="og:title" content="My page title" key="title" />
         </Head>
         {chosenButton == "1" &&
-        internalErrorLog.indexOf("dashboards") === -1 &&
-        internalErrorLog.indexOf("items") === -1 &&
-        internalErrorLog.indexOf("latestVersionJson") === -1 ? (
+        checkIfItemsAvailableInArray(internalErrorLog, "dashboards") &&
+        checkIfItemsAvailableInArray(internalErrorLog, "items") &&
+        checkIfItemsAvailableInArray(internalErrorLog, "latestVersionJson") &&
+        checkIfItemsAvailableInArray(internalErrorLog, "sections") ? (
           <Dashboard
             name={currentDashboard.dashboardName}
             columns={currentDashboard.dashboardColumns}
@@ -91,12 +104,18 @@ function HomePage({
           />
         ) : chosenButton == "2" &&
           chosenTab == "2" &&
-          internalErrorLog.indexOf("mmsv") === -1 &&
-          internalErrorLog.indexOf("dataItems") === -1 ? (
+          checkIfItemsAvailableInArray(internalErrorLog, "mmsv") &&
+          checkIfItemsAvailableInArray(internalErrorLog, "dataItems") ? (
           <DataSpecSearch mmsv={mmsv} dataItems={dataItems} />
         ) : chosenButton == "2" && chosenTab == "1" ? (
-          <CodesSchedulesSearch />
-        ) : null}
+          <CodesSchedulesSearch
+            codesSchedulesDataJson={codesSchedulesDataJson}
+          />
+        ) : (
+          <div className={styles.errorBox}>
+            {logError("Dashboard")}
+          </div>
+        )}
       </div>
     </>
   );
@@ -125,6 +144,11 @@ export async function getServerSideProps(context) {
   );
   const latestNewsJson = await newsDataReq.json();
   const newsData = latestNewsJson.latestNews;
+
+  const codesSchedulesDataReq = await fetch(
+    `https://prod-21.uksouth.logic.azure.com:443/workflows/08cc6cb613f24c20b8b7d61e707852ed/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Lu9fcr6ePmGgjIEsHIwQ8y64Xewe1lsErD-FDxYKSCM`
+  );
+  const codesSchedulesDataJson = await codesSchedulesDataReq.json();
   const dataSpecData = await fetch(
     `https://prod-24.uksouth.logic.azure.com:443/workflows/dcb64fdc2eea43aa8e231cb7035ff20d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6fNJtJqCiH8TYdaftlFMPn1nuUE5KNLopKDvuU9WRV8`
   );
@@ -140,7 +164,8 @@ export async function getServerSideProps(context) {
       latestVersionJson,
       newsData,
       mmsv,
-      dataItems
+      dataItems,
+      codesSchedulesDataJson
     }
   };
 }
