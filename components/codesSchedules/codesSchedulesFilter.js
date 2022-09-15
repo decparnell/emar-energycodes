@@ -5,15 +5,19 @@ import ScheduleDropdown from "../dropdown/schedule";
 export const MessageFilters = (
   scheduleList,
   schedulesFilterValue,
-  setSchedulesFilterValue
+  setSchedulesFilterValue,
+  clearFilter
 ) => {
+  console.log(scheduleList);
   return (
     <div className={styles.sourcetargetContainer}>
       <ScheduleDropdown
         style={styles.dropdown}
         options={scheduleList}
+        dropdownType="filter"
         value={[schedulesFilterValue, setSchedulesFilterValue]}
         version={false}
+        closeFilter={clearFilter}
       />
     </div>
   );

@@ -15,16 +15,16 @@ function ScheduleDetail({
   sections,
   components,
   document,
-  definitions
-}) {
-  
+  definitions,
+}) {  
+
   const apiVarList = [
     { obj: versions, name: "versions" },
     { obj: parts, name: "parts" },
     { obj: sections, name: "sections" },
     { obj: components, name: "components" },
     { obj: document, name: "document" },
-    { obj: definitions, name: "definitions" }
+    { obj: definitions, name: "definitions" },
   ];
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
   const docInfo = checkIfItemsAvailableInArray(internalErrorLog, "document")
@@ -45,7 +45,7 @@ function ScheduleDetail({
       <aside
         className={[
           isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed,
-          styles.sidebar
+          styles.sidebar,
         ].join(" ")}
       >
         <div className={styles.hamburger}>
@@ -78,7 +78,7 @@ function ScheduleDetail({
           isSidebarOpen
             ? styles.contentWithSidebar
             : styles.contentWithoutSidebar,
-          styles.content
+          styles.content,
         ].join(" ")}
       >
         {checkIfItemsAvailableInArray(internalErrorLog, "document") ? (
@@ -158,7 +158,7 @@ function createContent(parts, sections, components, definitions) {
     { obj: parts, name: "parts" },
     { obj: sections, name: "sections" },
     { obj: components, name: "components" },
-    { obj: definitions, name: "definitions" }
+    { obj: definitions, name: "definitions" },
   ];
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
@@ -170,6 +170,7 @@ function createContent(parts, sections, components, definitions) {
         let sectionsInPart = sections.filter((sec) => {
           return sec.partId_FK === part.partId;
         });
+
         if (checkIfItemsAvailableInArray(internalErrorLog, "components")) {
           for (const section of sectionsInPart) {
             let componentsInSection = components.filter(function (el2) {
@@ -260,6 +261,6 @@ export async function getServerSideProps(context) {
   const definitionsJson = await definitionsReq.json();
   const definitions = definitionsJson.definitions;
   return {
-    props: { versions, parts, sections, components, document, definitions }
+    props: { versions, parts, sections, components, document, definitions },
   };
 }

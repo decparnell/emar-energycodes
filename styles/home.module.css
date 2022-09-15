@@ -15,3 +15,11 @@
   background-color: #60935d;
   color:white;
 }
+
+.errorBox {
+  padding: 20px;
+  background-color: #e7ab00;
+  color: white;
+  margin: 25px;
+  text-align: center;
+}
