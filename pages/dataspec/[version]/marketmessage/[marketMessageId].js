@@ -8,10 +8,11 @@ import Head from "next/head";
 import SecondNavbar from "../../../../components/layout/secondHeader";
 import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable";
 import { logError } from "../../../../components/helperFunctions/logError";
+import { checkIfItemsAvailableInArray } from "../../../../components/helperFunctions/checkIfItemsAvailableInArray";
 
 function MmDetailPage(
   {
-     searchResults
+    searchResults
   }
 ) {
   const value = useContext(AppContext);
@@ -43,24 +44,24 @@ function MmDetailPage(
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
   const marketMessageInfo =
-    internalErrorLog.indexOf("searchResults") === -1 &&
-    internalErrorLog.indexOf("marketMessageInfo") === -1
+    checkIfItemsAvailableInArray(internalErrorLog,"searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog,"marketMessageInfo")
       ? searchResults[0]
       : null;
   const svForMarketMessage =
-    internalErrorLog.indexOf("searchResults") === -1 &&
-    internalErrorLog.indexOf("svForMarketMessage") === -1
+    checkIfItemsAvailableInArray(internalErrorLog,"searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog,"svForMarketMessage")
       ? searchResults[1]
       : null;
   const dataItems =
-    internalErrorLog.indexOf("searchResults") === -1 &&
-    internalErrorLog.indexOf("dataItems") === -1
+    checkIfItemsAvailableInArray(internalErrorLog,"searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog,"dataItems")
       ? searchResults[2]
       : null;
 
   const legacy =
-    internalErrorLog.indexOf("searchResults") === -1 &&
-    internalErrorLog.indexOf("marketMessageInfo") === -1
+    checkIfItemsAvailableInArray(internalErrorLog,"searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog,"marketMessageInfo")
       ? removeNullValues(marketMessageInfo.DTCDcode) +
         removeNullValues(marketMessageInfo.CSSMessageIdentifier) +
         removeNullValues(marketMessageInfo.LegacyRGMAMessageIdentifier) +
@@ -73,9 +74,12 @@ function MmDetailPage(
   return (
     <>
       <SecondNavbar />
-      {internalErrorLog.indexOf("searchResults") === -1 ? (
+      {checkIfItemsAvailableInArray(internalErrorLog, "searchResults") ? (
         <div className={styles.contentContainer}>
-          {internalErrorLog.indexOf("marketMessageInfo") === -1 ? (
+          {checkIfItemsAvailableInArray(
+            internalErrorLog,
+            "marketMessageInfo"
+          ) ? (
             <div>
               <Head>
                 <title>EMAR - {marketMessageInfo.Label}</title>
@@ -91,7 +95,10 @@ function MmDetailPage(
               {logError("Market Message Info", "is not available")}
             </div>
           )}
-          {internalErrorLog.indexOf("marketMessageInfo") === -1 && (
+          {checkIfItemsAvailableInArray(
+            internalErrorLog,
+            "marketMessageInfo"
+          ) && (
             <table className={styles.fullWidthTable}>
               <tbody>
                 <tr>
@@ -117,7 +124,7 @@ function MmDetailPage(
               </tbody>
             </table>
           )}
-          {internalErrorLog.indexOf("dataItems") === -1 ? (
+          {checkIfItemsAvailableInArray(internalErrorLog, "dataItems") ? (
             <div>
               <h2 className={styles.svHeader}>
                 The Data items message contains:
@@ -160,8 +167,10 @@ function MmDetailPage(
               )}
             </div>
           )}
-
-          {internalErrorLog.indexOf("svForMarketMessage") === -1 ? (
+          {checkIfItemsAvailableInArray(
+            internalErrorLog,
+            "svForMarketMessage"
+          ) ? (
             <div>
               <h2 className={styles.diHeader}>
                 The Scenario Vaiants for this message are:
