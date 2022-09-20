@@ -1,11 +1,13 @@
 .header {
-  background-image: linear-gradient(to right,#4d8934, #70ada3);
+  background-image: linear-gradient(to right, #4d8934, #70ada3);
   height: 8vh;
   width: 100%;
-  position: sticky; 
+  position: fixed;
+  top: 0;
   z-index: 100;
-  top:0;
+  overflow: hidden;
 }
+
 .logo {
   height: 100%;
   width: 5%;
@@ -15,82 +17,80 @@
   min-height: 6vh;
   height: 6vh;
   width: 100%;
-
 }
 
 .navLinks {
-    float: right;
-    height: 100%;
-    margin-right:2%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  float: right;
+  height: 100%;
+  margin-right: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  }
+.navLink,
+.secondHeaderLink {
+  height: 100%;
+  margin-left: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .navLink,.secondHeaderLink {
-    height: 100%;
-    margin-left: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .navLink{
-    font-weight: bold;
-    font-size: 20px;
-  }
-  .dataSpecDropDown{
-    border:0.5px solid black;
-    font-weight: bold;
-    padding: 3px;
-  }
+.navLink {
+  font-weight: bold;
+  font-size: 20px;
+}
+.dataSpecDropDown {
+  border: 0.5px solid black;
+  font-weight: bold;
+  padding: 3px;
+}
 
-  .tabHeader{
-    width:100%;
-    display: flex;
-    justify-content: space-evenly;
-    position: sticky; 
-    z-index: 100;
-    top: 8vh;
-  }
+.tabHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  position: sticky;
+  z-index: 100;
+  top: 0;
+}
 
-  .tabItem{
-    background-color: #E7F4E4;
-    width:100%;
-    text-align: center;
-    font-size: x-large;
-    cursor: pointer;
-    border-bottom: 1px solid #4d8934;
-  }
+.tabItem {
+  background-color: #e7f4e4;
+  width: 100%;
+  text-align: center;
+  font-size: x-large;
+  cursor: pointer;
+  border-bottom: 1px solid #4d8934;
+}
 
-  .chosenTab{
-    border: 3px solid #4d8934;
-    font-weight: bold;
-  }
+.chosenTab {
+  border: 3px solid #4d8934;
+  font-weight: bold;
+}
 
-  .buttonHeader{
-    width:100%;
-    display: flex;
-    justify-content: space-evenly;
-    margin:3% 0;
+.buttonHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 3% 0;
+}
 
-  }
+.buttonItem {
+  width: 20%;
+  background-color: #e7f4e4;
+  color: black;
+  cursor: pointer;
+  padding: 0.3%;
+}
 
-  .buttonItem{
-    width:20%;
-    background-color: #E7F4E4;
-    color:black;
-    cursor: pointer;
-    padding:0.3%;
-  }
-
-  .chosenButton{
-    background-color: #4d8934;
-    color:white;
-  }
-  .homeButton{
-    height:100%;
-    width:100%;
-    cursor:pointer;
-  }
+.chosenButton {
+  background-color: #4d8934;
+  color: white;
+}
+.homeButton {
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+}
