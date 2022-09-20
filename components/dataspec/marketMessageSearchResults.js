@@ -1,15 +1,22 @@
 import Link from "next/link";
 import styles from "../../styles/dataspec.module.css";
+import addPaddingToGroupId from "./functions/addIdPadding";
 import removeNullValues from "./functions/removeNulls";
 export const MarketMessageSearchResults = (
   searchResults,
   latestDataSpecVersion
 ) => {
+  const tableHeads = [
+    "Market Message Reference",
+    "Local Catalogue Reference",
+    "Market Message Name",
+    "Message Version Number"
+  ];
   const tableHeader = (
     <thead>
-      <th>Market Message Reference</th>
-      <th>Local Catalogue Reference</th>
-      <th>Market Message Name</th>
+      {tableHeads.map((item) => (
+        <th>{item}</th>
+      ))}
     </thead>
   );
 
@@ -21,8 +28,8 @@ export const MarketMessageSearchResults = (
           href={{
             pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[mmid]`,
             query: {
-              mmid: entry.EnergyMarketMessageIdentifier,
-            },
+              mmid: entry.EnergyMarketMessageIdentifier
+            }
           }}
           passHref={true}
         >
@@ -39,6 +46,7 @@ export const MarketMessageSearchResults = (
                 removeNullValues(entry.UNCMessageIdentifier)}
             </td>
             <td>{entry.Label}</td>
+            <td>{addPaddingToGroupId(entry.MessageVersionNumber)}</td>
           </tr>
         </Link>
       ))}
