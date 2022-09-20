@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import styles from "../../styles/helperFunctions.module.css";
+import styles from "../../../styles/helperFunctions.module.css";
 
-
-function hoverOverFunctionDefinition(definitionString, linkingWord, linkAddress) {
+function hoverOverFunctionDefinition(
+  definitionString,
+  linkingWord,
+  linkAddress
+) {
   const [isShown, setIsShown] = useState(false);
 
   return (
-    <div className={styles.tooltip}>
+    <>
       <a
         className={styles.tooltiptext}
-        href={linkAddress}
+        href={`/codes-schedules/definitions/${encodeURIComponent(linkAddress)}`}
         target="_blank"
         rel="noreferrer"
         onMouseEnter={() => setIsShown(true)}
@@ -17,8 +20,8 @@ function hoverOverFunctionDefinition(definitionString, linkingWord, linkAddress)
       >
         {linkingWord}
       </a>
-      {isShown && <div>{definitionString}</div>}
-    </div>
+      {isShown && <div className={styles.tooltip}>{definitionString}</div>}
+    </>
   );
 }
 

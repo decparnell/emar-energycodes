@@ -2,7 +2,7 @@ import styles from "../../styles/codes.module.css";
 import Link from "next/link";
 import Popup from "reactjs-popup";
 import Image from "next/image";
-
+import hoverOverFunctionDefinition from "../helperFunctions/onHoverDefinition";
 function CreateCustomTag(clauseReference, clauseComponents, definitions) {
   const clauseJsx = [];
   const componentId = clauseComponents[0].componentId;
@@ -38,9 +38,8 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
     componentContainer = `${styles.subHeading}`;
   } else if (style === "table") {
     CustomTag = `table`;
-  }
-  else if (style === "image") {
-    CustomTag = 'Image';
+  } else if (style === "image") {
+    CustomTag = "Image";
   }
 
   //LOOP OVER EACH COMPONENT IN THE CLAUSE AND ADD IT TO THE SAME BOX (mainly ofr lists.)
@@ -135,24 +134,28 @@ function addLinkedComponentsToOutput(
   clauseComponentId
 ) {
   //create an array of the text to display including all links using split text function
-  if (CustomTag === 'Image'){
+  if (CustomTag === "Image") {
     clauseJsx.push(
-      <Image alt="schedule image" src={text} 
-      className = 'scheduleImage' 
-      width = '550%'
-      height = '600%' />
-    )
+      <Image
+        alt="schedule image"
+        src={text}
+        className="scheduleImage"
+        width="550%"
+        height="600%"
+      />
+    );
   } else {
-  const linkedText = splitTextByKeyWords(text, definitions);
-  clauseJsx.push(
-    <CustomTag
-      className={customClassName}
-      key={`${clauseComponentId}`}
-      id={`${clauseComponentId}`}
-    >
-      {linkedText}
-    </CustomTag>
-  ); }
+    const linkedText = splitTextByKeyWords(text, definitions);
+    clauseJsx.push(
+      <CustomTag
+        className={customClassName}
+        key={`${clauseComponentId}`}
+        id={`${clauseComponentId}`}
+      >
+        {linkedText}
+      </CustomTag>
+    );
+  }
 }
 
 function createIndentedText(indent) {
@@ -184,8 +187,13 @@ function splitTextByKeyWords(text, definitions) {
       let textSplit = searchText.split(linkingWord);
       //for each item in the array until var i is = to the length textsplit - 2
       for (var i = 0; i < textSplit.length - 1; i += 1) {
+        const hoverFunction = hoverOverFunctionDefinition(
+          linkInfo["componentText"],
+          linkingWord,
+          linkInfo["linkForwardUrl"]
+        );
         //add two values to the array - first half of the split text and an 'a' link to the linked word
-        arrayOfText.push(
+        /* arrayOfText.push(
           textSplit[i],
           <a
             className={styles.linkedText}
@@ -197,7 +205,8 @@ function splitTextByKeyWords(text, definitions) {
           >
             {linkingWord}
           </a>
-        );
+        ); */
+        arrayOfText.push(textSplit[i], hoverFunction);
       }
       //once we get to the end of the array set the temp text value to the rest of the sentence
       searchText = textSplit[i];

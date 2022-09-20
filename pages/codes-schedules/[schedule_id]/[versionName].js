@@ -16,8 +16,7 @@ function ScheduleDetail({
   components,
   document,
   definitions,
-}) {  
-
+}) {
   const apiVarList = [
     { obj: versions, name: "versions" },
     { obj: parts, name: "parts" },
@@ -217,17 +216,11 @@ function createContent(parts, sections, components, definitions) {
           }
         } else {
           return (
-            <div className={styles.errorBox}>
-              {logError("Components")}
-            </div>
+            <div className={styles.errorBox}>{logError("Components")}</div>
           );
         }
       } else {
-        return (
-          <div className={styles.errorBox}>
-            {logError("Sections")}
-          </div>
-        );
+        return <div className={styles.errorBox}>{logError("Sections")}</div>;
       }
     }
   }
@@ -256,7 +249,7 @@ export async function getServerSideProps(context) {
   const document = dataJson.document;
 
   const definitionsReq = await fetch(
-    `https://prod-27.uksouth.logic.azure.com:443/workflows/ba14c0c80fa447f99dd47e6c861c3ffd/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=w7CExwLA7utrpv2MTCbiIN9YYsAkH6op-PGZLxfy0bA`
+    `https://prod-28.uksouth.logic.azure.com:443/workflows/32adcb866eed49d998b350e43e4386ac/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=I3PFridsAI83LG9Df3hipu3Z4V4qgmj8VvJ0ijYrYz8`
   );
   const definitionsJson = await definitionsReq.json();
   const definitions = definitionsJson.definitions;
