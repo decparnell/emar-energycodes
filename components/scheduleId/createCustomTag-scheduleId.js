@@ -2,7 +2,7 @@ import styles from "../../styles/codes.module.css";
 import Link from "next/link";
 import Popup from "reactjs-popup";
 import Image from "next/image";
-import hoverOverFunctionDefinition from "../helperFunctions/onHoverDefinition";
+import HoverOverFunctionDefinition from "../helperFunctions/onHoverDefinition";
 function CreateCustomTag(clauseReference, clauseComponents, definitions) {
   const clauseJsx = [];
   const componentId = clauseComponents[0].componentId;
@@ -187,25 +187,12 @@ function splitTextByKeyWords(text, definitions) {
       let textSplit = searchText.split(linkingWord);
       //for each item in the array until var i is = to the length textsplit - 2
       for (var i = 0; i < textSplit.length - 1; i += 1) {
-        const hoverFunction = hoverOverFunctionDefinition(
+        //using the hover function to create the link to the definitions page, and the on hover function
+        const hoverFunction = HoverOverFunctionDefinition(
           linkInfo["componentText"],
           linkingWord,
           linkInfo["linkForwardUrl"]
         );
-        //add two values to the array - first half of the split text and an 'a' link to the linked word
-        /* arrayOfText.push(
-          textSplit[i],
-          <a
-            className={styles.linkedText}
-            href={`/codes-schedules/definitions/${encodeURIComponent(
-              linkInfo["linkForwardUrl"]
-            )}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {linkingWord}
-          </a>
-        ); */
         arrayOfText.push(textSplit[i], hoverFunction);
       }
       //once we get to the end of the array set the temp text value to the rest of the sentence

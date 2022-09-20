@@ -6,13 +6,22 @@
   top: 0;
   z-index: 100;
   overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2em;
+}
+
+.headerText {
+  font-family: "Roboto";
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .logo {
-  height: 100%;
-  width: 5%;
-  float: left;
+  width: 65px;
 }
+
 .secondHeader {
   min-height: 6vh;
   height: 6vh;
@@ -66,8 +75,8 @@
 }
 
 .chosenTab {
-  border: 3px solid #4d8934;
-  font-weight: bold;
+  background-color: #4d8934;
+  color: white;
 }
 
 .buttonHeader {
@@ -90,7 +99,7 @@
   color: white;
 }
 .homeButton {
-  height: 100%;
-  width: 100%;
+  height: 40px;
+  width: 40px;
   cursor: pointer;
 }

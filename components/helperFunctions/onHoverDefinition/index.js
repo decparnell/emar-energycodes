@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "../../../styles/helperFunctions.module.css";
 
-function hoverOverFunctionDefinition(
+function HoverOverFunctionDefinition(
   definitionString,
   linkingWord,
   linkAddress
@@ -25,4 +25,4 @@ function hoverOverFunctionDefinition(
   );
 }
 
-export default hoverOverFunctionDefinition;
+export default HoverOverFunctionDefinition;
