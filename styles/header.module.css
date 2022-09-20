@@ -66,8 +66,8 @@
 }
 
 .chosenTab {
-  border: 3px solid #4d8934;
-  font-weight: bold;
+  background-color: #4d8934;
+  color: white;
 }
 
 .buttonHeader {
