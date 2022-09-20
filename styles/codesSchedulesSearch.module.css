@@ -35,6 +35,7 @@
 
 .contentContainer {
   margin: 5%;
+  padding-bottom: 6em;
   border-radius: 5px;
   color: black;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
@@ -49,9 +50,9 @@
 }
 
 .searchResultsTableRow {
-  width:90%;
-  margin-left:5%;
-  border:none;
+  width: 90%;
+  margin-left: 5%;
+  border: none;
   border-collapse: collapse;
 }
 
