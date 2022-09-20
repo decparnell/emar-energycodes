@@ -8,7 +8,6 @@ import SecondNavbar from "../../../../components/layout/secondHeader";
 import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable/index";
 import { logError } from "../../../../components/helperFunctions/logError";
 import { checkIfItemsAvailableInArray } from "../../../../components/helperFunctions/checkIfItemsAvailableInArray/index";
-import addPaddingToGroupId from "../../../../components/dataspec/functions/addIdPadding";
 
 function DiDetailPage({ searchResults }) {
   let apiVarList = [];
@@ -67,14 +66,6 @@ function DiDetailPage({ searchResults }) {
         removeNullValues(dataItemInfo.IUCDataItemReference) +
         removeNullValues(dataItemInfo.DCUSADataItemReference)
       : null;
-
-        const tableHeads = [
-          "Market Message Id",
-          "Local Catalogue Reference",
-          "Market Message Name",
-          "Message Version Number"
-        ];
-        
   return (
     <>
       <SecondNavbar />
@@ -186,9 +177,9 @@ function DiDetailPage({ searchResults }) {
                 }
               >
                 <thead>
-                  {tableHeads.map((item) => (
-                    <th>{item}</th>
-                  ))}
+                  <th>Market Message Id</th>
+                  <th>Local Catalogue Reference</th>
+                  <th>Market Message Name</th>
                 </thead>
                 <tbody>
                   {mmForDataItem.map((entry) => (
@@ -197,8 +188,8 @@ function DiDetailPage({ searchResults }) {
                       href={{
                         pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[mmid]`,
                         query: {
-                          mmid: entry.EnergyMarketMessageIdentifier
-                        }
+                          mmid: entry.EnergyMarketMessageIdentifier,
+                        },
                       }}
                     >
                       <tr
@@ -218,9 +209,6 @@ function DiDetailPage({ searchResults }) {
                             removeNullValues(entry.CSSMessageIdentifier)}
                         </td>
                         <td>{entry.Label}</td>
-                        <td>
-                          {addPaddingToGroupId(entry.MessageVersionNumber)}
-                        </td>
                       </tr>
                     </Link>
                   ))}

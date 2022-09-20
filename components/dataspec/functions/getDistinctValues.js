@@ -33,7 +33,6 @@ export function getDistinctValuesMarketMessage(array) {
       LegacySPAAMessageIdentifier: value.LegacySPAAMessageIdentifier,
       UNCMessageIdentifier: value.UNCMessageIdentifier,
       Label: value.Label,
-      MessageVersionNumber: value.MessageVersionNumber
     };
     if (distinctKeys.indexOf(newObject.EnergyMarketMessageIdentifier) == -1) {
       distinct.push(newObject);
