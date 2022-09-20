@@ -1,9 +1,10 @@
 import Image from "next/image";
-import logo from "./recco_logo.PNG";
+// import logo from "./recco_logo.PNG";
+import reccoLogo from "./RECCOLogoWhiteAsset13.png";
 import Link from "next/link";
 import { Fragment } from "react";
 import styles from "../../styles/header.module.css";
-import { AiOutlineHome } from "react-icons/ai";
+import { FaBars } from "react-icons/fa";
 function navbar() {
   //<div className="navLink">
   //<Link href="/rec-portal">REC Portal</Link>
@@ -12,12 +13,17 @@ function navbar() {
     <Fragment>
       <div className={styles.header}>
         <div className={styles.logo}>
-          {/* <Image alt="Recco logo" src={logo} /> */}
+          <Image alt="Recco logo" src={reccoLogo} />
         </div>
-        <div className={styles.navLinks}>
+        <div>
+          <Link href="/">
+            <h2 className={styles.headerText}>RECCo EMAR</h2>
+          </Link>
+        </div>
+        <div>
           <div className={styles.navLink}>
             <Link href="/">
-              <AiOutlineHome className={styles.homeButton} />
+              <FaBars className={styles.homeButton} />
             </Link>
           </div>
         </div>
