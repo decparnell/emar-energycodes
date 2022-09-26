@@ -12,14 +12,11 @@ function navbar() {
   return (
     <Fragment>
       <div className={styles.header}>
-        <div className={styles.logo}>
-          <Image alt="Recco logo" src={reccoLogo} />
-        </div>
-        <div>
-          <Link href="/">
-            <h2 className={styles.headerText}>RECCo EMAR</h2>
-          </Link>
-        </div>
+        <Link href="/">
+          <div className={styles.logo}>
+            <Image alt="Recco logo" src={reccoLogo} />
+          </div>
+        </Link>
         <div>
           <div className={styles.navLink}>
             <Link href="/">

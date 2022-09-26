@@ -8,7 +8,8 @@ import Head from "next/head";
 import { checkIfVariablesAreAvailable } from "../../../components/helperFunctions/checkIfVariablesAreAvailable";
 import { logError } from "../../../components/helperFunctions/logError";
 import { checkIfItemsAvailableInArray } from "../../../components/helperFunctions/checkIfItemsAvailableInArray";
-
+import { AiOutlineDownload } from "react-icons/ai";
+import OnHoverToolTip from "../../../components/helperFunctions/toolTip";
 function ScheduleDetail({
   versions,
   parts,
@@ -82,7 +83,11 @@ function ScheduleDetail({
       >
         {checkIfItemsAvailableInArray(internalErrorLog, "document") ? (
           <div className={styles.scheduleContainer}>
+            <OnHoverToolTip title="Download Schedules">
+              <AiOutlineDownload className={styles.downloadLink} />
+            </OnHoverToolTip>
             <h1 className={styles.contentTitle}>{docInfo.documentName}</h1>
+
             {checkIfItemsAvailableInArray(internalErrorLog, "versions") ? (
               <table id="version" className={styles.table}>
                 <thead>
