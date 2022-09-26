@@ -12,7 +12,7 @@
 
 .options,.versionOptions{
     position: absolute;
-    border: 1px solid #6e9f5b;
+    border: 1px solid #4d8934;
     overflow-y: scroll;
     max-height: 300px;
 }
@@ -24,10 +24,10 @@
 .option{
     background-color: #36494E;
     color:white;
-    border-bottom: 1px solid #6e9f5b;
+    border-bottom: 1px solid #4d8934;
 }
 .chosen{
-    background-color: #6e9f5b;
+    background-color: #4d8934;
 }
 .option:hover {
     background-color: #ddd;

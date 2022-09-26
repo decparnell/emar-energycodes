@@ -1,5 +1,5 @@
 .header {
-  background-image: linear-gradient(to right, #4d8934, #70ada3);
+  background-image: linear-gradient(90deg, #C4D38D 0%, #4D8934 53.65%);
   height: 8vh;
   width: 100%;
   position: fixed;
@@ -19,7 +19,8 @@
 }
 
 .logo {
-  width: 65px;
+  width: 9%;
+  cursor:pointer;
 }
 
 .secondHeader {
@@ -102,4 +103,5 @@
   height: 40px;
   width: 40px;
   cursor: pointer;
+  color:white;
 }

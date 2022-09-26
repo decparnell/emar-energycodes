@@ -104,16 +104,16 @@
   text-align: center;
   background: #36494e;
   color: white;
-  border: 1px solid #60935d;
+  border: 1px solid #4d8934;
   font-weight: bold;
 }
 
 .tableHearSide {
-  background: #60935d;
+  background: #4d8934;
   color: white;
 }
 .mmTable {
-  background-color: #60935d;
+  background-color: #4d8934;
 }
 
 .sourcetargetContainer {
@@ -129,7 +129,7 @@
 .source,
 .target {
   width: 30%;
-  background: #60935d;
+  background: #4d8934;
   color: white;
   text-align: center;
   font-size: 110%;
@@ -191,7 +191,7 @@
   cursor: pointer;
 }
 .chosen {
-  background-color: #60935d;
+  background-color: #4d8934;
   color: white;
 }
 
