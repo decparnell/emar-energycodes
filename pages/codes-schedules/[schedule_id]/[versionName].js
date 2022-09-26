@@ -8,8 +8,7 @@ import Head from "next/head";
 import { checkIfVariablesAreAvailable } from "../../../components/helperFunctions/checkIfVariablesAreAvailable";
 import { logError } from "../../../components/helperFunctions/logError";
 import { checkIfItemsAvailableInArray } from "../../../components/helperFunctions/checkIfItemsAvailableInArray";
-import { AiOutlineDownload } from "react-icons/ai";
-import OnHoverToolTip from "../../../components/helperFunctions/toolTip";
+import DocumentDownload from "../../../components/documentDownload";
 function ScheduleDetail({
   versions,
   parts,
@@ -17,6 +16,7 @@ function ScheduleDetail({
   components,
   document,
   definitions,
+  url,
 }) {
   const apiVarList = [
     { obj: versions, name: "versions" },
@@ -83,9 +83,7 @@ function ScheduleDetail({
       >
         {checkIfItemsAvailableInArray(internalErrorLog, "document") ? (
           <div className={styles.scheduleContainer}>
-            <OnHoverToolTip title="Download Schedules">
-              <AiOutlineDownload className={styles.downloadLink} />
-            </OnHoverToolTip>
+            <DocumentDownload type="schedule" url={url} />
             <h1 className={styles.contentTitle}>{docInfo.documentName}</h1>
 
             {checkIfItemsAvailableInArray(internalErrorLog, "versions") ? (
@@ -258,7 +256,21 @@ export async function getServerSideProps(context) {
   );
   const definitionsJson = await definitionsReq.json();
   const definitions = definitionsJson.definitions;
+
+  let urlFetch = await fetch(
+    `https://prod-03.uksouth.logic.azure.com/workflows/076c8da5b74d452abc028069f5a1ac4e/triggers/manual/paths/invoke/searchValue/${document[0].documentName}/versionNumber/${context.params.versionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wywtlxVddPbnw_SwqTbYDKCPB_9rfU085Qb5IvDk0A4`
+  );
+  const urlJson = await urlFetch.json();
+  const url = await urlJson.url;
   return {
-    props: { versions, parts, sections, components, document, definitions },
+    props: {
+      versions,
+      parts,
+      sections,
+      components,
+      document,
+      definitions,
+      url,
+    },
   };
 }
