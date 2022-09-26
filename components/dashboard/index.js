@@ -40,43 +40,45 @@ function Dashboard(props) {
     });
 
     return (
-      <div className={styles.sectionContainer}>
+      <div className={styles.container}>
         <h2 className={styles.sectionHeader}>{section.dashboardSectionName}</h2>
-        {sectionItems.map((item) => (
-          <>
-            {item.dashboardSectionItemsLinkType == "DOWNLOAD" ? (
-              <a
-                className={styles.itemContainer}
-                href={item.dashboardSectionItemsLink}
-                download={item.dashboardSectionItemsName}
-              >
-                {item.dashboardSectionItemsName}
-              </a>
-            ) : item.dashboardSectionItemsLinkType == "EXTERNAL" ? (
-              <a
-                href={item.dashboardSectionItemsLink}
-                className={styles.itemContainer}
-              >
-                {item.dashboardSectionItemsName}
-              </a>
-            ) : (
-              <Link
-                key={item.dashboardSectionsItemsId}
-                href={{
-                  pathname: `${item.dashboardSectionItemsLink}`,
-                }}
-                className={styles.itemContainer}
-                passHref={true}
-              >
-                <div className={styles.itemContainer}>
+        <div className={styles.sectionContainer}>
+          {sectionItems.map((item) => (
+            <>
+              {item.dashboardSectionItemsLinkType == "DOWNLOAD" ? (
+                <a
+                  className={styles.itemContainer}
+                  href={item.dashboardSectionItemsLink}
+                  download={item.dashboardSectionItemsName}
+                >
                   {item.dashboardSectionItemsName}
-                </div>
-              </Link>
-            )}
+                </a>
+              ) : item.dashboardSectionItemsLinkType == "EXTERNAL" ? (
+                <a
+                  href={item.dashboardSectionItemsLink}
+                  className={styles.itemContainer}
+                >
+                  {item.dashboardSectionItemsName}
+                </a>
+              ) : (
+                <Link
+                  key={item.dashboardSectionsItemsId}
+                  href={{
+                    pathname: `${item.dashboardSectionItemsLink}`,
+                  }}
+                  className={styles.itemContainer}
+                  passHref={true}
+                >
+                  <div className={styles.itemContainer}>
+                    {item.dashboardSectionItemsName}
+                  </div>
+                </Link>
+              )}
 
-            <div className={styles.seperator}></div>
-          </>
-        ))}
+              <div className={styles.seperator}></div>
+            </>
+          ))}
+        </div>
       </div>
     );
   }

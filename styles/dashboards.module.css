@@ -1,31 +1,40 @@
 .dashboardContainer {
-  display: grid;
-  background-color: #e7f4e4;
+  column-count: 2;
+  column-gap: 2em;
+  padding: 2em;
 }
+
+.container {
+  break-inside: avoid;
+}
+
 .sectionContainer {
-  margin: 3%;
-  padding-left: 3%;
-  padding-right: 5%;
+  margin-bottom: 2em;
+  padding: 1em;
   border-radius: 5px;
   background: white;
-  color: black;
   border-top: 10px solid #4d8934;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
+  break-inside: avoid;
 }
 
 .sectionHeader {
   margin: 0;
-  text-align: center;
+  text-align: left;
+  padding-bottom: 0.3em;
 }
 
 .itemContainer {
   cursor: pointer;
   color: #4d8934;
+  display: flex;
+  flex-direction: column;
 }
 
 .itemContainer:hover {
   color: black;
 }
+
 .seperator {
   border-bottom: 1px solid #34494e;
   width: 85%;
