@@ -3,7 +3,7 @@ import { useState } from "react";
 import styles from "../../../styles/codes.module.css";
 import CreateCustomTag from "../../../components/scheduleId/createCustomTag-scheduleId";
 import CreateChangeTable from "../../../components/scheduleId/createChangeTable";
-import { listItemsToIgnore, listHeaders } from "../../../components/settings";
+import { listItemsToIgnore } from "../../../components/settings";
 import Head from "next/head";
 import { checkIfVariablesAreAvailable } from "../../../components/helperFunctions/checkIfVariablesAreAvailable";
 import { logError } from "../../../components/helperFunctions/logError";
@@ -24,7 +24,7 @@ function ScheduleDetail({
     { obj: sections, name: "sections" },
     { obj: components, name: "components" },
     { obj: document, name: "document" },
-    { obj: definitions, name: "definitions" },
+    { obj: definitions, name: "definitions" }
   ];
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
   const docInfo = checkIfItemsAvailableInArray(internalErrorLog, "document")
@@ -39,13 +39,60 @@ function ScheduleDetail({
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+  const [searchPhraze, setSearchPhraze] = useState("");
+
+  // function escapeRegex(string) {
+  //   return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+  // }
+
+  // function formatSearchPhrase( searchPhrase) {
+  //   const regex = new RegExp(escapeRegex(searchPhrase), "ig");
+  //   const matches = Array.from(searchPhrase.matchAll(regex));
+
+  //   const result = searchPhrase.split(regex).flatMap((e, index) => [
+  //     e,
+  //     <span key={index} className={styles.color}>
+  //       {matches[index]?.[0]}
+  //     </span>
+  //   ]);
+  //   console.log("*******",result)
+  //   return result
+  // }
+  const Highlighted = (text, highlight) => {
+    // if (!highlight.trim()) {
+    // console.log("i'm here");
+    //   return <span>{text}</span>;
+    // }
+    const regex = new RegExp(`(${highlight})`, "gi");
+    const parts = text.split(regex);
+
+    return (
+      <span>
+        {parts.filter(String).map((part, i) => {
+          const result = regex.test(part) ? (
+            <mark key={i}>{part}</mark>
+          ) : (
+            <span key={i}>{part}</span>
+          );
+          console.log("******", result);
+          return result;
+        })}
+      </span>
+    );
+  };
+
+  const OnSearchChange = (event) => {
+    setSearchPhraze(event.target.value);
+    Highlighted("This is a long test", searchPhraze);
+    // console.log(event.target.value)
+  };
 
   return (
     <>
       <aside
         className={[
           isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed,
-          styles.sidebar,
+          styles.sidebar
         ].join(" ")}
       >
         <div className={styles.hamburger}>
@@ -78,9 +125,18 @@ function ScheduleDetail({
           isSidebarOpen
             ? styles.contentWithSidebar
             : styles.contentWithoutSidebar,
-          styles.content,
+          styles.content
         ].join(" ")}
       >
+        <input
+          id="searchPhrase"
+          name="searchPhrase"
+          type="text"
+          placeholder="Text Search"
+          autoComplete="on"
+          required
+          onChange={OnSearchChange}
+        />
         {checkIfItemsAvailableInArray(internalErrorLog, "document") ? (
           <div className={styles.scheduleContainer}>
             <OnHoverToolTip title="Download Schedules">
@@ -162,7 +218,7 @@ function createContent(parts, sections, components, definitions) {
     { obj: parts, name: "parts" },
     { obj: sections, name: "sections" },
     { obj: components, name: "components" },
-    { obj: definitions, name: "definitions" },
+    { obj: definitions, name: "definitions" }
   ];
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
@@ -259,6 +315,6 @@ export async function getServerSideProps(context) {
   const definitionsJson = await definitionsReq.json();
   const definitions = definitionsJson.definitions;
   return {
-    props: { versions, parts, sections, components, document, definitions },
+    props: { versions, parts, sections, components, document, definitions }
   };
 }
