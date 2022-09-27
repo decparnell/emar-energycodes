@@ -19,13 +19,13 @@ export const DataItemSearchResults = (searchResults, latestDataSpecVersion) => {
             pathname: `/dataspec/${latestDataSpecVersion}/dataitem/[dataItemId]`,
             query: {
               dataItemId: entry.DataItemIdentifier,
-            },
+            }
           }}
           passHref={true}
         >
           <tr
             key={entry.DataItemIdentifier}
-            className={`${styles.searchResultsRow} pointer`}
+            className={`${styles.searchResultsRow} ${styles.pointer}`}
           >
             <td>{entry.DataItemIdentifier}</td>
             <td>

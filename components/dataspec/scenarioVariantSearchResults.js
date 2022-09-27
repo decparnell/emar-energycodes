@@ -46,7 +46,7 @@ export const ScenarioVariantSearchResults = (
         >
           <tr
             key={entry.EnergyMarketMessageScenarioVariantIdentifier}
-            className={`${styles.searchResultsRow} pointer`}
+            className={`${styles.searchResultsRow} ${styles.pointer}`}
           >
             <td>{entry.EnergyMarketMessageScenarioVariantIdentifier}</td>
             <td>{entry.EnergyMarketMessageScenarioVariantName}</td>

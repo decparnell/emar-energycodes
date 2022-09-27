@@ -35,7 +35,7 @@ export const MarketMessageSearchResults = (
         >
           <tr
             key={entry.EnergyMarketMessageIdentifier}
-            className={`${styles.searchResultsRow} pointer`}
+            className={`${styles.searchResultsRow} ${styles.pointer}`}
           >
             <td>{entry.EnergyMarketMessageIdentifier}</td>
             <td>
