@@ -242,7 +242,7 @@ function createContent(parts, sections, components, definitions) {
 export async function getServerSideProps(context) {
   //return the info about the latest version
   const dataReq = await fetch(
-    `https://prod-24.uksouth.logic.azure.com/workflows/c33b5eaa44fa46e9937c34b52091467b/triggers/manual/paths/invoke/${context.params.schedule_id}/${context.params.versionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xtAmkWUamwr-8PSmPnraMtCqA6mgxiAXrCqqZPf06OI`
+    `https://prod-17.uksouth.logic.azure.com/workflows/77a0b5ad93b64061b09df91f2c31533c/triggers/manual/paths/invoke/documentId/${context.params.schedule_id}/version/${context.params.versionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=BDD6aTd29eiNrUUfBH6cjUCM0puErQ5vJyjWzUKmKEI`
   );
   const dataJson = await dataReq.json();
   const parts = dataJson.parts;
@@ -250,7 +250,6 @@ export async function getServerSideProps(context) {
   const components = dataJson.components;
   const versions = dataJson.versions;
   const document = dataJson.document;
-
   const definitionsReq = await fetch(
     `https://prod-28.uksouth.logic.azure.com:443/workflows/32adcb866eed49d998b350e43e4386ac/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=I3PFridsAI83LG9Df3hipu3Z4V4qgmj8VvJ0ijYrYz8`
   );
