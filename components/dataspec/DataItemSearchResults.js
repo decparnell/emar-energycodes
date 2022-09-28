@@ -16,16 +16,18 @@ export const DataItemSearchResults = (searchResults, latestDataSpecVersion) => {
         <Link
           key={entry.DataItemIdentifier}
           href={{
-            pathname: `/dataspec/${latestDataSpecVersion}/dataitem/[dataItemId]`,
-            query: {
-              dataItemId: entry.DataItemIdentifier,
-            },
+            pathname: "/"
           }}
-          passHref={true}
         >
           <tr
             key={entry.DataItemIdentifier}
-            className={`${styles.searchResultsRow} pointer`}
+            className={`${styles.searchResultsRow} ${styles.pointer}`}
+            onClick={() =>
+              window.open(
+                `/dataspec/${latestDataSpecVersion}/dataitem/${entry.DataItemIdentifier}`,
+                "_blank"
+              )
+            }
           >
             <td>{entry.DataItemIdentifier}</td>
             <td>

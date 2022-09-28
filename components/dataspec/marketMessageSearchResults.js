@@ -1,22 +1,15 @@
 import Link from "next/link";
 import styles from "../../styles/dataspec.module.css";
-import addPaddingToGroupId from "./functions/addIdPadding";
 import removeNullValues from "./functions/removeNulls";
 export const MarketMessageSearchResults = (
   searchResults,
   latestDataSpecVersion
 ) => {
-  const tableHeads = [
-    "Market Message Reference",
-    "Local Catalogue Reference",
-    "Market Message Name",
-    "Message Version Number"
-  ];
   const tableHeader = (
     <thead>
-      {tableHeads.map((item) => (
-        <th>{item}</th>
-      ))}
+      <th>Market Message Reference</th>
+      <th>Local Catalogue Reference</th>
+      <th>Market Message Name</th>
     </thead>
   );
 
@@ -24,18 +17,20 @@ export const MarketMessageSearchResults = (
     <tbody>
       {searchResults.map((entry) => (
         <Link
-          key={entry.EnergyMarketMessageIdentifier}
+          key={entry.DataItemIdentifier}
           href={{
-            pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[mmid]`,
-            query: {
-              mmid: entry.EnergyMarketMessageIdentifier
-            }
+            pathname: "/"
           }}
-          passHref={true}
         >
           <tr
             key={entry.EnergyMarketMessageIdentifier}
-            className={`${styles.searchResultsRow} pointer`}
+            className={`${styles.searchResultsRow} ${styles.pointer}`}
+            onClick={() =>
+              window.open(
+                `/dataspec/${latestDataSpecVersion}/marketmessage/${entry.EnergyMarketMessageIdentifier}`,
+                "_blank"
+              )
+            }
           >
             <td>{entry.EnergyMarketMessageIdentifier}</td>
             <td>
@@ -46,7 +41,6 @@ export const MarketMessageSearchResults = (
                 removeNullValues(entry.UNCMessageIdentifier)}
             </td>
             <td>{entry.Label}</td>
-            <td>{addPaddingToGroupId(entry.MessageVersionNumber)}</td>
           </tr>
         </Link>
       ))}
