@@ -24,18 +24,20 @@ export const MarketMessageSearchResults = (
     <tbody>
       {searchResults.map((entry) => (
         <Link
-          key={entry.EnergyMarketMessageIdentifier}
+          key={entry.DataItemIdentifier}
           href={{
-            pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[mmid]`,
-            query: {
-              mmid: entry.EnergyMarketMessageIdentifier
-            }
+            pathname: "/"
           }}
-          passHref={true}
         >
           <tr
             key={entry.EnergyMarketMessageIdentifier}
-            className={`${styles.searchResultsRow} pointer`}
+            className={`${styles.searchResultsRow} ${styles.pointer}`}
+            onClick={() =>
+              window.open(
+                `/dataspec/${latestDataSpecVersion}/marketmessage/${entry.EnergyMarketMessageIdentifier}`,
+                "_blank"
+              )
+            }
           >
             <td>{entry.EnergyMarketMessageIdentifier}</td>
             <td>

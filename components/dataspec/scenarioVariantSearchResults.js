@@ -34,19 +34,20 @@ export const ScenarioVariantSearchResults = (
     <tbody>
       {searchResults.map((entry) => (
         <Link
-          key={entry.EnergyMarketMessageScenarioVariantIdentifier}
+          key={entry.DataItemIdentifier}
           href={{
-            pathname: `/dataspec/${latestDataSpecVersion}/scenario-variant/[scenarioVariant]`,
-            query: {
-              scenarioVariant:
-                entry.EnergyMarketMessageScenarioVariantIdentifier,
-            },
+            pathname: "/"
           }}
-          passHref={true}
         >
           <tr
             key={entry.EnergyMarketMessageScenarioVariantIdentifier}
-            className={`${styles.searchResultsRow} pointer`}
+            className={`${styles.searchResultsRow} ${styles.pointer}`}
+            onClick={() =>
+              window.open(
+                `/dataspec/${latestDataSpecVersion}/scenario-variant/${entry.EnergyMarketMessageScenarioVariantIdentifier}`,
+                "_blank"
+              )
+            }
           >
             <td>{entry.EnergyMarketMessageScenarioVariantIdentifier}</td>
             <td>{entry.EnergyMarketMessageScenarioVariantName}</td>
