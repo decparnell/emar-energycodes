@@ -257,13 +257,6 @@
   text-align: center;
 }
 
-.downloadLink{
-  width:5%;
-  height:5%;
-  margin-top:1%;
-  position:absolute;
-}
-
 .inlineLink{
   display:inline;
     text-align: center;

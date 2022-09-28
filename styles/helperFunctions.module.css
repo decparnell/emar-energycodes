@@ -1,6 +1,6 @@
 .linkedText {
   font-weight: 600;
-  border-bottom: 1px dotted black;
+  border-bottom: 1px dotted #4d8934;
 }
 
 .tooltip {
@@ -8,7 +8,7 @@
   margin-top:3%;
   display: inline-block;
   padding:1%;
-  border: 2px solid black;
+  border: 5px solid #4d8934;
   border-radius: 10px;
   background-color: white;
 }
@@ -31,7 +31,7 @@
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: transparent transparent black transparent;
+  border-color: transparent transparent #4d8934 transparent;
 }
 
 .tooltip:hover .tooltiptext {
