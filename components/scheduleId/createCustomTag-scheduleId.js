@@ -3,6 +3,7 @@ import Link from "next/link";
 import Popup from "reactjs-popup";
 import Image from "next/image";
 import HoverOverFunctionDefinition from "../helperFunctions/onHoverDefinition";
+import LinkTextFromDefinitions from "../helperFunctions/linkTextFromDefinitions";
 function CreateCustomTag(clauseReference, clauseComponents, definitions) {
   const clauseJsx = [];
   const componentId = clauseComponents[0].componentId;
@@ -145,7 +146,7 @@ function addLinkedComponentsToOutput(
       />
     );
   } else {
-    const linkedText = splitTextByKeyWords(text, definitions);
+    const linkedText = LinkTextFromDefinitions(text, definitions);
     clauseJsx.push(
       <CustomTag
         className={customClassName}
