@@ -30,25 +30,27 @@ export default function LinkTextFromDefinitions(text, definitions) {
               linkInfo["linkForwardUrl"]
             );
             //if no definitions have been pushed yet
-            if (searchText.length == 1 && j == 0) {
-              arrayOfText.push(textSplit[j], hoverFunction, textSplit[j + 1]);
+            if (j == 0 && searchText.length == 1) {
+              searchText[i] = textSplit[j];
+              searchText.splice(i + 1, 0, hoverFunction);
+              searchText.splice(i + 2, 0, textSplit[j + 1]);
               //if no definitions have been pushed, and this is the second item
-            } else if (searchText.length == 1 && j > 0) {
-              arrayOfText.push(hoverFunction, textSplit[j + 1]);
+            } else if (j > 0) {
+              searchText.splice(i + j + 1, 0, hoverFunction);
+              searchText.splice(i + j + 2, 0, textSplit[j + 1]);
             } else {
-              //function works if you add in number values but using i + 1 / 2 breaks it -------------------
-              arrayOfText[2] = textSplit[j];
-              arrayOfText.splice(3, 0, hoverFunction);
-              arrayOfText.splice(4, 0, textSplit[j + 1]);
+              searchText[parseInt(i)] = textSplit[j];
+              searchText.splice(parseInt(i) + 1, 0, hoverFunction);
+              searchText.splice(parseInt(i) + 2, 0, textSplit[j + 1]);
             }
           }
           //once we get to the end of the array set the temp text value to the rest of the sentence
-          searchText = arrayOfText;
+          //searchText = arrayOfText;
         }
       }
     }
   }
   //if no links are left in the string then add the rest of the string to the output array and return it
-  //arrayOfText.push(searchText);
+  arrayOfText.push(searchText);
   return arrayOfText;
 }
