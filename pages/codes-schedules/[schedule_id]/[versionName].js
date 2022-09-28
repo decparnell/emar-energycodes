@@ -9,6 +9,7 @@ import { checkIfVariablesAreAvailable } from "../../../components/helperFunction
 import { logError } from "../../../components/helperFunctions/logError";
 import { checkIfItemsAvailableInArray } from "../../../components/helperFunctions/checkIfItemsAvailableInArray";
 import DocumentDownload from "../../../components/documentDownload";
+
 function ScheduleDetail({
   versions,
   parts,
