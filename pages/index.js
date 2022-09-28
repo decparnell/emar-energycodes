@@ -20,7 +20,7 @@ function HomePage({
   newsData,
   mmsv,
   dataItems,
-  codesSchedulesDataJson
+  codesSchedulesDataJson,
 }) {
   const apiVarList = [
     { obj: newsData, name: "newsData" },
@@ -29,7 +29,7 @@ function HomePage({
     { obj: mmsv, name: "mmsv" },
     { obj: dashboards, name: "dashboards" },
     { obj: sections, name: "sections" },
-    { obj: dataItems, name: "dataItems" }
+    { obj: dataItems, name: "dataItems" },
   ];
   const value = useContext(AppContext);
   let { chosenButton, chosenTab } = value.state;
@@ -79,9 +79,7 @@ function HomePage({
       {checkIfItemsAvailableInArray(internalErrorLog, "newsData") ? (
         <NewsBanner news={newsData} />
       ) : (
-        <div className={styles.errorBox}>
-          {logError("News Data")}
-        </div>
+        <div className={styles.errorBox}>{logError("News Data")}</div>
       )}
       <TabNavbar />
       <ButtonNavbar />
@@ -112,9 +110,7 @@ function HomePage({
             codesSchedulesDataJson={codesSchedulesDataJson}
           />
         ) : (
-          <div className={styles.errorBox}>
-            {logError("Dashboard")}
-          </div>
+          <div className={styles.errorBox}>{logError("Dashboard")}</div>
         )}
       </div>
     </>
@@ -127,7 +123,7 @@ export default HomePage;
 export async function getServerSideProps(context) {
   // Fetch data from external API
   const dataReq = await fetch(
-    `https://prod-17.uksouth.logic.azure.com/workflows/0eddf883c64d48d0939b18549894fe2e/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=qmkujig7GnFXCDXAXxVci2bH9VtUPMyyEwlyEibylvI`
+    `https://prod-12.uksouth.logic.azure.com:443/workflows/4c67d7f8644444278df5488ba97723dc/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6W4SqteUrXdeurJNKWJma27oNLUiaQeR6pdXIWqhAhw`
   );
   const dataJson = await dataReq.json();
   const dashboards = dataJson.dashboards;
@@ -135,22 +131,22 @@ export async function getServerSideProps(context) {
   const items = dataJson.items;
 
   const getLatestVersions = await fetch(
-    `https://prod-02.uksouth.logic.azure.com:443/workflows/42c048e7e8dc41758ed35c02ff7b4de7/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6P22c3SoD1TzE42D8fz1HCWKFo4u-l34pRvtnf2i47g`
+    `https://prod-31.uksouth.logic.azure.com:443/workflows/74c7d3ac4b93473c81b4fc762aea9133/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=uEnmZBZlGdrJ-pRJCcmTAMtoVJlLR2MIXiCYq3TXaf8`
   );
   const latestVersionJson = await getLatestVersions.json();
 
   const newsDataReq = await fetch(
-    "https://prod2-21.uksouth.logic.azure.com:443/workflows/3b40d5e4e24449e187511befe44b600b/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=ikzFKQ4CtAXK2-HMi8rjTZ5Is_ho1YnNGDCNg8t0HRk"
+    "https://prod-22.uksouth.logic.azure.com:443/workflows/e36d26ad83b04a86bc67b618e20c9dc5/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Zymwu40i_cJZuIQhxAW9VZeDw22xzO97ie4sApLfizU"
   );
   const latestNewsJson = await newsDataReq.json();
   const newsData = latestNewsJson.latestNews;
 
   const codesSchedulesDataReq = await fetch(
-    `https://prod-21.uksouth.logic.azure.com:443/workflows/08cc6cb613f24c20b8b7d61e707852ed/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Lu9fcr6ePmGgjIEsHIwQ8y64Xewe1lsErD-FDxYKSCM`
+    `https://prod-04.uksouth.logic.azure.com:443/workflows/51e9e129f1b645ee96aa180a68a2033f/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Cg3T-VLyFtcRDJvXkEEYDLpftYytyNtWpBiD15qXosg`
   );
   const codesSchedulesDataJson = await codesSchedulesDataReq.json();
   const dataSpecData = await fetch(
-    `https://prod-24.uksouth.logic.azure.com:443/workflows/dcb64fdc2eea43aa8e231cb7035ff20d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6fNJtJqCiH8TYdaftlFMPn1nuUE5KNLopKDvuU9WRV8`
+    `https://prod2-25.uksouth.logic.azure.com:443/workflows/bc7a8128d44d4d1ea8cb95e2bac0b1b2/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=nKbYkRaRysRGNTguW8HeX5HhgtlfHDFwNCBwqRr8OdQ`
   );
   const dataSpecDataJson = await dataSpecData.json();
   const mmsv = dataSpecDataJson.mmsv;
@@ -165,7 +161,7 @@ export async function getServerSideProps(context) {
       newsData,
       mmsv,
       dataItems,
-      codesSchedulesDataJson
-    }
+      codesSchedulesDataJson,
+    },
   };
 }

@@ -1,6 +1,6 @@
 import Calendar from "../../components/calendar/calendar";
 import styles from "../../styles/recportal.module.css";
-
+import LinkTextFromDefinitions from "../../components/helperFunctions/linkTextFromDefinitions";
 const recPortalLinks = [
   {
     name: "REC Documents",
@@ -44,6 +44,11 @@ const recPortalLinks = [
   },
 ];
 
+const definitions = [
+  { linkText: "dog", componentText: "dog", linkForwardUrl: 1 },
+  { linkText: "really", componentText: "really", linkForwardUrl: 1 },
+];
+
 function RecPortal() {
   const recinformation = recPortalLinks.filter(
     (link) => link.group == "rec_info"
@@ -76,6 +81,12 @@ function RecPortal() {
             </li>
           ))}
         </ul>
+      </div>
+      <div className={styles.infoContainer}>
+        {LinkTextFromDefinitions(
+          "I really want a dog , becuase I really like them.",
+          definitions
+        )}
       </div>
     </div>
   );
