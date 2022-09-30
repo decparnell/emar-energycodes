@@ -35,7 +35,7 @@
 
 .contentContainer {
   margin: 5%;
-  padding-bottom: 6em;
+  padding-bottom: 5vh;
   border-radius: 5px;
   color: black;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
@@ -43,6 +43,7 @@
 
 .resultsTable {
   margin: auto;
+  margin-bottom:2%;
 }
 
 .color {

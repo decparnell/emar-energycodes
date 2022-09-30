@@ -7,6 +7,19 @@ function HoverOverFunctionDefinition(
   linkAddress
 ) {
   const [isShown, setIsShown] = useState(false);
+  const [delayHandler, setDelayHandler] = useState(null);
+  const handleMouseEnter = (event) => {
+    setDelayHandler(
+      setTimeout(() => {
+        setIsShown(true);
+      }, 100)
+    );
+  };
+
+  const handleMouseLeave = () => {
+    setIsShown(false);
+    clearTimeout(delayHandler);
+  };
 
   return (
     <>
@@ -15,8 +28,8 @@ function HoverOverFunctionDefinition(
         href={`/codes-schedules/definitions/${encodeURIComponent(linkAddress)}`}
         target="_blank"
         rel="noreferrer"
-        onMouseEnter={() => setIsShown(true)}
-        onMouseLeave={() => setIsShown(false)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         {linkingWord}
       </a>
