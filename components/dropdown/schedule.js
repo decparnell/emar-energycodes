@@ -37,7 +37,7 @@ function ScheduleDropdown(props) {
 
   return (
     <div
-      className={`${props.style} ${styles.dropdown} pointer`}
+      className={`${props.style} ${styles.dropdown} ${styles.dropdownItems} pointer`}
       onClick={() => setDropdownOpen((current) => !current)}
     >
       {checkIfObject(dropdownValue)
@@ -52,7 +52,7 @@ function ScheduleDropdown(props) {
       ) : (
         <>
           <AiFillCaretUp />
-          <div className={styles.options}>
+          <div className={`${styles.options} ${styles.dropdownContainer}`}>
             {props.options.map((option, index) => (
               <div
                 className={styles.option}
