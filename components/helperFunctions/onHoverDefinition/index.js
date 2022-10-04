@@ -35,8 +35,8 @@ function HoverOverFunctionDefinition(
           )}`}
           target="_blank"
           rel="noreferrer"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          //onMouseEnter={handleMouseEnter}
+          //onMouseLeave={handleMouseLeave}
         >
           {linkingWord}
         </a>
@@ -50,19 +50,19 @@ function HoverOverFunctionDefinition(
           `}
           target="_blank"
           rel="noreferrer"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          //onMouseEnter={handleMouseEnter}
+          //onMouseLeave={handleMouseLeave}
         >
           {linkingWord}
         </a>
       )}
-      {isShown && (
+      {/* {isShown && (
         <div className={styles.tooltip}>
           {linkType == "definition"
             ? definitionString
             : "Click to go to the Schedule"}
         </div>
-      )}
+      )} */}
     </>
   );
 }
