@@ -38,8 +38,10 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
     componentContainer = `${styles.subHeading}`;
   } else if (style === "table") {
     CustomTag = `table`;
-  } else if (style === "image") {
+  } else if (style.indexOf("image") != -1) {
     CustomTag = "Image";
+  } else if (style.indexOf("text") != -1) {
+    CustomTag = "p";
   }
 
   //LOOP OVER EACH COMPONENT IN THE CLAUSE AND ADD IT TO THE SAME BOX (mainly ofr lists.)
