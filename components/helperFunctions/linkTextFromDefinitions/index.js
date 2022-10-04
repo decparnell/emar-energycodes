@@ -26,6 +26,7 @@ export default function LinkTextFromDefinitions(text, definitions) {
             //using the hover function to create the link to the definitions page, and the on hover function
             const hoverFunction = HoverOverFunctionDefinition(
               linkInfo["componentText"],
+              linkInfo["linkType"],
               linkingWord,
               linkInfo["linkForwardUrl"]
             );
@@ -44,13 +45,10 @@ export default function LinkTextFromDefinitions(text, definitions) {
               searchText.splice(parseInt(i) + 2, 0, textSplit[j + 1]);
             }
           }
-          //once we get to the end of the array set the temp text value to the rest of the sentence
-          //searchText = arrayOfText;
         }
       }
     }
   }
-  //if no links are left in the string then add the rest of the string to the output array and return it
   arrayOfText.push(searchText);
   return arrayOfText;
 }
