@@ -6,8 +6,8 @@ const nextConfig = {
 module.exports = {
   images: {
     domains: ["reccodocstroage.blob.core.windows.net"],
-    // time in seconds of no pages generating during static
-    // generation before timing out
-    staticPageGenerationTimeout: 1000,
   },
+  // time in seconds of no pages generating during static
+  // generation before timing out
+  staticPageGenerationTimeout: 1000,
 };
