@@ -18,6 +18,7 @@ function ScheduleDetail({
   document,
   definitions,
   url,
+  optionalityInfo,
 }) {
   const apiVarList = [
     { obj: versions, name: "versions" },
@@ -88,27 +89,49 @@ function ScheduleDetail({
             <h1 className={styles.contentTitle}>{docInfo.documentName}</h1>
 
             {checkIfItemsAvailableInArray(internalErrorLog, "versions") ? (
-              <table id="version" className={styles.table}>
-                <thead>
-                  <tr>
-                    <th>Version</th>
-                    <th>Implementation Date</th>
-                    <th>Reason</th>
-                  </tr>
-                </thead>
-                {checkIfItemsAvailableInArray(
-                  internalErrorLog,
-                  "schedule_id"
-                ) &&
-                checkIfItemsAvailableInArray(
-                  internalErrorLog,
-                  "versionName"
-                ) ? (
-                  <tbody>
-                    {CreateChangeTable(versions, schedule_id, versionName)}
-                  </tbody>
-                ) : null}
-              </table>
+              <div>
+                <table id="version" className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>Version</th>
+                      <th>Implementation Date</th>
+                      <th>Reason</th>
+                    </tr>
+                  </thead>
+                  {checkIfItemsAvailableInArray(
+                    internalErrorLog,
+                    "schedule_id"
+                  ) &&
+                  checkIfItemsAvailableInArray(
+                    internalErrorLog,
+                    "versionName"
+                  ) ? (
+                    <tbody>
+                      {CreateChangeTable(versions, schedule_id, versionName)}
+                    </tbody>
+                  ) : null}
+                </table>
+                {optionalityInfo[0].optionalityId && (
+                  <table className={styles.table}>
+                    <thead>
+                      <tr>
+                        <th></th>
+                        {<th>{optionalityInfo[0].partName}</th>}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {optionalityInfo.map((el) => {
+                        return (
+                          <tr key={el.partsOwnersOptionalityId}>
+                            <td>{el.ownersName}</td>
+                            <td>{el.optionalityName}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                )}
+              </div>
             ) : (
               <div className={styles.errorBox}>{logError("Versions")}</div>
             )}
@@ -315,12 +338,14 @@ export async function getServerSideProps(context) {
   const dataReq = await fetch(
     `https://prod-17.uksouth.logic.azure.com/workflows/77a0b5ad93b64061b09df91f2c31533c/triggers/manual/paths/invoke/documentId/${context.params.schedule_id}/version/${context.params.versionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=BDD6aTd29eiNrUUfBH6cjUCM0puErQ5vJyjWzUKmKEI`
   );
+
   const dataJson = await dataReq.json();
   const parts = dataJson.parts;
   const sections = dataJson.sections;
   const components = dataJson.components;
   const versions = dataJson.versions;
   const document = dataJson.document;
+
   const definitionsReq = await fetch(
     `https://prod-28.uksouth.logic.azure.com:443/workflows/32adcb866eed49d998b350e43e4386ac/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=I3PFridsAI83LG9Df3hipu3Z4V4qgmj8VvJ0ijYrYz8`
   );
@@ -332,6 +357,12 @@ export async function getServerSideProps(context) {
   );
   const urlJson = await urlFetch.json();
   const url = await urlJson.url;
+
+  const optionalityReq = await fetch(
+    `https://prod-14.uksouth.logic.azure.com/workflows/4f3b0f9b10f14137afd1fca0686b8119/triggers/manual/paths/invoke/documentId/${document[0].documentId}/versionId/${context.params.versionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lVJcdlsL4DY-LixBpllt8Ats8IO9LiJjpjs6FxZovjg`
+  );
+  const optionalityInfo = await optionalityReq.json();
+
   return {
     props: {
       versions,
@@ -341,6 +372,7 @@ export async function getServerSideProps(context) {
       document,
       definitions,
       url,
+      optionalityInfo,
     },
   };
 }
