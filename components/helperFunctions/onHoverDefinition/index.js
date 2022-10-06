@@ -13,10 +13,11 @@ function HoverOverFunctionDefinition(
   const [isShown, setIsShown] = useState(false);
   const [delayHandler, setDelayHandler] = useState(null);
   const handleMouseEnter = (event) => {
+    //do the api call here await data and feedback
     setDelayHandler(
       setTimeout(() => {
         setIsShown(true);
-      }, 100)
+      }, 500)
     );
   };
 
