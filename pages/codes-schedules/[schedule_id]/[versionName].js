@@ -310,7 +310,9 @@ export async function getStaticProps({ params }) {
     `https://prod-28.uksouth.logic.azure.com:443/workflows/32adcb866eed49d998b350e43e4386ac/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=I3PFridsAI83LG9Df3hipu3Z4V4qgmj8VvJ0ijYrYz8`
   );
   const definitionsJson = await definitionsReq.json();
-  const definitions = definitionsJson.definitions;
+  let definitions = definitionsJson.definitions;
+  const scheduleLinks = definitionsJson.scheduleLinks;
+  definitions = definitions.concat(scheduleLinks);
 
   let urlFetch = await fetch(
     `https://prod-03.uksouth.logic.azure.com/workflows/076c8da5b74d452abc028069f5a1ac4e/triggers/manual/paths/invoke/searchValue/${document[0].documentName}/versionNumber/${params.versionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wywtlxVddPbnw_SwqTbYDKCPB_9rfU085Qb5IvDk0A4`
