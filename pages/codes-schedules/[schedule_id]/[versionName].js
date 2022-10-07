@@ -261,7 +261,7 @@ function createContent(parts, sections, components, definitions) {
     );
   }
 }
-
+/*
 export async function getStaticPaths() {
   // When this is true (in preview environments) don't
   // prerender any static pages
@@ -293,7 +293,7 @@ export async function getStaticPaths() {
   return { paths, fallback: false };
 }
 
-/* // This also gets called at build time
+ // This also gets called at build time
 export async function getStaticProps({ params }) {
   // params contains the post `id`.
   // If the route is like /posts/1, then params.id is 1
