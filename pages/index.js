@@ -11,6 +11,7 @@ import CodesSchedulesSearch from "../components/codesSchedules/codesSchedulesSea
 import { checkIfVariablesAreAvailable } from "../components/helperFunctions/checkIfVariablesAreAvailable";
 import { logError } from "../components/helperFunctions/logError";
 import { checkIfItemsAvailableInArray } from "../components/helperFunctions/checkIfItemsAvailableInArray/";
+import { AiOutlineCloseCircle, AiOutlineComment } from "react-icons/ai";
 
 function HomePage({
   dashboards,
@@ -20,7 +21,7 @@ function HomePage({
   newsData,
   mmsv,
   dataItems,
-  codesSchedulesDataJson,
+  codesSchedulesDataJson
 }) {
   const apiVarList = [
     { obj: newsData, name: "newsData" },
@@ -29,7 +30,7 @@ function HomePage({
     { obj: mmsv, name: "mmsv" },
     { obj: dashboards, name: "dashboards" },
     { obj: sections, name: "sections" },
-    { obj: dataItems, name: "dataItems" },
+    { obj: dataItems, name: "dataItems" }
   ];
   const value = useContext(AppContext);
   let { chosenButton, chosenTab } = value.state;
@@ -74,6 +75,18 @@ function HomePage({
       );
     }
   }, [currentDashboard]);
+
+  const [isClosed, setIsClosed] = useState("false");
+
+  const onCloseMinimimisedButtonClick = () => {
+    setIsClosed((closed) => !closed);
+  };
+
+  const onFeedbackFormSubmitButton = () => {
+    //to be done later
+    console.log("Submit Button Clicked!");
+  };
+
   return (
     <>
       {checkIfItemsAvailableInArray(internalErrorLog, "newsData") ? (
@@ -111,6 +124,51 @@ function HomePage({
           />
         ) : (
           <div className={styles.errorBox}>{logError("Dashboard")}</div>
+        )}
+        {isClosed ? (
+          <div className={styles.contactForm}>
+            <div className={styles.BtnContainer}>
+              <AiOutlineCloseCircle
+                className={styles.closeBtn}
+                onClick={onCloseMinimimisedButtonClick}
+              />
+            </div>
+            <h3>Contact Us</h3>
+            <form
+              method="POST"
+              class={styles.formElement}
+              target="_self"
+            >
+              <input
+                type="text"
+                class={styles.fullName}
+                placeholder="Enter Your Name"
+              ></input>
+              <textarea
+                rows="4"
+                cols="50"
+                class={styles.feedback}
+                placeholder="Enter Your Feedback"
+                minlength="50"
+                required
+              ></textarea>
+              <button
+                onClick={onFeedbackFormSubmitButton}
+                type="submit"
+                class={styles.submitBtn}
+                name="submit"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        ) : (
+          <div
+            className={styles.minimiseBtn}
+            onClick={onCloseMinimimisedButtonClick}
+          >
+            <AiOutlineComment className={styles.openBtn} />
+          </div>
         )}
       </div>
     </>
@@ -161,7 +219,7 @@ export async function getServerSideProps(context) {
       newsData,
       mmsv,
       dataItems,
-      codesSchedulesDataJson,
-    },
+      codesSchedulesDataJson
+    }
   };
 }
