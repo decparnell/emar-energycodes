@@ -293,7 +293,7 @@ export async function getStaticPaths() {
   return { paths, fallback: false };
 }
 
-// This also gets called at build time
+/* // This also gets called at build time
 export async function getStaticProps({ params }) {
   // params contains the post `id`.
   // If the route is like /posts/1, then params.id is 1
@@ -339,8 +339,8 @@ export async function getStaticProps({ params }) {
     },
   };
 }
-
-/* // This gets called on every request
+ */
+// This gets called on every request
 export async function getServerSideProps(context) {
   //return the info about the latest version
   const dataReq = await fetch(
@@ -384,4 +384,3 @@ export async function getServerSideProps(context) {
     },
   };
 }
- */
