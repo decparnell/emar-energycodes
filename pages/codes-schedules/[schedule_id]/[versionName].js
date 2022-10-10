@@ -261,85 +261,6 @@ function createContent(parts, sections, components, definitions) {
     );
   }
 }
-/*
-export async function getStaticPaths() {
-  // When this is true (in preview environments) don't
-  // prerender any static pages
-  // (faster builds, but slower initial page load)
-  if (process.env.SKIP_BUILD_STATIC_GENERATION) {
-    return {
-      paths: [],
-      fallback: "blocking",
-    };
-  }
-
-  // Call an external API endpoint to get posts
-  const res = await fetch(
-    "https://prod-31.uksouth.logic.azure.com/workflows/74c7d3ac4b93473c81b4fc762aea9133/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=uEnmZBZlGdrJ-pRJCcmTAMtoVJlLR2MIXiCYq3TXaf8"
-  );
-  const schedules = await res.json();
-
-  // Get the paths we want to prerender based on posts
-  // In production environments, prerender all pages
-  // (slower builds, but faster initial page load)
-  const paths = schedules.map((schedule) => ({
-    params: {
-      schedule_id: schedule.documentId.toString(),
-      versionName: schedule.versionName.toString(),
-    },
-  }));
-
-  // { fallback: false } means other routes should 404
-  return { paths, fallback: false };
-}
-
- // This also gets called at build time
-export async function getStaticProps({ params }) {
-  // params contains the post `id`.
-  // If the route is like /posts/1, then params.id is 1
-  const dataReq = await fetch(
-    `https://prod-17.uksouth.logic.azure.com/workflows/77a0b5ad93b64061b09df91f2c31533c/triggers/manual/paths/invoke/documentId/${params.schedule_id}/version/${params.versionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=BDD6aTd29eiNrUUfBH6cjUCM0puErQ5vJyjWzUKmKEI`
-  );
-  const dataJson = await dataReq.json();
-  const parts = dataJson.parts;
-  const sections = dataJson.sections;
-  const components = dataJson.components;
-  const versions = dataJson.versions;
-  const document = dataJson.document;
-  const definitionsReq = await fetch(
-    `https://prod-28.uksouth.logic.azure.com:443/workflows/32adcb866eed49d998b350e43e4386ac/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=I3PFridsAI83LG9Df3hipu3Z4V4qgmj8VvJ0ijYrYz8`
-  );
-  const definitionsJson = await definitionsReq.json();
-  let definitions = definitionsJson.definitions;
-  const scheduleLinks = definitionsJson.scheduleLinks;
-  definitions = definitions.concat(scheduleLinks);
-
-  let urlFetch = await fetch(
-    `https://prod-03.uksouth.logic.azure.com/workflows/076c8da5b74d452abc028069f5a1ac4e/triggers/manual/paths/invoke/searchValue/${document[0].documentName}/versionNumber/${params.versionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wywtlxVddPbnw_SwqTbYDKCPB_9rfU085Qb5IvDk0A4`
-  );
-  const urlJson = await urlFetch.json();
-  const url = await urlJson.url;
-
-  const optionalityReq = await fetch(
-    `https://prod-14.uksouth.logic.azure.com/workflows/4f3b0f9b10f14137afd1fca0686b8119/triggers/manual/paths/invoke/documentId/${document[0].documentId}/versionId/${params.versionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lVJcdlsL4DY-LixBpllt8Ats8IO9LiJjpjs6FxZovjg`
-  );
-  const optionalityInfo = await optionalityReq.json();
-
-  // Pass post data to the page via props
-  return {
-    props: {
-      versions,
-      parts,
-      sections,
-      components,
-      document,
-      definitions,
-      url,
-      optionalityInfo,
-    },
-  };
-}
- */
 // This gets called on every request
 export async function getServerSideProps(context) {
   //return the info about the latest version
@@ -358,7 +279,9 @@ export async function getServerSideProps(context) {
     `https://prod-28.uksouth.logic.azure.com:443/workflows/32adcb866eed49d998b350e43e4386ac/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=I3PFridsAI83LG9Df3hipu3Z4V4qgmj8VvJ0ijYrYz8`
   );
   const definitionsJson = await definitionsReq.json();
-  const definitions = definitionsJson.definitions;
+  let definitions = definitionsJson.definitions;
+  const scheduleLinks = definitionsJson.scheduleLinks;
+  definitions = definitions.concat(scheduleLinks);
 
   let urlFetch = await fetch(
     `https://prod-03.uksouth.logic.azure.com/workflows/076c8da5b74d452abc028069f5a1ac4e/triggers/manual/paths/invoke/searchValue/${document[0].documentName}/versionNumber/${context.params.versionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wywtlxVddPbnw_SwqTbYDKCPB_9rfU085Qb5IvDk0A4`

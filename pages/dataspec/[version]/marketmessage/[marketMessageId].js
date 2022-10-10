@@ -251,7 +251,7 @@ export async function getServerSideProps(context) {
   ];
 
   const urlFetch = await fetch(
-    `https://prod-18.uksouth.logic.azure.com/workflows/ba54bba8972e48438cbb6f0571163ef0/triggers/manual/paths/invoke/searchValue/{searchValue}/versionNumber/{versionId}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=RO7KjzGq7_bdQqRL4PUPuSk3zzJFdZky3aumpoWCIS0`
+    `https://prod-18.uksouth.logic.azure.com/workflows/ba54bba8972e48438cbb6f0571163ef0/triggers/manual/paths/invoke/searchValue/${context.params.marketMessageId}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=RO7KjzGq7_bdQqRL4PUPuSk3zzJFdZky3aumpoWCIS0`
   );
   const urlJson = await urlFetch.json();
   const url = urlJson.url;
