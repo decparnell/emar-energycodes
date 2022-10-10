@@ -33,32 +33,25 @@ export const ScenarioVariantSearchResults = (
   const tableBody = (
     <tbody>
       {searchResults.map((entry) => (
-        <Link
-          key={entry.DataItemIdentifier}
-          href={{
-            pathname: "/"
-          }}
+        <tr
+          key={entry.EnergyMarketMessageScenarioVariantIdentifier}
+          className={`${styles.searchResultsRow} ${styles.pointer}`}
+          onClick={() =>
+            window.open(
+              `/dataspec/${latestDataSpecVersion}/scenario-variant/${entry.EnergyMarketMessageScenarioVariantIdentifier}`,
+              "_blank"
+            )
+          }
         >
-          <tr
-            key={entry.EnergyMarketMessageScenarioVariantIdentifier}
-            className={`${styles.searchResultsRow} ${styles.pointer}`}
-            onClick={() =>
-              window.open(
-                `/dataspec/${latestDataSpecVersion}/scenario-variant/${entry.EnergyMarketMessageScenarioVariantIdentifier}`,
-                "_blank"
-              )
-            }
-          >
-            <td>{entry.EnergyMarketMessageScenarioVariantIdentifier}</td>
-            <td>{entry.EnergyMarketMessageScenarioVariantName}</td>
-            <td>{entry.SourceName}</td>
-            <td>{entry.TargetName}</td>
-            <td>{entry.ApiMethod}</td>
-            <td>
-              <span className={styles.wordWrap}>{entry.ApiRoute}</span>
-            </td>
-          </tr>
-        </Link>
+          <td>{entry.EnergyMarketMessageScenarioVariantIdentifier}</td>
+          <td>{entry.EnergyMarketMessageScenarioVariantName}</td>
+          <td>{entry.SourceName}</td>
+          <td>{entry.TargetName}</td>
+          <td>{entry.ApiMethod}</td>
+          <td>
+            <span className={styles.wordWrap}>{entry.ApiRoute}</span>
+          </td>
+        </tr>
       ))}
     </tbody>
   );

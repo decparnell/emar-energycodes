@@ -16,33 +16,26 @@ export const MarketMessageSearchResults = (
   const tableBody = (
     <tbody>
       {searchResults.map((entry) => (
-        <Link
-          key={entry.DataItemIdentifier}
-          href={{
-            pathname: "/"
-          }}
+        <tr
+          key={entry.EnergyMarketMessageIdentifier}
+          className={`${styles.searchResultsRow} ${styles.pointer}`}
+          onClick={() =>
+            window.open(
+              `/dataspec/${latestDataSpecVersion}/marketmessage/${entry.EnergyMarketMessageIdentifier}`,
+              "_blank"
+            )
+          }
         >
-          <tr
-            key={entry.EnergyMarketMessageIdentifier}
-            className={`${styles.searchResultsRow} ${styles.pointer}`}
-            onClick={() =>
-              window.open(
-                `/dataspec/${latestDataSpecVersion}/marketmessage/${entry.EnergyMarketMessageIdentifier}`,
-                "_blank"
-              )
-            }
-          >
-            <td>{entry.EnergyMarketMessageIdentifier}</td>
-            <td>
-              {removeNullValues(entry.DTCDcode) +
-                removeNullValues(entry.CSSMessageIdentifier) +
-                removeNullValues(entry.LegacyRGMAMessageIdentifier) +
-                removeNullValues(entry.LegacySPAAMessageIdentifier) +
-                removeNullValues(entry.UNCMessageIdentifier)}
-            </td>
-            <td>{entry.Label}</td>
-          </tr>
-        </Link>
+          <td>{entry.EnergyMarketMessageIdentifier}</td>
+          <td>
+            {removeNullValues(entry.DTCDcode) +
+              removeNullValues(entry.CSSMessageIdentifier) +
+              removeNullValues(entry.LegacyRGMAMessageIdentifier) +
+              removeNullValues(entry.LegacySPAAMessageIdentifier) +
+              removeNullValues(entry.UNCMessageIdentifier)}
+          </td>
+          <td>{entry.Label}</td>
+        </tr>
       ))}
     </tbody>
   );
