@@ -64,8 +64,6 @@ function ScheduleDetail({
   };
   const mandatoryTable = transformTable(optionalityInfo, parts);
 
-  console.log("transformTable", transformTable(optionalityInfo, parts));
-
   return (
     <>
       <aside
