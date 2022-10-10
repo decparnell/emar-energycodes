@@ -28,6 +28,7 @@ function ScheduleDetail({
     { obj: document, name: "document" },
     { obj: definitions, name: "definitions" },
   ];
+
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
   const docInfo = checkIfItemsAvailableInArray(internalErrorLog, "document")
     ? document[0]
@@ -44,6 +45,24 @@ function ScheduleDetail({
 
   const scheduleNumber = docInfo.scheduleNumber;
   const scheduleName = docInfo.documentName;
+
+  const transformTable = (optionalities, parts) => {
+    let res = {};
+    for (const el of optionalities) {
+      res[el.ownersName] = [];
+      const ownersId = el.ownersId;
+      for (const part of parts) {
+        const value = optionalities.find(
+          (el) => el.ownersId === ownersId && el.partId === part.partId
+        );
+        if (value !== undefined) {
+          res[el.ownersName].push(value.optionalityName);
+        }
+      }
+    }
+    return res;
+  };
+  const mandatoryTable = transformTable(optionalityInfo, parts);
 
   return (
     <>
@@ -123,15 +142,19 @@ function ScheduleDetail({
                     <thead>
                       <tr>
                         <th></th>
-                        {<th>{optionalityInfo[0].partName}</th>}
+                        {parts.map((el, i) => {
+                          return <th key={i}>{el.partName}</th>;
+                        })}
                       </tr>
                     </thead>
                     <tbody>
-                      {optionalityInfo.map((el) => {
+                      {Object.keys(mandatoryTable).map((el) => {
                         return (
                           <tr key={el.partsOwnersOptionalityId}>
-                            <td>{el.ownersName}</td>
-                            <td>{el.optionalityName}</td>
+                            <td>{el}</td>
+                            {mandatoryTable[el].map((item, i) => (
+                              <td key={i}>{item}</td>
+                            ))}
                           </tr>
                         );
                       })}
