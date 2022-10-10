@@ -9,8 +9,9 @@ import SecondNavbar from "../../../../components/layout/secondHeader";
 import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable";
 import { logError } from "../../../../components/helperFunctions/logError";
 import { checkIfItemsAvailableInArray } from "../../../../components/helperFunctions/checkIfItemsAvailableInArray";
+import DocumentDownload from "../../../../components/documentDownload";
 
-function MmDetailPage({ searchResults }) {
+function MmDetailPage({ searchResults, url }) {
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
 
@@ -40,24 +41,24 @@ function MmDetailPage({ searchResults }) {
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
   const marketMessageInfo =
-    checkIfItemsAvailableInArray(internalErrorLog,"searchResults") &&
-    checkIfItemsAvailableInArray(internalErrorLog,"marketMessageInfo")
+    checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog, "marketMessageInfo")
       ? searchResults[0]
       : null;
   const svForMarketMessage =
-    checkIfItemsAvailableInArray(internalErrorLog,"searchResults") &&
-    checkIfItemsAvailableInArray(internalErrorLog,"svForMarketMessage")
+    checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog, "svForMarketMessage")
       ? searchResults[1]
       : null;
   const dataItems =
-    checkIfItemsAvailableInArray(internalErrorLog,"searchResults") &&
-    checkIfItemsAvailableInArray(internalErrorLog,"dataItems")
+    checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog, "dataItems")
       ? searchResults[2]
       : null;
 
   const legacy =
-    checkIfItemsAvailableInArray(internalErrorLog,"searchResults") &&
-    checkIfItemsAvailableInArray(internalErrorLog,"marketMessageInfo")
+    checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
+    checkIfItemsAvailableInArray(internalErrorLog, "marketMessageInfo")
       ? removeNullValues(marketMessageInfo.DTCDcode) +
         removeNullValues(marketMessageInfo.CSSMessageIdentifier) +
         removeNullValues(marketMessageInfo.LegacyRGMAMessageIdentifier) +
@@ -65,7 +66,7 @@ function MmDetailPage({ searchResults }) {
         removeNullValues(marketMessageInfo.UNCMessageIdentifier)
       : null;
 
- const dataItemsTableHead = [
+  const dataItemsTableHead = [
     "Data Item Id",
     "Local Catalogue Reference",
     "Data Item Name",
@@ -87,6 +88,7 @@ function MmDetailPage({ searchResults }) {
                 <title>EMAR - {marketMessageInfo.Label}</title>
                 <meta property="og:title" content="My page title" key="title" />
               </Head>
+              <DocumentDownload type="mm" url={url} />
               <h1 className={styles.contentTitle}>
                 {marketMessageInfo.EnergyMarketMessageIdentifier} -{" "}
                 {marketMessageInfo.Label}
@@ -167,11 +169,7 @@ function MmDetailPage({ searchResults }) {
               </table>
             </div>
           ) : (
-            <div className={styles.errorBox}>
-              {logError(
-                "Data Item"
-              )}
-            </div>
+            <div className={styles.errorBox}>{logError("Data Item")}</div>
           )}
           {checkIfItemsAvailableInArray(
             internalErrorLog,
@@ -226,16 +224,12 @@ function MmDetailPage({ searchResults }) {
             </div>
           ) : (
             <div className={styles.errorBox}>
-              {logError(
-                "Scenario Variant",
-              )}
+              {logError("Scenario Variant")}
             </div>
           )}
         </div>
       ) : (
-        <div className={styles.errorBox}>
-          {logError("Market Message Info")}
-        </div>
+        <div className={styles.errorBox}>{logError("Market Message Info")}</div>
       )}
     </>
   );
@@ -256,6 +250,12 @@ export async function getServerSideProps(context) {
     dataJson.dataItemList,
   ];
 
+  const urlFetch = await fetch(
+    `https://prod-18.uksouth.logic.azure.com/workflows/ba54bba8972e48438cbb6f0571163ef0/triggers/manual/paths/invoke/searchValue/${context.params.marketMessageId}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=RO7KjzGq7_bdQqRL4PUPuSk3zzJFdZky3aumpoWCIS0`
+  );
+  const urlJson = await urlFetch.json();
+  const url = urlJson.url;
+
   // Pass data to the page via props
-  return { props: { searchResults } };
+  return { props: { searchResults, url } };
 }
