@@ -236,7 +236,7 @@ export default DiDetailPage;
 export async function getServerSideProps(context) {
   // Fetch data from external API
   const dataReq = await fetch(
-    `https://prod-02.uksouth.logic.azure.com/workflows/5454d5de7bcc4ce59f905b0ceeb6a778/triggers/manual/paths/invoke/searchType/{searchType}/searchValue/${context.params.dataItemId}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=PjsWaPjm_aHA3QcaiqNmWXg7OVtbegI-ZA2gwZnNnoc`
+    `https://prod-28.uksouth.logic.azure.com/workflows/e4bbba13f520488ea5594563501811a0/triggers/manual/paths/invoke/searchType/{searchType}/searchValue/${context.params.dataItemId}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=iW7V0i46HByptwH0eKAUbSEbkTjrwAXEjDHw8rEDlgk`
   );
   const dataJson = await dataReq.json();
   const searchResults = [
