@@ -60,3 +60,11 @@
 .searchResultsTableRow td {
   border: 1px solid #000;
 }
+
+.messageBox {
+  padding: 20px;
+  background-color: #e7ab00;
+  color: white;
+  margin: 25px;
+  text-align: center;
+}
