@@ -4,6 +4,19 @@ function CreateCSSearchResults(searchResults, errorMessage, searchPhrase) {
   let tableHeader = "";
   let tableBody = "";
 
+  searchResults = searchResults
+    .filter(
+      (value, index, self) =>
+        index ===
+        self.findIndex(
+          (t) =>
+            t.versionName === value.versionName &&
+            t.documentName === value.documentName &&
+            t.clauseReference === value.clauseReference &&
+            t.componentText === value.componentText
+        )
+    )
+    .sort();
   if (errorMessage) {
   } else {
     const codesSchedulesSearch = CodesSchedulesSearchResults(
