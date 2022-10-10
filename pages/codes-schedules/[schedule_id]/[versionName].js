@@ -42,6 +42,9 @@ function ScheduleDetail({
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const scheduleNumber = docInfo.scheduleNumber;
+  const scheduleName = docInfo.documentName;
+
   return (
     <>
       <aside
@@ -86,7 +89,11 @@ function ScheduleDetail({
         {checkIfItemsAvailableInArray(internalErrorLog, "document") ? (
           <div className={styles.scheduleContainer}>
             <DocumentDownload type="schedule" url={url} />
-            <h1 className={styles.contentTitle}>{docInfo.documentName}</h1>
+            <h1 className={styles.contentTitle}>
+              {scheduleNumber
+                ? `${scheduleName} - Schedule ${scheduleNumber}`
+                : scheduleName}
+            </h1>
 
             {checkIfItemsAvailableInArray(internalErrorLog, "versions") ? (
               <div>
