@@ -13,34 +13,27 @@ export const DataItemSearchResults = (searchResults, latestDataSpecVersion) => {
   const tableBody = (
     <tbody>
       {searchResults.map((entry) => (
-        <Link
+        <tr
           key={entry.DataItemIdentifier}
-          href={{
-            pathname: "/"
-          }}
+          className={`${styles.searchResultsRow} ${styles.pointer}`}
+          onClick={() =>
+            window.open(
+              `/dataspec/${latestDataSpecVersion}/dataitem/${entry.DataItemIdentifier}`,
+              "_blank"
+            )
+          }
         >
-          <tr
-            key={entry.DataItemIdentifier}
-            className={`${styles.searchResultsRow} ${styles.pointer}`}
-            onClick={() =>
-              window.open(
-                `/dataspec/${latestDataSpecVersion}/dataitem/${entry.DataItemIdentifier}`,
-                "_blank"
-              )
-            }
-          >
-            <td>{entry.DataItemIdentifier}</td>
-            <td>
-              {removeNullValues(entry.DTCLegacyReference) +
-                removeNullValues(entry.SPAALegacyReference) +
-                removeNullValues(entry.RGMALegacyReference) +
-                removeNullValues(entry.UNCDataItemReference) +
-                removeNullValues(entry.IUCDataItemReference) +
-                removeNullValues(entry.DCUSADataItemReference)}
-            </td>
-            <td>{entry.DataItemName}</td>
-          </tr>
-        </Link>
+          <td>{entry.DataItemIdentifier}</td>
+          <td>
+            {removeNullValues(entry.DTCLegacyReference) +
+              removeNullValues(entry.SPAALegacyReference) +
+              removeNullValues(entry.RGMALegacyReference) +
+              removeNullValues(entry.UNCDataItemReference) +
+              removeNullValues(entry.IUCDataItemReference) +
+              removeNullValues(entry.DCUSADataItemReference)}
+          </td>
+          <td>{entry.DataItemName}</td>
+        </tr>
       ))}
     </tbody>
   );
