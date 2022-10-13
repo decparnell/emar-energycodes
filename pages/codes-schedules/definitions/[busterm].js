@@ -25,7 +25,7 @@ export default definitions;
 export async function getServerSideProps(context) {
   // Fetch data from external API
   const dataReq = await fetch(
-    `https://prod-24.uksouth.logic.azure.com/workflows/c33b5eaa44fa46e9937c34b52091467b/triggers/manual/paths/invoke/${context.params.busterm}/definition?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xtAmkWUamwr-8PSmPnraMtCqA6mgxiAXrCqqZPf06OI`
+    `https://prod-24.uksouth.logic.azure.com/workflows/5193606ca45540798cf35eb8212216cc/triggers/manual/paths/invoke/documentId/${context.params.busterm}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=_YdM-1PPPblaVqP28pTc5rJQ0vrJDHcel3ZBFQjQwik`
   );
   const dataJson = await dataReq.json();
   const parts = dataJson.parts;

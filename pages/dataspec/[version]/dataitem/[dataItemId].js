@@ -8,8 +8,9 @@ import SecondNavbar from "../../../../components/layout/secondHeader";
 import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable/index";
 import { logError } from "../../../../components/helperFunctions/logError";
 import { checkIfItemsAvailableInArray } from "../../../../components/helperFunctions/checkIfItemsAvailableInArray/index";
+import DocumentDownload from "../../../../components/documentDownload";
 
-function DiDetailPage({ searchResults }) {
+function DiDetailPage({ searchResults, url }) {
   let apiVarList = [];
   const checkIfsearchResultsAvailable = () => {
     if (searchResults) {
@@ -78,6 +79,7 @@ function DiDetailPage({ searchResults }) {
                 <meta property="og:title" content="My page title" key="title" />
               </Head>
               <div className={styles.flexContainer}>
+                <DocumentDownload type="di" url={url} />
                 <div className={styles.fullBoxTable}>
                   <h1 className={styles.contentTitle}>
                     {dataItemInfo.DataItemIdentifier} -{" "}
@@ -234,7 +236,7 @@ export default DiDetailPage;
 export async function getServerSideProps(context) {
   // Fetch data from external API
   const dataReq = await fetch(
-    `https://prod-02.uksouth.logic.azure.com/workflows/5454d5de7bcc4ce59f905b0ceeb6a778/triggers/manual/paths/invoke/searchType/{searchType}/searchValue/${context.params.dataItemId}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=PjsWaPjm_aHA3QcaiqNmWXg7OVtbegI-ZA2gwZnNnoc`
+    `https://prod-28.uksouth.logic.azure.com/workflows/e4bbba13f520488ea5594563501811a0/triggers/manual/paths/invoke/searchType/{searchType}/searchValue/${context.params.dataItemId}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=iW7V0i46HByptwH0eKAUbSEbkTjrwAXEjDHw8rEDlgk`
   );
   const dataJson = await dataReq.json();
   const searchResults = [
@@ -243,6 +245,12 @@ export async function getServerSideProps(context) {
     dataJson.enumerations,
   ];
 
+  const urlFetch = await fetch(
+    `https://prod-18.uksouth.logic.azure.com/workflows/ba54bba8972e48438cbb6f0571163ef0/triggers/manual/paths/invoke/searchValue/${context.params.dataItemId}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=RO7KjzGq7_bdQqRL4PUPuSk3zzJFdZky3aumpoWCIS0`
+  );
+  const urlJson = await urlFetch.json();
+  const url = urlJson.url;
+
   // Pass data to the page via props
-  return { props: { searchResults } };
+  return { props: { searchResults, url } };
 }
