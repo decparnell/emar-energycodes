@@ -10,6 +10,10 @@ app
   .then(() => {
     const server = express();
 
+    server.get("/sso", (req, res) => {
+      res.send("hello world");
+    });
+
     server.get("*", (req, res) => {
       return handle(req, res);
     });
