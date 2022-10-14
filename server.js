@@ -1,25 +1,19 @@
 const express = require("express");
 const next = require("next");
 
+const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== "production";
-const nextApp = next({ dev });
-const handle = nextApp.getRequestHandler();
+const app = next({ dev });
+const handle = app.getRequestHandler();
 
-nextApp
-  .prepare()
-  .then(() => {
-    const app = express();
+app.prepare().then(() => {
+  const server = express();
 
-    app.get("*", (req, res) => {
-      return handle(req, res);
-    });
-
-    app.listen(3000, (err) => {
-      if (err) throw err;
-      console.log("> Ready on http://localhost:3000");
-    });
-  })
-  .catch((ex) => {
-    console.error(ex.stack);
-    process.exit(1);
+  server.all("*", (req, res) => {
+    return handle(req, res);
   });
+
+  server.listen(port, () => {
+    console.log(`> Ready on http://localhost:${port}`);
+  });
+});
