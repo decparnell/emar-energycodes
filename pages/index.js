@@ -12,6 +12,7 @@ import { checkIfVariablesAreAvailable } from "../components/helperFunctions/chec
 import { logError } from "../components/helperFunctions/logError";
 import { checkIfItemsAvailableInArray } from "../components/helperFunctions/checkIfItemsAvailableInArray/";
 import { AiOutlineCloseCircle, AiOutlineComment } from "react-icons/ai";
+import { logMessage } from "../components/helperFunctions/logMessage";
 
 function HomePage({
   dashboards,
@@ -77,14 +78,39 @@ function HomePage({
   }, [currentDashboard]);
 
   const [isClosed, setIsClosed] = useState("false");
+  const [fullname, setFullName] = useState("unknown user");
+  const [comment, setComment] = useState("");
+  const [insertError, setInsertError] = useState("");
 
   const onCloseMinimimisedButtonClick = () => {
     setIsClosed((closed) => !closed);
   };
 
+  async function sendFeedbackToDatabase() {
+    //return the info about the latest version
+    const dataReq = await fetch(
+      `https://prod-11.uksouth.logic.azure.com/workflows/b36b8eadc12b4dddb40ba785b4844a00/triggers/manual/paths/invoke/name/${fullname}/comment/${comment}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=cmZIJNw2L8UG2wPSTjs3m1wtIIEtstLsZ8DgUkBzKc0`
+    );
+    const dataJson = await dataReq.json();
+    if (dataJson.status!= 200) {
+      setInsertError("Something went wrong! Please try again.");
+    }
+    return {
+      props: { dataJson }
+    };
+  }
+
+  const onFullNameChange = (event) => {
+    setFullName(event.target.value);
+  };
+  const onFeedbackChange = (event) => {
+    setComment(event.target.value);
+  };
+
   const onFeedbackFormSubmitButton = () => {
-    //to be done later
-    console.log("Submit Button Clicked!");
+    if (comment.length > 10) {
+      sendFeedbackToDatabase();
+    }
   };
 
   return (
@@ -96,6 +122,9 @@ function HomePage({
       )}
       <TabNavbar />
       <ButtonNavbar />
+      {insertError && (
+        <div className={styles.errorBox}>{logMessage(insertError)}</div>
+      )}
       <div className={styles.container}>
         <Head>
           <title>EMAR Dashboards</title>
@@ -134,22 +163,20 @@ function HomePage({
               />
             </div>
             <h3>Contact Us</h3>
-            <form
-              method="POST"
-              class={styles.formElement}
-              target="_self"
-            >
+            <form method="POST" class={styles.formElement} target="_self">
               <input
                 type="text"
                 class={styles.fullName}
                 placeholder="Enter Your Name"
+                onChange={onFullNameChange}
               ></input>
               <textarea
                 rows="4"
                 cols="50"
                 class={styles.feedback}
                 placeholder="Enter Your Feedback"
-                minlength="50"
+                minlength="10"
+                onChange={onFeedbackChange}
                 required
               ></textarea>
               <button
