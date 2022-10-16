@@ -9,6 +9,10 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
   const server = express();
 
+  server.all("/hello", (req, res) => {
+    res.send("Hello World!");
+  });
+
   server.all("*", (req, res) => {
     return handle(req, res);
   });
