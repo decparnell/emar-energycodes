@@ -77,7 +77,7 @@ function HomePage({
     }
   }, [currentDashboard]);
 
-  const [isClosed, setIsClosed] = useState("false");
+  const [isClosed, setIsClosed] = useState(true);
   const [fullname, setFullName] = useState("unknown user");
   const [comment, setComment] = useState("");
   const [insertError, setInsertError] = useState("");
@@ -155,6 +155,13 @@ function HomePage({
           <div className={styles.errorBox}>{logError("Dashboard")}</div>
         )}
         {isClosed ? (
+          <div
+            className={styles.minimiseBtn}
+            onClick={onCloseMinimimisedButtonClick}
+          >
+            <AiOutlineComment className={styles.openBtn} />
+          </div>
+        ) : (
           <div className={styles.contactForm}>
             <div className={styles.BtnContainer}>
               <AiOutlineCloseCircle
@@ -188,13 +195,6 @@ function HomePage({
                 Submit
               </button>
             </form>
-          </div>
-        ) : (
-          <div
-            className={styles.minimiseBtn}
-            onClick={onCloseMinimimisedButtonClick}
-          >
-            <AiOutlineComment className={styles.openBtn} />
           </div>
         )}
       </div>
