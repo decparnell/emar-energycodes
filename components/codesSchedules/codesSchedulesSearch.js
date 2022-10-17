@@ -1,16 +1,14 @@
 import styles from "../../styles/codesSchedulesSearch.module.css";
-import { useState, useContext, useEffect } from "react";
+import { useState } from "react";
 import CodesSchedulesSearchForm from "./codesSchedulesSearchForm";
 import createCSSearchResults from "./createCSSearchResults";
-import AppContext from "../context/AppContext";
 import Head from "next/head";
 import { MessageFilters } from "./codesSchedulesFilter";
-// import { getDistinctValuesSchedules } from "../dataspec/functions/getDistinctValues";
 
 function CodesSchedulesSearch(props) {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [searchResults, setSearchResults] = useState("");
-  const [errorMessage, setErrorMessage] = useState();
+  const [errorMessage, setErrorMessage] = useState("");
   const [schedulesFilterValue, setSchedulesFilterValue] =
     useState("Filter Schedules:");
 
