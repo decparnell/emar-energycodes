@@ -16,7 +16,7 @@ const SearchForm = (
     event.preventDefault(); // don't redirect the page
     setSourceFilterValue("Filter the source:");
     setTargetFilterValue("Filter the target:");
-    const searchValue = event.target.freeTextSearch.value;
+    const searchValue = encodeURIComponent(event.target.freeTextSearch.value);
     let dataReq = "";
 
     if (searchType == "mm") {
