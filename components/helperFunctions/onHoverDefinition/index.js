@@ -10,8 +10,10 @@ function HoverOverFunctionDefinition(
 ) {
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
-  const [isShown, setIsShown] = useState(false);
+  /*   const [isShown, setIsShown] = useState(false);
   const [delayHandler, setDelayHandler] = useState(null);
+
+
   const handleMouseEnter = (event) => {
     //do the api call here await data and feedback
     setDelayHandler(
@@ -24,7 +26,7 @@ function HoverOverFunctionDefinition(
   const handleMouseLeave = () => {
     setIsShown(false);
     clearTimeout(delayHandler);
-  };
+  }; */
 
   return (
     <>
@@ -36,8 +38,8 @@ function HoverOverFunctionDefinition(
           )}`}
           target="_blank"
           rel="noreferrer"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          /* onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave} */
         >
           {linkingWord}
         </a>
@@ -51,19 +53,19 @@ function HoverOverFunctionDefinition(
           `}
           target="_blank"
           rel="noreferrer"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          /* onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave} */
         >
           {linkingWord}
         </a>
       )}
-      {isShown && (
+      {/* {isShown && (
         <div className={styles.tooltip}>
           {linkType == "definition"
             ? definitionString
             : "Click to go to the Schedule"}
         </div>
-      )}
+      )} */}
     </>
   );
 }

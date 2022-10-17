@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import styles from "../../styles/codesSchedulesSearch.module.css";
 export const CodesSchedulesSearchResults = (searchResults, searchPhrase) => {
   const router = useRouter();
-  //console.log(searchResults);
+
   function escapeRegex(string) {
     return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
   }

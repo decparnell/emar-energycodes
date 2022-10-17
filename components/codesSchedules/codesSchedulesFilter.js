@@ -8,7 +8,6 @@ export const MessageFilters = (
   setSchedulesFilterValue,
   clearFilter
 ) => {
-  console.log(scheduleList);
   return (
     <div className={styles.sourcetargetContainer}>
       <ScheduleDropdown
