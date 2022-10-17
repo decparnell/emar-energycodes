@@ -27,6 +27,7 @@ function CreateCSSearchResults(searchResults, errorMessage, searchPhrase) {
     tableHeader = codesSchedulesSearch[0];
     tableBody = codesSchedulesSearch[1];
   }
+
   return (
     <>
       {searchResults.length > 0 ? (
@@ -37,8 +38,8 @@ function CreateCSSearchResults(searchResults, errorMessage, searchPhrase) {
           </table>
         </div>
       ) : (
-        <div className={styles.messageBox}>
-          {logMessage("There are no results for the term you have searched.")}
+        <div className={styles.errorMessage}>
+          {logMessage(`No results found for "${searchPhrase}"`)}
         </div>
       )}
     </>
