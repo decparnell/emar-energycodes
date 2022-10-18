@@ -28,7 +28,8 @@ export default function LinkTextFromDefinitions(text, definitions) {
               linkInfo["componentText"],
               linkInfo["linkType"],
               linkingWord,
-              linkInfo["linkForwardUrl"]
+              linkInfo["linkForwardUrl"],
+              linkInfo["versionName"]
             );
             //if no definitions have been pushed yet
             if (j == 0 && searchText.length == 1) {

@@ -6,10 +6,9 @@ function HoverOverFunctionDefinition(
   definitionString,
   linkType,
   linkingWord,
-  linkAddress
+  linkAddress,
+  versionName
 ) {
-  const value = useContext(AppContext);
-  let { latestDataSpecVersion } = value.state;
   /*   const [isShown, setIsShown] = useState(false);
   const [delayHandler, setDelayHandler] = useState(null);
 
@@ -49,7 +48,7 @@ function HoverOverFunctionDefinition(
           className={styles.tooltiptext}
           href={`/codes-schedules/${encodeURIComponent(
             linkAddress
-          )}/${encodeURIComponent(latestDataSpecVersion)}
+          )}/${encodeURIComponent(versionName)}
           `}
           target="_blank"
           rel="noreferrer"

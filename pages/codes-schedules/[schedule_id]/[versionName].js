@@ -36,7 +36,6 @@ function ScheduleDetail({
   const router = useRouter();
   const schedule_id = router.query.schedule_id;
   const versionName = router.query.versionName;
-
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
