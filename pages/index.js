@@ -163,7 +163,7 @@ function HomePage({
               />
             </div>
             <h3>Contact Us</h3>
-            <form method="POST" class={styles.formElement} target="_self">
+            <form method="POST" className={styles.formElement} target="_self">
               <input
                 type="text"
                 className={styles.fullName}
