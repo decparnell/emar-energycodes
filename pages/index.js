@@ -22,7 +22,7 @@ function HomePage({
   newsData,
   mmsv,
   dataItems,
-  codesSchedulesDataJson
+  codesSchedulesDataJson,
 }) {
   const apiVarList = [
     { obj: newsData, name: "newsData" },
@@ -31,7 +31,7 @@ function HomePage({
     { obj: mmsv, name: "mmsv" },
     { obj: dashboards, name: "dashboards" },
     { obj: sections, name: "sections" },
-    { obj: dataItems, name: "dataItems" }
+    { obj: dataItems, name: "dataItems" },
   ];
   const value = useContext(AppContext);
   let { chosenButton, chosenTab } = value.state;
@@ -92,11 +92,11 @@ function HomePage({
       `https://prod-11.uksouth.logic.azure.com/workflows/b36b8eadc12b4dddb40ba785b4844a00/triggers/manual/paths/invoke/name/${fullname}/comment/${comment}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=cmZIJNw2L8UG2wPSTjs3m1wtIIEtstLsZ8DgUkBzKc0`
     );
     const dataJson = await dataReq.json();
-    if (dataJson.status!= 200) {
+    if (dataJson.status != 200) {
       setInsertError("Something went wrong! Please try again.");
     }
     return {
-      props: { dataJson }
+      props: { dataJson },
     };
   }
 
@@ -166,23 +166,23 @@ function HomePage({
             <form method="POST" class={styles.formElement} target="_self">
               <input
                 type="text"
-                class={styles.fullName}
+                className={styles.fullName}
                 placeholder="Enter Your Name"
                 onChange={onFullNameChange}
               ></input>
               <textarea
                 rows="4"
                 cols="50"
-                class={styles.feedback}
+                className={styles.feedback}
                 placeholder="Enter Your Feedback"
-                minlength="10"
+                minLength="10"
                 onChange={onFeedbackChange}
                 required
               ></textarea>
               <button
                 onClick={onFeedbackFormSubmitButton}
                 type="submit"
-                class={styles.submitBtn}
+                className={styles.submitBtn}
                 name="submit"
               >
                 Submit
@@ -246,7 +246,7 @@ export async function getServerSideProps(context) {
       newsData,
       mmsv,
       dataItems,
-      codesSchedulesDataJson
-    }
+      codesSchedulesDataJson,
+    },
   };
 }
