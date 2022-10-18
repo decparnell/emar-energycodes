@@ -53,26 +53,26 @@ const FeedbackForm = ({ setInsertError }) => {
             />
           </div>
           <h3>Contact Us</h3>
-          <form method="POST" class={styles.formElement} target="_self">
+          <form method="POST" className={styles.formElement} target="_self">
             <input
               type="text"
-              class={styles.fullName}
+              className={styles.fullName}
               placeholder="Enter Your Name"
               onChange={onFullNameChange}
             ></input>
             <textarea
               rows="4"
               cols="50"
-              class={styles.feedback}
+              className={styles.feedback}
               placeholder="Enter Your Feedback"
-              minlength="10"
+              minLength="10"
               onChange={onFeedbackChange}
               required
             ></textarea>
             <button
               onClick={onFeedbackFormSubmitButton}
               type="submit"
-              class={styles.submitBtn}
+              className={styles.submitBtn}
               name="submit"
             >
               Submit
