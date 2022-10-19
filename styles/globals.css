@@ -205,47 +205,47 @@ div {
   z-index: 9999;
 }
 .spinner {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  height: 50%;
-  width: 50%;
-  margin: 0px auto;
-  -webkit-animation: rotation 0.9s infinite linear;
-  -moz-animation: rotation 0.9s infinite linear;
-  -o-animation: rotation 0.9s infinite linear;
-  animation: rotation 0.9s infinite linear;
+  border: 16px solid white;
+  border-radius: 50%;
+  border-top: 16px solid #4d8934;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 1.5s infinite linear;
+  -moz-animation: spin 1.5s infinite linear;
+  -o-animation: spin 1.5s infinite linear;
+  animation: spin 1.5s infinite linear;
 }
 
-@-webkit-keyframes rotation {
-  from {
-    -webkit-transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(359deg);
-  }
-}
-@-moz-keyframes rotation {
-  from {
-    -moz-transform: rotate(0deg);
-  }
-  to {
-    -moz-transform: rotate(359deg);
-  }
-}
-@-o-keyframes rotation {
-  from {
-    -o-transform: rotate(0deg);
-  }
-  to {
-    -o-transform: rotate(359deg);
-  }
-}
-@keyframes rotation {
-  from {
+@keyframes spin {
+  0% {
     transform: rotate(0deg);
   }
-  to {
-    transform: rotate(359deg);
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-o-keyframes spin {
+  0% {
+    -o-transform: rotate(0deg);
+  }
+  100% {
+    -o-transform: rotate(360deg);
   }
 }
