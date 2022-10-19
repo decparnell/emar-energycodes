@@ -30,12 +30,18 @@ function CreateCSSearchResults(searchResults, errorMessage, searchPhrase) {
 
   return (
     <>
-      <div className={styles.contentContainer}>
-        <table className={styles.resultsTable}>
-          {tableHeader}
-          {tableBody}
-        </table>
-      </div>
+      {searchResults.length > 0 ? (
+        <div className={styles.contentContainer}>
+          <table className={styles.resultsTable}>
+            {tableHeader}
+            {tableBody}
+          </table>
+        </div>
+      ) : (
+        <div className={styles.errorMessage}>
+          {logMessage(`No results found for "${searchPhrase}"`)}
+        </div>
+      )}
     </>
   );
 }
