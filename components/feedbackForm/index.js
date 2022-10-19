@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "../../styles/feedbackForm.module.css";
 import { AiOutlineCloseCircle, AiOutlineComment } from "react-icons/ai";
-
+import sanitizeForUrl from "../helperFunctions/sanitizeForUrl";
 const FeedbackForm = ({ setInsertError }) => {
   const [isClosed, setIsClosed] = useState(true);
   const [fullname, setFullName] = useState("unknown user");
@@ -11,15 +11,17 @@ const FeedbackForm = ({ setInsertError }) => {
     setIsClosed((closed) => !closed);
   };
   async function sendFeedbackToDatabase() {
+    const cleanName = sanitizeForUrl(fullname);
+    const cleanComment = sanitizeForUrl(comment);
     const dataReq = await fetch(
-      `https://prod-11.uksouth.logic.azure.com/workflows/b36b8eadc12b4dddb40ba785b4844a00/triggers/manual/paths/invoke/name/${fullname}/comment/${comment}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=cmZIJNw2L8UG2wPSTjs3m1wtIIEtstLsZ8DgUkBzKc0`
+      `https://prod-11.uksouth.logic.azure.com/workflows/b36b8eadc12b4dddb40ba785b4844a00/triggers/manual/paths/invoke/name/${cleanName}/comment/${cleanComment}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=cmZIJNw2L8UG2wPSTjs3m1wtIIEtstLsZ8DgUkBzKc0`
     );
     const dataJson = await dataReq.json();
     if (dataJson.status != 200) {
       setInsertError("Something went wrong! Please try again.");
     }
     return {
-      props: { dataJson }
+      props: { dataJson },
     };
   }
 
