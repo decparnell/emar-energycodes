@@ -51,7 +51,7 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
     const text = comp.componentText;
     const indent = comp.indent;
     const tag = comp.componentType;
-    const clauseComponentId = comp.componentId - 2;
+    const clauseComponentId = comp.componentId;
     //create initial value for the tag and class name
     let customClassName = createIndentedText(indent);
     if (compI > 0) {
