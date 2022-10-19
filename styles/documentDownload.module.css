@@ -1,6 +1,7 @@
-.downloadLink{
-    width:5%;
-    height:5%;
-    margin-top:1%;
-    position:absolute;
-  }
+.downloadLink {
+  width: 5%;
+  height: 5%;
+  margin-top: 1%;
+  position: fixed;
+  top: 10vh;
+}

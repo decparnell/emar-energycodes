@@ -70,6 +70,7 @@ function DiDetailPage({ searchResults, url }) {
   return (
     <>
       <SecondNavbar />
+      <DocumentDownload type="di" url={url} />
       {checkIfItemsAvailableInArray(internalErrorLog, "searchResults") ? (
         <div className={styles.contentContainer}>
           {checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo") ? (
@@ -79,7 +80,6 @@ function DiDetailPage({ searchResults, url }) {
                 <meta property="og:title" content="My page title" key="title" />
               </Head>
               <div className={styles.flexContainer}>
-                <DocumentDownload type="di" url={url} />
                 <div className={styles.fullBoxTable}>
                   <h1 className={styles.contentTitle}>
                     {dataItemInfo.DataItemIdentifier} -{" "}
