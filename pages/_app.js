@@ -3,8 +3,6 @@ import Layout from "../components/layout/layout";
 import AppContext from "../components/context/AppContext";
 import Router from "next/router";
 import { useState, useEffect } from "react";
-import Image from "next/image";
-import logo from "../public/recco_logo.PNG";
 import Script from "next/script";
 function Loading() {
   const [loading, setLoading] = useState(false);
@@ -27,7 +25,7 @@ function Loading() {
   return (
     loading && (
       <div className="spinner-wrapper">
-        <Image alt="Recco logo" src={logo} className="spinner" />
+        <div className="spinner"></div>
       </div>
     )
   );
