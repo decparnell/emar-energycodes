@@ -5,7 +5,10 @@ import Link from "next/link";
 import { Fragment } from "react";
 import styles from "../../styles/header.module.css";
 import { FaBars } from "react-icons/fa";
+import AsideDropDownMenu from "../AsideDropDownMenu";
+
 function navbar() {
+  const meniuItems = ["Home"];
   //<div className="navLink">
   //<Link href="/rec-portal">REC Portal</Link>
   //</div>
@@ -18,11 +21,7 @@ function navbar() {
           </div>
         </Link>
         <div>
-          <div className={styles.navLink}>
-            <Link href="/">
-              <FaBars className={styles.homeButton} />
-            </Link>
-          </div>
+          <AsideDropDownMenu meniuItems={meniuItems} />
         </div>
       </div>
     </Fragment>
