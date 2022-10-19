@@ -22,7 +22,7 @@ function HomePage({
   newsData,
   mmsv,
   dataItems,
-  codesSchedulesDataJson
+  codesSchedulesDataJson,
 }) {
   const apiVarList = [
     { obj: newsData, name: "newsData" },
@@ -31,7 +31,7 @@ function HomePage({
     { obj: mmsv, name: "mmsv" },
     { obj: dashboards, name: "dashboards" },
     { obj: sections, name: "sections" },
-    { obj: dataItems, name: "dataItems" }
+    { obj: dataItems, name: "dataItems" },
   ];
   const value = useContext(AppContext);
   let { chosenButton, chosenTab } = value.state;
@@ -170,7 +170,7 @@ export async function getServerSideProps(context) {
       newsData,
       mmsv,
       dataItems,
-      codesSchedulesDataJson
-    }
+      codesSchedulesDataJson,
+    },
   };
 }

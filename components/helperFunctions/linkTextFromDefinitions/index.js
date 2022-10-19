@@ -22,13 +22,15 @@ export default function LinkTextFromDefinitions(text, definitions) {
           //split the text on the word to get an array of two halves
           let textSplit = searchText[i].split(linkingWord);
           //for each item in the array until var i is = to the length textsplit - 2
+          let extraCounter = 2;
           for (var j = 0; j < textSplit.length - 1; j += 1) {
             //using the hover function to create the link to the definitions page, and the on hover function
             const hoverFunction = HoverOverFunctionDefinition(
               linkInfo["componentText"],
               linkInfo["linkType"],
               linkingWord,
-              linkInfo["linkForwardUrl"]
+              linkInfo["linkForwardUrl"],
+              linkInfo["versionName"]
             );
             //if no definitions have been pushed yet
             if (j == 0 && searchText.length == 1) {
@@ -37,8 +39,17 @@ export default function LinkTextFromDefinitions(text, definitions) {
               searchText.splice(i + 2, 0, textSplit[j + 1]);
               //if no definitions have been pushed, and this is the second item
             } else if (j > 0) {
-              searchText.splice(i + j + 1, 0, hoverFunction);
-              searchText.splice(i + j + 2, 0, textSplit[j + 1]);
+              searchText.splice(
+                parseInt(i) + parseInt(extraCounter) + 1,
+                0,
+                hoverFunction
+              );
+              searchText.splice(
+                parseInt(i) + parseInt(extraCounter) + 2,
+                0,
+                textSplit[j + 1]
+              );
+              extraCounter += 1;
             } else {
               searchText[parseInt(i)] = textSplit[j];
               searchText.splice(parseInt(i) + 1, 0, hoverFunction);
