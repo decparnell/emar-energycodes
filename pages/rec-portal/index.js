@@ -45,8 +45,82 @@ const recPortalLinks = [
 ];
 
 const definitions = [
-  { linkText: "dog", componentText: "dog", linkForwardUrl: 1 },
-  { linkText: "really", componentText: "really", linkForwardUrl: 1 },
+  {
+    linkText: "Centralised Registration Service",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+  {
+    linkText: "Core Systems Assurance Provider",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+  {
+    linkText: "CSS Systems Integrator",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+  {
+    linkText: "Post Implementation Period",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+  {
+    linkText: "Switching Operator",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+  {
+    linkText: "CSS Provider",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+
+  {
+    linkText: "CRS Provider",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+
+  {
+    linkText: "DCC Licence",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+
+  {
+    linkText: "SI Provider",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+  {
+    linkText: "Party",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+  {
+    linkText: "DCC",
+    componentText: "dog",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+
+  {
+    linkText: "Interpretation Schedule",
+    linkType: "schedule",
+    componentText: "really",
+    linkForwardUrl: 1,
+  },
 ];
 
 function RecPortal() {
@@ -82,9 +156,9 @@ function RecPortal() {
           ))}
         </ul>
       </div>
-      <div className={styles.infoContainer}>
+      <div className={styles.dectest}>
         {LinkTextFromDefinitions(
-          "I really want a dog , becuase I really like them.",
+          "The DCC is primarily a Party for the purpose of providing the Centralised Registration Service in accordance with Condition 15 (Incorporation, delivery and provision of the Centralised Registration Service) of the DCC Licence, in which context the DCC is referred to as the CRS Provider. The CRS Provider encompasses the following roles: the CSS Provider, the CSS Systems Integrator, the SI Provider and the Switching Operator and, until the end of the Post Implementation Period only, the Core Systems Assurance Provider and CSS Systems Integrator (as such roles are defined in the Interpretation Schedule).",
           definitions
         )}
       </div>

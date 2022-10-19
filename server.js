@@ -24,7 +24,7 @@ app.prepare().then(() => {
       "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC4J0rpnr8bv65MgnrQ1+p7iQn3FCqF+WKQmcWfCYB5m7r5uqewT8fKGQTlglaOT+xPm8e/iSrFAapSx1z3AASZzh9touMs5RvNYsyq/3nAJW9iaghqYb5u8c4M/g3SkaNdGTZH4wkSdR8FGmrfSoX+XXOwBN7lawjNF3/WURv0cPDPhS4Xi9/bLDiP3UD9HFg8SJQTCzMXAxWCSA7ab9enBzSRO7o0zBhDXzj/MQ94UqqCNdxWZ4id6i2keWPQSysM9TmN/ntutabGzEVUSBgcnAVwAEBx/1B6MgwnK48dy6boiVG9k6racZAVbBEGD3YQri+1Q86XubRsFrOHTVRFAgMBAAECggEAGLXdDYApsLWF0+pmRIPUiQMYfTkNg7C1EyYvKGoD/U1yR3ROcBAkhO/agll899eto/kJUqA7Rvg0PKtXxCUSePj5qqKCzVFo66RoRkHFuozLZ29G9c9r2ENGHOQyQqEcRK/PYtIKM5nXsb2bvZ6oYDt1/JaKukokgjC3DLERiTksC+s2ROf6WjOAcJpYpQe3eTVQ/t0coJlWY8ljNZSTKft8MeAW0ZAL3cn3fdGPh+WJN+IQ5rKuYIE/C3GE7sgkK0JtAYGycfPj0tIY/wxDaV6PZf/req3ALLnj1Qoyq1358QORaElrdyAARRT8hXJsP3TLJb5bTbKkw1+xxP88OQKBgQDKLY3B5w0ahpfZCQZ/pYuA2ju/QyJVwN2rDQ/asfDSNzNl7oTSf4kPVJ5CX5MXsRAcoHiSk9Rhei5CVIQvhknddTWjSnTqQGQLk1bhsdnXyqrplv+d+GwimL3vfYRI2X/T+cz44zgLE3StkFKBD/uQBqfqux8RYO9r6xzA7KN23wKBgQDpLV7RjLX8hOhePifSTXuiUPfdmS2jltTO+UW9iGSu9i8I/f9e5csdfVfWFXwo/chQl2lPU7uztcO75mLEJUtVS6KzjRvhEjAiqWrqJqxcOAi5b9/QGme4m9GZdmroQG9NDW7IpHqa7dZNNVunwt+f4sC8QeMI5oEV2cA3hK9NWwKBgGJvM2mIuNSFW0EMJ+HWE8m0dwp0AS+HK2WwgluT7xAqWBf0vS5PccfJBxSBu/f4+UM2zf1vhCPBfOxGgeUxmJz+CBNsmOfEWfFY1yAjm1B5GCWKowGiheOCQldr4RAm9RmbsbQrzIl3+4LVlZXI1k4VL4QVftbTPz5nxiQYEq45AoGAGNS3CzOj0Z9Jq3eNAA02REPBEX0Vah1OzjenYJacujEHMzrxLebkqWBGsUqabTcRVNu64DK3g1yw2lqfW+noys2CJwK43E/2hkpqU0MJCc0ByNWMDPoy32rgeCovGkp6T8dFa+JwF/2J27D58LSE4d7gzWtqxPDfADevC3p6vI8CgYEAtegmCq6bTL6D8haP0j3t+qdjNTJlZoVlepJlpCPZiIRgdVj4T6fk1Ye1EdGuKSq2LlfBQENLu5JugwPmXRXqnvNkfyBypdHTiZtHHD9J1z5b56Z4kMsJDzG0lgE1O4TdnVAqExumhbe5Y7GpDjva3QRTBPhy4DUo0ZmCWRhzIhY=",
     certificate:
       "MIIDRDCCAiygAwIBAgIQQLvOYPT2TVmvIS0m+OdcfDANBgkqhkiG9w0BAQsFADAfMR0wGwYDVQQDDBRSZWNfRGlnaXRhbE5hdmlnYXRvcjAeFw0yMjEwMDUwODU2NDZaFw0zMjEwMDUwOTA2NDZaMB8xHTAbBgNVBAMMFFJlY19EaWdpdGFsTmF2aWdhdG9yMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuCdK6Z6/G7+uTIJ60Nfqe4kJ9xQqhflikJnFnwmAeZu6+bqnsE/HyhkE5YJWjk/sT5vHv4kqxQGqUsdc9wAEmc4fbaLjLOUbzWLMqv95wCVvYmoIamG+bvHODP4N0pGjXRk2R+MJEnUfBRpq30qF/l1zsATe5WsIzRd/1lEb9HDwz4UuF4vf2yw4j91A/RxYPEiUEwszFwMVgkgO2m/Xpwc0kTu6NMwYQ184/zEPeFKqgjXcVmeIneotpHlj0EsrDPU5jf57brWmxsxFVEgYHJwFcABAcf9QejIMJyuPHcum6IlRvZOq2nGQFWwRBg92EK4vtUPOl7m0bBazh01URQIDAQABo3wwejAOBgNVHQ8BAf8EBAMCBaAwCQYDVR0TBAIwADAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwHwYDVR0jBBgwFoAU4n9m20aXwIrxA2LncVHg23bUn/wwHQYDVR0OBBYEFOJ/ZttGl8CK8QNi53FR4Nt21J/8MA0GCSqGSIb3DQEBCwUAA4IBAQBwUnJYrr1Khu7RetYy649lKn02PjzThuZZXE+0ClJys5NGDW0rdjk//8LSZSe8cpUtY38kc45LQUrtu3V2LsrVHafdj4an1+0jFNBc4d6cqCiuoSx62c9q0JAJkeFv4YvgQHI8oA0wPghi3uIQ7o08Qm4gCuE/wbS6dYT692sM3NX8FE+mhPPBFfozJtJOUaj1pTymR9eNmLqMC8d9GDuFQe+crXQWCI+MNClGL+gIdBbLq5yP+lvaDKnzAdI5U5g2965kBK9f71ekRo2X2E+OVZhjPjdwqKM3kSPS3wiJ31uT3CUAkTgFspShvcXHFAtlgqzzb1Ql9kYYys0z31SU",
-    assert_endpoint: "https://emar-energycodes.azurewebsites.net/assert",
+    assert_endpoint: "http://localhost:3000/assert",
     sign_get_request: true,
   };
   var sp = new saml2.ServiceProvider(sp_options);
@@ -63,14 +63,15 @@ app.prepare().then(() => {
   server.post("/assert", function (req, res) {
     var options = { request_body: req.body };
     sp.post_assert(idp, options, function (err, saml_response) {
-      if (err != null) return res.send(500);
+      //if (err != null) return res.sendStatus(500);
 
       // Save name_id and session_index for logout
       // Note:  In practice these should be saved in the user session, not globally.
-      name_id = saml_response.user.name_id;
-      session_index = saml_response.user.session_index;
+      //name_id = saml_response.user.name_id;
+      //session_index = saml_response.user.session_index;
 
-      res.send("Hello #{name_id}! session_index: #{session_index}.");
+      res.send(err);
+      //res.send("Hello #{name_id}! session_index: #{session_index}.");
     });
   });
 
@@ -82,7 +83,7 @@ app.prepare().then(() => {
     };
 
     sp.create_logout_request_url(idp, options, function (err, logout_url) {
-      if (err != null) return res.send(500);
+      if (err != null) return res.sendStatus(500);
       res.redirect(logout_url);
     });
   });
