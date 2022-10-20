@@ -33,16 +33,20 @@ table {
   padding-bottom: 1vh;
   text-align: center;
 }
+
 th {
   text-align: center;
   background-color: #4d8934;
   color: white;
   border: 1px solid #4d8934;
 }
+
 td {
   border-bottom: 1px solid #4d8934;
   text-align: center;
+  padding: 0 0.4em;
 }
+
 tr {
   background-color: #e7f4e4;
   text-align: center;

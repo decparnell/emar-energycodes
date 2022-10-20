@@ -6,6 +6,7 @@ import AppContext from "../context/AppContext";
 import Head from "next/head";
 import SecondNavbar from "../layout/secondHeader";
 import { MessageFilters } from "./sourceTargetFilters";
+
 function DataSpecSearch(props) {
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
@@ -52,6 +53,7 @@ function DataSpecSearch(props) {
   }
 
   function handleButtonClick(newType, e) {
+    setErrorMessage(undefined);
     e.preventDefault();
     setSearchType(newType);
   }
@@ -145,6 +147,7 @@ function DataSpecSearch(props) {
         {SearchForm(
           setSearchResults,
           searchType,
+          // searchValue,
           errorMessage,
           setErrorMessage,
           latestDataSpecVersion,
