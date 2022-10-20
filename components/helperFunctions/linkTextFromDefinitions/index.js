@@ -10,7 +10,7 @@ export default function LinkTextFromDefinitions(text, definitions) {
   for (const word in wordsToLink) {
     //for each row in the search text array
     for (const i in searchText) {
-      if (typeof searchText[i] == "string") {
+      if (typeof searchText[i] != "object") {
         //create a variable containing the word
         let linkingWord = wordsToLink[word];
         //find the info about the linking word ie what the link for the word should be
@@ -21,10 +21,11 @@ export default function LinkTextFromDefinitions(text, definitions) {
         if (searchText[i].indexOf(linkingWord) >= 0) {
           //split the text on the word to get an array of two halves
           let textSplit = searchText[i].split(linkingWord);
-          //for each item in the array until var i is = to the length textsplit - 2
-          let extraCounter = 2;
-          for (var j = 0; j < textSplit.length - 1; j += 1) {
-            //using the hover function to create the link to the definitions page, and the on hover function
+          //split counter count against the number of textSplit.length
+          //extra counter takes into account the additional entries with each iteration
+          let extraCounter = 0;
+          let splitCounter = 0;
+          do {
             const hoverFunction = HoverOverFunctionDefinition(
               linkInfo["componentText"],
               linkInfo["linkType"],
@@ -32,39 +33,30 @@ export default function LinkTextFromDefinitions(text, definitions) {
               linkInfo["linkForwardUrl"],
               linkInfo["versionName"]
             );
-            //if no definitions have been pushed yet
-            if (j > 0 && j == textSplit.length - 2) {
-              searchText.splice(parseInt(i) + parseInt(j) + 1, 1, textSplit[j]);
+            if (splitCounter == 0) {
+              //if there is only one definition found in the string then replace the string with the first half of the split text
               searchText.splice(
-                parseInt(i) + parseInt(j) + 1 + 1,
-                0,
-                hoverFunction
+                parseInt(i) + extraCounter,
+                1,
+                textSplit[splitCounter]
               );
-              searchText.splice(
-                parseInt(i) + parseInt(j) + 1 + 2,
-                0,
-                textSplit[j + 1]
-              );
-              extraCounter += 1;
-            } else if (j > 0) {
-              searchText.splice(
-                parseInt(i) + parseInt(j) + 1,
-                0,
-                hoverFunction
-              );
-              searchText.splice(
-                parseInt(i) + parseInt(j) + 1 + 1,
-                0,
-                textSplit[j + 1]
-              );
-
-              extraCounter += 1;
             } else {
-              searchText.splice(parseInt(i), 1, textSplit[j]);
-              searchText.splice(parseInt(i) + 1, 0, hoverFunction);
-              searchText.splice(parseInt(i) + 2, 0, textSplit[j + 1]);
+              //if there is more than one definition is found in the string then and this is the second, then add the string to the end.
+              searchText.splice(
+                parseInt(i) + extraCounter,
+                0,
+                textSplit[splitCounter]
+              );
             }
-          }
+            searchText.splice(parseInt(i) + extraCounter + 1, 0, hoverFunction);
+            extraCounter += 2;
+            splitCounter++;
+          } while (splitCounter < textSplit.length - 1);
+          searchText.splice(
+            parseInt(i) + extraCounter,
+            0,
+            textSplit[textSplit.length - 1]
+          );
         }
       }
     }
@@ -72,11 +64,15 @@ export default function LinkTextFromDefinitions(text, definitions) {
   arrayOfText.push(searchText);
   return arrayOfText;
 }
-
-function printArray(array) {
+//for testing to print sentences
+/* function printArray(array) {
   console.log("--------------");
   for (const i in array) {
-    console.log(String(array[i]));
+    if (typeof array[i] == "object") {
+      console.log("[", array[i].key, "]");
+    } else {
+      console.log(array[i]);
+    }
   }
   console.log("--------------");
-}
+} */

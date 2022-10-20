@@ -70,7 +70,7 @@ app.prepare().then(() => {
       //name_id = saml_response.user.name_id;
       //session_index = saml_response.user.session_index;
 
-      res.send(err);
+      res.send(saml_response);
       //res.send("Hello #{name_id}! session_index: #{session_index}.");
     });
   });
