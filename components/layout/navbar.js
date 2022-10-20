@@ -4,14 +4,9 @@ import reccoLogo from "./RECCOLogoWhiteAsset13.png";
 import Link from "next/link";
 import { Fragment } from "react";
 import styles from "../../styles/header.module.css";
-import { FaBars } from "react-icons/fa";
 import AsideDropDownMenu from "../AsideDropDownMenu";
 
 function navbar() {
-  const meniuItems = ["Home"];
-  //<div className="navLink">
-  //<Link href="/rec-portal">REC Portal</Link>
-  //</div>
   return (
     <Fragment>
       <div className={styles.header}>
@@ -21,7 +16,7 @@ function navbar() {
           </div>
         </Link>
         <div>
-          <AsideDropDownMenu meniuItems={meniuItems} />
+          <AsideDropDownMenu />
         </div>
       </div>
     </Fragment>

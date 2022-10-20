@@ -1,5 +1,5 @@
 .sidebarOpen {
-  width: 20vw;
+  width: 10vw;
 }
 
 .sidebarClosed {
@@ -34,7 +34,7 @@
 }
 
 .sidebarOpen {
-  width: 20vw;
+  width: 10vw;
 }
 
 .sidebarClosed {
@@ -60,7 +60,7 @@
   position: absolute;
   height: 4px;
   width: 100%;
-  background: #36494e;
+  background: white;
   border-radius: 9px;
   opacity: 1;
   left: 0;
@@ -99,4 +99,8 @@
   top: 9px;
   width: 0%;
   left: 50%;
+}
+.homeLink{
+  width:2vw;
+  height:2vw;
 }
