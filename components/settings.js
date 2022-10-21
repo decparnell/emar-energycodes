@@ -7,6 +7,10 @@ export const buttonHeaderOptions = [
   { id: 2, name: "Detailed Search" },
 ];
 
+export const meniuItems = [
+  { title: "Home", link: "/" },
+  ];
+
 export const dashboards = [
   {
     dashboardId: 1,
