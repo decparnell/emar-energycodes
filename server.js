@@ -57,7 +57,7 @@ app.prepare().then(() => {
   });
 
   // Variables used in login/logout process
-  var name_id, session_index;
+  var displayName, emailAddress, objectId;
 
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
@@ -69,16 +69,19 @@ app.prepare().then(() => {
       // Note:  In practice these should be saved in the user session, not globally.
       displayName = saml_response.user.DisplayName;
       emailAddress = saml_response.user.email;
-
-      res.send("Hello #{displayName}! email: #{emailAddress}.");
+      objectId = saml_response.user.objectId;
+      res.send(
+        "Hello #{displayName}! email: #{emailAddress} objectId: #{objectId}."
+      );
     });
   });
 
   // Starting point for logout
   server.get("/logout", function (req, res) {
     var options = {
-      name_id: name_id,
-      session_index: session_index,
+      DisplayName: displayName,
+      email: email,
+      objectId: objectId,
     };
 
     sp.create_logout_request_url(idp, options, function (err, logout_url) {
