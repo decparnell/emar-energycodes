@@ -14,12 +14,25 @@
   text-align: center;
 }
 
+.searchBoxHeader{
+  margin:0;
+}
+.text{
+  margin:1em 0;
+}
+.sourcetargetContainer{
+  margin:0;
+}
+.dropdown {
+  width: 20%;
+  margin: 0 auto;
+}
 .searchButton {
   margin-left: auto;
 }
 
 .searchForm {
-  margin: 2em auto;
+  margin: 0.5em auto 2em auto;
   padding: 1em;
 }
 
@@ -31,16 +44,27 @@
   padding: 0.2em 0.5em;
 }
 
+.dropdown {
+  width: 20%;
+  margin: 2em auto 0 auto;
+}
+
 .searchResultsRow {
   color: black;
 }
 
 .contentContainer {
-  margin: 5%;
+  margin: 2% 5%;
   padding-bottom: 5vh;
   border-radius: 5px;
   color: black;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
+}
+.sourcetargetContainer{
+  margin:0;
+}
+.searchBoxHeader{
+  margin:0;
 }
 
 .resultsTable {

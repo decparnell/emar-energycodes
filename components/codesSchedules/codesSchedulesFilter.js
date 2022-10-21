@@ -1,5 +1,5 @@
 import { getDistinctValuesSchedules } from "../dataspec/functions/getDistinctValues";
-import styles from "../../styles/codes.module.css";
+import styles from "../../styles/codesSchedulesSearch.module.css";
 import ScheduleDropdown from "../dropdown/schedule";
 
 export const MessageFilters = (

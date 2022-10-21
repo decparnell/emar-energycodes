@@ -1,4 +1,5 @@
 import styles from "../../styles/codesSchedulesSearch.module.css";
+import sanitizeForUrl from "../helperFunctions/sanitizeForUrl";
 
 const CodesSchedulesSearchForm = (
   setSearchResults,
@@ -17,17 +18,27 @@ const CodesSchedulesSearchForm = (
     setSearchResults(null);
     setErrorMessage(null);
     event.preventDefault(); // don't redirect the page
+
     const searchPhrase = event.target.searchPhrase.value;
+    const alteredSearchPhrase = sanitizeForUrl(searchPhrase);
 
     try {
       let dataReq = await fetch(
-        `https://prod-10.uksouth.logic.azure.com/workflows/53359f3f225a48f681c60120fceed2fd/triggers/manual/paths/invoke/searchPhrase/${searchPhrase}/documentId/${documentId}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=nRdlEoLJ91Ha3ExMDx2493S_8WgALiFN7YARzkUJSEU`
+        `https://prod-10.uksouth.logic.azure.com/workflows/53359f3f225a48f681c60120fceed2fd/triggers/manual/paths/invoke/searchPhrase/${encodeURIComponent(
+          alteredSearchPhrase
+        )}/documentId/${encodeURIComponent(
+          documentId
+        )}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=nRdlEoLJ91Ha3ExMDx2493S_8WgALiFN7YARzkUJSEU`
       );
+
       const dataJson = await dataReq.json();
+      if (dataJson?.error != null) {
+        throw "";
+      }
       setSearchPhrase(searchPhrase);
       setSearchResults(dataJson);
     } catch (err) {
-      setErrorMessage("There has been an error with your search");
+      setErrorMessage(`No results found for "${searchPhrase}"`);
     }
   };
 
@@ -48,7 +59,9 @@ const CodesSchedulesSearchForm = (
       >
         Search
       </button>
-      {errorMessage ? <p>{errorMessage}</p> : null}
+      {errorMessage ? (
+        <p className={styles.errorMessage}>{errorMessage}</p>
+      ) : null}
     </form>
   );
 };

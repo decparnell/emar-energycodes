@@ -9,5 +9,19 @@ export const buttonHeaderOptions = [
 
 export const meniuItems = [
   { title: "Home", link: "/" },
-  { title: "Change", link: "/" },
+  ];
+
+export const dashboards = [
+  {
+    dashboardId: 1,
+    dashboardName: "Codes Schedules",
+    dashboardColumns: 2,
+    dashboardOrder: 1,
+  },
+  {
+    dashboardId: 2,
+    dashboardName: "Data Specification",
+    dashboardColumns: 2,
+    dashboardOrder: 2,
+  },
 ];

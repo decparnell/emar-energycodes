@@ -77,6 +77,7 @@ function MmDetailPage({ searchResults, url }) {
   return (
     <>
       <SecondNavbar />
+      <DocumentDownload type="mm" url={url} />
       {checkIfItemsAvailableInArray(internalErrorLog, "searchResults") ? (
         <div className={styles.contentContainer}>
           {checkIfItemsAvailableInArray(
@@ -88,7 +89,7 @@ function MmDetailPage({ searchResults, url }) {
                 <title>EMAR - {marketMessageInfo.Label}</title>
                 <meta property="og:title" content="My page title" key="title" />
               </Head>
-              <DocumentDownload type="mm" url={url} />
+
               <h1 className={styles.contentTitle}>
                 {marketMessageInfo.EnergyMarketMessageIdentifier} -{" "}
                 {marketMessageInfo.Label}
