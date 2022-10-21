@@ -36,7 +36,6 @@ function ScheduleDetail({
   const router = useRouter();
   const schedule_id = router.query.schedule_id;
   const versionName = router.query.versionName;
-
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
@@ -143,7 +142,7 @@ function ScheduleDetail({
                       <tr>
                         <th></th>
                         {parts.map((el, i) => {
-                          return <th key={i}>{el.partName}</th>;
+                          return <th key={el.partId}>{el.partName}</th>;
                         })}
                       </tr>
                     </thead>
@@ -190,7 +189,7 @@ const createSidebarContent = (parts, sections) => {
   for (const part of parts) {
     content.push(
       <h5 className={styles.sidebarPartName}>
-        <a>{part.partName}</a>
+        <a href={`#${part.partId}`}>{part.partName}</a>
       </h5>
     );
     let sectionsInPart = sections.filter((sec) => {
@@ -199,7 +198,7 @@ const createSidebarContent = (parts, sections) => {
 
     for (const section of sectionsInPart) {
       content.push(
-        <a key={section.sectionId} href={`#${section.sectionId}`}>
+        <a href={`#sec${section.sectionId}`}>
           {section.sectionOrder}. {section.sectionName}
         </a>
       );
@@ -221,7 +220,11 @@ function createContent(parts, sections, components, definitions) {
   let content = [];
   if (checkIfItemsAvailableInArray(internalErrorLog, "parts")) {
     for (const part of parts) {
-      content.push(<h2 className={styles.partName}>{part.partName}</h2>);
+      content.push(
+        <h2 id={`${part.partId}`} className={styles.partName}>
+          {part.partName}
+        </h2>
+      );
       if (checkIfItemsAvailableInArray(internalErrorLog, "sections")) {
         let sectionsInPart = sections.filter((sec) => {
           return sec.partId_FK === part.partId;
@@ -260,7 +263,7 @@ function createContent(parts, sections, components, definitions) {
             }
             content.push(
               <div
-                id={section.sectionId}
+                id={`sec${section.sectionId}`}
                 key={section.sectionName}
                 className={styles.section}
               >
@@ -291,6 +294,7 @@ function createContent(parts, sections, components, definitions) {
     );
   }
 }
+
 // This gets called on every request
 export async function getServerSideProps(context) {
   //return the info about the latest version

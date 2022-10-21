@@ -6,6 +6,7 @@ import AppContext from "../context/AppContext";
 import Head from "next/head";
 import SecondNavbar from "../layout/secondHeader";
 import { MessageFilters } from "./sourceTargetFilters";
+
 function DataSpecSearch(props) {
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
@@ -52,6 +53,7 @@ function DataSpecSearch(props) {
   }
 
   function handleButtonClick(newType, e) {
+    setErrorMessage(undefined);
     e.preventDefault();
     setSearchType(newType);
   }
@@ -70,16 +72,15 @@ function DataSpecSearch(props) {
         <SecondNavbar />
         <h1 className={styles.searchBoxHeader}>Data Specification Search</h1>
         <p className={styles.dataSpecExplainaition}>
-          Here you can search the data specification for either Market Message;
-          Scenario Variants; and Data Items.
+          Here you can search the data specification. Using the buttons below to
+          search either the Market Messages, Scenario Variants, or the Data
+          Items. The complete list of results can be seen at the bottom of this
+          page, or you can use the search options to narrow down the results.
+          You can search for EMAR Id&apos;s, Legacy Id&apos;s, the name of the
+          item, or the source / target.
         </p>
         <p className={styles.dataSpecExplainaition}>
-          This will allow you to view the data flows for all of the messages.
-        </p>
-        <p className={styles.dataSpecExplainaition}>
-          Into the search box you can type either the new id; the legacy id; or
-          the name of the item you are searching for (Partials are also
-          permitted)
+          (Partials are also permitted)
         </p>
         <div className={styles.searchTypeButtons}>
           {searchType == "mm" ? (
@@ -145,6 +146,7 @@ function DataSpecSearch(props) {
         {SearchForm(
           setSearchResults,
           searchType,
+          // searchValue,
           errorMessage,
           setErrorMessage,
           latestDataSpecVersion,

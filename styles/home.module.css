@@ -1,19 +1,19 @@
 .container {
-  width:100%;
+  width: 100%;
 }
-.dashboardSelector{
-  width:50%;
-  margin-left:25%;
+.dashboardSelector {
+  width: 50%;
+  margin-left: 25%;
   justify-content: space-between;
-  display:flex;
+  display: flex;
 }
 
-.dashButtonTitle{
-  margin:2%;
+.dashButtonTitle {
+  margin: 2%;
 }
-.selectedDashboard{
+.selectedDashboard {
   background-color: #4d8934;
-  color:white;
+  color: white;
 }
 
 .errorBox {
@@ -23,3 +23,4 @@
   margin: 25px;
   text-align: center;
 }
+

@@ -23,7 +23,8 @@
   margin: 0 2%;
 }
 
-.decTest{
+.dectest{
   width:100%;
   height:40%;
+  display:inline-block
 }

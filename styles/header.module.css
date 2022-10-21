@@ -1,5 +1,5 @@
 .header {
-  background-image: linear-gradient(90deg, #C4D38D 0%, #4D8934 53.65%);
+  background-image: linear-gradient(90deg, #c4d38d 0%, #4d8934 53.65%);
   height: 8vh;
   width: 100%;
   position: fixed;
@@ -20,12 +20,12 @@
 
 .logo {
   width: 9%;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .secondHeader {
   min-height: 6vh;
-  height: 6vh;
+  height: 7vh;
   width: 100%;
 }
 
@@ -84,7 +84,11 @@
   width: 100%;
   display: flex;
   justify-content: space-evenly;
-  margin: 3% 0;
+  position: sticky;
+  top: 33px;
+  background-color: white;
+  padding: 25px;
+  z-index: 100;
 }
 
 .buttonItem {
@@ -103,5 +107,5 @@
   height: 40px;
   width: 40px;
   cursor: pointer;
-  color:white;
+  color: white;
 }

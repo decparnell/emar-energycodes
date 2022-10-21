@@ -11,6 +11,8 @@ import CodesSchedulesSearch from "../components/codesSchedules/codesSchedulesSea
 import { checkIfVariablesAreAvailable } from "../components/helperFunctions/checkIfVariablesAreAvailable";
 import { logError } from "../components/helperFunctions/logError";
 import { checkIfItemsAvailableInArray } from "../components/helperFunctions/checkIfItemsAvailableInArray/";
+import { logMessage } from "../components/helperFunctions/logMessage";
+import FeedbackForm from "../components/feedbackForm/index";
 
 function HomePage({
   dashboards,
@@ -74,15 +76,19 @@ function HomePage({
       );
     }
   }, [currentDashboard]);
+
+  const [insertError, setInsertError] = useState("");
+
   return (
     <>
       {checkIfItemsAvailableInArray(internalErrorLog, "newsData") ? (
         <NewsBanner news={newsData} />
-      ) : (
-        <div className={styles.errorBox}>{logError("News Data")}</div>
-      )}
+      ) : null}
       <TabNavbar />
       <ButtonNavbar />
+      {insertError && (
+        <div className={styles.errorBox}>{logMessage(insertError)}</div>
+      )}
       <div className={styles.container}>
         <Head>
           <title>EMAR Dashboards</title>
@@ -112,6 +118,7 @@ function HomePage({
         ) : (
           <div className={styles.errorBox}>{logError("Dashboard")}</div>
         )}
+        <FeedbackForm setInsertError={setInsertError} />
       </div>
     </>
   );

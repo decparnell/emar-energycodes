@@ -45,8 +45,54 @@ const recPortalLinks = [
 ];
 
 const definitions = [
-  { linkText: "dog", componentText: "dog", linkForwardUrl: 1 },
-  { linkText: "really", componentText: "really", linkForwardUrl: 1 },
+  {
+    linkText: " Centralised Registration Service",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+  {
+    linkText: "REC Service Provider",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+  {
+    linkText: "REC Service User",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+  {
+    linkText: "REC Service",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+  {
+    linkText: "CRS Provider",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+  {
+    linkText: "REC PAB",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+  {
+    linkText: "RECCo",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+  {
+    linkText: "Code",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
 ];
 
 function RecPortal() {
@@ -82,9 +128,9 @@ function RecPortal() {
           ))}
         </ul>
       </div>
-      <div className={styles.infoContainer}>
+      <div className={styles.dectest}>
         {LinkTextFromDefinitions(
-          "I really want a dog , becuase I really like them.",
+          "RECCo is responsible for procuring the REC Services (including the Centralised Registration Services) from the REC Service Providers (including the CRS Provider). RECCo is then responsible for supplying the REC Services (including the Centralised Registration Services) to the REC Service Users in accordance with this Code. Any and all provision of services by the REC Service Providers to the REC Service Users under this Code is undertaken solely as procured by RECCo under this Code. It is acknowledged that the REC Services are supplied to RECCo and used for the purposes of its business as the central administrator of this Code and the REC Services. Acting via the REC PAB, RECCo will take action against the REC Service Providers where they fail to provide the REC Services in accordance with this Code.",
           definitions
         )}
       </div>
