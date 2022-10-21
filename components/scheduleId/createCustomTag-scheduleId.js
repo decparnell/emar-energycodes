@@ -54,7 +54,9 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
     const clauseComponentId = comp.componentId;
     //create initial value for the tag and class name
     let customClassName = createIndentedText(indent);
-    if (compI > 0) {
+    if (compI > 0 && (tag === "tableData" || tag === "tableHeader")) {
+      customClassName = `${customClassName} ${styles.multipleClauses} ${styles.tableitem}`;
+    } else if (compI > 0) {
       customClassName = `${customClassName} ${styles.multipleClauses}`;
     }
 
