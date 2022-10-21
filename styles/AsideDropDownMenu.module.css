@@ -1,5 +1,5 @@
 .sidebarOpen {
-  width: 10vw;
+  width: 15vw;
 }
 
 .sidebarClosed {
@@ -14,7 +14,8 @@
   z-index: 999;
   top: 8vh;
   right: 0;
-  background-image: linear-gradient(#acc7a7, #ffffff);
+  background-image: linear-gradient(#4d8934 0%, #c4d38d 97.65%);
+
   overflow-y: scroll;
   overflow-x: hidden;
   transition: 0.5s;
@@ -35,7 +36,7 @@
 }
 
 .sidebarOpen {
-  width: 10vw;
+  width: 15vw;
 }
 
 .sidebarClosed {
@@ -102,6 +103,8 @@
   left: 50%;
 }
 .homeLink{
-  width:2vw;
-  height:2vw;
+  width:4vw;
+  height:4vw;
+  margin-left:0;
+  color: black;
 }
