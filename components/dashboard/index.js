@@ -28,9 +28,10 @@ function Dashboard(props) {
           false &&
         item.dashboardSectionItemsLink != "FIX"
       ) {
-        const versionName = versions.filter(
+        const versionNames = versions.filter(
           (version) => version.documentId == item.dashboardSectionItemsLink
-        )[0].versionName;
+        );
+        const versionName = versionNames[versionNames.length - 1].versionName;
 
         sectionItems[index].dashboardSectionItemsLink =
           "/codes-schedules/" +

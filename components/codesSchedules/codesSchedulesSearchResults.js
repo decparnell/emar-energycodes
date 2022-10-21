@@ -3,6 +3,9 @@ import styles from "../../styles/codesSchedulesSearch.module.css";
 export const CodesSchedulesSearchResults = (searchResults, searchPhrase) => {
   const router = useRouter();
 
+  searchResults = searchResults.sort((a, b) =>
+    b.versionName.localeCompare(a.versionName)
+  );
   function escapeRegex(string) {
     return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
   }

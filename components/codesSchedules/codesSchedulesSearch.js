@@ -23,7 +23,6 @@ function CodesSchedulesSearch(props) {
       </Head>
       <div className={styles.searchContainer}>
         <h1 className={styles.searchBoxHeader}>Codes Schedules Search</h1>
-        <p>Here you can search for Codes Schedules</p>
         {MessageFilters(
           props.codesSchedulesDataJson,
           schedulesFilterValue,
