@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "../../styles/AsideDropDownMenu.module.css";
 import { AiOutlineHome } from "react-icons/ai";
 import { meniuItems } from "../settings";
-
+import Link from "next/link";
 function AsideDropDownMenu() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => {
@@ -35,9 +35,9 @@ function AsideDropDownMenu() {
       <div className={styles.sidebarSectionsList}>
         <ul>
           <li className={styles.listElements} key="homelink">
-            <a href="/" className={styles.listElements}>
+            <Link href="/" className={styles.listElements}>
               <AiOutlineHome className={styles.homeLink} />
-            </a>
+            </Link>
           </li>
           {cleanArray.map((item, index) => (
             <li className={styles.listElements} key={index}>

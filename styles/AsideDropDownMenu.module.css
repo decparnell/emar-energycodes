@@ -31,6 +31,7 @@
   display: block;
   transition: all 0.5s;
   font-size: 25px;
+  cursor: pointer;
 }
 
 .sidebarOpen {
@@ -43,7 +44,7 @@
 
 .iconContainer {
   position: fixed;
-  top: 4vh;
+  top: 2vh;
   right: 1em;
 }
 
