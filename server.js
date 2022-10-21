@@ -91,53 +91,12 @@ app.prepare().then(() => {
   });
 
   server.all("*", (req, res) => {
-    if (displayName) return handle(req, res);
-    res.redirect("/login");
-  });
-
-  server.listen(port, () => {
-    console.log(`> Ready on http://localhost:${port}`);
-  });
-
-  /*   server.route("/login-idp").get(passport.authenticate("samlStrategy"));
-  server.route("/login-idp/callback").post(samlCallback(passport));
-
-  server.route("/metadata").get(function (req, res) {
-    res.type("application/xml");
-    res.status(200);
-    res.send(
-      samlStrategy.generateServiceProviderMetadata(
-        fs.readFileSync("./certs/cert.pem", "utf8"),
-        fs.readFileSync("./certs/cert.pem", "utf8")
-      )
-    );
-  }); */
-
-  /* server.post(
-    "/login/callback",
-    bodyParser.urlencoded({ extended: false }),
-    passport.authenticate("samlStrategy", {
-      failureRedirect: "/",
-      failureFlash: true,
-    }),
-    function (req, res) {
-      res.redirect("/");
-    }
-  );
-
-  server.get(
-    "/login",
-    passport.authenticate("saml", { failureRedirect: "/", failureFlash: true }),
-    function (req, res) {
-      res.redirect("/");
-    }
-  );
-
-  server.all("*", (req, res) => {
+    //if (displayName) return handle(req, res);
+    //res.redirect("/login");
     return handle(req, res);
   });
 
   server.listen(port, () => {
     console.log(`> Ready on http://localhost:${port}`);
-  }); */
+  });
 });
