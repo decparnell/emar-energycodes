@@ -83,9 +83,7 @@ function HomePage({
     <>
       {checkIfItemsAvailableInArray(internalErrorLog, "newsData") ? (
         <NewsBanner news={newsData} />
-      ) : (
-        <div className={styles.errorBox}>{logError("News Data")}</div>
-      )}
+      ) : null}
       <TabNavbar />
       <ButtonNavbar />
       {insertError && (
