@@ -26,9 +26,9 @@ function CodesSchedulesSearch(props) {
         <p className={styles.text}>
           Here you can search for Codes Schedules. Into the text box below you
           can enter any term which you are looking for and we will show you all
-          of the clauses which contain that term. We'll also tell you if we cant
-          find the term. If you know the specific schedule which you want to
-          search then you can use the filter directly below.
+          of the clauses which contain that term. We&apos;ll also tell you if we
+          cant find the term. If you know the specific schedule which you want
+          to search then you can use the filter directly below.
         </p>
         {MessageFilters(
           props.codesSchedulesDataJson,

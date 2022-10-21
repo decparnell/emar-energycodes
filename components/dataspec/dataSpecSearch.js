@@ -74,8 +74,8 @@ function DataSpecSearch(props) {
           search either the Market Messages, Scenario Variants, or the Data
           Items. The complete list of results can be seen at the bottom of this
           page, or you can use the search options to narrow down the results.
-          You can search for EMAR Id's, Legacy Id's, the name of the item, or
-          the source / target.
+          You can search for EMAR Id&apos;s, Legacy Id&apos;s, the name of the
+          item, or the source / target.
         </p>
         <p className={styles.dataSpecExplainaition}>
           (Partials are also permitted)
