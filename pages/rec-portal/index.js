@@ -46,80 +46,52 @@ const recPortalLinks = [
 
 const definitions = [
   {
-    linkText: "Centralised Registration Service",
+    linkText: " Centralised Registration Service",
     componentText: "really",
     linkForwardUrl: 1,
     linkType: "definition",
   },
   {
-    linkText: "Core Systems Assurance Provider",
+    linkText: "REC Service Provider",
     componentText: "really",
     linkForwardUrl: 1,
     linkType: "definition",
   },
   {
-    linkText: "CSS Systems Integrator",
+    linkText: "REC Service User",
     componentText: "really",
     linkForwardUrl: 1,
     linkType: "definition",
   },
   {
-    linkText: "Post Implementation Period",
+    linkText: "REC Service",
     componentText: "really",
     linkForwardUrl: 1,
     linkType: "definition",
   },
-  {
-    linkText: "Switching Operator",
-    componentText: "really",
-    linkForwardUrl: 1,
-    linkType: "definition",
-  },
-  {
-    linkText: "CSS Provider",
-    componentText: "really",
-    linkForwardUrl: 1,
-    linkType: "definition",
-  },
-
   {
     linkText: "CRS Provider",
     componentText: "really",
     linkForwardUrl: 1,
     linkType: "definition",
   },
-
   {
-    linkText: "DCC Licence",
-    componentText: "really",
-    linkForwardUrl: 1,
-    linkType: "definition",
-  },
-
-  {
-    linkText: "SI Provider",
+    linkText: "REC PAB",
     componentText: "really",
     linkForwardUrl: 1,
     linkType: "definition",
   },
   {
-    linkText: "Party",
+    linkText: "RECCo",
     componentText: "really",
     linkForwardUrl: 1,
     linkType: "definition",
   },
   {
-    linkText: "DCC",
-    componentText: "dog",
-    linkForwardUrl: 1,
-    linkType: "definition",
-  },
-
-  {
-    linkText: "Interpretation Schedule",
-    linkType: "schedule",
+    linkText: "Code",
     componentText: "really",
     linkForwardUrl: 1,
+    linkType: "definition",
   },
 ];
 
@@ -158,7 +130,7 @@ function RecPortal() {
       </div>
       <div className={styles.dectest}>
         {LinkTextFromDefinitions(
-          "The DCC is primarily a Party for the purpose of providing the Centralised Registration Service in accordance with Condition 15 (Incorporation, delivery and provision of the Centralised Registration Service) of the DCC Licence, in which context the DCC is referred to as the CRS Provider. The CRS Provider encompasses the following roles: the CSS Provider, the CSS Systems Integrator, the SI Provider and the Switching Operator and, until the end of the Post Implementation Period only, the Core Systems Assurance Provider and CSS Systems Integrator (as such roles are defined in the Interpretation Schedule).",
+          "RECCo is responsible for procuring the REC Services (including the Centralised Registration Services) from the REC Service Providers (including the CRS Provider). RECCo is then responsible for supplying the REC Services (including the Centralised Registration Services) to the REC Service Users in accordance with this Code. Any and all provision of services by the REC Service Providers to the REC Service Users under this Code is undertaken solely as procured by RECCo under this Code. It is acknowledged that the REC Services are supplied to RECCo and used for the purposes of its business as the central administrator of this Code and the REC Services. Acting via the REC PAB, RECCo will take action against the REC Service Providers where they fail to provide the REC Services in accordance with this Code.",
           definitions
         )}
       </div>

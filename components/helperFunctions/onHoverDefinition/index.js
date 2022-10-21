@@ -1,5 +1,5 @@
 import styles from "../../../styles/helperFunctions.module.css";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, Fragment } from "react";
 import AppContext from "../../context/AppContext";
 
 function HoverOverFunctionDefinition(
@@ -28,7 +28,7 @@ function HoverOverFunctionDefinition(
   }; */
 
   return (
-    <>
+    <Fragment key={linkingWord}>
       {linkType == "definition" ? (
         <a
           className={styles.tooltiptext}
@@ -65,7 +65,7 @@ function HoverOverFunctionDefinition(
             : "Click to go to the Schedule"}
         </div>
       )} */}
-    </>
+    </Fragment>
   );
 }
 
