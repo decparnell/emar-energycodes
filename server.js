@@ -67,10 +67,10 @@ app.prepare().then(() => {
 
       // Save name_id and session_index for logout
       // Note:  In practice these should be saved in the user session, not globally.
-      name_id = saml_response.user.name_id;
-      session_index = saml_response.user.session_index;
+      displayName = saml_response.user.DisplayName;
+      emailAddress = saml_response.user.email;
 
-      res.send("Hello #{name_id}! session_index: #{session_index}.");
+      res.send("Hello #{displayName}! email: #{emailAddress}.");
     });
   });
 
