@@ -3,7 +3,7 @@ import styles from "../../styles/codesSchedulesSearch.module.css";
 export const CodesSchedulesSearchResults = (searchResults, searchPhrase) => {
   const router = useRouter();
 
-  searchResults = searchResults.sort((a, b) =>
+  searchResults = searchResults?.sort((a, b) =>
     b.versionName.localeCompare(a.versionName)
   );
   function escapeRegex(string) {
@@ -68,7 +68,7 @@ export const CodesSchedulesSearchResults = (searchResults, searchPhrase) => {
 
   const tableBody = (
     <tbody>
-      {searchResults.map((entry) => {
+      {searchResults?.map((entry) => {
         return (
           <tr
             key={entry.componentId}

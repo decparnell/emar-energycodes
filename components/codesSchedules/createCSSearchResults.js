@@ -1,12 +1,19 @@
 import styles from "../../styles/codesSchedulesSearch.module.css";
 import { logMessage } from "../helperFunctions/logMessage";
 import { CodesSchedulesSearchResults } from "./codesSchedulesSearchResults";
-function CreateCSSearchResults(searchResults, errorMessage, searchPhrase) {
+function CreateCSSearchResults(
+  searchResults,
+  errorMessage,
+  searchPhrase,
+  handleAllClick,
+  handleLatestClick,
+  isLatestVersionSelected
+) {
   let tableHeader = "";
   let tableBody = "";
 
   searchResults = searchResults
-    .filter(
+    ?.filter(
       (value, index, self) =>
         index ===
         self.findIndex(
@@ -18,8 +25,8 @@ function CreateCSSearchResults(searchResults, errorMessage, searchPhrase) {
         )
     )
     .sort();
-  if (errorMessage) {
-  } else {
+
+  if (!errorMessage) {
     const codesSchedulesSearch = CodesSchedulesSearchResults(
       searchResults,
       searchPhrase
@@ -30,8 +37,30 @@ function CreateCSSearchResults(searchResults, errorMessage, searchPhrase) {
 
   return (
     <>
-      {searchResults.length > 0 ? (
+      {searchResults?.length > 0 ? (
         <div className={styles.contentContainer}>
+          <div className={styles.sortContainer}>
+            <button
+              className={
+                isLatestVersionSelected
+                  ? styles.selectedVersion
+                  : styles.notSelectedVersion
+              }
+              onClick={handleLatestClick}
+            >
+              Latest version
+            </button>
+            <button
+              className={
+                isLatestVersionSelected
+                  ? styles.notSelectedVersion
+                  : styles.selectedVersion
+              }
+              onClick={handleAllClick}
+            >
+              All versions
+            </button>
+          </div>
           <table className={styles.resultsTable}>
             {tableHeader}
             {tableBody}
