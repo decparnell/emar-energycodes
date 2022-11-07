@@ -124,3 +124,12 @@
   background-color: #e7f4e4;
   color: black;
 }
+
+.resultsNumber {
+  color: #e7ab00;
+}
+
+.resultsMessage {
+  text-align: center;
+  color: black;
+}

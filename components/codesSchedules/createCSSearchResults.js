@@ -61,6 +61,15 @@ function CreateCSSearchResults(
               All versions
             </button>
           </div>
+          <div className={styles.resultsMessage}>
+            <p>
+              <span className={styles.resultsNumber}>
+                {searchResults.length}{" "}
+              </span>
+              results for &quot;
+              <span className={styles.resultsNumber}>{searchPhrase}</span>&quot;
+            </p>
+          </div>
           <table className={styles.resultsTable}>
             {tableHeader}
             {tableBody}

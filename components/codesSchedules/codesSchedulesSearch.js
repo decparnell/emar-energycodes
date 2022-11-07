@@ -45,8 +45,7 @@ function CodesSchedulesSearch(props) {
 
   const handleLatestClick = () => {
     setIsLatestVersionSelected(true);
-    setDisplayResults(latestResults.reverse());
-    // reversing only to make it visible for the user that something's actually changed
+    setDisplayResults(latestResults);
   };
 
   return (
