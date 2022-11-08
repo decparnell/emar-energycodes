@@ -242,7 +242,7 @@ export default MmDetailPage;
 export async function getServerSideProps(context) {
   // Fetch data from external API
   const dataReq = await fetch(
-    `https://prod-00.uksouth.logic.azure.com/workflows/0b5552f9640a441891edf1f4bf678372/triggers/manual/paths/invoke/searchType/1/searchValue/${context.params.marketMessageId}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=q2SEdJOh6ncM2DVx2-YhplordGojLu-b77vRZnIJDQY`
+    `https://prod-00.uksouth.logic.azure.com/workflows/5274b717bcf04104a6e99b41704c1698/triggers/manual/paths/invoke/searchType/{searchType}/searchValue/${context.params.marketMessageId}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xmOj_s9acsMTWSJyIwmmg__Qomwbd2rns4FuXcgklDo`
   );
   const dataJson = await dataReq.json();
   const searchResults = [
