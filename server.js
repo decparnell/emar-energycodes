@@ -63,7 +63,7 @@ app.prepare().then(() => {
   server.post("/assert", function (req, res) {
     var options = { request_body: req.body };
     sp.post_assert(idp, options, function (err, saml_response) {
-      if (err != null) return res.sendStatus(500);
+      if (err != null) return res.send(err);
 
       // Save name_id and session_index for logout
       // Note:  In practice these should be saved in the user session, not globally.
