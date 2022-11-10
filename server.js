@@ -75,7 +75,7 @@ app.prepare().then(() => {
         "Hello #{displayName}! email: #{emailAddress} objectId: #{objectId}."
       ); */
       console.log(String(saml_response));
-      res.send(String(saml_response));
+      res.send(String(options));
     });
   });
 
