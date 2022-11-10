@@ -62,6 +62,7 @@ app.prepare().then(() => {
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
     var options = { request_body: req.body };
+    console.log(options);
     sp.post_assert(idp, options, function (err, saml_response) {
       //if (err != {}) return res.send(err);
 
