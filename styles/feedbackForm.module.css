@@ -50,7 +50,10 @@
 }
 
 .openBtn {
-  background-color: #4d8934;
+  color: white;
+  font-size: 8px;
+  font-weight:bold;
+  margin:0;
 }
 
 .closeBtn {
@@ -85,7 +88,6 @@
   height: 50px;
   background: #4d8934;
   z-index: 99;
-  padding-top: 10px;
   position: fixed;
   border: 2px solid #4d8934;
   border-radius: 5px;
@@ -93,6 +95,13 @@
   animation: slide 2s forwards;
   box-shadow: 0px 0px 6px 2px #4d8934;
   border-top-left-radius: 50px;
+  color:white;
+  font-size: 12;
+  font-weight: bold;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding:auto;
 }
 
 .closedContactForm {

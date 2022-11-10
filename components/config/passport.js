@@ -9,7 +9,7 @@ module.exports = function (passport, config) {
     done(null, user);
   });
 
-  passport.use(
+  /* passport.use(
     new SamlStrategy(config.passport.saml, function (profile, done) {
       return done(null, {
         id: profile.uid,
@@ -17,6 +17,17 @@ module.exports = function (passport, config) {
         displayName: profile.cn,
         firstName: profile.givenName,
         lastName: profile.sn,
+      });
+    })
+  ); */
+  passport.use(
+    new SamlStrategy(config.passport.saml, function (profile, done) {
+      return done(null, {
+        id: profile.NameID,
+        email: profile.email,
+        displayName: profile.DisplayName,
+        firstName: profile.GivenName,
+        lastName: profile.Surname,
       });
     })
   );
