@@ -44,7 +44,7 @@ const FeedbackForm = ({ setInsertError }) => {
           className={styles.minimiseBtn}
           onClick={onCloseMinimimisedButtonClick}
         >
-          <AiOutlineComment className={styles.openBtn} />
+          Feedback
         </div>
       ) : (
         <div className={styles.contactForm}>
