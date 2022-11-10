@@ -62,7 +62,7 @@ app.prepare().then(() => {
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
     var options = { request_body: req.body };
-    console.log(options);
+    console.log(req.body);
     sp.post_assert(idp, options, function (err, saml_response) {
       //if (err != {}) return res.send(err);
 
@@ -75,7 +75,7 @@ app.prepare().then(() => {
         "Hello #{displayName}! email: #{emailAddress} objectId: #{objectId}."
       ); */
       console.log(String(saml_response));
-      res.send(String(options));
+      res.send(String(req.body));
     });
   });
 
