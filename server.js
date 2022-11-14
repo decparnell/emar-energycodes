@@ -62,10 +62,14 @@ app.prepare().then(() => {
 
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
-    var uriDecoded = decodeURIComponent(req.body.SAMLResponse);
+    console.log(
+      "assert req body --------------------------------- " + req.body
+    );
+    var options = { request_body: req.body };
+    /* var uriDecoded = decodeURIComponent(req.body.SAMLResponse);
     var b64decoded = new Buffer.from(uriDecoded, "base64");
     var decodedSAML = b64decoded.toString();
-    var options = { request_body: { SAMLResponse: decodedSAML } };
+    var options = { request_body: { SAMLResponse: decodedSAML } }; */
     sp.post_assert(idp, options, function (err, saml_response) {
       //if (err != {}) return res.send(err);
 
@@ -74,7 +78,9 @@ app.prepare().then(() => {
       //displayName = saml_response.DisplayName;
       //emailAddress = saml_response.email;
       //objectId = saml_response.NameID;
-      console.log(saml_response);
+      console.log(
+        "saml response --------------------------------- " + saml_response
+      );
       name_id = "dec";
       //saml_response.user.name_id;
       session_index = "p";
