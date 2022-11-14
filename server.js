@@ -62,6 +62,7 @@ app.prepare().then(() => {
 
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
+    let userEmail = "";
     var options = { request_body: req.body };
     sp.post_assert(idp, options, function (err, saml_response) {
       if (err != null) {
@@ -69,6 +70,7 @@ app.prepare().then(() => {
         return res.send(err);
       }
       email = saml_response.user.attributes.email;
+      userEmail = email;
       name_id = saml_response.user.name_id;
       GivenName = saml_response.user.attributes.GivenName;
       DisplayName = saml_response.user.attributes.DisplayName;
@@ -80,11 +82,12 @@ app.prepare().then(() => {
       console.log("-----DisplayName------ " + DisplayName);
       console.log("-----objectId------ " + objectId);
       console.log("-----name------ " + name);
+      console.log(JSON.stringify(saml_response));
       session_index = saml_response.user.session_index;
     });
     const request = require("request");
     request(
-      `https://prod-12.uksouth.logic.azure.com/workflows/a01770cba8f44c8a90274a6faa24955d/triggers/manual/paths/invoke/email/${email}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vm5xuq9xqyj6xN0P_NBrRPjDsElEJhOsWIWcmjfdzak`,
+      `https://prod-12.uksouth.logic.azure.com/workflows/a01770cba8f44c8a90274a6faa24955d/triggers/manual/paths/invoke/email/${userEmail}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vm5xuq9xqyj6xN0P_NBrRPjDsElEJhOsWIWcmjfdzak`,
       function (error, response, body) {
         if (error && response.statusCode != 200) {
           console.log(
