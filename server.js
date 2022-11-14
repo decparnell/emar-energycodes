@@ -63,7 +63,7 @@ app.prepare().then(() => {
   server.post("/assert", function (req, res) {
     console.log(req.body.SAMLResponse);
     let buff = new Buffer.from(req.body.SAMLResponse, "base64");
-    let text = buff.toString("ascii");
+    let text = buff.toString("utf8");
     var options = { request_body: { SAMLResponse: text } };
     res.send(text);
     /* sp.post_assert(idp, options, function (err, saml_response) {
