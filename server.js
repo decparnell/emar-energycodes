@@ -61,11 +61,13 @@ app.prepare().then(() => {
 
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
-    console.log(req.body.SAMLResponse);
-    let buff = new Buffer.from(req.body.SAMLResponse, "base64");
-    let text = buff.toString("utf8");
-    var options = { request_body: { SAMLResponse: text } };
-    res.send(text);
+    var zlib = require("zlib");
+    var uriDecoded = decodeURIComponent(encodedSAML);
+    var b64decoded = new Buffer.from(uriDecoded, "base64");
+    var decodedSAML = zlib.inflateRawSync(b64decoded).toString();
+    var options = { request_body: { SAMLResponse: decodedSAML } };
+    console.log(decodedSAML);
+    res.send(decodedSAML);
     /* sp.post_assert(idp, options, function (err, saml_response) {
       //if (err != {}) return res.send(err);
 
