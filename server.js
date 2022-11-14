@@ -58,7 +58,7 @@ app.prepare().then(() => {
   });
 
   // Variables used in login/logout process
-  var email, name_id, name, DisplayName, GivenName, objectId, session_index;
+  var email, name_id, DisplayName, objectId, session_index;
 
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
@@ -73,6 +73,7 @@ app.prepare().then(() => {
       userEmail = email;
       DisplayName = saml_response.user.attributes.DisplayName;
       objectId = saml_response.user.attributes.objectId;
+      name_id = saml_response.user.name_id;
       session_index = saml_response.user.session_index;
     });
     const request = require("request");
@@ -86,18 +87,18 @@ app.prepare().then(() => {
               " ------- " +
               error
           );
+        } else {
+          res.redirect("/");
         }
       }
     );
-    res.redirect("/");
   });
 
   // Starting point for logout
   server.get("/logout", function (req, res) {
     var options = {
-      DisplayName: displayName,
-      email: email,
-      objectId: objectId,
+      name_id: name_id,
+      session_index: session_index,
     };
 
     sp.create_logout_request_url(idp, options, function (err, logout_url) {
