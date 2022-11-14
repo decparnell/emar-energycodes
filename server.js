@@ -65,18 +65,21 @@ app.prepare().then(() => {
     var b64decoded = new Buffer.from(uriDecoded, "base64");
     var decodedSAML = b64decoded.toString();
     var options = { request_body: { SAMLResponse: decodedSAML } };
-    console.log(decodedSAML);
     sp.post_assert(idp, options, function (err, saml_response) {
       //if (err != {}) return res.send(err);
 
       // Save name_id and session_index for logout
       // Note:  In practice these should be saved in the user session, not globally.
-      displayName = saml_response.DisplayName;
-      emailAddress = saml_response.email;
-      objectId = saml_response.NameID;
-      res.send(
+      //displayName = saml_response.DisplayName;
+      //emailAddress = saml_response.email;
+      //objectId = saml_response.NameID;
+      console.log(saml_response.user);
+      name_id = saml_response.user.name_id;
+      session_index = saml_response.user.session_index;
+      res.send("Hello #{name_id}! email: #{session_index}");
+      /* res.send(
         "Hello #{displayName}! email: #{emailAddress} objectId: #{objectId}."
-      );
+      ); */
     });
   });
 
