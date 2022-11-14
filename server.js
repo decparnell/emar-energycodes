@@ -62,31 +62,20 @@ app.prepare().then(() => {
 
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
-    console.log(
-      "assert req body --------------------------------- " + req.body
-    );
     var options = { request_body: req.body };
-    /* var uriDecoded = decodeURIComponent(req.body.SAMLResponse);
-    var b64decoded = new Buffer.from(uriDecoded, "base64");
-    var decodedSAML = b64decoded.toString();
-    var options = { request_body: { SAMLResponse: decodedSAML } }; */
     sp.post_assert(idp, options, function (err, saml_response) {
-      //if (err != {}) return res.send(err);
-
-      // Save name_id and session_index for logout
-      // Note:  In practice these should be saved in the user session, not globally.
-      //displayName = saml_response.DisplayName;
-      //emailAddress = saml_response.email;
-      //objectId = saml_response.NameID;
-      console.log(
-        "saml response --------------------------------- " + saml_response
-      );
+      if (err != {}) return res.send(err);
       name_id = saml_response.user.name_id;
       session_index = saml_response.user.session_index;
-      res.send(`Hello #{name_id}! email: #{session_index}`);
-      /* res.send(
-        "Hello #{displayName}! email: #{emailAddress} objectId: #{objectId}."
-      ); */
+      const request = require("request");
+      request(
+        `https://prod-12.uksouth.logic.azure.com/workflows/a01770cba8f44c8a90274a6faa24955d/triggers/manual/paths/invoke/email/${name_id}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vm5xuq9xqyj6xN0P_NBrRPjDsElEJhOsWIWcmjfdzak`,
+        function (error, response, body) {
+          /*         if (!error && response.statusCode == 200) {
+        } */
+          res.redirect("/");
+        }
+      );
     });
   });
 
