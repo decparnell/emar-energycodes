@@ -61,6 +61,7 @@ app.prepare().then(() => {
 
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
+    console.log(req.body);
     let buff = new Buffer(req.body, "base64");
     let text = buff.toString("ascii");
     var options = { request_body: text };
