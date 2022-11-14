@@ -64,7 +64,7 @@ app.prepare().then(() => {
   server.post("/assert", function (req, res) {
     var options = { request_body: req.body };
     sp.post_assert(idp, options, function (err, saml_response) {
-      if (err != {}) {
+      if (err != null) {
         console.log("assert error ------ " + err);
         return res.send(err);
       }
