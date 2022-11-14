@@ -58,7 +58,7 @@ app.prepare().then(() => {
   });
 
   // Variables used in login/logout process
-  var email, session_index, objectId;
+  var email, name_id, name, DisplayName, GivenName, objectId, session_index;
 
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
@@ -69,6 +69,17 @@ app.prepare().then(() => {
         return res.send(err);
       }
       email = saml_response.user.attributes.email;
+      name_id = saml_response.user.name_id;
+      GivenName = saml_response.user.attributes.GivenName;
+      DisplayName = saml_response.user.attributes.DisplayName;
+      objectId = saml_response.user.attributes.objectId;
+      name = saml_response.user.name;
+      console.log("-----email------ " + email);
+      console.log("-----name_id------ " + name_id);
+      console.log("-----GivenName------ " + GivenName);
+      console.log("-----DisplayName------ " + DisplayName);
+      console.log("-----objectId------ " + objectId);
+      console.log("-----name------ " + name);
       session_index = saml_response.user.session_index;
     });
     const request = require("request");
