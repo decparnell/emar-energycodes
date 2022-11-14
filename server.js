@@ -26,6 +26,7 @@ app.prepare().then(() => {
       "MIIDRDCCAiygAwIBAgIQQLvOYPT2TVmvIS0m+OdcfDANBgkqhkiG9w0BAQsFADAfMR0wGwYDVQQDDBRSZWNfRGlnaXRhbE5hdmlnYXRvcjAeFw0yMjEwMDUwODU2NDZaFw0zMjEwMDUwOTA2NDZaMB8xHTAbBgNVBAMMFFJlY19EaWdpdGFsTmF2aWdhdG9yMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuCdK6Z6/G7+uTIJ60Nfqe4kJ9xQqhflikJnFnwmAeZu6+bqnsE/HyhkE5YJWjk/sT5vHv4kqxQGqUsdc9wAEmc4fbaLjLOUbzWLMqv95wCVvYmoIamG+bvHODP4N0pGjXRk2R+MJEnUfBRpq30qF/l1zsATe5WsIzRd/1lEb9HDwz4UuF4vf2yw4j91A/RxYPEiUEwszFwMVgkgO2m/Xpwc0kTu6NMwYQ184/zEPeFKqgjXcVmeIneotpHlj0EsrDPU5jf57brWmxsxFVEgYHJwFcABAcf9QejIMJyuPHcum6IlRvZOq2nGQFWwRBg92EK4vtUPOl7m0bBazh01URQIDAQABo3wwejAOBgNVHQ8BAf8EBAMCBaAwCQYDVR0TBAIwADAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwHwYDVR0jBBgwFoAU4n9m20aXwIrxA2LncVHg23bUn/wwHQYDVR0OBBYEFOJ/ZttGl8CK8QNi53FR4Nt21J/8MA0GCSqGSIb3DQEBCwUAA4IBAQBwUnJYrr1Khu7RetYy649lKn02PjzThuZZXE+0ClJys5NGDW0rdjk//8LSZSe8cpUtY38kc45LQUrtu3V2LsrVHafdj4an1+0jFNBc4d6cqCiuoSx62c9q0JAJkeFv4YvgQHI8oA0wPghi3uIQ7o08Qm4gCuE/wbS6dYT692sM3NX8FE+mhPPBFfozJtJOUaj1pTymR9eNmLqMC8d9GDuFQe+crXQWCI+MNClGL+gIdBbLq5yP+lvaDKnzAdI5U5g2965kBK9f71ekRo2X2E+OVZhjPjdwqKM3kSPS3wiJ31uT3CUAkTgFspShvcXHFAtlgqzzb1Ql9kYYys0z31SU",
     assert_endpoint: "https://emar-energycodes.azurewebsites.net/assert",
     sign_get_request: true,
+    allow_unencrypted_assertion: true,
   };
   var sp = new saml2.ServiceProvider(sp_options);
 
@@ -78,7 +79,7 @@ app.prepare().then(() => {
       //saml_response.user.name_id;
       session_index = "p";
       //saml_response.user.session_index;
-      res.send("Hello #{name_id}! email: #{session_index}");
+      res.send(`Hello #{name_id}! email: #{session_index}`);
       /* res.send(
         "Hello #{displayName}! email: #{emailAddress} objectId: #{objectId}."
       ); */
