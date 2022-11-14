@@ -64,7 +64,7 @@ app.prepare().then(() => {
     var zlib = require("zlib");
     var uriDecoded = decodeURIComponent(req.body.SAMLResponse);
     var b64decoded = new Buffer.from(uriDecoded, "base64");
-    var decodedSAML = zlib.inflateRawSync(b64decoded).toString();
+    var decodedSAML = b64decoded.toString();
     var options = { request_body: { SAMLResponse: decodedSAML } };
     console.log(decodedSAML);
     res.send(decodedSAML);
