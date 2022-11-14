@@ -61,12 +61,11 @@ app.prepare().then(() => {
 
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
-    var zlib = require("zlib");
     var uriDecoded = decodeURIComponent(req.body.SAMLResponse);
     var b64decoded = new Buffer.from(uriDecoded, "base64");
     var decodedSAML = b64decoded.toString();
     var options = { request_body: { SAMLResponse: decodedSAML } };
-    console.log(decodedSAML);
+    console.log(b64decoded);
     res.send(decodedSAML);
     /* sp.post_assert(idp, options, function (err, saml_response) {
       //if (err != {}) return res.send(err);
