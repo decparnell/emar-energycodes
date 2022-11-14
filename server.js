@@ -58,7 +58,7 @@ app.prepare().then(() => {
   });
 
   // Variables used in login/logout process
-  var name_id, session_index, objectId;
+  var email, session_index, objectId;
 
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
@@ -68,12 +68,12 @@ app.prepare().then(() => {
         console.log("assert error ------ " + err);
         return res.send(err);
       }
-      name_id = saml_response.user.name_id;
+      email = saml_response.user.attributes.email;
       session_index = saml_response.user.session_index;
     });
     const request = require("request");
     request(
-      `https://prod-12.uksouth.logic.azure.com/workflows/a01770cba8f44c8a90274a6faa24955d/triggers/manual/paths/invoke/email/${name_id}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vm5xuq9xqyj6xN0P_NBrRPjDsElEJhOsWIWcmjfdzak`,
+      `https://prod-12.uksouth.logic.azure.com/workflows/a01770cba8f44c8a90274a6faa24955d/triggers/manual/paths/invoke/email/${email}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vm5xuq9xqyj6xN0P_NBrRPjDsElEJhOsWIWcmjfdzak`,
       function (error, response, body) {
         if (error && response.statusCode != 200) {
           console.log(
