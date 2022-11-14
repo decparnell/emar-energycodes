@@ -64,16 +64,26 @@ app.prepare().then(() => {
   server.post("/assert", function (req, res) {
     var options = { request_body: req.body };
     sp.post_assert(idp, options, function (err, saml_response) {
-      if (err != {}) return res.send(err);
+      if (err != {}) {
+        console.log("assert error ------ " + err);
+        return res.send(err);
+      }
       name_id = saml_response.user.name_id;
       session_index = saml_response.user.session_index;
       const request = require("request");
       request(
         `https://prod-12.uksouth.logic.azure.com/workflows/a01770cba8f44c8a90274a6faa24955d/triggers/manual/paths/invoke/email/${name_id}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vm5xuq9xqyj6xN0P_NBrRPjDsElEJhOsWIWcmjfdzak`,
         function (error, response, body) {
-          /*         if (!error && response.statusCode == 200) {
-        } */
-          res.redirect("/");
+          if (!error && response.statusCode == 200) {
+            res.redirect("/");
+          } else {
+            console.log(
+              "Insert into Db Error ------ " +
+                response.statusCode +
+                " ------- " +
+                error
+            );
+          }
         }
       );
     });
