@@ -73,9 +73,11 @@ app.prepare().then(() => {
       //displayName = saml_response.DisplayName;
       //emailAddress = saml_response.email;
       //objectId = saml_response.NameID;
-      console.log(saml_response.user);
-      name_id = saml_response.user.name_id;
-      session_index = saml_response.user.session_index;
+      console.log(saml_response);
+      name_id = "dec";
+      //saml_response.user.name_id;
+      session_index = "p";
+      //saml_response.user.session_index;
       res.send("Hello #{name_id}! email: #{session_index}");
       /* res.send(
         "Hello #{displayName}! email: #{emailAddress} objectId: #{objectId}."
