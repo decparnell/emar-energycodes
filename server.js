@@ -65,7 +65,7 @@ app.prepare().then(() => {
     var b64decoded = new Buffer.from(uriDecoded, "base64");
     var decodedSAML = b64decoded.toString();
     var options = { request_body: { SAMLResponse: decodedSAML } };
-    console.log(b64decoded);
+    console.log(decodedSAML);
     res.send(decodedSAML);
     /* sp.post_assert(idp, options, function (err, saml_response) {
       //if (err != {}) return res.send(err);
