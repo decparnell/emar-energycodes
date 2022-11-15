@@ -83,8 +83,8 @@ app.prepare().then(() => {
     // Sample URL
     const url = `https://prod-12.uksouth.logic.azure.com/workflows/a01770cba8f44c8a90274a6faa24955d/triggers/manual/paths/invoke/email/${userEmail}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vm5xuq9xqyj6xN0P_NBrRPjDsElEJhOsWIWcmjfdzak`;
 
-    const request = https.request(url, (error, response) => {
-      if (error && response.statusCode != 200) {
+    const request = https.request(url, (response) => {
+      if (response.statusCode != 200) {
         console.log(
           "Insert into Db Error ------ " +
             response.statusCode +
