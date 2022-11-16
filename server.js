@@ -26,6 +26,7 @@ app.prepare().then(() => {
       "MIIDRDCCAiygAwIBAgIQQLvOYPT2TVmvIS0m+OdcfDANBgkqhkiG9w0BAQsFADAfMR0wGwYDVQQDDBRSZWNfRGlnaXRhbE5hdmlnYXRvcjAeFw0yMjEwMDUwODU2NDZaFw0zMjEwMDUwOTA2NDZaMB8xHTAbBgNVBAMMFFJlY19EaWdpdGFsTmF2aWdhdG9yMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuCdK6Z6/G7+uTIJ60Nfqe4kJ9xQqhflikJnFnwmAeZu6+bqnsE/HyhkE5YJWjk/sT5vHv4kqxQGqUsdc9wAEmc4fbaLjLOUbzWLMqv95wCVvYmoIamG+bvHODP4N0pGjXRk2R+MJEnUfBRpq30qF/l1zsATe5WsIzRd/1lEb9HDwz4UuF4vf2yw4j91A/RxYPEiUEwszFwMVgkgO2m/Xpwc0kTu6NMwYQ184/zEPeFKqgjXcVmeIneotpHlj0EsrDPU5jf57brWmxsxFVEgYHJwFcABAcf9QejIMJyuPHcum6IlRvZOq2nGQFWwRBg92EK4vtUPOl7m0bBazh01URQIDAQABo3wwejAOBgNVHQ8BAf8EBAMCBaAwCQYDVR0TBAIwADAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwHwYDVR0jBBgwFoAU4n9m20aXwIrxA2LncVHg23bUn/wwHQYDVR0OBBYEFOJ/ZttGl8CK8QNi53FR4Nt21J/8MA0GCSqGSIb3DQEBCwUAA4IBAQBwUnJYrr1Khu7RetYy649lKn02PjzThuZZXE+0ClJys5NGDW0rdjk//8LSZSe8cpUtY38kc45LQUrtu3V2LsrVHafdj4an1+0jFNBc4d6cqCiuoSx62c9q0JAJkeFv4YvgQHI8oA0wPghi3uIQ7o08Qm4gCuE/wbS6dYT692sM3NX8FE+mhPPBFfozJtJOUaj1pTymR9eNmLqMC8d9GDuFQe+crXQWCI+MNClGL+gIdBbLq5yP+lvaDKnzAdI5U5g2965kBK9f71ekRo2X2E+OVZhjPjdwqKM3kSPS3wiJ31uT3CUAkTgFspShvcXHFAtlgqzzb1Ql9kYYys0z31SU",
     assert_endpoint: "https://emar-energycodes.azurewebsites.net/assert",
     sign_get_request: true,
+    allow_unencrypted_assertion: true,
   };
   var sp = new saml2.ServiceProvider(sp_options);
 
@@ -57,41 +58,63 @@ app.prepare().then(() => {
   });
 
   // Variables used in login/logout process
-  var displayName, emailAddress, objectId;
+  var email, name_id, DisplayName, objectId, session_index;
 
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
+    let userEmail = "";
     var options = { request_body: req.body };
     sp.post_assert(idp, options, function (err, saml_response) {
-      if (err != null) return res.send(err);
-
-      // Save name_id and session_index for logout
-      // Note:  In practice these should be saved in the user session, not globally.
-      displayName = saml_response.DisplayName;
-      emailAddress = saml_response.email;
-      objectId = saml_response.NameID;
-      res.send(
-        "Hello #{displayName}! email: #{emailAddress} objectId: #{objectId}."
-      );
+      if (err != null) {
+        console.log("assert error ------ " + err);
+        return res.send(err);
+      }
+      email = saml_response.user.attributes.email;
+      userEmail = email;
+      console.log("Email ------ " + userEmail);
+      DisplayName = saml_response.user.attributes.DisplayName;
+      objectId = saml_response.user.attributes.objectId;
+      name_id = saml_response.user.name_id;
+      session_index = saml_response.user.session_index;
     });
+    res.redirect("/");
+    /* const https = require("https");
+    console.log("Email ------ " + userEmail);
+    // Sample URL
+    const url = `https://prod-12.uksouth.logic.azure.com/workflows/a01770cba8f44c8a90274a6faa24955d/triggers/manual/paths/invoke/email/${userEmail}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vm5xuq9xqyj6xN0P_NBrRPjDsElEJhOsWIWcmjfdzak`;
+    https
+      .get(url, (resp) => {
+        // The whole response has been received. Print out the result.
+        resp.on("end", () => {
+          res.redirect("/");
+        });
+      })
+      .on("error", (error) => {
+        console.log(
+          "Insert into Db Error ------ " +
+            response.statusCode +
+            " ------- " +
+            error
+        );
+      }); */
   });
 
   // Starting point for logout
   server.get("/logout", function (req, res) {
     var options = {
-      DisplayName: displayName,
-      email: email,
-      objectId: objectId,
+      name_id: name_id,
+      session_index: session_index,
     };
 
     sp.create_logout_request_url(idp, options, function (err, logout_url) {
       if (err != null) return res.sendStatus(500);
+      name_id = undefined;
       res.redirect(logout_url);
     });
   });
 
   server.all("*", (req, res) => {
-    //if (displayName) return handle(req, res);
+    //if (name_id) return handle(req, res);
     //res.redirect("/login");
     return handle(req, res);
   });
