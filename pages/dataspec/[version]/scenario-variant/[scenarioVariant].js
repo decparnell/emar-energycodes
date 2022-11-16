@@ -12,10 +12,10 @@ import { logError } from "../../../../components/helperFunctions/logError";
 import { checkIfItemsAvailableInArray } from "../../../../components/helperFunctions/checkIfItemsAvailableInArray";
 
 function ScenarioPage({ scenarioVariantInfo, structure, mmInfo }) {
-    const apiVarList = [
+  const apiVarList = [
     { obj: scenarioVariantInfo, name: "scenarioVariantInfo" },
     { obj: structure, name: "structure" },
-    { obj: mmInfo, name: "mmInfo" }
+    { obj: mmInfo, name: "mmInfo" },
   ];
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
@@ -139,9 +139,7 @@ function ScenarioPage({ scenarioVariantInfo, structure, mmInfo }) {
           {checkIfItemsAvailableInArray(internalErrorLog, "structure") ? (
             CreateFlowStructure(structure)
           ) : (
-            <div className={styles.errorBox}>
-              {logError("Structure")}
-            </div>
+            <div className={styles.errorBox}>{logError("Structure")}</div>
           )}
         </div>
       ) : (
@@ -159,12 +157,12 @@ export default ScenarioPage;
 export async function getServerSideProps(context) {
   // Fetch data from external API
   const dataReq = await fetch(
-    `https://prod-24.uksouth.logic.azure.com/workflows/745e02a8a89c49caa6ebf5ee4d3102ab/triggers/manual/paths/invoke/scenarioVariant/${context.params.scenarioVariant}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=U4fk5dXXgeeHE5VbPydGMyA7ZUobST6KOGviXAwyuIg`
+    `https://prod-12.uksouth.logic.azure.com/workflows/a8f5052aac70469c8e4de8990ef5289f/triggers/manual/paths/invoke/scenarioVariant/${context.params.scenarioVariant}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Y8zRRQl2HM4BzMaVYcwnXoBCKqWgY3CHveRGzkstYIg`
   );
   const dataJson = await dataReq.json();
   const scenarioVariantInfo = dataJson.scenarioVariantInfo;
   const structure = dataJson.structure;
-  const mmInfo = dataJson.mmInfo;
+  const mmInfo = dataJson.mminfo;
 
   // Pass data to the page via props
   return { props: { scenarioVariantInfo, structure, mmInfo } };
