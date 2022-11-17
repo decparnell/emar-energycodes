@@ -15,34 +15,7 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
     orderNumber = "";
   }
 
-  //mock up for component links
-  let componentLinks = [];
-  if (componentId < 170 && componentId > 160) {
-    componentLinks = ["HELLO"];
-  }
-  let needed = false;
-  if (componentLinks.length > 0) {
-    needed = true;
-  }
-  let CustomTag = `${style}`;
   let componentContainer = `${styles.componentContainer}`;
-  //alter class and tag depending on what the style is
-  if (
-    ["listNumber", "listNumberItem", "listBullet", "listBulletItem"].includes(
-      style
-    )
-  ) {
-    CustomTag = `p`;
-  } else if (style === "title") {
-    CustomTag = `h3`;
-    componentContainer = `${styles.subHeading}`;
-  } else if (style === "table") {
-    CustomTag = `table`;
-  } else if (style.indexOf("image") != -1) {
-    CustomTag = "Image";
-  } else if (style.indexOf("text") != -1) {
-    CustomTag = "p";
-  }
 
   //LOOP OVER EACH COMPONENT IN THE CLAUSE AND ADD IT TO THE SAME BOX (mainly ofr lists.)
 
@@ -50,18 +23,39 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
     const comp = clauseComponents[compI];
     const text = comp.componentText;
     const indent = comp.indent;
-    const tag = comp.componentType;
+    let CustomTag = comp.componentType;
     const clauseComponentId = comp.componentId;
+    //alter class and tag depending on what the style is
+    if (
+      ["listNumber", "listNumberItem", "listBullet", "listBulletItem"].includes(
+        CustomTag
+      )
+    ) {
+      CustomTag = `p`;
+    } else if (CustomTag === "title") {
+      CustomTag = `h3`;
+      componentContainer = `${styles.subHeading}`;
+    } else if (CustomTag === "table") {
+      CustomTag = `table`;
+    } else if (CustomTag.indexOf("image") != -1) {
+      CustomTag = "Image";
+    } else if (CustomTag.indexOf("text") != -1) {
+      CustomTag = "p";
+    }
+
     //create initial value for the tag and class name
     let customClassName = createIndentedText(indent);
-    if (compI > 0 && (tag === "tableData" || tag === "tableHeader")) {
+    if (
+      compI > 0 &&
+      (CustomTag === "tableData" || CustomTag === "tableHeader")
+    ) {
       customClassName = `${customClassName} ${styles.multipleClauses} ${styles.tableitem}`;
     } else if (compI > 0) {
       customClassName = `${customClassName} ${styles.multipleClauses}`;
     }
 
     //append jsx to the clauseJsx array depending on the type of data coming in
-    if (tag == "tableHeader") {
+    if (CustomTag == "tableHeader") {
       const tableJsx = [];
       const headersJsx = [];
       const tableData = clauseComponents.filter(
@@ -102,7 +96,7 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
       }
 
       clauseJsx.push(<table className={styles.clauseTable}>{tableJsx}</table>);
-    } else if (tag == "tableData") {
+    } else if (CustomTag == "tableData") {
     } else {
       //create an array of the text to display including all links using split text function
       addLinkedComponentsToOutput(
