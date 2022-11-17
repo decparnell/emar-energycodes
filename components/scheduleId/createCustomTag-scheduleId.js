@@ -115,9 +115,7 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
     <div className={componentContainer} key={componentId} id={componentId}>
       <div className={styles.orderNum}>{orderNumber}</div>
       <div className={styles.textHolder}>{clauseJsx}</div>
-      <div className={styles.linkButton}>
-        <CreatePopUp needed={needed} />
-      </div>
+      <div className={styles.linkButton}></div>
     </div>
   );
   return output;
