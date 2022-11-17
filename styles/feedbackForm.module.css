@@ -98,10 +98,8 @@
   color:white;
   font-size: 12;
   font-weight: bold;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  padding:auto;
+  padding-top: 10px;
+  padding-left:10px;
 }
 
 .closedContactForm {
