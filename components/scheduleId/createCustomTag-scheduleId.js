@@ -29,10 +29,12 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
     if (CustomTag === "title") {
       CustomTag = `h3`;
       componentContainer = `${styles.subHeading}`;
-    } else if (CustomTag === "table") {
-      CustomTag = `table`;
+    } else if (CustomTag === "tableHeader") {
+      CustomTag = `tableHeader`;
     } else if (CustomTag.indexOf("image") != -1) {
       CustomTag = "Image";
+    } else if (CustomTag === "tableData") {
+      CustomTag = "tableData";
     } else {
       CustomTag = "p";
     }
