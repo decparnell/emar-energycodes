@@ -243,7 +243,10 @@ function createContent(parts, sections, components, definitions) {
             for (const clauseI in clauses) {
               const clause = clauses[clauseI];
               if (clausesProcessed.indexOf(clause.clauseReference) == -1) {
-                clausesProcessed.push(clause.clauseReference);
+                if (clause.clauseReference != "") {
+                  clausesProcessed.push(clause.clauseReference);
+                }
+
                 let clauseComponents = [];
                 if (clause.componentType == "title") {
                   clauseComponents.push(clause);

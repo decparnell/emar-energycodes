@@ -6,6 +6,7 @@ export default function LinkTextFromDefinitions(text, definitions) {
   //creating an array of the words that need linking
   let wordsToLink = definitions.map((a) => a.linkText);
   wordsToLink = wordsToLink.sort((a, b) => b.length - a.length);
+
   //for each word that needs linking
   for (const word in wordsToLink) {
     //for each row in the search text array
