@@ -26,23 +26,16 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
     let CustomTag = comp.componentType;
     const clauseComponentId = comp.componentId;
     //alter class and tag depending on what the style is
-    if (
-      ["listNumber", "listNumberItem", "listBullet", "listBulletItem"].includes(
-        CustomTag
-      )
-    ) {
-      CustomTag = `p`;
-    } else if (CustomTag === "title") {
+    if (CustomTag === "title") {
       CustomTag = `h3`;
       componentContainer = `${styles.subHeading}`;
     } else if (CustomTag === "table") {
       CustomTag = `table`;
     } else if (CustomTag.indexOf("image") != -1) {
       CustomTag = "Image";
-    } else if (CustomTag.indexOf("text") != -1) {
+    } else {
       CustomTag = "p";
     }
-
     //create initial value for the tag and class name
     let customClassName = createIndentedText(indent);
     if (
