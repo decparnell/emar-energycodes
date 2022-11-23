@@ -2,6 +2,7 @@ import HoverOverFunctionDefinition from "../onHoverDefinition";
 export default function LinkTextFromDefinitions(text, definitions) {
   //creating temp text value and the output array
   let searchText = [text];
+
   let arrayOfText = [];
   //creating an array of the words that need linking
   let wordsToLink = definitions.map((a) => a.linkText);
@@ -10,8 +11,9 @@ export default function LinkTextFromDefinitions(text, definitions) {
   //for each word that needs linking
   for (const word in wordsToLink) {
     //for each row in the search text array
-    for (const i in searchText) {
-      if (typeof searchText[i] != "object") {
+    let searchCounter = 0;
+    do {
+      if (typeof searchText[searchCounter] != "object") {
         //create a variable containing the word
         let linkingWord = wordsToLink[word];
         //find the info about the linking word ie what the link for the word should be
@@ -19,9 +21,9 @@ export default function LinkTextFromDefinitions(text, definitions) {
           (element) => element.linkText == linkingWord
         );
         //if the word can be found in the text
-        if (searchText[i].indexOf(linkingWord) >= 0) {
+        if (searchText[searchCounter].indexOf(linkingWord) >= 0) {
           //split the text on the word to get an array of two halves
-          let textSplit = searchText[i].split(linkingWord);
+          let textSplit = searchText[searchCounter].split(linkingWord);
           //split counter count against the number of textSplit.length
           //extra counter takes into account the additional entries with each iteration
           let extraCounter = 0;
@@ -37,30 +39,35 @@ export default function LinkTextFromDefinitions(text, definitions) {
             if (splitCounter == 0) {
               //if there is only one definition found in the string then replace the string with the first half of the split text
               searchText.splice(
-                parseInt(i) + extraCounter,
+                parseInt(searchCounter) + extraCounter,
                 1,
                 textSplit[splitCounter]
               );
             } else {
               //if there is more than one definition is found in the string then and this is the second, then add the string to the end.
               searchText.splice(
-                parseInt(i) + extraCounter,
+                parseInt(searchCounter) + extraCounter,
                 0,
                 textSplit[splitCounter]
               );
             }
-            searchText.splice(parseInt(i) + extraCounter + 1, 0, hoverFunction);
+            searchText.splice(
+              parseInt(searchCounter) + extraCounter + 1,
+              0,
+              hoverFunction
+            );
             extraCounter += 2;
             splitCounter++;
           } while (splitCounter < textSplit.length - 1);
           searchText.splice(
-            parseInt(i) + extraCounter,
+            parseInt(searchCounter) + extraCounter,
             0,
             textSplit[textSplit.length - 1]
           );
         }
       }
-    }
+      searchCounter++;
+    } while (searchCounter < searchText.length);
   }
   arrayOfText.push(searchText);
   return arrayOfText;

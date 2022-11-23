@@ -52,7 +52,13 @@ const recPortalLinks = [
 
 const definitions = [
   {
-    linkText: " Centralised Registration Service",
+    linkText: "REC Performance Assurance Board",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+  {
+    linkText: "Centralised Registration Service",
     componentText: "really",
     linkForwardUrl: 1,
     linkType: "definition",
@@ -82,7 +88,19 @@ const definitions = [
     linkType: "definition",
   },
   {
-    linkText: "REC PAB",
+    linkText: "Change Panel",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+  {
+    linkText: "Sub-Committee",
+    componentText: "really",
+    linkForwardUrl: 1,
+    linkType: "definition",
+  },
+  {
+    linkText: "REC Board",
     componentText: "really",
     linkForwardUrl: 1,
     linkType: "definition",
@@ -135,11 +153,10 @@ function RecPortal() {
         </ul>
       </div>
       <div className={styles.dectest}>
-        {text}
-        {/* {LinkTextFromDefinitions(
-          "RECCo is responsible for procuring the REC Services (including the Centralised Registration Services) from the REC Service Providers (including the CRS Provider). RECCo is then responsible for supplying the REC Services (including the Centralised Registration Services) to the REC Service Users in accordance with this Code. Any and all provision of services by the REC Service Providers to the REC Service Users under this Code is undertaken solely as procured by RECCo under this Code. It is acknowledged that the REC Services are supplied to RECCo and used for the purposes of its business as the central administrator of this Code and the REC Services. Acting via the REC PAB, RECCo will take action against the REC Service Providers where they fail to provide the REC Services in accordance with this Code.",
+        {LinkTextFromDefinitions(
+          "The Change Panel and the REC Performance Assurance Board are Sub-Committees. The REC Board shall, at a time it considers appropriate, establish the Change Panel and the REC Performance Assurance Board. Until those Sub-Committees have been established, the functions, duties and powers assigned to them under this Code shall be performed and exercised by the REC Board.",
           definitions
-        )} */}
+        )}
       </div>
     </div>
   );
