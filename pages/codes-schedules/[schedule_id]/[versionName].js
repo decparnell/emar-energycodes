@@ -9,6 +9,7 @@ import { checkIfVariablesAreAvailable } from "../../../components/helperFunction
 import { logError } from "../../../components/helperFunctions/logError";
 import { checkIfItemsAvailableInArray } from "../../../components/helperFunctions/checkIfItemsAvailableInArray";
 import DocumentDownload from "../../../components/documentDownload";
+import Sidebar from "../../../components/sidebar";
 
 function ScheduleDetail({
   versions,
@@ -45,12 +46,18 @@ function ScheduleDetail({
   const scheduleNumber = docInfo.scheduleNumber;
   const scheduleName = docInfo.documentName;
 
+  // create data for mandatory table, X axis being parts, Y axis optionality owners.
+  // structured as object with:
+  // keys being optionality.ownersName
+  // values being an array of optionality.optionalityNames (Mandatory, N/A)
   const transformTable = (optionalities, parts) => {
     let res = {};
     for (const el of optionalities) {
+      // each optionality owner gets a key
       res[el.ownersName] = [];
       const ownersId = el.ownersId;
       for (const part of parts) {
+        // find a match between optionalities and parts by ownersId and partId
         const value = optionalities.find(
           (el) => el.ownersId === ownersId && el.partId === part.partId
         );
@@ -65,29 +72,11 @@ function ScheduleDetail({
 
   return (
     <>
-      <aside
-        className={[
-          isSidebarOpen ? styles.sidebarOpen : styles.sidebarClosed,
-          styles.sidebar,
-        ].join(" ")}
-      >
-        <div className={styles.hamburger}>
-          <div
-            className={[isSidebarOpen ? styles.open : null, styles.burger].join(
-              " "
-            )}
-            onClick={toggleSidebar}
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-        <Head>
-          <title>EMAR - {docInfo ? docInfo.documentName : null}</title>
-          <meta property="og:title" content="My page title" key="title" />
-        </Head>
+      <Head>
+        <title>EMAR - {docInfo ? docInfo.documentName : null}</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
+      <Sidebar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}>
         {checkIfItemsAvailableInArray(internalErrorLog, "sections") ? (
           <div className={styles.sidebarSectionsList}>
             {createSidebarContent(parts, sections)}
@@ -95,7 +84,7 @@ function ScheduleDetail({
         ) : (
           <div className={styles.errorBox}>{logError("Sections")}</div>
         )}
-      </aside>
+      </Sidebar>
       <div
         className={[
           isSidebarOpen
@@ -112,7 +101,7 @@ function ScheduleDetail({
                 ? `${scheduleName} - Schedule ${scheduleNumber}`
                 : scheduleName}
             </h1>
-
+            {/* versions table */}
             {checkIfItemsAvailableInArray(internalErrorLog, "versions") ? (
               <div>
                 <table id="version" className={styles.table}>
@@ -136,6 +125,7 @@ function ScheduleDetail({
                     </tbody>
                   ) : null}
                 </table>
+                {/* if there is at least one optionality show a mandatory table */}
                 {optionalityInfo[0].optionalityId && (
                   <table className={styles.table}>
                     <thead>
@@ -147,6 +137,8 @@ function ScheduleDetail({
                       </tr>
                     </thead>
                     <tbody>
+                      {/* as per transformTable data structure first column is a key (optionality.ownersName) 
+                      and the rest of columns are value array  */}
                       {Object.keys(mandatoryTable).map((el) => {
                         return (
                           <tr key={el.partsOwnersOptionalityId}>
@@ -183,12 +175,14 @@ function ScheduleDetail({
 
 export default ScheduleDetail;
 
+// content for sidebar
 const createSidebarContent = (parts, sections) => {
   let content = [];
 
   for (const part of parts) {
     content.push(
       <h5 className={styles.sidebarPartName}>
+        {/* partName (Main, Schedule 1 - Interpretations and Definitions etc) to be displayed in sidebar */}
         <a href={`#${part.partId}`}>{part.partName}</a>
       </h5>
     );
@@ -199,6 +193,7 @@ const createSidebarContent = (parts, sections) => {
     for (const section of sectionsInPart) {
       content.push(
         <a href={`#sec${section.sectionId}`}>
+          {/* sectionName - 1. Definitions and Interpretation, 2. Categories of Parties */}
           {section.sectionOrder}. {section.sectionName}
         </a>
       );
@@ -330,7 +325,7 @@ export async function getServerSideProps(context) {
     `https://prod-14.uksouth.logic.azure.com/workflows/4f3b0f9b10f14137afd1fca0686b8119/triggers/manual/paths/invoke/documentId/${document[0].documentId}/versionId/${context.params.versionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lVJcdlsL4DY-LixBpllt8Ats8IO9LiJjpjs6FxZovjg`
   );
   const optionalityInfo = await optionalityReq.json();
-
+  // Pass data to the page via props
   return {
     props: {
       versions,

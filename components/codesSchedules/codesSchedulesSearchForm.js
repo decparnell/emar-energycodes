@@ -1,6 +1,9 @@
 import styles from "../../styles/codesSchedulesSearch.module.css";
 import sanitizeForUrl from "../helperFunctions/sanitizeForUrl";
 
+/**
+ * form consisting of input field and submit button
+ */
 const CodesSchedulesSearchForm = (
   setSearchResults,
   errorMessage,
@@ -8,6 +11,7 @@ const CodesSchedulesSearchForm = (
   setSearchPhrase,
   schedulesFilterValue
 ) => {
+  // submit handler
   const completeSearch = async (event) => {
     let documentId = "";
     if (typeof schedulesFilterValue == "object") {
@@ -15,14 +19,18 @@ const CodesSchedulesSearchForm = (
     } else {
       documentId = schedulesFilterValue;
     }
+    // clean up before setting new results
     setSearchResults(null);
     setErrorMessage(null);
     event.preventDefault(); // don't redirect the page
 
+    // get search phrase from input field
     const searchPhrase = event.target.searchPhrase.value;
+    // remove special charachters from searchPhrase
     const alteredSearchPhrase = sanitizeForUrl(searchPhrase);
 
     try {
+      // get data from api based on search phrase and documentId
       let dataReq = await fetch(
         `https://prod-10.uksouth.logic.azure.com/workflows/53359f3f225a48f681c60120fceed2fd/triggers/manual/paths/invoke/searchPhrase/${encodeURIComponent(
           alteredSearchPhrase
@@ -32,12 +40,17 @@ const CodesSchedulesSearchForm = (
       );
 
       const dataJson = await dataReq.json();
+
+      // if api response has an "error" key then it doesn't contain valid search results
       if (dataJson?.error != null) {
         throw "";
       }
+
+      // set search results from api response
       setSearchPhrase(searchPhrase);
       setSearchResults(dataJson);
     } catch (err) {
+      // show error message if api call failed, couldn't be parsed or "error" key is present
       setErrorMessage(`No results found for "${searchPhrase}"`);
     }
   };

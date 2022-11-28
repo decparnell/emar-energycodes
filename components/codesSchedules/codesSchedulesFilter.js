@@ -2,7 +2,10 @@ import { getDistinctValuesSchedules } from "../dataspec/functions/getDistinctVal
 import styles from "../../styles/codesSchedulesSearch.module.css";
 import ScheduleDropdown from "../dropdown/schedule";
 
-export const MessageFilters = (
+/**
+ * Filter dropdown for codes schedules, items are schedules headers
+ */
+export const CodesSchedulesFilter = (
   scheduleList,
   schedulesFilterValue,
   setSchedulesFilterValue,
