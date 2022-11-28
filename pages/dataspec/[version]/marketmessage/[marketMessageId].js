@@ -17,22 +17,23 @@ function MmDetailPage({ searchResults, url }) {
 
   let apiVarList = [];
   const checkIfsearchResultsAvailable = () => {
+    //checks whether all the required item are within searchResults
     if (searchResults) {
       apiVarList = [
         {
           obj: searchResults,
-          name: "searchResults",
+          name: "searchResults"
         },
         { obj: searchResults[0], name: "marketMessageInfo" },
         { obj: searchResults[1], name: "svForMarketMessage" },
-        { obj: searchResults[2], name: "dataItems" },
+        { obj: searchResults[2], name: "dataItems" }
       ];
     } else {
       apiVarList = [
         {
           obj: searchResults,
-          name: "searchResults",
-        },
+          name: "searchResults"
+        }
       ];
     }
   };
@@ -72,6 +73,7 @@ function MmDetailPage({ searchResults, url }) {
     "Data Item Name",
   ];
   const showApiColumns =
+    //create a list of items that have ApiMethod or ApiRoute available
     svForMarketMessage.find((el) => el.ApiMethod || el.ApiRoute) !== undefined;
 
   return (
@@ -80,6 +82,7 @@ function MmDetailPage({ searchResults, url }) {
       <DocumentDownload type="mm" url={url} />
       {checkIfItemsAvailableInArray(internalErrorLog, "searchResults") ? (
         <div className={styles.contentContainer}>
+          {/* if there is a null value , it replaces it with "" */}
           {checkIfItemsAvailableInArray(
             internalErrorLog,
             "marketMessageInfo"
@@ -147,14 +150,15 @@ function MmDetailPage({ searchResults, url }) {
                       href={{
                         pathname: `/dataspec/${latestDataSpecVersion}/dataitem/[di]`,
                         query: {
-                          di: entry.DataItemIdentifier,
-                        },
+                          di: entry.DataItemIdentifier
+                        }
                       }}
                       passHref={true}
                     >
                       <tr className={styles.pointer}>
                         <td>{entry.DataItemIdentifier}</td>
                         <td>
+                          {/* if there is a null value , it replaces it with "" */}
                           {removeNullValues(entry.DTCLegacyReference) +
                             removeNullValues(entry.SPAALegacyReference) +
                             removeNullValues(entry.RGMALegacyReference) +
@@ -200,8 +204,8 @@ function MmDetailPage({ searchResults, url }) {
                       href={{
                         pathname: `/dataspec/${latestDataSpecVersion}/scenario-variant/[sv]`,
                         query: {
-                          sv: entry.EnergyMarketMessageScenarioVariantIdentifier,
-                        },
+                          sv: entry.EnergyMarketMessageScenarioVariantIdentifier
+                        }
                       }}
                       passHref={true}
                     >
