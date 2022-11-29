@@ -154,9 +154,8 @@ app.prepare().then(() => {
   });
 
   server.all("*", (req, res) => {
-    //if (name_id) return handle(req, res);
-    //res.redirect("/login");
-    return handle(req, res);
+    if (name_id) return handle(req, res);
+    res.redirect("/login");
   });
 
   server.listen(port, () => {
