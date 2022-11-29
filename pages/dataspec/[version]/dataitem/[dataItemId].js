@@ -113,6 +113,12 @@ function DiDetailPage({ searchResults, url }) {
                       </tr>
                       <tr>
                         <td className={styles.mmTable}>Data Type</td>
+                        <td>{dataItemInfo.DataTypeFormatName}</td>
+                      </tr>
+                      <tr>
+                        <td className={styles.mmTable}>
+                          Data Type Format Rule
+                        </td>
                         <td>{dataItemInfo.DataTypeFormatRuleName}</td>
                       </tr>
                       <tr>
