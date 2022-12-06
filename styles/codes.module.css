@@ -60,11 +60,11 @@
 .subHeading {
   width: 100%;
   display: inline-block;
-  margin-top: 3vh;
+  margin-top: 2vh;
 }
 
 .multipleClauses {
-  margin-top: 1vh;
+  margin: 2vh 0;
 }
 
 .multipleClauses td {
@@ -133,7 +133,11 @@
 .clauseTable td {
   color: black;
 }
-
+.indented_1 {
+  margin: 0;
+  /* padding-left: 2vw; */
+  /* border: 3px solid red; */
+}
 .sidebar {
   height: 100%;
   display: block;

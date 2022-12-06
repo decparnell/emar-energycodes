@@ -65,45 +65,46 @@ button {
 .plain_text {
   margin: 0;
   padding: 0;
+  line-height: 24px;
 }
 .indented_1 {
   margin: 0;
-  padding-left: 5vw;
+  padding-left: 2vw;
 }
 
 .indented_2 {
-  padding-left: 10vw;
+  padding-left: 4vw;
   margin: 0;
 }
 .indented_3 {
-  padding-left: 15vw;
+  padding-left: 6vw;
   margin: 0;
 }
 
 .indented_4 {
-  padding-left: 20vw;
+  padding-left: 8vw;
   margin: 0;
 }
 .indented_5 {
-  padding-left: 25vw;
+  padding-left: 10vw;
   margin: 0;
 }
 
 .indented_6 {
-  padding-left: 30vw;
+  padding-left: 12vw;
   margin: 0;
 }
 .indented_7 {
-  padding-left: 35vw;
+  padding-left: 14vw;
   margin: 0;
 }
 
 .indented_8 {
-  padding-left: 40vw;
+  padding-left: 16vw;
   margin: 0;
 }
 .indented_9 {
-  padding-left: 45vw;
+  padding-left: 18vw;
   margin: 0;
 }
 
