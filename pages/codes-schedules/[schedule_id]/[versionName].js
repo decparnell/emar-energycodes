@@ -9,6 +9,7 @@ import { checkIfVariablesAreAvailable } from "../../../components/helperFunction
 import { logError } from "../../../components/helperFunctions/logError";
 import { checkIfItemsAvailableInArray } from "../../../components/helperFunctions/checkIfItemsAvailableInArray";
 import DocumentDownload from "../../../components/documentDownload";
+import LinkTextFromDefinitions from "../../../components/helperFunctions/linkTextFromDefinitions";
 import Sidebar from "../../../components/sidebar";
 
 function ScheduleDetail({
@@ -259,6 +260,10 @@ function createContent(parts, sections, components, definitions) {
                 );
               }
             }
+            const linkedSectionName = LinkTextFromDefinitions(
+              section.sectionName,
+              definitions
+            );
             content.push(
               <div
                 id={`sec${section.sectionId}`}
@@ -266,7 +271,7 @@ function createContent(parts, sections, components, definitions) {
                 className={styles.section}
               >
                 <h3>
-                  ({section.sectionOrder}) {section.sectionName}
+                  ({section.sectionOrder}) {linkedSectionName}
                 </h3>
                 {componentsJsx}
               </div>
