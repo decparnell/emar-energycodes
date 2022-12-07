@@ -1,20 +1,58 @@
 import styles from "../../styles/codesSchedulesSearch.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CodesSchedulesSearchForm from "./codesSchedulesSearchForm";
 import createCSSearchResults from "./createCSSearchResults";
 import Head from "next/head";
-import { MessageFilters } from "./codesSchedulesFilter";
+import { CodesSchedulesFilter } from "./codesSchedulesFilter";
 
+/**
+ * CodesSchedulesSearch wrapper. Includes Header, description, MessageFilters, CodesSchedulesSearchForm, and table with searchResults
+ * for codes schedules page
+ */
 function CodesSchedulesSearch(props) {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [searchResults, setSearchResults] = useState("");
+  const [isLatestVersionSelected, setIsLatestVersionSelected] = useState(true);
+  const [displayResults, setDisplayResults] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [schedulesFilterValue, setSchedulesFilterValue] =
     useState("Filter Schedules:");
 
+  // sets schedulesFilterValue back to initial, unselected state. Used in MessageFilters
   const clearFilter = () => {
     setSchedulesFilterValue("Filter Schedules:");
   };
+
+  let latestResults;
+  const latestVersions = {};
+
+  if (searchResults?.length > 0) {
+    latestResults = searchResults
+      .sort((a, b) => b.versionName.localeCompare(a.versionName))
+      .filter((el) => {
+        const key = `${el.clauseReference} ${el.documentName}`;
+        if (latestVersions[key] === undefined) {
+          latestVersions[key] = el.versionName;
+        }
+        return latestVersions[key] === el.versionName;
+      });
+  }
+
+  useEffect(() => {
+    setDisplayResults(latestResults);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchResults]);
+
+  const handleAllClick = () => {
+    setIsLatestVersionSelected(false);
+    setDisplayResults(searchResults);
+  };
+
+  const handleLatestClick = () => {
+    setIsLatestVersionSelected(true);
+    setDisplayResults(latestResults);
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -30,7 +68,7 @@ function CodesSchedulesSearch(props) {
           cant find the term. If you know the specific schedule which you want
           to search then you can use the filter directly below.
         </p>
-        {MessageFilters(
+        {CodesSchedulesFilter(
           props.codesSchedulesDataJson,
           schedulesFilterValue,
           setSchedulesFilterValue,
@@ -46,7 +84,14 @@ function CodesSchedulesSearch(props) {
         )}
       </div>
       {searchResults
-        ? createCSSearchResults(searchResults, errorMessage, searchPhrase)
+        ? createCSSearchResults(
+            displayResults,
+            errorMessage,
+            searchPhrase,
+            handleAllClick,
+            handleLatestClick,
+            isLatestVersionSelected
+          )
         : null}
     </div>
   );

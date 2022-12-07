@@ -14,14 +14,14 @@
   text-align: center;
 }
 
-.searchBoxHeader{
-  margin:0;
+.searchBoxHeader {
+  margin: 0;
 }
-.text{
-  margin:1em 0;
+.text {
+  margin: 1em 0;
 }
-.sourcetargetContainer{
-  margin:0;
+.sourcetargetContainer {
+  margin: 0;
 }
 .dropdown {
   width: 20%;
@@ -60,16 +60,15 @@
   color: black;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
 }
-.sourcetargetContainer{
-  margin:0;
+.sourcetargetContainer {
+  margin: 0;
 }
-.searchBoxHeader{
-  margin:0;
+.searchBoxHeader {
+  margin: 0;
 }
 
 .resultsTable {
-  margin: auto;
-  margin-bottom: 2%;
+  margin: 0 auto 2em auto;
 }
 
 .color {
@@ -97,4 +96,40 @@
   padding: 0.2em;
   background-color: #e7ab00;
   border-radius: 0.5em;
+}
+
+.sortContainer {
+  display: flex;
+  justify-content: space-around;
+  width: 40vw;
+  margin: 0 auto;
+  padding: 1.4em;
+}
+
+.selectedVersion,
+.notSelectedVersion {
+  width: 40%;
+  padding: 0.4em;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.selectedVersion {
+  background-color: #4d8934;
+  color: white;
+}
+
+.notSelectedVersion {
+  background-color: #e7f4e4;
+  color: black;
+}
+
+.resultsNumber {
+  color: #e7ab00;
+}
+
+.resultsMessage {
+  text-align: center;
+  color: black;
 }

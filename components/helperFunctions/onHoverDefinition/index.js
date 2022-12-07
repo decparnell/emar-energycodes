@@ -9,24 +9,6 @@ function HoverOverFunctionDefinition(
   linkAddress,
   versionName
 ) {
-  /*   const [isShown, setIsShown] = useState(false);
-  const [delayHandler, setDelayHandler] = useState(null);
-
-
-  const handleMouseEnter = (event) => {
-    //do the api call here await data and feedback
-    setDelayHandler(
-      setTimeout(() => {
-        setIsShown(true);
-      }, 500)
-    );
-  };
-
-  const handleMouseLeave = () => {
-    setIsShown(false);
-    clearTimeout(delayHandler);
-  }; */
-
   return (
     <Fragment key={linkingWord}>
       {linkType == "definition" ? (
@@ -37,13 +19,46 @@ function HoverOverFunctionDefinition(
           )}`}
           target="_blank"
           rel="noreferrer"
-          /* onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave} */
+        >
+          {linkingWord}
+        </a>
+      ) : linkType == "marketmessage" ? (
+        <a
+          className={styles.tooltiptext}
+          href={`/dataspec/${encodeURIComponent(
+            versionName
+          )}/marketmessage/${encodeURIComponent(linkAddress)}
+        `}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {linkingWord}
+        </a>
+      ) : linkType == "dataitem" ? (
+        <a
+          className={styles.tooltiptext}
+          href={`/dataspec/${encodeURIComponent(
+            versionName
+          )}/dataitem/${encodeURIComponent(linkAddress)}
+        `}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {linkingWord}
+        </a>
+      ) : linkType == "scenariovariant" ? (
+        <a
+          className={styles.tooltiptext}
+          href={`/dataspec/${encodeURIComponent(
+            versionName
+          )}/scenario-variant/${encodeURIComponent(linkAddress)}
+        `}
+          target="_blank"
+          rel="noreferrer"
         >
           {linkingWord}
         </a>
       ) : (
-        //CHANGE : Latest dataspec version for the version of the document
         <a
           className={styles.tooltiptext}
           href={`/codes-schedules/${encodeURIComponent(
@@ -52,19 +67,10 @@ function HoverOverFunctionDefinition(
           `}
           target="_blank"
           rel="noreferrer"
-          /* onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave} */
         >
           {linkingWord}
         </a>
       )}
-      {/* {isShown && (
-        <div className={styles.tooltip}>
-          {linkType == "definition"
-            ? definitionString
-            : "Click to go to the Schedule"}
-        </div>
-      )} */}
     </Fragment>
   );
 }
