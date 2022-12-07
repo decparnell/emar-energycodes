@@ -2,26 +2,33 @@ import Link from "next/link";
 import styles from "../../styles/dashboards.module.css";
 
 function Dashboard(props) {
-  const dashboardName = props.name;
+  //gets props.columns and put it in the columns variable
   const columns = props.columns;
+  //gets props.sections and put it in the sections variable
   const sections = props.sections;
+  //gets props.items and put it in the items variable
   const items = props.items;
   const containerStyle = `${styles.dashboardContainer} columns_${columns}`;
+  //gets props.versions and put it in the versions variable
   const versions = props.versions;
 
   const sectionsJSX = [];
 
   function CreateSection(section) {
     const sectionItems = items
+      // filter items based on the dashboardSectionId key
       .filter(
         (item) => item.dashboardSectionId_FK == section.dashboardSectionId
       )
+      //sort the items(ascending)
       .sort(
         (firstItem, secondItem) =>
           firstItem.dashboardSectionItemsOrder -
           secondItem.dashboardSectionItemsOrder
       );
+    //loops over every item in sectionItems 
     sectionItems.forEach((item, index) => {
+      //checks for certain condition and if it was true sets the version name
       if (
         item.dashboardSectionItemsLinkType == "SCHEDULE" &&
         item.dashboardSectionItemsLink.startsWith("/codes-schedules/") ==
@@ -65,7 +72,7 @@ function Dashboard(props) {
                 <Link
                   key={item.dashboardSectionsItemsId}
                   href={{
-                    pathname: `${item.dashboardSectionItemsLink}`,
+                    pathname: `${item.dashboardSectionItemsLink}`
                   }}
                   className={styles.itemContainer}
                   passHref={true}

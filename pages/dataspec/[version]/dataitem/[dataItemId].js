@@ -13,27 +13,29 @@ import DocumentDownload from "../../../../components/documentDownload";
 function DiDetailPage({ searchResults, url }) {
   let apiVarList = [];
   const checkIfsearchResultsAvailable = () => {
+    //checks whether all the required item are within searchResults
     if (searchResults) {
       apiVarList = [
         {
           obj: searchResults,
-          name: "searchResults",
+          name: "searchResults"
         },
         { obj: searchResults[0], name: "dataItemInfo" },
         { obj: searchResults[1], name: "mmForDataItem" },
-        { obj: searchResults[2], name: "dataEnumerations" },
+        { obj: searchResults[2], name: "dataEnumerations" }
       ];
     } else {
       apiVarList = [
         {
           obj: searchResults,
-          name: "searchResults",
-        },
+          name: "searchResults"
+        }
       ];
     }
   };
 
   checkIfsearchResultsAvailable();
+  //gets list(if any) of  unavailable items 
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
   const value = useContext(AppContext);
@@ -60,6 +62,7 @@ function DiDetailPage({ searchResults, url }) {
   const legacy =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
     checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo")
+    //if there is a null value , it replaces it with ""
       ? removeNullValues(dataItemInfo.DTCLegacyReference) +
         removeNullValues(dataItemInfo.SPAALegacyReference) +
         removeNullValues(dataItemInfo.RGMALegacyReference) +
@@ -113,6 +116,12 @@ function DiDetailPage({ searchResults, url }) {
                       </tr>
                       <tr>
                         <td className={styles.mmTable}>Data Type</td>
+                        <td>{dataItemInfo.DataTypeFormatName}</td>
+                      </tr>
+                      <tr>
+                        <td className={styles.mmTable}>
+                          Data Type Format Rule
+                        </td>
                         <td>{dataItemInfo.DataTypeFormatRuleName}</td>
                       </tr>
                       <tr>

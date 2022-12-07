@@ -6,6 +6,7 @@ import styles from "../../styles/codesSchedulesSearch.module.css";
  */
 export const CodesSchedulesSearchResults = (searchResults, searchPhrase) => {
   const router = useRouter();
+
   // sort results in descending order based on versionName (3.0.0)
   searchResults = searchResults.sort((a, b) =>
     b.versionName.localeCompare(a.versionName)
@@ -79,7 +80,7 @@ export const CodesSchedulesSearchResults = (searchResults, searchPhrase) => {
   // populating table body with results with highlighted search phrase
   const tableBody = (
     <tbody>
-      {searchResults.map((entry) => {
+      {searchResults?.map((entry) => {
         return (
           <tr
             key={entry.componentId}
