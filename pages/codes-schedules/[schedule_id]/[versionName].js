@@ -318,7 +318,8 @@ export async function getServerSideProps(context) {
   const definitionsJson = await definitionsReq.json();
   let definitions = definitionsJson.definitions;
   const scheduleLinks = definitionsJson.scheduleLinks;
-  definitions = definitions.concat(scheduleLinks);
+  const dataSpecLinks = definitionsJson.dataSpecLinks;
+  definitions = definitions.concat(scheduleLinks).concat(dataSpecLinks);
 
   let urlFetch = await fetch(
     `https://prod-03.uksouth.logic.azure.com/workflows/076c8da5b74d452abc028069f5a1ac4e/triggers/manual/paths/invoke/searchValue/${document[0].documentName}/versionNumber/${context.params.versionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wywtlxVddPbnw_SwqTbYDKCPB_9rfU085Qb5IvDk0A4`
