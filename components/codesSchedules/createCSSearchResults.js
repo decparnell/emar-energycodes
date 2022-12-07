@@ -1,12 +1,25 @@
 import styles from "../../styles/codesSchedulesSearch.module.css";
 import { logMessage } from "../helperFunctions/logMessage";
 import { CodesSchedulesSearchResults } from "./codesSchedulesSearchResults";
+
+/**
+ *  returns table with search results or error message
+ */
 function CreateCSSearchResults(searchResults, errorMessage, searchPhrase) {
+function CreateCSSearchResults(
+  searchResults,
+  errorMessage,
+  searchPhrase,
+  handleAllClick,
+  handleLatestClick,
+  isLatestVersionSelected
+) {
   let tableHeader = "";
   let tableBody = "";
 
+  // deduplicating search results and sorting them in descending order
   searchResults = searchResults
-    .filter(
+    ?.filter(
       (value, index, self) =>
         index ===
         self.findIndex(
@@ -18,8 +31,9 @@ function CreateCSSearchResults(searchResults, errorMessage, searchPhrase) {
         )
     )
     .sort();
-  if (errorMessage) {
-  } else {
+
+  // if errorMessage is not set then create table header and body
+  if (!errorMessage) {
     const codesSchedulesSearch = CodesSchedulesSearchResults(
       searchResults,
       searchPhrase
@@ -28,10 +42,42 @@ function CreateCSSearchResults(searchResults, errorMessage, searchPhrase) {
     tableBody = codesSchedulesSearch[1];
   }
 
+  //  if searchResults array is not empty show table with the results otherwise show error message
   return (
     <>
-      {searchResults.length > 0 ? (
+      {searchResults?.length > 0 ? (
         <div className={styles.contentContainer}>
+          <div className={styles.sortContainer}>
+            <button
+              className={
+                isLatestVersionSelected
+                  ? styles.selectedVersion
+                  : styles.notSelectedVersion
+              }
+              onClick={handleLatestClick}
+            >
+              Latest version
+            </button>
+            <button
+              className={
+                isLatestVersionSelected
+                  ? styles.notSelectedVersion
+                  : styles.selectedVersion
+              }
+              onClick={handleAllClick}
+            >
+              All versions
+            </button>
+          </div>
+          <div className={styles.resultsMessage}>
+            <p>
+              <span className={styles.resultsNumber}>
+                {searchResults.length}{" "}
+              </span>
+              results for &quot;
+              <span className={styles.resultsNumber}>{searchPhrase}</span>&quot;
+            </p>
+          </div>
           <table className={styles.resultsTable}>
             {tableHeader}
             {tableBody}
