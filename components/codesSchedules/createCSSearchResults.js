@@ -1,6 +1,11 @@
 import styles from "../../styles/codesSchedulesSearch.module.css";
 import { logMessage } from "../helperFunctions/logMessage";
 import { CodesSchedulesSearchResults } from "./codesSchedulesSearchResults";
+
+/**
+ *  returns table with search results or error message
+ */
+function CreateCSSearchResults(searchResults, errorMessage, searchPhrase) {
 function CreateCSSearchResults(
   searchResults,
   errorMessage,
@@ -12,6 +17,7 @@ function CreateCSSearchResults(
   let tableHeader = "";
   let tableBody = "";
 
+  // deduplicating search results and sorting them in descending order
   searchResults = searchResults
     ?.filter(
       (value, index, self) =>
@@ -26,6 +32,7 @@ function CreateCSSearchResults(
     )
     .sort();
 
+  // if errorMessage is not set then create table header and body
   if (!errorMessage) {
     const codesSchedulesSearch = CodesSchedulesSearchResults(
       searchResults,
@@ -35,6 +42,7 @@ function CreateCSSearchResults(
     tableBody = codesSchedulesSearch[1];
   }
 
+  //  if searchResults array is not empty show table with the results otherwise show error message
   return (
     <>
       {searchResults?.length > 0 ? (

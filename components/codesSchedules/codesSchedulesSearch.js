@@ -3,8 +3,12 @@ import { useEffect, useState } from "react";
 import CodesSchedulesSearchForm from "./codesSchedulesSearchForm";
 import createCSSearchResults from "./createCSSearchResults";
 import Head from "next/head";
-import { MessageFilters } from "./codesSchedulesFilter";
+import { CodesSchedulesFilter } from "./codesSchedulesFilter";
 
+/**
+ * CodesSchedulesSearch wrapper. Includes Header, description, MessageFilters, CodesSchedulesSearchForm, and table with searchResults
+ * for codes schedules page
+ */
 function CodesSchedulesSearch(props) {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [searchResults, setSearchResults] = useState("");
@@ -14,6 +18,7 @@ function CodesSchedulesSearch(props) {
   const [schedulesFilterValue, setSchedulesFilterValue] =
     useState("Filter Schedules:");
 
+  // sets schedulesFilterValue back to initial, unselected state. Used in MessageFilters
   const clearFilter = () => {
     setSchedulesFilterValue("Filter Schedules:");
   };
@@ -63,7 +68,7 @@ function CodesSchedulesSearch(props) {
           cant find the term. If you know the specific schedule which you want
           to search then you can use the filter directly below.
         </p>
-        {MessageFilters(
+        {CodesSchedulesFilter(
           props.codesSchedulesDataJson,
           schedulesFilterValue,
           setSchedulesFilterValue,
