@@ -5,7 +5,6 @@ import { CodesSchedulesSearchResults } from "./codesSchedulesSearchResults";
 /**
  *  returns table with search results or error message
  */
-function CreateCSSearchResults(searchResults, errorMessage, searchPhrase) {
 function CreateCSSearchResults(
   searchResults,
   errorMessage,
