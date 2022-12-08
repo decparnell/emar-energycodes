@@ -8,9 +8,9 @@ export const CodesSchedulesSearchResults = (searchResults, searchPhrase) => {
   const router = useRouter();
 
   // sort results in descending order based on versionName (3.0.0)
-  searchResults = searchResults.sort((a, b) =>
+  /* searchResults = searchResults.sort((a, b) =>
     b.versionName.localeCompare(a.versionName)
-  );
+  ); */
 
   // escape regex patterns in a string to produce a string-matching regex from it.
   // regex is used for highlighting search phrase in results
