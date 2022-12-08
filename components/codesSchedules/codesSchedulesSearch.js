@@ -26,7 +26,7 @@ function CodesSchedulesSearch(props) {
   let latestResults;
   const latestVersions = {};
 
-  if (searchResults?.length > 0) {
+  if (searchResults.length > 0) {
     latestResults = searchResults
       .sort((a, b) => b.versionName.localeCompare(a.versionName))
       .filter((el) => {
