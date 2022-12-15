@@ -216,9 +216,13 @@ function createContent(parts, sections, components, definitions) {
   let content = [];
   if (checkIfItemsAvailableInArray(internalErrorLog, "parts")) {
     for (const part of parts) {
+      const linkedPartName = LinkTextFromDefinitions(
+        part.partName,
+        definitions
+      );
       content.push(
         <h2 id={`${part.partId}`} className={styles.partName}>
-          {part.partName}
+          {linkedPartName}
         </h2>
       );
       if (checkIfItemsAvailableInArray(internalErrorLog, "sections")) {
