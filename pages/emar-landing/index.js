@@ -18,14 +18,14 @@ function Landing() {
       <h1>Welcome to the Energy Market Architecture Repository (EMAR)</h1>
       <div className={styles.landingButtons}>
         {LandingButton(
-          "IBM Jazz",
-          "A detailed view of the codes schedules, and the data specification, with the added ability to run reports, view market scenarios and more",
-          "https://emar.energycodes.co.uk/rm/web#action=com.ibm.rdm.web.pages.showFoundationProjectDashboard&componentURI=https%3A%2F%2Femar.energycodes.co.uk%2Frm%2Frm-projects%2F_Xqe2IFBPEeuGWeSXvTEFcQ%2Fcomponents%2F_XwleIFBPEeuGWeSXvTEFcQ"
-        )}
-        {LandingButton(
           "Digital Navigator",
           "A simplified view of the codes schedules and the Data specification",
           "/"
+        )}
+        {LandingButton(
+          "IBM Jazz",
+          "A detailed view of the codes schedules, and the data specification, with the added ability to run reports, view market scenarios and more",
+          "https://emar.energycodes.co.uk/rm/web#action=com.ibm.rdm.web.pages.showFoundationProjectDashboard&componentURI=https%3A%2F%2Femar.energycodes.co.uk%2Frm%2Frm-projects%2F_Xqe2IFBPEeuGWeSXvTEFcQ%2Fcomponents%2F_XwleIFBPEeuGWeSXvTEFcQ"
         )}
       </div>
     </div>
