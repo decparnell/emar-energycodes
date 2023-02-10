@@ -9,7 +9,11 @@ export const buttonHeaderOptions = [
 
 export const meniuItems = [
   { title: "Home", link: "/" },
-  ];
+  {
+    title: "IBM Jazz",
+    link: "https://emar.energycodes.co.uk/rm/web#action=com.ibm.rdm.web.pages.showFoundationProjectDashboard&componentURI=https%3A%2F%2Femar.energycodes.co.uk%2Frm%2Frm-projects%2F_Xqe2IFBPEeuGWeSXvTEFcQ%2Fcomponents%2F_XwleIFBPEeuGWeSXvTEFcQ",
+  },
+];
 
 export const dashboards = [
   {

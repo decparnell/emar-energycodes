@@ -1,0 +1,23 @@
+.container{
+    width:100%;
+    text-align:center;
+}
+
+.landingButtons{
+    width:100%;
+    margin-top:10%;
+    display: flex;
+    justify-content: space-evenly;
+    cursor:pointer
+}
+.landingButtonLink{
+    cursor:pointer
+}
+
+.landingButton{
+    padding:5px;
+    width:30%;
+    background: linear-gradient(174.19deg, #C4D38D 2.31%, #4D8934 95.96%);
+    box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
