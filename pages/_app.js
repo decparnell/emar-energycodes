@@ -37,7 +37,8 @@ export default function MyApp({ Component, pageProps }) {
     { versionNumber: "2.2.2", status: "Superseded" },
     { versionNumber: "2.3.0", status: "Superseded" },
     { versionNumber: "3.0.0", status: "Superseded" },
-    { versionNumber: "3.2.0", status: "Live" },
+    { versionNumber: "3.2.0", status: "Superseded" },
+    { versionNumber: "3.3.0", status: "Live" },
   ]); //
 
   const [latestDataSpecVersion, setLatestDataSpecVersion] = useState(
