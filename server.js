@@ -39,7 +39,7 @@ app.prepare().then(() => {
     sign_get_request: true,
     allow_unencrypted_assertion: true,
   }; */
-  //Test Service provider
+  //Dev Service provider
   /* var sp_options = {
     entity_id: "Recco.DigitalNavigator.Dev",
     private_key:
@@ -154,7 +154,7 @@ app.prepare().then(() => {
   });
 
   server.all("*", (req, res) => {
-    if (name_id) return handle(req, res);
+    if (name_id && name_id != "") return handle(req, res);
     res.redirect("/login");
     //return handle(req, res);
   });
