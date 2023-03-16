@@ -127,7 +127,12 @@ function HomePage({
 export default HomePage;
 
 // This gets called on every request
-export async function getServerSideProps(context) {
+export async function getServerSideProps({ req, res }) {
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=20000, stale-while-revalidate=59"
+  );
+
   // Fetch data from external API
   const dataReq = await fetch(
     `https://prod-12.uksouth.logic.azure.com:443/workflows/4c67d7f8644444278df5488ba97723dc/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6W4SqteUrXdeurJNKWJma27oNLUiaQeR6pdXIWqhAhw`
