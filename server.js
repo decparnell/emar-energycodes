@@ -112,7 +112,7 @@ app.prepare().then(() => {
   });
 
   // Variables used in login/logout process
-  //var email, name_id, DisplayName, objectId, session_index;
+  var name_id, session_index;
 
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
@@ -128,6 +128,9 @@ app.prepare().then(() => {
         name_id: saml_response.user.name_id,
         session_index: saml_response.user.session_index,
       };
+      name_id = saml_response.user.name_id;
+      session_index = saml_response.user.session_index;
+
       await req.session.save();
 
       ///add req user across the rest of page.
@@ -163,15 +166,17 @@ app.prepare().then(() => {
 
   // Starting point for logout
   server.get("/logout", function (req, res) {
+    var name = req.session.user ? req.session.user.name_id : " ";
+    var session_index = req.session.user ? req.session.user.session_index : " ";
     var options = {
-      name_id: req.session.user.name_id,
-      session_index: req.session.user.session_index,
+      name_id: name,
+      session_index: session_index,
     };
 
     sp.create_logout_request_url(idp, options, function (err, logout_url) {
       if (err != null) return res.sendStatus(500);
       req.session.destroy();
-      //name_id = undefined;
+      name_id = undefined;
       res.redirect(logout_url);
     });
   });
