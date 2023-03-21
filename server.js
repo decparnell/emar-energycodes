@@ -3,12 +3,12 @@ const port = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
-import { ironSession } from "iron-session/express";
 app.prepare().then(() => {
   var saml2 = require("saml2-js");
   var fs = require("fs");
   var express = require("express");
   var server = express();
+  var ironSession = require("iron-session/express");
   // If you're using express <4.0:
   var bodyParser = require("body-parser");
   server.use(
@@ -17,7 +17,7 @@ app.prepare().then(() => {
     })
   );
   server.use(
-    ironSession({
+    ironSession.ironSession({
       cookieName: "digitalnavigator",
       password: "VADUjnRrXiYpoVrahCaqvkrWHqmlszAR",
       cookieOptions: { secure: process.env.NODE_ENV === "production" },
