@@ -8,7 +8,7 @@ app.prepare().then(() => {
   var fs = require("fs");
   var express = require("express");
   var server = express();
-  var ironSession = require("iron-session/express");
+  var ironSession = require("iron-session/express").ironSession;
   // If you're using express <4.0:
   var bodyParser = require("body-parser");
   server.use(
@@ -16,13 +16,20 @@ app.prepare().then(() => {
       extended: true,
     })
   );
-  server.use(
-    ironSession.ironSession({
+  /* server.use(
+    ironSession({
       cookieName: "digitalnavigator",
       password: "VADUjnRrXiYpoVrahCaqvkrWHqmlszAR",
       cookieOptions: { secure: process.env.NODE_ENV === "production" },
     })
-  );
+  ); */
+  var session = ironSession({
+    cookieName: "iron-session/examples/express",
+    password: process.env.SECRET_COOKIE_PASSWORD,
+    cookieOptions: {
+      secure: process.env.NODE_ENV === "production",
+    },
+  });
 
   // Production service provider
   var sp_options = {
@@ -111,7 +118,7 @@ app.prepare().then(() => {
   server.post("/assert", function (req, res) {
     //let userEmail = "";
     var options = { request_body: req.body };
-    sp.post_assert(idp, options, function (err, saml_response) {
+    sp.post_assert(idp, options, async function (err, saml_response) {
       if (err != null) {
         console.log("assert error ------ " + err);
         return res.send(err);
@@ -121,7 +128,7 @@ app.prepare().then(() => {
         name_id: saml_response.user.name_id,
         session_index: saml_response.user.session_index,
       };
-      req.session.save();
+      await req.session.save();
 
       ///add req user across the rest of page.
       /* email = saml_response.user.attributes.email;
@@ -170,7 +177,7 @@ app.prepare().then(() => {
   });
 
   server.all("*", (req, res) => {
-    if (req.session.user) return handle(req, res);
+    if (req.session.user === undefined) return handle(req, res);
     res.redirect("/login");
     //return handle(req, res);
   });
