@@ -3,7 +3,7 @@ const port = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
-
+import { ironSession } from "iron-session/express";
 app.prepare().then(() => {
   var saml2 = require("saml2-js");
   var fs = require("fs");
@@ -14,6 +14,13 @@ app.prepare().then(() => {
   server.use(
     bodyParser.urlencoded({
       extended: true,
+    })
+  );
+  server.use(
+    ironSession({
+      cookieName: "digitalnavigator",
+      password: "VADUjnRrXiYpoVrahCaqvkrWHqmlszAR",
+      cookieOptions: { secure: process.env.NODE_ENV === "production" },
     })
   );
 
@@ -98,24 +105,32 @@ app.prepare().then(() => {
   });
 
   // Variables used in login/logout process
-  var email, name_id, DisplayName, objectId, session_index;
+  //var email, name_id, DisplayName, objectId, session_index;
 
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
-    let userEmail = "";
+    //let userEmail = "";
     var options = { request_body: req.body };
     sp.post_assert(idp, options, function (err, saml_response) {
       if (err != null) {
         console.log("assert error ------ " + err);
         return res.send(err);
       }
-      email = saml_response.user.attributes.email;
+      req.session.user = {
+        email: saml_response.user.attributes.email,
+        name_id: saml_response.user.name_id,
+        session_index: saml_response.user.session_index,
+      };
+      req.session.save();
+
+      ///add req user across the rest of page.
+      /* email = saml_response.user.attributes.email;
       userEmail = email;
       console.log("Email ------ " + userEmail);
       DisplayName = saml_response.user.attributes.DisplayName;
       objectId = saml_response.user.attributes.objectId;
       name_id = saml_response.user.name_id;
-      session_index = saml_response.user.session_index;
+      session_index = saml_response.user.session_index; */
     });
     res.redirect("/");
     /* const https = require("https");
@@ -142,19 +157,20 @@ app.prepare().then(() => {
   // Starting point for logout
   server.get("/logout", function (req, res) {
     var options = {
-      name_id: name_id,
-      session_index: session_index,
+      name_id: req.session.user.name_id,
+      session_index: req.session.user.session_index,
     };
 
     sp.create_logout_request_url(idp, options, function (err, logout_url) {
       if (err != null) return res.sendStatus(500);
-      name_id = undefined;
+      req.session.destroy();
+      //name_id = undefined;
       res.redirect(logout_url);
     });
   });
 
   server.all("*", (req, res) => {
-    if (name_id && name_id != "") return handle(req, res);
+    if (req.session.user) return handle(req, res);
     res.redirect("/login");
     //return handle(req, res);
   });
