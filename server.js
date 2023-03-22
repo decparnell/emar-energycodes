@@ -116,7 +116,6 @@ app.prepare().then(() => {
 
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
-    let userEmail = "";
     var options = { request_body: req.body };
     //make the function async for the session
     sp.post_assert(idp, options, function (err, saml_response) {
@@ -129,14 +128,10 @@ app.prepare().then(() => {
         name_id: saml_response.user.name_id,
         session_index: saml_response.user.session_index,
       }; */
-      name_id = saml_response.user.name_id;
-      session_index = saml_response.user.session_index;
-
       /* await req.session.save(); */
 
       ///add req user across the rest of page.
       email = saml_response.user.attributes.email;
-      userEmail = email;
       DisplayName = saml_response.user.attributes.DisplayName;
       objectId = saml_response.user.attributes.objectId;
       name_id = saml_response.user.name_id;
@@ -164,7 +159,7 @@ app.prepare().then(() => {
   });
 
   server.all("*", (req, res) => {
-    if (userEmail && userEmail != "") return handle(req, res);
+    if (name_id && name_id != "") return handle(req, res);
     res.redirect("/login");
     //return handle(req, res);
   });
