@@ -112,7 +112,7 @@ app.prepare().then(() => {
   });
 
   // Variables used in login/logout process
-  var userEmail, email, name_id, session_index, DisplayName, objectId;
+  var email, name_id, session_index, DisplayName, objectId;
 
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
