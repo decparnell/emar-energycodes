@@ -112,7 +112,7 @@ app.prepare().then(() => {
   });
 
   // Variables used in login/logout process
-  var email, name_id, session_index, DisplayName, objectId;
+  var userEmail, name_id, session_index, DisplayName, objectId;
 
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
@@ -135,8 +135,7 @@ app.prepare().then(() => {
       /* await req.session.save(); */
 
       ///add req user across the rest of page.
-      email = saml_response.user.attributes.email;
-      userEmail = email;
+      userEmail = saml_response.user.attributes.email;
       console.log("Email ------ " + userEmail);
       DisplayName = saml_response.user.attributes.DisplayName;
       objectId = saml_response.user.attributes.objectId;
