@@ -23,13 +23,13 @@ app.prepare().then(() => {
       cookieOptions: { secure: process.env.NODE_ENV === "production" },
     })
   ); */
-  var session = ironSession({
+  /*  var session = ironSession({
     cookieName: "iron-session/examples/express",
     password: process.env.SECRET_COOKIE_PASSWORD,
     cookieOptions: {
       secure: process.env.NODE_ENV === "production",
     },
-  });
+  }); */
 
   // Production service provider
   var sp_options = {
@@ -112,35 +112,35 @@ app.prepare().then(() => {
   });
 
   // Variables used in login/logout process
-  var name_id, session_index;
+  var userEmail, name_id, session_index, DisplayName, objectId;
 
   // Assert endpoint for when login completes
   server.post("/assert", function (req, res) {
-    //let userEmail = "";
+    let userEmail = "";
     var options = { request_body: req.body };
-    sp.post_assert(idp, options, async function (err, saml_response) {
+    //make the function async for the session
+    sp.post_assert(idp, options, function (err, saml_response) {
       if (err != null) {
         console.log("assert error ------ " + err);
         return res.send(err);
       }
-      req.session.user = {
+      /* req.session.user = {
         email: saml_response.user.attributes.email,
         name_id: saml_response.user.name_id,
         session_index: saml_response.user.session_index,
-      };
+      }; */
       name_id = saml_response.user.name_id;
       session_index = saml_response.user.session_index;
 
-      await req.session.save();
+      /* await req.session.save(); */
 
       ///add req user across the rest of page.
-      /* email = saml_response.user.attributes.email;
-      userEmail = email;
+      userEmail = saml_response.user.attributes.email;
       console.log("Email ------ " + userEmail);
       DisplayName = saml_response.user.attributes.DisplayName;
       objectId = saml_response.user.attributes.objectId;
       name_id = saml_response.user.name_id;
-      session_index = saml_response.user.session_index; */
+      session_index = saml_response.user.session_index;
     });
     res.redirect("/");
     /* const https = require("https");
@@ -166,23 +166,24 @@ app.prepare().then(() => {
 
   // Starting point for logout
   server.get("/logout", function (req, res) {
-    var name = req.session.user ? req.session.user.name_id : " ";
+    /* var name = req.session.user ? req.session.user.name_id : " ";
     var session_index = req.session.user ? req.session.user.session_index : " ";
+     */
     var options = {
-      name_id: name,
+      name_id: name_id,
       session_index: session_index,
     };
 
     sp.create_logout_request_url(idp, options, function (err, logout_url) {
       if (err != null) return res.sendStatus(500);
-      req.session.destroy();
+      //req.session.destroy();
       name_id = undefined;
       res.redirect(logout_url);
     });
   });
 
   server.all("*", (req, res) => {
-    if (req.session.user !== undefined) return handle(req, res);
+    if (userEmail && userEmail != "") return handle(req, res);
     res.redirect("/login");
     //return handle(req, res);
   });
