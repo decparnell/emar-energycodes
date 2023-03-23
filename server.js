@@ -25,7 +25,7 @@ app.prepare().then(() => {
   ); */
   var session = ironSession({
     cookieName: "iron-session/examples/express",
-    password: process.env.SECRET_COOKIE_PASSWORD,
+    password: "VADUjnRrXiYpoVrahCaqvkrWHqmlszAR",
     cookieOptions: {
       secure: process.env.NODE_ENV === "production",
     },
