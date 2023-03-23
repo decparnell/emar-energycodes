@@ -115,20 +115,20 @@ app.prepare().then(() => {
   /*   var email, name_id, session_index, DisplayName, objectId; */
 
   // Assert endpoint for when login completes
-  server.post("/assert", function (req, res) {
+  server.post("/assert", async function (req, res) {
     var options = { request_body: req.body };
     //make the function async for the session
     sp.post_assert(idp, options, async function (err, saml_response) {
-      if (err != null) {
-        console.log("assert error ------ " + err);
-        return res.send(err);
-      }
       req.session.user = {
         email: saml_response.user.attributes.email,
         name_id: saml_response.user.name_id,
         session_index: saml_response.user.session_index,
       };
       await req.session.save();
+      if (err != null) {
+        console.log("assert error ------ " + err);
+        return res.send(err);
+      }
 
       ///add req user across the rest of page.
       /* email = saml_response.user.attributes.email;
