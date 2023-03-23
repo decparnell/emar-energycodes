@@ -23,13 +23,13 @@ app.prepare().then(() => {
       cookieOptions: { secure: process.env.NODE_ENV === "production" },
     })
   ); */
-  /*  var session = ironSession({
+  var session = ironSession({
     cookieName: "iron-session/examples/express",
     password: process.env.SECRET_COOKIE_PASSWORD,
     cookieOptions: {
       secure: process.env.NODE_ENV === "production",
     },
-  }); */
+  });
 
   // Production service provider
   /* var sp_options = {
@@ -159,7 +159,7 @@ app.prepare().then(() => {
   });
 
   server.all("*", (req, res) => {
-    if (name_id && name_id != "") return handle(req, res);
+    if (req.session.user) return handle(req, res);
     res.redirect("/login");
     //return handle(req, res);
   });
