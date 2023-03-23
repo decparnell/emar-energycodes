@@ -8,7 +8,8 @@ app.prepare().then(() => {
   var fs = require("fs");
   var express = require("express");
   var server = express();
-  var ironSession = require("iron-session/express").ironSession;
+  var cookieParser = require("cookie-parser");
+  var sessions = require("express-session");
   // If you're using express <4.0:
   var bodyParser = require("body-parser");
   server.use(
@@ -16,20 +17,23 @@ app.prepare().then(() => {
       extended: true,
     })
   );
+  // creating 24 hours from milliseconds
+  const oneDay = 1000 * 60 * 60 * 24;
+
+  //session middleware
   server.use(
-    ironSession({
-      cookieName: "digitalnavigator",
-      password: "VADUjnRrXiYpoVrahCaqvkrWHqmlszAR",
-      cookieOptions: { secure: process.env.NODE_ENV === "production" },
+    sessions({
+      secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+      saveUninitialized: true,
+      cookie: { maxAge: oneDay },
+      resave: false,
     })
   );
-  /*  var session = ironSession({
-    cookieName: "iron-session/examples/express",
-    password: "VADUjnRrXiYpoVrahCaqvkrWHqmlszAR",
-    cookieOptions: {
-      secure: process.env.NODE_ENV === "production",
-    },
-  }); */
+  // cookie parser middleware
+  app.use(cookieParser());
+
+  // a variable to save a session
+  var session;
 
   // Production service provider
   /* var sp_options = {
@@ -115,20 +119,11 @@ app.prepare().then(() => {
   /*   var email, name_id, session_index, DisplayName, objectId; */
 
   // Assert endpoint for when login completes
-  server.post("/assert", async function (req, res) {
+  server.post("/assert", function (req, res) {
     var options = { request_body: req.body };
-    //make the function async for the session
-    sp.post_assert(idp, options, async function (err, saml_response) {
-      try {
-        req.session.user = {
-          email: saml_response.user.attributes.email,
-          name_id: saml_response.user.name_id,
-          session_index: saml_response.user.session_index,
-        };
-        await req.session.save();
-      } catch (req_error) {
-        return res.send(req_error);
-      }
+    sp.post_assert(idp, options, function (err, saml_response) {
+      session = req.session;
+      session.user = saml_response.user.name_id;
       if (err != null) {
         console.log("assert error ------ " + err);
         return res.send(err);
@@ -147,8 +142,7 @@ app.prepare().then(() => {
   // Starting point for logout
   server.get("/logout", function (req, res) {
     var name = req.session.user ? req.session.user.name_id : " ";
-    var session_index = req.session.user ? req.session.user.session_index : " ";
-
+    var session_index = 1;
     var options = {
       name_id: name,
       session_index: session_index,
