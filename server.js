@@ -16,20 +16,20 @@ app.prepare().then(() => {
       extended: true,
     })
   );
-  /* server.use(
+  server.use(
     ironSession({
       cookieName: "digitalnavigator",
       password: "VADUjnRrXiYpoVrahCaqvkrWHqmlszAR",
       cookieOptions: { secure: process.env.NODE_ENV === "production" },
     })
-  ); */
-  var session = ironSession({
+  );
+  /*  var session = ironSession({
     cookieName: "iron-session/examples/express",
     password: "VADUjnRrXiYpoVrahCaqvkrWHqmlszAR",
     cookieOptions: {
       secure: process.env.NODE_ENV === "production",
     },
-  });
+  }); */
 
   // Production service provider
   /* var sp_options = {
