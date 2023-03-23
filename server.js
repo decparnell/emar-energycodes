@@ -30,7 +30,7 @@ app.prepare().then(() => {
     })
   );
   // cookie parser middleware
-  app.use(cookieParser());
+  server.use(cookieParser());
 
   // a variable to save a session
   var session;
