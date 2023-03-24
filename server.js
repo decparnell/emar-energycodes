@@ -141,7 +141,8 @@ app.prepare().then(() => {
 
   // Starting point for logout
   server.get("/logout", function (req, res) {
-    var name = " ";
+    //req.session.user ? req.session.user.name_id : " ";
+    var name = "";
     var session_index = 1;
     var options = {
       name_id: name,
@@ -157,7 +158,7 @@ app.prepare().then(() => {
   });
 
   server.all("*", (req, res) => {
-    if (session.user !== undefined) return handle(req, res);
+    if (session !== undefined) return handle(req, res);
     res.redirect("/login");
     //return handle(req, res);
   });
