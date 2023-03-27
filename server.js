@@ -124,7 +124,7 @@ app.prepare().then(() => {
     sp.post_assert(idp, options, function (err, saml_response) {
       session = req.session;
       session.user = saml_response.user.name_id;
-      console.log(session);
+      console.error(session);
       if (err != null) {
         console.log("assert error ------ " + err);
         return res.send(err);
