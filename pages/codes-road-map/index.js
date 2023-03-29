@@ -8,6 +8,7 @@ function CodesRoadMap({
   const apiResList = [
     { obj: latestCodesRoadMapLinkJSON, name: "latestCodesRoadMapLinkJSON" }
   ]
+  const wikiPage = "https://recportal.co.uk/rec-wiki-landing/-/knowledge_base_search/677762514/maximized?_com_liferay_knowledge_base_web_portlet_SearchPortlet_redirect=https%3A%2F%2Frecportal.co.uk%3A443%2Frec-wiki-landing%3Fp_p_id%3Dcom_liferay_knowledge_base_web_portlet_SearchPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview%26_com_liferay_knowledge_base_web_portlet_SearchPortlet_mvcPath%3D%252Fsearch%252Fsearch.jsp%26_com_liferay_knowledge_base_web_portlet_SearchPortlet_keywords%3Droadmap%26_com_liferay_knowledge_base_web_portlet_SearchPortlet_formDate%3D1680000364694"
   return (
     <>
       <div className={styles.container}>
@@ -27,7 +28,7 @@ function CodesRoadMap({
               <td>
                 <b>Where to find out more</b>
                 <p> ** </p>
-                <p>If you want to know more about the roadmap purpose and process, visit the Wiki page here.</p>
+                <p>If you want to know more about the roadmap purpose and process, <a href={wikiPage} target="_blank">visit the Wiki page here.</a></p>
                 <p>The roadmap launched in March 2023 and it will evolve over time – we welcome your views on how we can develop it further for you.  If you have comments or feedback on any aspect of the roadmap, please contact <a href="#" onClick={() => window.location = 'mailto:enquiries@recmanager.co.uk'}>enquiries@recmanager.co.uk</a>.</p>
               </td>
             </tr>
