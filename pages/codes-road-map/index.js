@@ -36,11 +36,7 @@ function CodesRoadMap({ latestCodesRoadMapLinkJSON }) {
             <tr>
               <td>
                 {latestCodesRoadMapLinkJSON.map((item) => (
-                  <a
-                    href={"https://" + item.link}
-                    key={item.codesRoadMapLinksId}
-                    download
-                  >
+                  <a href={item.link} key={item.codesRoadMapLinksId} download>
                     Spreadsheet to download containing the roadmap
                   </a>
                 ))}
