@@ -31,12 +31,12 @@
   text-decoration: none;
   display: block;
   transition: all 0.5s;
-  font-size: 25px;
+  font-size: 20px;
   cursor: pointer;
 }
 
 .sidebarOpen {
-  width: 18vw;
+  width: 20vw;
 }
 
 .sidebarClosed {
