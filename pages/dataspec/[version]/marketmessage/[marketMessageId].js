@@ -22,18 +22,18 @@ function MmDetailPage({ searchResults, url }) {
       apiVarList = [
         {
           obj: searchResults,
-          name: "searchResults"
+          name: "searchResults",
         },
         { obj: searchResults[0], name: "marketMessageInfo" },
         { obj: searchResults[1], name: "svForMarketMessage" },
-        { obj: searchResults[2], name: "dataItems" }
+        { obj: searchResults[2], name: "dataItems" },
       ];
     } else {
       apiVarList = [
         {
           obj: searchResults,
-          name: "searchResults"
-        }
+          name: "searchResults",
+        },
       ];
     }
   };
@@ -150,8 +150,8 @@ function MmDetailPage({ searchResults, url }) {
                       href={{
                         pathname: `/dataspec/${latestDataSpecVersion}/dataitem/[di]`,
                         query: {
-                          di: entry.DataItemIdentifier
-                        }
+                          di: entry.DataItemIdentifier,
+                        },
                       }}
                       passHref={true}
                     >
@@ -182,7 +182,7 @@ function MmDetailPage({ searchResults, url }) {
           ) ? (
             <div>
               <h2 className={styles.diHeader}>
-                The Scenario Vaiants for this message are:
+                The Scenario Variants for this message are:
               </h2>
               <table className={styles.diList}>
                 <thead>
@@ -204,8 +204,8 @@ function MmDetailPage({ searchResults, url }) {
                       href={{
                         pathname: `/dataspec/${latestDataSpecVersion}/scenario-variant/[sv]`,
                         query: {
-                          sv: entry.EnergyMarketMessageScenarioVariantIdentifier
-                        }
+                          sv: entry.EnergyMarketMessageScenarioVariantIdentifier,
+                        },
                       }}
                       passHref={true}
                     >

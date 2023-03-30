@@ -39,8 +39,7 @@ function CodesRoadMap({ latestCodesRoadMapLinkJSON }) {
                   <a
                     href={"https://" + item.link}
                     key={item.codesRoadMapLinksId}
-                    rel="noreferrer"
-                    target="_blank"
+                    download
                   >
                     Spreadsheet to download containing the roadmap
                   </a>
