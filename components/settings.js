@@ -16,6 +16,13 @@ export const meniuItems = [
   { title: "Codes Road Map", link: "/codes-road-map" },
 ];
 
+export const tabs = [
+  { title: "Schedules", link: "/" },
+  { title: "Data Specification", link: "/dataspec" },
+  { title: "Codes Road Map", link: "/codes-road-map" },
+  { title: "Release Management", link: "/release-management" },
+];
+
 export const dashboards = [
   {
     dashboardId: 1,
