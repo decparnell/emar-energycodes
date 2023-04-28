@@ -6,9 +6,11 @@ function QuickLink(props) {
   //title = text to display at teh top of the link (string)
   //link = where to redirect to
   //image = react icons object to display under the text
+  //width = width for styling
+  //height
   return (
     <Link href={props.link}>
-      <div className={` ${styles.quickLink} box`}>
+      <div className={` ${styles.quickLink} box`} style={{width:props.width,height:props.height}}>
         {props.title}
         <div className={styles.image}>{props.image}</div>
       </div>
