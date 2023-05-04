@@ -18,3 +18,8 @@
     padding: 5% 0%;
     cursor: pointer;
   }
+
+  .green{
+    background-color: green;
+    color: white;
+  }

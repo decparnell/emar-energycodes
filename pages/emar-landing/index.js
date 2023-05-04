@@ -15,6 +15,10 @@ function Landing() {
 
   return (
     <div className={styles.container}>
+      <Head>
+        <title>EMAR Landing</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
       <h1>Welcome to the Energy Market Architecture Repository (EMAR)</h1>
       <div className={styles.landingButtons}>
         {LandingButton(
