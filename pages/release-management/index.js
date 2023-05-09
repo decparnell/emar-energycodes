@@ -1,6 +1,7 @@
 import styles from "../../styles/releaseManagement.module.css";
 import Head from "next/head";
 import QuickLink from "../../components/helperFunctions/quickLink";
+import React from 'react';
 
 function ReleaseManagement({ recVersionAndChangesJSON }) {
 
@@ -8,41 +9,109 @@ function ReleaseManagement({ recVersionAndChangesJSON }) {
     { obj: recVersionAndChangesJSON, name: "recVersionAndChangesJSON" }
   ];
 
+  //JSON objects
   const recVersion = recVersionAndChangesJSON.RecVersions;
   const changeProposal = recVersionAndChangesJSON.ChangeProposal;
   const changeInRecVersion = recVersionAndChangesJSON.ChangeInRecVersion;
   const changeAffectedSchedules = recVersionAndChangesJSON.ChangeAffectedSchedules;
 
-  function filterByrecVersionsId(jsonData, field_name, id) {
-    const filteredByIdData = jsonData.filter(obj => obj[field_name] === id)
-    return filteredByIdData;
+  //merge for changeProposal and changeAffectedSchedules
+  const mergedChanges = changeProposal.map((changeProposal) => {
+    const changeAffected = filterByFieldId(changeAffectedSchedules, "changeProposalId_FK", changeProposal.changeProposalId)
+    return ({ ...changeProposal, changeAffectedLength: changeAffected.length, changeAffected })
+  });
+
+  //merge recVersion with mergedChanges(changeProposal and changeAffectedSchedules)
+  const releaseManagementTable = recVersion.map((recVer) => {
+    const changeProposal = filterByFieldId(mergedChanges, "recVersionId_FK", recVer.recVersionsId)
+    const sumChangeAffected = changeProposal.map((cp) => {
+      let sumChangeAffected = 0
+      sumChangeAffected = sumChangeAffected + cp.changeAffectedLength
+      return (sumChangeAffected)
+    })
+
+    return ({ ...recVer, changeProposalLength: changeProposal.length, changeProposal, sumChangeAffected: sumChangeAffected.reduce((sum, value) => sum = sum + value, 0) })
+  })
+
+  //Filter JSON object by specific field and id
+  function filterByFieldId(jsonData, field_name, id) {
+    return jsonData.filter(obj => obj[field_name] === id)
   }
 
-  function mergeJSON(recVersion, changeProposal) {
-    let mergedJSON = [];
+  const firstBlock = (tableData, index) => {
 
-    for (let i = 0; i < changeProposal.length; i++) {
-      mergedJSON.push({
-        ...recVersion[i],
-        ...(changeProposal.find((innerItem) => innerItem.recVersionId_FK === recVersion[i].recVersionsId))
-      });
-    }
-    return mergedJSON;
+    const fbChangeProposal = tableData.changeProposal[0]
+    return (
+      <tr>
+        <td rowSpan={tableData.sumChangeAffected}>{tableData.name}</td>
+        <td rowSpan={tableData.sumChangeAffected}>{tableData.status}</td>
+        <td rowSpan={tableData.sumChangeAffected}>{new Date(tableData.releaseDate).toLocaleDateString("en-GB")}</td>
+        <td>{fbChangeProposal?.number}</td>
+        <td>{fbChangeProposal?.name + "\n" + fbChangeProposal?.changeAffectedLength}</td>
+        {fbChangeProposal?.changeAffected.map((changeAffected) => (
+          <tr><td>{changeAffected.affectedRecItems}</td></tr>
+        ))}
+        {/* index === 0 && <td>{"first row"}</td> */}
+        <td>{"recVersion.emarVersion"}</td>
+        <td>{"recVersion.release"}</td>
+      </tr>
+    )
   }
 
-  function mergeJSON2(recVersion, changeProposal) {
-    const merged = recVersion.map(item => ({
-      ...item,
-      ...changeProposal.find(obj => obj.recVersionId_FK === item.recVersionsId)
-    }));
-    return merged;
+
+  const firstBlock2 = (tableData, index) => {
+    return (
+      tableData.changeProposal.map((changeProp, indx) => {
+        return (
+          <tr>
+            <td>{tableData.name}</td>
+            <td>{tableData.status}</td>
+            <td>{new Date(tableData.releaseDate).toLocaleDateString("en-GB")}</td>
+            <td>{changeProp?.number}</td>
+            <td>{changeProp?.name + "\n" + changeProp?.changeAffectedLength}</td>
+            {changeProp.changeAffected.map((changeAffected) => (
+              <tr><td>{changeAffected.affectedRecItems}</td></tr>
+            ))}
+            {/* index === 0 && <td>{"first row"}</td> */}
+            <td>{tableData.emarVersion}</td>
+            <td><a href={tableData.linkToDetailedNotes} target="_blank" rel="noreferrer">{recVersion.name} Release Notes</a></td>
+          </tr>
+        )
+      })
+    )
   }
 
+  const secondBlock = (tableData, index) => {
+    console.log("Secondo", tableData)
+    return (
+      <>
+      <tr>
+        <td rowSpan={tableData.sumChangeAffected}>{tableData.name}</td>
+        <td rowSpan={tableData.sumChangeAffected}>{tableData.status}</td>
+        <td rowSpan={tableData.sumChangeAffected}>{new Date(tableData.releaseDate).toLocaleDateString("en-GB")}</td>
+      </tr>
+        {tableData.changeProposal.map((changeProp, indx) => {
+          return (
+            <tr>
+              <td>{changeProp?.number}</td>
+              <td>{changeProp?.name}</td>
+              {changeProp.changeAffectedLength === 0 && <td>{"N/A"}</td>}
+              {changeProp.changeAffected.map((changeAffected, ind) => (
+                indx >= 0 && <tr><td>{changeAffected.affectedRecItems}</td></tr>
+              ))}
+              {indx === 0 && <td rowSpan={tableData.sumChangeAffected}>{tableData.emarVersion}</td>}
+              {indx === 0 && <td rowSpan={tableData.sumChangeAffected}><a href={tableData.linkToDetailedNotes} target="_blank" rel="noreferrer">{recVersion.name} Release Notes</a></td>}
+            </tr>
+          )
+        })}
+        
+      </>
+    )
+  }
+
+  
 
 
-  //console.log(changeProposal)
-  //console.log(mergeJSON2(changeProposal, recVersion).find(obj => obj.recVersionsId === 2))
-  //const mgh = mergeJSON2(changeProposal, recVersion);
 
   return (
     <>
@@ -75,45 +144,40 @@ function ReleaseManagement({ recVersionAndChangesJSON }) {
                   <th>Version</th>
                   <th>Status</th>
                   <th>Release Date</th>
-                  <tr>
-                    <th>Change Proposal Number</th>
-                    <th>Change Proposal Name</th>
-                  </tr>
+                  <th>Change Proposal Number</th>
+                  <th>Change Proposal Name</th>
                   <th>Affected REC Items</th>
                   <th>EMAR Version</th>
-                  <th>Release </th>
+                  <th>Release</th>
                 </tr>
               </thead>
               <tbody>
                 {
-                  recVersion.map((item, index) => {
-                    const changeProposalFiltered = filterByrecVersionsId(changeProposal, "recVersionId_FK", item.recVersionsId);
-                    let cpId = -1;
-                    let arr;
+                  releaseManagementTable.map((tableData, index) => {
+                    //const changeProposalFiltered = filterByFieldId(mergedChanges, "recVersionId_FK", recVersion.recVersionsId);
                     return (
-                      <tr key={index}>
-                        <td>{item.name}</td>
-                        <td>{item.status}</td>
-                        <td>{item.releaseDate}</td>
-                        {changeProposalFiltered.length > 0 ?
-                          changeProposalFiltered.map((itemCP) => {
-                            cpId = itemCP.changeProposalId;
-                            return (
-                              <tr>
-                                <td>{itemCP.number}</td>
-                                <td>{itemCP.name}</td>
-                              </tr>
-                            )
-                          }) :
-                          <tr>
-                            <td>{"N/A"}</td>
-                            <td>{"N/A"}</td>
-                          </tr>
-                        }
-                        <td>{"AFFECTED ITEMS"}</td>
-                        <td>{item.emarVersion}</td>
-                        <td><a href={item.linkToDetailedNotes}>{item.name} Release Notes</a></td>
+                      <>
+                      <tr>
+                        <td rowSpan={tableData.sumChangeAffected}>{tableData.name}</td>
+                        <td rowSpan={tableData.sumChangeAffected}>{tableData.status}</td>
+                        <td rowSpan={tableData.sumChangeAffected}>{new Date(tableData.releaseDate).toLocaleDateString("en-GB")}</td>
                       </tr>
+                        {tableData.changeProposal.map((changeProp, indx) => {
+                          return (
+                            <tr>
+                              <td>{changeProp?.number}</td>
+                              <td>{changeProp?.name}</td>
+                              {changeProp.changeAffectedLength === 0 && <td>{"N/A"}</td>}
+                              {changeProp.changeAffected.map((changeAffected, ind) => (
+                                indx >= 0 && <tr><td>{changeAffected.affectedRecItems}</td></tr>
+                              ))}
+                              {indx === 0 && <td rowSpan={tableData.sumChangeAffected}>{tableData.emarVersion}</td>}
+                              {indx === 0 && <td rowSpan={tableData.sumChangeAffected}><a href={tableData.linkToDetailedNotes} target="_blank" rel="noreferrer">{recVersion.name} Release Notes</a></td>}
+                            </tr>
+                          )
+                        })}
+                        
+                      </>
                     )
                   })
                 }
