@@ -42,6 +42,8 @@ const ReleaseTable = (props) => {
     };
   });
 
+  console.log(releaseManagementTable);
+
   function sortByReleaseDate(a, b) {
     return (
       new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()
@@ -53,25 +55,16 @@ const ReleaseTable = (props) => {
   }
 
   const CreateVersionRow = (props) => {
-    console.log(props.affectedRecItems);
     return (
       <tr>
-        <td rowSpan={props.changeProposalLength}>{props.version}</td>
-        <td rowSpan={props.changeProposalLength}>{props.status}</td>
-        <td rowSpan={props.changeProposalLength}>{props.releaseDate}</td>
-        <td>{props.changeNumber}</td>
-        <td>{props.changeName}</td>
-        <td>
-          <ul className={styles.affectedItemList}>
-            {props.affectedRecItemsList.map((item) => {
-              return (
-                <li className={styles.affectedItem}>{item.affectedRecItems}</li>
-              );
-            })}
-          </ul>
-        </td>
-        <td rowSpan={props.changeProposalLength}>{props.emarVersion}</td>
-        <td rowSpan={props.changeProposalLength}>
+        <td rowSpan={props.sumChangeAffected}>{props.version}</td>
+        <td rowSpan={props.sumChangeAffected}>{props.status}</td>
+        <td rowSpan={props.sumChangeAffected}>{props.releaseDate}</td>
+        <td rowSpan={props.changeAffectedLength}>{props.changeNumber}</td>
+        <td rowSpan={props.changeAffectedLength}>{props.changeName}</td>
+        <td>{props.affectedRecItems}</td>
+        <td rowSpan={props.sumChangeAffected}>{props.emarVersion}</td>
+        <td rowSpan={props.sumChangeAffected}>
           <a href={props.linkToDetailedNotes} target="_blank" rel="noreferrer">
             {props.version} Release Notes
           </a>
@@ -83,17 +76,17 @@ const ReleaseTable = (props) => {
   const CreateChangeRow = (props) => {
     return (
       <tr>
-        <td>{props.changeNumber}</td>
-        <td>{props.changeName}</td>
-        <td>
-          <ul className={styles.affectedItemList}>
-            {props.affectedRecItemsList.map((item) => {
-              return (
-                <li className={styles.affectedItem}>{item.affectedRecItems}</li>
-              );
-            })}
-          </ul>
-        </td>
+        <td rowSpan={props.changeAffectedLength}>{props.changeNumber}</td>
+        <td rowSpan={props.changeAffectedLength}>{props.changeName}</td>
+        <td>{props.affectedRecItems}</td>
+      </tr>
+    );
+  };
+
+  const CreateAffectedRow = (props) => {
+    return (
+      <tr>
+        <td>{props.affectedRecItems}</td>
       </tr>
     );
   };
@@ -110,12 +103,27 @@ const ReleaseTable = (props) => {
           releaseDate={new Date(item.releaseDate).toLocaleDateString("en-GB")}
           changeNumber={item.changeProposal[0].number}
           changeName={item.changeProposal[0].name}
-          affectedRecItemsList={item.changeProposal[0].changeAffected}
+          affectedRecItems={
+            item.changeProposal[0].changeAffected[0].affectedRecItems
+          }
           emarVersion={item.emarVersion}
           linkToDetailedNotes={item.linkToDetailedNotes}
-          changeProposalLength={item.changeProposalLength}
+          sumChangeAffected={item.sumChangeAffected}
+          changeAffectedLength={item.changeProposal[0].changeAffectedLength}
         />
       );
+
+      if (item.changeProposal[0].changeAffectedLength > 1) {
+        for (let i = 1; i < item.changeProposal[0].changeAffectedLength; i++) {
+          tableData.push(
+            <CreateAffectedRow
+              affectedRecItems={
+                item.changeProposal[0].changeAffected[i].affectedRecItems
+              }
+            />
+          );
+        }
+      }
 
       if (item.changeProposalLength > 1) {
         for (let i = 1; i < item.changeProposalLength; i++) {
@@ -123,10 +131,28 @@ const ReleaseTable = (props) => {
             <CreateChangeRow
               changeNumber={item.changeProposal[i].number}
               changeName={item.changeProposal[i].name}
-              affectedRecItemsList={item.changeProposal[i].changeAffected}
+              affectedRecItems={
+                item.changeProposal[i].changeAffected[0].affectedRecItems
+              }
               changeAffectedLength={item.changeProposal[i].changeAffectedLength}
             />
           );
+
+          if (item.changeProposal[i].changeAffectedLength > 1) {
+            for (
+              let j = 1;
+              j < item.changeProposal[i].changeAffectedLength;
+              j++
+            ) {
+              tableData.push(
+                <CreateAffectedRow
+                  affectedRecItems={
+                    item.changeProposal[i].changeAffected[j].affectedRecItems
+                  }
+                />
+              );
+            }
+          }
         }
       }
     }
