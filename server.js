@@ -3,7 +3,7 @@ const port = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
-const got = require("got");
+const got = import("got");
 app.prepare().then(() => {
   var saml2 = require("saml2-js");
   var fs = require("fs");
