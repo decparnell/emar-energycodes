@@ -1,250 +1,129 @@
-import styles from "../../../../styles/dataspec.module.css";
-import Link from "next/link";
-import removeNullValues from "../../../../components/dataspec/functions/removeNulls";
-import addPaddingToGroupId from "../../../../components/dataspec/functions/addIdPadding";
+import styles from "../../../../styles/scenarioVariant.module.css";
 import AppContext from "../../../../components/context/AppContext";
-import { useContext, useEffect } from "react";
-import Head from "next/head";
-import SecondNavbar from "../../../../components/layout/secondHeader";
+import { useState, useContext, useEffect } from "react";
+import SideNav from "../../../../components/dashboardSideNav";
+import removeNullValues from "../../../../components/dataspec/functions/removeNulls";
 import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable";
-import { logError } from "../../../../components/helperFunctions/logError";
 import { checkIfItemsAvailableInArray } from "../../../../components/helperFunctions/checkIfItemsAvailableInArray";
-import DocumentDownload from "../../../../components/documentDownload";
+import { checkIfsearchResultsAvailable } from "../../../../components/helperFunctions/checkIfsearchResultsAvailable";
+import MarketMessageTables from "../../../../components/tables/marketMessageTables";
 
-function MmDetailPage({ searchResults, url }) {
+function MarketMessagePage({ searchResults }) {
+
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
 
-  let apiVarList = [];
-  const checkIfsearchResultsAvailable = () => {
-    //checks whether all the required item are within searchResults
-    if (searchResults) {
-      apiVarList = [
-        {
-          obj: searchResults,
-          name: "searchResults",
-        },
-        { obj: searchResults[0], name: "marketMessageInfo" },
-        { obj: searchResults[1], name: "svForMarketMessage" },
-        { obj: searchResults[2], name: "dataItems" },
-      ];
-    } else {
-      apiVarList = [
-        {
-          obj: searchResults,
-          name: "searchResults",
-        },
-      ];
-    }
-  };
+  let dashboard = [
+    { dashboardId: "BasicInformation", dashboardSectionName: "Basic Information", dashboardSectionOrder: 1 },
+    { dashboardId: "DataItems", dashboardSectionName: "Data Items", dashboardSectionOrder: 2 },
+    { dashboardId: "ScenarioVariants", dashboardSectionName: "Scenario Variants", dashboardSectionOrder: 3 },
+  ]
 
-  checkIfsearchResultsAvailable();
+  let apiVarList = [
+    { obj: dashboard, name: "sections" },
+  ];
+
+
+  //Data and SearchResults
+  const searchRes = checkIfsearchResultsAvailable(searchResults)
+  apiVarList.push(...searchRes)
+
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
   const marketMessageInfo =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-    checkIfItemsAvailableInArray(internalErrorLog, "marketMessageInfo")
+      checkIfItemsAvailableInArray(internalErrorLog, "marketMessageInfo")
       ? searchResults[0]
       : null;
+
   const svForMarketMessage =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-    checkIfItemsAvailableInArray(internalErrorLog, "svForMarketMessage")
+      checkIfItemsAvailableInArray(internalErrorLog, "svForMarketMessage")
       ? searchResults[1]
       : null;
+
   const dataItems =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-    checkIfItemsAvailableInArray(internalErrorLog, "dataItems")
+      checkIfItemsAvailableInArray(internalErrorLog, "dataItems")
       ? searchResults[2]
       : null;
 
   const legacy =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-    checkIfItemsAvailableInArray(internalErrorLog, "marketMessageInfo")
+      checkIfItemsAvailableInArray(internalErrorLog, "marketMessageInfo")
       ? removeNullValues(marketMessageInfo.DTCDcode) +
-        removeNullValues(marketMessageInfo.CSSMessageIdentifier) +
-        removeNullValues(marketMessageInfo.LegacyRGMAMessageIdentifier) +
-        removeNullValues(marketMessageInfo.LegacySPAAMessageIdentifier) +
-        removeNullValues(marketMessageInfo.UNCMessageIdentifier)
+      removeNullValues(marketMessageInfo.CSSMessageIdentifier) +
+      removeNullValues(marketMessageInfo.LegacyRGMAMessageIdentifier) +
+      removeNullValues(marketMessageInfo.LegacySPAAMessageIdentifier) +
+      removeNullValues(marketMessageInfo.UNCMessageIdentifier)
       : null;
 
-  const dataItemsTableHead = [
-    "Data Item Id",
-    "Local Catalogue Reference",
-    "Data Item Name",
-  ];
   const showApiColumns =
     //create a list of items that have ApiMethod or ApiRoute available
     svForMarketMessage.find((el) => el.ApiMethod || el.ApiRoute) !== undefined;
 
+
+  //Left Navigation Bar
+  const [currentSections, setCurrentSections] = useState(() => {
+    if (checkIfItemsAvailableInArray(internalErrorLog, "sections")) {
+      return dashboard[0];
+    }
+  });
+
+  console.log("currentSections", currentSections)
+  useEffect(() => {
+  }, [currentSections]);
+
   return (
     <>
-      <SecondNavbar />
-      <DocumentDownload type="mm" url={url} />
-      {checkIfItemsAvailableInArray(internalErrorLog, "searchResults") ? (
-        <div className={styles.contentContainer}>
-          {/* if there is a null value , it replaces it with "" */}
-          {checkIfItemsAvailableInArray(
-            internalErrorLog,
-            "marketMessageInfo"
-          ) ? (
-            <div>
-              <Head>
-                <title>EMAR - {marketMessageInfo.Label}</title>
-                <meta property="og:title" content="My page title" key="title" />
-              </Head>
+      <div className={styles.container}>
+        <div className={`${styles.sideNavContainer}`}>
+          <SideNav
+            navbarType="ContentBasedNavBar"
+            items={dashboard}
+            dashboardId="dashboardId"
+            name="dashboardSectionName"
+            stateVar={currentSections}
+            stateSet={setCurrentSections}
+          />
 
-              <h1 className={styles.contentTitle}>
-                {marketMessageInfo.EnergyMarketMessageIdentifier} -{" "}
-                {marketMessageInfo.Label}
-              </h1>
-            </div>
-          ) : (
-            <div className={styles.errorBox}>
-              {logError("Market Message Info")}
-            </div>
-          )}
-          {checkIfItemsAvailableInArray(
-            internalErrorLog,
-            "marketMessageInfo"
-          ) && (
-            <table className={styles.fullWidthTable}>
-              <tbody>
-                <tr>
-                  <td className={styles.mmTable}>Local Catalogue Reference</td>
-                  <td>{removeNullValues(legacy)}</td>
-                </tr>
-                <tr>
-                  <td className={styles.mmTable}>Description</td>
-                  <td>{marketMessageInfo.Description}</td>
-                </tr>
-                <tr>
-                  <td className={styles.mmTable}>Version Number</td>
-                  <td>
-                    {addPaddingToGroupId(
-                      marketMessageInfo.MessageVersionNumber
-                    )}
-                  </td>
-                </tr>
-                <tr>
-                  <td className={styles.mmTable}>Notes</td>
-                  <td>{marketMessageInfo.ExternalNotes}</td>
-                </tr>
-              </tbody>
-            </table>
-          )}
-          {checkIfItemsAvailableInArray(internalErrorLog, "dataItems") ? (
-            <div>
-              <h2 className={styles.svHeader}>
-                The Data items message contains:
-              </h2>
-              <table className={styles.svList}>
-                <thead>
-                  {dataItemsTableHead.map((item, index) => (
-                    <th key={index}>{item}</th>
-                  ))}
-                </thead>
-                <tbody>
-                  {dataItems.map((entry) => (
-                    <Link
-                      key={entry.DataItemIdentifier}
-                      href={{
-                        pathname: `/dataspec/${latestDataSpecVersion}/dataitem/[di]`,
-                        query: {
-                          di: entry.DataItemIdentifier,
-                        },
-                      }}
-                      passHref={true}
-                    >
-                      <tr className={styles.pointer}>
-                        <td>{entry.DataItemIdentifier}</td>
-                        <td>
-                          {/* if there is a null value , it replaces it with "" */}
-                          {removeNullValues(entry.DTCLegacyReference) +
-                            removeNullValues(entry.SPAALegacyReference) +
-                            removeNullValues(entry.RGMALegacyReference) +
-                            removeNullValues(entry.UNCDataItemReference) +
-                            removeNullValues(entry.IUCDataItemReference) +
-                            removeNullValues(entry.DCUSADataItemReference)}
-                        </td>
-                        <td>{entry.DataItemName}</td>
-                      </tr>
-                    </Link>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className={styles.errorBox}>{logError("Data Item")}</div>
-          )}
-          {checkIfItemsAvailableInArray(
-            internalErrorLog,
-            "svForMarketMessage"
-          ) ? (
-            <div>
-              <h2 className={styles.diHeader}>
-                The Scenario Variants for this message are:
-              </h2>
-              <table className={styles.diList}>
-                <thead>
-                  <th>Variant Id</th>
-                  <th>SV Name</th>
-                  <th>Source</th>
-                  <th>Target</th>
-                  {showApiColumns ? (
-                    <>
-                      <th>API Method</th>
-                      <th>API Route</th>
-                    </>
-                  ) : null}
-                </thead>
-                <tbody>
-                  {svForMarketMessage.map((entry) => (
-                    <Link
-                      key={entry.EnergyMarketMessageScenarioVariantIdentifier}
-                      href={{
-                        pathname: `/dataspec/${latestDataSpecVersion}/scenario-variant/[sv]`,
-                        query: {
-                          sv: entry.EnergyMarketMessageScenarioVariantIdentifier,
-                        },
-                      }}
-                      passHref={true}
-                    >
-                      <tr
-                        key={entry.EnergyMarketMessageScenarioVariantIdentifier}
-                        className={styles.pointer}
-                      >
-                        <td>
-                          {entry.EnergyMarketMessageScenarioVariantIdentifier}
-                        </td>
-                        <td>{entry.EnergyMarketMessageScenarioVariantName}</td>
-                        <td>{entry.SourceMarketDataServiceName}</td>
-                        <td>{entry.TargetMarketDataServiceName}</td>
-                        {entry.ApiMethod ? <td>{entry.ApiMethod}</td> : null}
-                        {entry.ApiRoute ? <td>{entry.ApiRoute}</td> : null}
-                      </tr>
-                    </Link>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className={styles.errorBox}>
-              {logError("Scenario Variant")}
-            </div>
-          )}
         </div>
-      ) : (
-        <div className={styles.errorBox}>{logError("Market Message Info")}</div>
-      )}
+        <div className={`${styles.mainContentContainer}`}>
+        <section id={dashboard[0].dashboardId}>
+          <MarketMessageTables keyTitle="Basic Information" latestDataSpecVersion={latestDataSpecVersion} dataBody={marketMessageInfo} legacy={legacy} />
+        </section>
+        <section id={dashboard[1].dashboardId}>
+          <MarketMessageTables keyTitle="Data Items" latestDataSpecVersion={latestDataSpecVersion} dataBody={dataItems} />
+        </section>
+        <section id={dashboard[2].dashboardId}>
+          <MarketMessageTables keyTitle="Scenario Variant" latestDataSpecVersion={latestDataSpecVersion} dataBody={svForMarketMessage} showApiColumns={showApiColumns} />
+        </section>
+        </div>
+      </div>
     </>
   );
 }
 
-export default MmDetailPage;
+export default MarketMessagePage;
+
 
 // This gets called on every request
 export async function getServerSideProps(context) {
+  context.res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=20000, stale-while-revalidate=59"
+  );
+
+  //Navigation Bar
   // Fetch data from external API
+  const navigationBarReq = await fetch(
+    `https://prod-04.uksouth.logic.azure.com/workflows/4db80aa335be4311b0a1a8d80cc7c504/triggers/manual/paths/invoke/Data Specification?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=rzSvBbeSA3spIYX1gDBk10Bam3XBduOo5vvY1kYYLPA`
+  );
+  const navigationDataJson = await navigationBarReq.json();
+  const sections = navigationDataJson.sections;
+  const items = navigationDataJson.items;
+
+  //Content Data
   const dataReq = await fetch(
     `https://prod-00.uksouth.logic.azure.com/workflows/5274b717bcf04104a6e99b41704c1698/triggers/manual/paths/invoke/searchType/{searchType}/searchValue/${context.params.marketMessageId}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xmOj_s9acsMTWSJyIwmmg__Qomwbd2rns4FuXcgklDo`
   );
@@ -255,12 +134,12 @@ export async function getServerSideProps(context) {
     dataJson.dataItemList,
   ];
 
-  const urlFetch = await fetch(
-    `https://prod-18.uksouth.logic.azure.com/workflows/ba54bba8972e48438cbb6f0571163ef0/triggers/manual/paths/invoke/searchValue/${context.params.marketMessageId}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=RO7KjzGq7_bdQqRL4PUPuSk3zzJFdZky3aumpoWCIS0`
-  );
-  const urlJson = await urlFetch.json();
-  const url = urlJson.url;
-
   // Pass data to the page via props
-  return { props: { searchResults, url } };
+  return {
+    props: {
+      sections,
+      items,
+      searchResults,
+    },
+  };
 }
