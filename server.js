@@ -163,9 +163,9 @@ app.prepare().then(() => {
     var session = req.session;
     var email = session.user;
     if (session !== undefined) {
-      got.post(
+      /* got.post(
         `https://prod-12.uksouth.logic.azure.com/workflows/a01770cba8f44c8a90274a6faa24955d/triggers/manual/paths/invoke/email/${email}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vm5xuq9xqyj6xN0P_NBrRPjDsElEJhOsWIWcmjfdzak`
-      );
+      ); */
       return handle(req, res);
     }
     res.redirect("/login");
