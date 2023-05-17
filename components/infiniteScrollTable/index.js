@@ -1,5 +1,6 @@
 import Link from "next/link";
 import InfiniteScroll from "react-infinite-scroll-component";
+import styles from "../../styles/infiniteScrollTable.module.css";
 const ResultsTable = (props) => {
   /////// PROPS
   //array of length 2 [data to be displayed, function to set data variable]
@@ -31,8 +32,9 @@ const ResultsTable = (props) => {
       hasMore={data.length > 1000 ? false : true}
       loader={<p>Loading...</p>}
       endMessage={<p>No more data to load.</p>}
+      className={styles.scroll}
     >
-      <table>
+      <table className={styles.table}>
         <thead>
           <tr>
             {headers.map((head) => {
