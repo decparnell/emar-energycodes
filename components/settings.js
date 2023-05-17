@@ -37,3 +37,36 @@ export const dashboards = [
     dashboardOrder: 2,
   },
 ];
+
+export const dataSpecSerachTypes = [
+  { name: "Market Messages" },
+  { name: "Scenario Variants" },
+  { name: "Data Items" },
+];
+
+export const marketMessageHeaders = [
+  { title: "Identifier", dataColumn: "EnergyMarketMessageIdentifier" },
+  { title: "Local Reference", dataColumn: "LegacyIdentifier" },
+  { title: "Message Name", dataColumn: "Label" },
+];
+
+export const scenarioVariantHeaders = [
+  {
+    title: "Identifier",
+    dataColumn: "EnergyMarketMessageScenarioVariantIdentifier",
+  },
+  {
+    title: "Scenario Variant Name",
+    dataColumn: "EnergyMarketMessageScenarioVariantName",
+  },
+  { title: "Source", dataColumn: "SourceName" },
+  { title: "Target", dataColumn: "TargetName" },
+  { title: "Api Method", dataColumn: "ApiMethod" },
+  { title: "Api Route", dataColumn: "ApiRoute" },
+];
+
+export const dataItemHeaders = [
+  { title: "Identifier", dataColumn: "DataItemIdentifier" },
+  { title: "Local Reference", dataColumn: "LegacyIdentifier" },
+  { title: "Message Name", dataColumn: "DataItemName" },
+];

@@ -10,7 +10,7 @@ const GlobalDropDown = (props) => {
   const handleChange = props.handleChange;
 
   return (
-    <FormControl sx={{ m: 1, minWidth: 120 }}>
+    <FormControl sx={{ m: 1, minWidth: 200 }}>
       <InputLabel id="demo-simple-select-helper-label">{label}</InputLabel>
       <Select
         labelId="demo-simple-select-helper-label"
@@ -19,7 +19,7 @@ const GlobalDropDown = (props) => {
         label={label}
         onChange={handleChange}
       >
-        <MenuItem value="">
+        <MenuItem value="-">
           <em>None</em>
         </MenuItem>
         {items.map((item) => {
