@@ -1,6 +1,7 @@
-export function checkIfsearchResultsAvailable (searchResults) {
+export function checkIfsearchResultsAvailable(searchResults, pageId) {
+  let apiVarList = [];
+  if (pageId === "MarketMessagePage") {
     //checks whether all the required item are within searchResults
-    let apiVarList = [];
     if (searchResults) {
       apiVarList = [
         {
@@ -19,6 +20,27 @@ export function checkIfsearchResultsAvailable (searchResults) {
         },
       ];
     }
+  } else if (pageId === "DataItemDetailsPage") {
+    //checks whether all the required item are within searchResults
+    if (searchResults) {
+      apiVarList = [
+        {
+          obj: searchResults,
+          name: "searchResults"
+        },
+        { obj: searchResults[0], name: "dataItemInfo" },
+        { obj: searchResults[1], name: "mmForDataItem" },
+        { obj: searchResults[2], name: "dataEnumerations" }
+      ];
+    } else {
+      apiVarList = [
+        {
+          obj: searchResults,
+          name: "searchResults"
+        }
+      ];
+    }
+  }
 
-    return apiVarList;
+  return apiVarList;
 }

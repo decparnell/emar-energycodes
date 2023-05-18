@@ -9,6 +9,12 @@ import { checkIfsearchResultsAvailable } from "../../../../components/helperFunc
 import MarketMessageTables from "../../../../components/tables/marketMessageTables";
 
 function MarketMessagePage({ searchResults }) {
+<<<<<<< HEAD
+=======
+
+  const pageId = "MarketMessagePage"
+
+>>>>>>> 6db7efe74ab0384e7e16becac4e796a2afd1b039
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
 
@@ -33,8 +39,13 @@ function MarketMessagePage({ searchResults }) {
   let apiVarList = [{ obj: dashboard, name: "sections" }];
 
   //Data and SearchResults
+<<<<<<< HEAD
   const searchRes = checkIfsearchResultsAvailable(searchResults);
   apiVarList.push(...searchRes);
+=======
+  const searchRes = checkIfsearchResultsAvailable(searchResults, pageId)
+  apiVarList.push(...searchRes)
+>>>>>>> 6db7efe74ab0384e7e16becac4e796a2afd1b039
 
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
@@ -77,8 +88,13 @@ function MarketMessagePage({ searchResults }) {
     }
   });
 
+<<<<<<< HEAD
   console.log("currentSections", currentSections);
   useEffect(() => {}, [currentSections]);
+=======
+  useEffect(() => {
+  }, [currentSections]);
+>>>>>>> 6db7efe74ab0384e7e16becac4e796a2afd1b039
 
   return (
     <>
