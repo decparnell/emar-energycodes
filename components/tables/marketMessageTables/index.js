@@ -12,7 +12,7 @@ const MarketMessageTables = (props) => {
 
 
     //Title Request Metering System tables
-    const TitleRqstMeteringSysTables = (props) => {
+    const RequestMeteringSysTables = (props) => {
         return (
             <section>
                 <div className={styles.tables}>
@@ -47,11 +47,11 @@ const MarketMessageTables = (props) => {
                     <table>
                         <tr>
                             <th className={styles.customTableHeader}>Description</th>
-                            <td className={styles.customTableData}>{props.marketMessageInfo.Description}</td>
+                            <td className={styles.customTableData}>{props.marketMessageInfo.Description ? props.marketMessageInfo.Description : "NA"}</td>
                         </tr>
                         <tr>
                             <th>Notes</th>
-                            <td>{props.marketMessageInfo.ExternalNotes}</td>
+                            <td>{props.marketMessageInfo.ExternalNotes ? props.marketMessageInfo.ExternalNotes : "NA"}</td>
                         </tr>
                     </table>
                 </div>
@@ -155,7 +155,7 @@ const MarketMessageTables = (props) => {
     const MMTables = (props) => {
         switch (props.k) {
             case "Basic Information":
-                return <TitleRqstMeteringSysTables marketMessageInfo={dataBody} legacy={legacy} />
+                return <RequestMeteringSysTables marketMessageInfo={dataBody} legacy={legacy} />
             case "Data Items":
                 return <DataItemsTable dataItems={dataBody} />
             case "Scenario Variant":

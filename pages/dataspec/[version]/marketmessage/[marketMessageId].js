@@ -10,6 +10,8 @@ import MarketMessageTables from "../../../../components/tables/marketMessageTabl
 
 function MarketMessagePage({ searchResults }) {
 
+  const pageId = "MarketMessagePage"
+
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
 
@@ -25,7 +27,7 @@ function MarketMessagePage({ searchResults }) {
 
 
   //Data and SearchResults
-  const searchRes = checkIfsearchResultsAvailable(searchResults)
+  const searchRes = checkIfsearchResultsAvailable(searchResults, pageId)
   apiVarList.push(...searchRes)
 
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
@@ -62,7 +64,6 @@ function MarketMessagePage({ searchResults }) {
     //create a list of items that have ApiMethod or ApiRoute available
     svForMarketMessage.find((el) => el.ApiMethod || el.ApiRoute) !== undefined;
 
-
   //Left Navigation Bar
   const [currentSections, setCurrentSections] = useState(() => {
     if (checkIfItemsAvailableInArray(internalErrorLog, "sections")) {
@@ -70,7 +71,6 @@ function MarketMessagePage({ searchResults }) {
     }
   });
 
-  console.log("currentSections", currentSections)
   useEffect(() => {
   }, [currentSections]);
 
