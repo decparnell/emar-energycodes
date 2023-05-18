@@ -93,15 +93,9 @@ function HomePage({ sections, items, newsData }) {
             </div>
             <div className={`${styles.right}`}>
               <div className={`${styles.quickLinkContainer}`}>
-                <QuickLink
-                  title="Search"
-                  link="/"
-                  image={search}
-                  width="20%"
-                  height="65%"
-                />
+                <QuickLink title="Search" link="/" image={search} width="20%" height="65%" />
                 <QuickLink title="" link="/" width="20%" height="65%" />
-                <QuickLink title="" link="/" width="20%" height="65%" />
+                <QuickLink title="" link="/" width="20%" height="65%"/>
               </div>
               <div className={`${styles.upcomingChangesContent} box`}></div>
             </div>
@@ -132,17 +126,17 @@ export async function getServerSideProps({ req, res }) {
   const sections = dataJson.sections;
   const items = dataJson.items;
 
-  const newsDataReq = await fetch(
+  /*   const newsDataReq = await fetch(
     "https://prod-22.uksouth.logic.azure.com:443/workflows/e36d26ad83b04a86bc67b618e20c9dc5/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Zymwu40i_cJZuIQhxAW9VZeDw22xzO97ie4sApLfizU"
   );
   const latestNewsJson = await newsDataReq.json();
-  const newsData = latestNewsJson.latestNews;
+  const newsData = latestNewsJson.latestNews; */
   // Pass data to the page via props
   return {
     props: {
       sections,
       items,
-      newsData,
+      //newsData,
     },
   };
 }

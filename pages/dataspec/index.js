@@ -89,7 +89,7 @@ function DataSpec({ sections, items }) {
               <div className={`${styles.quickLinkContainer}`}>
                 <QuickLink
                   title="Search"
-                  link="/"
+                  link="/dataspec/search"
                   image={search}
                   width="20%"
                   height="65%"

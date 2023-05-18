@@ -64,10 +64,6 @@ function DataSpecSearch(props) {
 
   return (
     <div className={styles.container}>
-      <Head>
-        <title>EMAR Data Specification</title>
-        <meta property="og:title" content="My page title" key="title" />
-      </Head>
       <div className={styles.searchContainer}>
         <SecondNavbar />
         <h1 className={styles.searchBoxHeader}>Data Specification Search</h1>
