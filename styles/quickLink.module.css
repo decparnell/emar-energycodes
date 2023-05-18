@@ -2,6 +2,7 @@
     font-size: 20px;
     text-align: center;
     font-weight: bold;
+    cursor:pointer;
 }
 .image{
     width:100%;
