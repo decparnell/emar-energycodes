@@ -58,19 +58,19 @@ table {
 
 th {
   text-align: center;
-  background-color: #4d8934;
-  color: white;
-  border: 1px solid #4d8934;
+  background-color: #4e8934;
+  color:white;
+  opacity: 75%;
 }
 
 td {
-  border-bottom: 1px solid #4d8934;
   text-align: center;
   padding: 0 0.4em;
+
 }
 
 tr {
-  background-color: #e7f4e4;
+  background-color: white;
   text-align: center;
 }
 

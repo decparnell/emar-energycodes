@@ -6,10 +6,11 @@
 .sideNavContainer {
     height:83vh;
     width:20vw;
+    position:fixed;
 }
 
 .mainContentContainer {
     height:83vh;
     width:80vw;
-    margin-right:1vw;
+    margin:0 1vw 0 20vw;
 }

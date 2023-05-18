@@ -12,11 +12,13 @@ import {
   scenarioVariantHeaders,
   dataItemHeaders,
 } from "../../../components/settings";
+import { Button, TextField } from "@mui/material";
 
 function DataSpecSearchPage() {
   const [data, setData] = useState([]);
   const [source, setSource] = useState("-");
   const [target, setTarget] = useState("-");
+  const [searchValue, setSearchValue] = useState("");
   const [startVal, setStartVal] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -75,18 +77,26 @@ function DataSpecSearchPage() {
     handleScrollToTop();
   };
   //handle click of search type buttons
-  const handleClick = (type) => {
-    //refreshData();
-    setStartVal(0);
-    setData([]);
-    handleScrollToTop();
+  const handleSideNavClick = (type) => {
+    refreshData();
     setSearchType(type);
   };
 
-  const handleChange = (event) => {
-    // refreshData();
-    setSource(event.target.value);
-    //fetchData();
+  const handleSourceChange = (e) => {
+    refreshData();
+    setSource(e.target.value);
+    //fetchData()
+  };
+
+  const handleTargetChange = (e) => {
+    refreshData();
+    setTarget(e.target.value);
+    //fetchData()
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(searchValue);
   };
 
   return (
@@ -100,7 +110,7 @@ function DataSpecSearchPage() {
           items={dataSpecSerachTypes}
           name="name"
           stateVar={searchType}
-          stateSet={handleClick}
+          stateSet={handleSideNavClick}
         />
       </div>
       <div className={`${styles.right}`}>
@@ -113,12 +123,38 @@ function DataSpecSearchPage() {
               <HelpOutlineIcon className={styles.helpIcon} />
             </Tooltip>
           </div>
+          <form className={styles.searchBox} onSubmit={handleSubmit}>
+            <TextField
+              id="outlined-basic"
+              label={`${searchType.name} Search`}
+              onChange={(e) => setSearchValue(e.target.value)}
+              value={searchValue}
+              variant="outlined"
+              size="small"
+              fullWidth
+            />
+
+            <Button
+              className={`${styles.searchButton} green`}
+              variant="contained"
+              type="submit"
+              value="submit"
+            >
+              Search
+            </Button>
+          </form>
           <div className={styles.filterContainer}>
             <GlobalDropDown
               label="Filter the Source:"
               value={source}
               items={dropdownItems}
-              handleChange={handleChange}
+              handleChange={handleSourceChange}
+            />
+            <GlobalDropDown
+              label="Filter the Target:"
+              value={target}
+              items={dropdownItems}
+              handleChange={handleTargetChange}
             />
           </div>
         </div>

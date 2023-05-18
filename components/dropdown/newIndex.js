@@ -11,13 +11,16 @@ const GlobalDropDown = (props) => {
 
   return (
     <FormControl sx={{ m: 1, minWidth: 200 }}>
-      <InputLabel id="demo-simple-select-helper-label">{label}</InputLabel>
+      <InputLabel id="demo-simple-select-helper-label" size="small">
+        {label}
+      </InputLabel>
       <Select
         labelId="demo-simple-select-helper-label"
         id="demo-simple-select-helper"
         value={value}
         label={label}
         onChange={handleChange}
+        size="small"
       >
         <MenuItem value="-">
           <em>None</em>

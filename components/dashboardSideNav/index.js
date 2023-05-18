@@ -1,11 +1,11 @@
 import styles from "../../styles/sideNav.module.css";
 
 function SideNav(props) {
-  //props?.navbarType - type of navigation bar 
+  //props?.navbarType - type of navigation bar
   //Current options:
   // - LocalNavBar : standard local navigation bar
   // - ContentBasedNavBar : hyperlink that jump to specific section
-  
+
   //Local Navigation Bar
   //props -
   //items = array of items;
@@ -22,12 +22,13 @@ function SideNav(props) {
     props.stateSet(name);
   };
 
-  const contentBasedNBHandleClick = (item) => {
+  const contentBasedNBHandleClick = (item, e) => {
+    e.preventDefault();
     props.stateSet(item);
     const sectionId = item[props.dashboardId];
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+      section.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -36,8 +37,9 @@ function SideNav(props) {
       <div className={`${styles.sideNav} box`}>
         {props.items.map((item, i) => (
           <div
-            className={`${styles.sideNavItem} ${props.stateVar[props.name] === item[props.name] ? "green" : ""
-              }`}
+            className={`${styles.sideNavItem} ${
+              props.stateVar[props.name] === item[props.name] ? "green" : ""
+            }`}
             onClick={(e) => handleClick(item, e)}
             key={i}
           >
@@ -45,31 +47,42 @@ function SideNav(props) {
           </div>
         ))}
       </div>
-    )
-  }
+    );
+  };
 
   const ContentBasedNavBar = (props) => {
     return (
       <div className={`${styles.sideNav} box`}>
         {props.items.map((item, i) => (
           <div
-            className={`${styles.sideNavItem} ${props.stateVar[props.name] === item[props.name] ? "green" : ""
-              }`}
-            onClick={() => contentBasedNBHandleClick(item)}
+            className={`${styles.sideNavItem} ${
+              props.stateVar[props.name] === item[props.name] ? "green" : ""
+            }`}
+            onClick={(e) => contentBasedNBHandleClick(item, e)}
             key={i}
           >
-            <a href={`#${item[props.dashboardId]}`} onClick={(e) => e.preventDefault()} className={styles.noUnderline}>{item[props.name]}</a>
+            {item[props.name]}
           </div>
         ))}
       </div>
-    )
-  }
+    );
+  };
 
-  return (
-    props?.navbarType === "ContentBasedNavBar" ?
-      <ContentBasedNavBar items={props.items} name={props.name} stateVar={props.stateVar} stateSet={props.stateSet} dashboardId={props.dashboardId}/>
-      :
-      <LocalNavBar items={props.items} name={props.name} stateVar={props.stateVar} stateSet={props.stateSet} />
+  return props?.navbarType === "ContentBasedNavBar" ? (
+    <ContentBasedNavBar
+      items={props.items}
+      name={props.name}
+      stateVar={props.stateVar}
+      stateSet={props.stateSet}
+      dashboardId={props.dashboardId}
+    />
+  ) : (
+    <LocalNavBar
+      items={props.items}
+      name={props.name}
+      stateVar={props.stateVar}
+      stateSet={props.stateSet}
+    />
   );
 }
 

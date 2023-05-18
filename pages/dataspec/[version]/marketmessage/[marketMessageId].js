@@ -9,59 +9,66 @@ import { checkIfsearchResultsAvailable } from "../../../../components/helperFunc
 import MarketMessageTables from "../../../../components/tables/marketMessageTables";
 
 function MarketMessagePage({ searchResults }) {
-
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
 
   let dashboard = [
-    { dashboardId: "BasicInformation", dashboardSectionName: "Basic Information", dashboardSectionOrder: 1 },
-    { dashboardId: "DataItems", dashboardSectionName: "Data Items", dashboardSectionOrder: 2 },
-    { dashboardId: "ScenarioVariants", dashboardSectionName: "Scenario Variants", dashboardSectionOrder: 3 },
-  ]
-
-  let apiVarList = [
-    { obj: dashboard, name: "sections" },
+    {
+      dashboardId: "BasicInformation",
+      dashboardSectionName: "Basic Information",
+      dashboardSectionOrder: 1,
+    },
+    {
+      dashboardId: "DataItems",
+      dashboardSectionName: "Data Items",
+      dashboardSectionOrder: 2,
+    },
+    {
+      dashboardId: "ScenarioVariants",
+      dashboardSectionName: "Scenario Variants",
+      dashboardSectionOrder: 3,
+    },
   ];
 
+  let apiVarList = [{ obj: dashboard, name: "sections" }];
 
   //Data and SearchResults
-  const searchRes = checkIfsearchResultsAvailable(searchResults)
-  apiVarList.push(...searchRes)
+  const searchRes = checkIfsearchResultsAvailable(searchResults);
+  apiVarList.push(...searchRes);
 
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
   const marketMessageInfo =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-      checkIfItemsAvailableInArray(internalErrorLog, "marketMessageInfo")
+    checkIfItemsAvailableInArray(internalErrorLog, "marketMessageInfo")
       ? searchResults[0]
       : null;
 
   const svForMarketMessage =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-      checkIfItemsAvailableInArray(internalErrorLog, "svForMarketMessage")
+    checkIfItemsAvailableInArray(internalErrorLog, "svForMarketMessage")
       ? searchResults[1]
       : null;
 
   const dataItems =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-      checkIfItemsAvailableInArray(internalErrorLog, "dataItems")
+    checkIfItemsAvailableInArray(internalErrorLog, "dataItems")
       ? searchResults[2]
       : null;
 
   const legacy =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-      checkIfItemsAvailableInArray(internalErrorLog, "marketMessageInfo")
+    checkIfItemsAvailableInArray(internalErrorLog, "marketMessageInfo")
       ? removeNullValues(marketMessageInfo.DTCDcode) +
-      removeNullValues(marketMessageInfo.CSSMessageIdentifier) +
-      removeNullValues(marketMessageInfo.LegacyRGMAMessageIdentifier) +
-      removeNullValues(marketMessageInfo.LegacySPAAMessageIdentifier) +
-      removeNullValues(marketMessageInfo.UNCMessageIdentifier)
+        removeNullValues(marketMessageInfo.CSSMessageIdentifier) +
+        removeNullValues(marketMessageInfo.LegacyRGMAMessageIdentifier) +
+        removeNullValues(marketMessageInfo.LegacySPAAMessageIdentifier) +
+        removeNullValues(marketMessageInfo.UNCMessageIdentifier)
       : null;
 
   const showApiColumns =
     //create a list of items that have ApiMethod or ApiRoute available
     svForMarketMessage.find((el) => el.ApiMethod || el.ApiRoute) !== undefined;
-
 
   //Left Navigation Bar
   const [currentSections, setCurrentSections] = useState(() => {
@@ -70,9 +77,8 @@ function MarketMessagePage({ searchResults }) {
     }
   });
 
-  console.log("currentSections", currentSections)
-  useEffect(() => {
-  }, [currentSections]);
+  console.log("currentSections", currentSections);
+  useEffect(() => {}, [currentSections]);
 
   return (
     <>
@@ -86,18 +92,31 @@ function MarketMessagePage({ searchResults }) {
             stateVar={currentSections}
             stateSet={setCurrentSections}
           />
-
         </div>
         <div className={`${styles.mainContentContainer}`}>
-        <section id={dashboard[0].dashboardId}>
-          <MarketMessageTables keyTitle="Basic Information" latestDataSpecVersion={latestDataSpecVersion} dataBody={marketMessageInfo} legacy={legacy} />
-        </section>
-        <section id={dashboard[1].dashboardId}>
-          <MarketMessageTables keyTitle="Data Items" latestDataSpecVersion={latestDataSpecVersion} dataBody={dataItems} />
-        </section>
-        <section id={dashboard[2].dashboardId}>
-          <MarketMessageTables keyTitle="Scenario Variant" latestDataSpecVersion={latestDataSpecVersion} dataBody={svForMarketMessage} showApiColumns={showApiColumns} />
-        </section>
+          <section id={dashboard[0].dashboardId}>
+            <MarketMessageTables
+              keyTitle="Basic Information"
+              latestDataSpecVersion={latestDataSpecVersion}
+              dataBody={marketMessageInfo}
+              legacy={legacy}
+            />
+          </section>
+          <section id={dashboard[1].dashboardId}>
+            <MarketMessageTables
+              keyTitle="Data Items"
+              latestDataSpecVersion={latestDataSpecVersion}
+              dataBody={dataItems}
+            />
+          </section>
+          <section id={dashboard[2].dashboardId}>
+            <MarketMessageTables
+              keyTitle="Scenario Variant"
+              latestDataSpecVersion={latestDataSpecVersion}
+              dataBody={svForMarketMessage}
+              showApiColumns={showApiColumns}
+            />
+          </section>
         </div>
       </div>
     </>
@@ -106,22 +125,12 @@ function MarketMessagePage({ searchResults }) {
 
 export default MarketMessagePage;
 
-
 // This gets called on every request
 export async function getServerSideProps(context) {
   context.res.setHeader(
     "Cache-Control",
     "public, s-maxage=20000, stale-while-revalidate=59"
   );
-
-  //Navigation Bar
-  // Fetch data from external API
-  const navigationBarReq = await fetch(
-    `https://prod-04.uksouth.logic.azure.com/workflows/4db80aa335be4311b0a1a8d80cc7c504/triggers/manual/paths/invoke/Data Specification?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=rzSvBbeSA3spIYX1gDBk10Bam3XBduOo5vvY1kYYLPA`
-  );
-  const navigationDataJson = await navigationBarReq.json();
-  const sections = navigationDataJson.sections;
-  const items = navigationDataJson.items;
 
   //Content Data
   const dataReq = await fetch(
@@ -137,8 +146,6 @@ export async function getServerSideProps(context) {
   // Pass data to the page via props
   return {
     props: {
-      sections,
-      items,
       searchResults,
     },
   };

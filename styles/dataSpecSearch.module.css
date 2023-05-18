@@ -34,5 +34,19 @@
 }
 .filterContainer{
     width:100%;
-    border:1px solid red;
+}
+.searchBox{
+    display:flex;
+    width:80%;
+    margin: 0 0 0 5% 
+}
+
+.searchButton{
+    margin: 0 0 0 10%;
+    padding:1%;
+    width:15%;
+}
+.searchButton:hover{
+    background-color: #4d8934;
+    opacity: 100%;
 }
