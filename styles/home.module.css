@@ -43,3 +43,23 @@
   width:98%;
   margin-bottom: 7.5%;
 }
+
+.dashboardItem{
+  cursor: pointer;
+  font-size:16px;
+  margin:1% 2% 0 5%;
+  color:rgb(82, 82, 181);
+  text-decoration: underline;
+}
+
+.iconBox{
+  justify-content: space-evenly;
+  display: flex;
+}
+
+.preicon{
+  width:8%;
+  height:8%;
+  margin-top:-2%;
+  font-weight: lighter;
+}

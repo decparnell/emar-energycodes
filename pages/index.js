@@ -8,7 +8,8 @@ import { checkIfItemsAvailableInArray } from "../components/helperFunctions/chec
 import { logMessage } from "../components/helperFunctions/logMessage";
 import QuickLink from "../components/helperFunctions/quickLink";
 import SideNav from "../components/dashboardSideNav";
-import { BiSearchAlt2 } from "react-icons/bi";
+import { BiRightArrow, BiSearchAlt2 } from "react-icons/bi";
+import Link from "next/link";
 
 function HomePage({ sections, items, newsData }) {
   const apiVarList = [
@@ -20,21 +21,26 @@ function HomePage({ sections, items, newsData }) {
   let { chosenButton, chosenTab } = value.state;
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
-  /*  const [currentDashboard, setCurrentDashboard] = useState(() => {
-    if (checkIfItemsAvailableInArray(internalErrorLog, "dashboards")) {
-      return dashboards.filter((dashboard) => dashboard.dashboardOrder == 1)[0];
-    }
-  });
- */
-
   const [currentSections, setCurrentSections] = useState(() => {
     if (checkIfItemsAvailableInArray(internalErrorLog, "sections")) {
       return sections[0];
     }
   });
 
+  const [currentItems, setCurrentItems] = useState(() => {
+    return items.filter(
+      (item) =>
+        item.dashboardSectionId_FK === currentSections.dashboardSectionId
+    );
+  });
+
   useEffect(() => {
-    console.log(currentSections);
+    setCurrentItems(
+      items.filter(
+        (item) =>
+          item.dashboardSectionId_FK === currentSections.dashboardSectionId
+      )
+    );
   }, [currentSections]);
 
   const [insertError, setInsertError] = useState("");
@@ -73,7 +79,17 @@ function HomePage({ sections, items, newsData }) {
         <div className={styles.mainContentContainer}>
           <div className={styles.top}>
             <div className={`${styles.left} box`}>
-              <h6>{currentSections.dashboardSectionName}</h6>
+              <h6 className="boxTitle">
+                {currentSections.dashboardSectionName}
+              </h6>
+              {currentItems.map((item, i) => (
+                <Link href="/" className={styles.dashboardItem} key={i}>
+                  <div className={styles.dashboardItem}>
+                    <BiRightArrow />
+                    {item.dashboardSectionItemsName}
+                  </div>
+                </Link>
+              ))}
             </div>
             <div className={`${styles.right}`}>
               <div className={`${styles.quickLinkContainer}`}>
@@ -85,7 +101,7 @@ function HomePage({ sections, items, newsData }) {
             </div>
           </div>
           <div className={`${styles.prereleaseContent} box`}>
-            <h6>Pre-Release Information</h6>
+            <h6 className="boxTitle">Pre-Release Information</h6>
           </div>
         </div>
       </div>

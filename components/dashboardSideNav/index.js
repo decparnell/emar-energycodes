@@ -12,10 +12,6 @@ function SideNav(props) {
     props.stateSet(name);
   };
 
-  useEffect(() => {
-    console.log(props.stateVar);
-  }, [props.stateVar]);
-
   return (
     <div className={`${styles.sideNav} box`}>
       {props.items.map((item, i) => (
@@ -23,7 +19,7 @@ function SideNav(props) {
           className={`${styles.sideNavItem} ${
             props.stateVar[props.name] === item[props.name] ? "green" : ""
           }`}
-          onClick={(e) => handleClick(item[props.name], e)}
+          onClick={(e) => handleClick(item, e)}
           key={i}
         >
           {item[props.name]}
