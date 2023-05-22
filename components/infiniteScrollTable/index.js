@@ -17,6 +17,8 @@ const ResultsTable = (props) => {
   //the api address to call to get the next batch of data
   const fetchData = props.fetchData;
 
+  const hasMore = props.hasMore;
+
   function returnTableDataForHeaders(item) {
     let jsxArray = [];
     headers.map((row) => {
@@ -29,7 +31,7 @@ const ResultsTable = (props) => {
     <InfiniteScroll
       dataLength={data.length}
       next={fetchData}
-      hasMore={data.length > 1000 ? false : true}
+      hasMore={hasMore}
       loader={<p>Loading...</p>}
       endMessage={<p>No more data to load.</p>}
       className={styles.scroll}

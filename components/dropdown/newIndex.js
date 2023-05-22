@@ -21,8 +21,9 @@ const GlobalDropDown = (props) => {
         label={label}
         onChange={handleChange}
         size="small"
+        defaultValue=""
       >
-        <MenuItem value="-">
+        <MenuItem value="">
           <em>None</em>
         </MenuItem>
         {items.map((item) => {

@@ -16,12 +16,13 @@ import { Button, TextField } from "@mui/material";
 
 function DataSpecSearchPage() {
   const [data, setData] = useState([]);
-  const [source, setSource] = useState("-");
-  const [target, setTarget] = useState("-");
+  const [source, setSource] = useState("");
+  const [target, setTarget] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [startVal, setStartVal] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [hasMore, setHasMore] = useState(true);
   const [searchType, setSearchType] = useState({ name: "Market Messages" });
   const headers =
     searchType.name === "Market Messages"
@@ -34,21 +35,29 @@ function DataSpecSearchPage() {
       title: "Half Hourly Data Collector",
       value: "Half Hourly Data Collector",
     },
+    {
+      title: "Distribution Network Operator",
+      value: "Distribution Network Operator",
+    },
   ];
   ///////////////FUNCTIONS/////////////////////////
   //fetch data for the results table (before an actual search has been done)
   const fetchData = async () => {
     setIsLoading(true);
     setError(null);
-
+    const mappedSource = source === "" ? "-" : source;
+    const mappedTarget = target === "" ? "-" : target;
+    const mappedSearch = searchValue === "" ? "-" : searchValue;
     try {
       const response = await fetch(
-        `https://prod-17.uksouth.logic.azure.com/workflows/f977e7f523164a488ec1500b8d81a7cd/triggers/manual/paths/invoke/searchType/${searchType.name}/startVal/${startVal}/source/${source}/target/${target}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=gRmq-WU9sVpROu8kyaVtadjAtqEm4HfILr_kGqNMZPU`
+        `https://prod-17.uksouth.logic.azure.com/workflows/f977e7f523164a488ec1500b8d81a7cd/triggers/manual/paths/invoke/searchType/${searchType.name}/startVal/${startVal}/source/${mappedSource}/target/${mappedTarget}/search/${mappedSearch}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=gRmq-WU9sVpROu8kyaVtadjAtqEm4HfILr_kGqNMZPU`
       );
       const dataSpecDataJson = await response.json();
       const newData = dataSpecDataJson.Table1;
       if (startVal === 0) {
         setData(newData);
+      } else if (typeof newData === "undefined") {
+        setHasMore(false);
       } else {
         setData((prevData) => [...prevData, ...newData]);
       }
@@ -63,7 +72,7 @@ function DataSpecSearchPage() {
 
   useEffect(() => {
     fetchData();
-  }, [searchType]);
+  }, [searchType, source, target]);
 
   //////////////HANDLING FUNCTIONS/////////////////
   //scroll to the top of the page when the button is clicked
@@ -85,17 +94,17 @@ function DataSpecSearchPage() {
   const handleSourceChange = (e) => {
     refreshData();
     setSource(e.target.value);
-    //fetchData()
   };
 
   const handleTargetChange = (e) => {
     refreshData();
     setTarget(e.target.value);
-    //fetchData()
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    refreshData();
+    fetchData();
     console.log(searchValue);
   };
 
@@ -166,6 +175,7 @@ function DataSpecSearchPage() {
             baseLink="/dataspec/3.3.0/marketmessage"
             searchType={searchType}
             fetchData={fetchData}
+            hasMore={hasMore}
           />
         </div>
       </div>
