@@ -161,7 +161,7 @@ app.prepare().then(() => {
   server.all("*", (req, res) => {
     var session = req.session;
     var email = session.user;
-    if (session !== undefined) return handle(req, res);
+    if (email !== undefined) return handle(req, res);
 
     res.redirect("/login");
     //return handle(req, res);
