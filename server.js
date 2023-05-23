@@ -35,7 +35,6 @@ app.prepare().then(() => {
 
   // a variable to save a session
   var session;
-
   // Production service provider
   /* var sp_options = {
     entity_id: "Recco.DigitalNavigator.Production",

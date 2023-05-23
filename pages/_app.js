@@ -47,7 +47,7 @@ export default function MyApp({ Component, pageProps }) {
   );
 
   const [newsItems, setNewsItems] = useState();
-  const [chosenTab, setChosenTab] = useState(1);
+  const [chosenTab, setChosenTab] = useState("Schedules");
   const [chosenButton, setChosenButton] = useState(1);
 
   const [errorLog, setErrorLog] = useState([]);
@@ -88,7 +88,7 @@ export default function MyApp({ Component, pageProps }) {
           setErrorLog: setErrorLog,
         }}
       >
-        <Layout>
+        <Layout chosenTab={chosenTab}>
           <Component {...pageProps} />
         </Layout>
       </AppContext.Provider>

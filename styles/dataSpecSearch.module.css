@@ -1,0 +1,52 @@
+.container {
+    width: 100%;
+  }
+
+  .left{
+    width:15%;
+    height:80vh;
+    position:fixed;
+  }
+
+  .right{
+    width:80%;
+    padding:0;
+    float:right;
+
+}
+
+.searchTop,.searchResults{
+    text-align: center;
+    margin:2% 0 2% 0;
+    width:96%;
+    height:100%;
+}
+
+.help{
+    float:right;
+    height:5vh;
+    width:100%;
+}
+.helpIcon{
+    height:100%;
+    width:5%;
+    float:right;
+}
+.filterContainer{
+    width:100%;
+}
+.searchBox{
+    display:flex;
+    width:80%;
+    margin: 0 0 0 5% 
+}
+
+.searchButton{
+    margin: 0 0 0 10%;
+    padding:1%;
+    width:15%;
+}
+.searchButton:hover{
+    background-color: #4d8934;
+    opacity: 100%;
+}
