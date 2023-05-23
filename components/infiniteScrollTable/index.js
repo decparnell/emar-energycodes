@@ -46,11 +46,14 @@ const ResultsTable = (props) => {
         </thead>
 
         <tbody>
-          {data.map((item) => {
+          {data.map((item, index) => {
             if (typeof baseLink !== "undefined") {
               return (
-                <Link href={`${baseLink}/${item[headers[0].dataColumn]}`}>
-                  <tr key={item.RowNum}>{returnTableDataForHeaders(item)}</tr>
+                <Link
+                  key={index}
+                  href={`${baseLink}/${item[headers[0].dataColumn]}`}
+                >
+                  <tr>{returnTableDataForHeaders(item)}</tr>
                 </Link>
               );
             } else {

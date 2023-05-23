@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styles from "../../styles/landing.module.css";
-
+import Head from "next/head";
 function Landing() {
   const LandingButton = (title, maintext, hrefLink) => {
     return (

@@ -63,9 +63,11 @@ const ReleaseTable = (props) => {
         <td>{props.changeName}</td>
         <td>
           <ul className={styles.affectedItemList}>
-            {props.affectedRecItemsList.map((item) => {
+            {props.affectedRecItemsList.map((item, index) => {
               return (
-                <li className={styles.affectedItem}>{item.affectedRecItems}</li>
+                <li className={styles.affectedItem} key={index}>
+                  {item.affectedRecItems}
+                </li>
               );
             })}
           </ul>
@@ -87,9 +89,11 @@ const ReleaseTable = (props) => {
         <td>{props.changeName}</td>
         <td>
           <ul className={styles.affectedItemList}>
-            {props.affectedRecItemsList.map((item) => {
+            {props.affectedRecItemsList.map((item, index) => {
               return (
-                <li className={styles.affectedItem}>{item.affectedRecItems}</li>
+                <li className={styles.affectedItem} key={index}>
+                  {item.affectedRecItems}
+                </li>
               );
             })}
           </ul>
