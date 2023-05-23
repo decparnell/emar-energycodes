@@ -39,8 +39,8 @@ const ResultsTable = (props) => {
       <table className={styles.table}>
         <thead>
           <tr>
-            {headers.map((head) => {
-              return <th>{head.title}</th>;
+            {headers.map((head, index) => {
+              return <th key={index}>{head.title}</th>;
             })}
           </tr>
         </thead>
@@ -57,9 +57,7 @@ const ResultsTable = (props) => {
                 </Link>
               );
             } else {
-              return (
-                <tr key={item.RowNum}>{returnTableDataForHeaders(item)}</tr>
-              );
+              return <tr key={index}>{returnTableDataForHeaders(item)}</tr>;
             }
           })}
         </tbody>
