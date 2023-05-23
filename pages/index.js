@@ -43,6 +43,17 @@ function HomePage({ sections, items, newsData }) {
     );
   }, [currentSections]);
 
+  useEffect(() => {
+    fetch("/api/session")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Session data:", data);
+      })
+      .catch((error) => {
+        console.error("Error fetching session data:", error);
+      });
+  }, []);
+
   const [insertError, setInsertError] = useState("");
 
   const search = (
@@ -93,9 +104,15 @@ function HomePage({ sections, items, newsData }) {
             </div>
             <div className={`${styles.right}`}>
               <div className={`${styles.quickLinkContainer}`}>
-                <QuickLink title="Search" link="/" image={search} width="20%" height="65%" />
+                <QuickLink
+                  title="Search"
+                  link="/"
+                  image={search}
+                  width="20%"
+                  height="65%"
+                />
                 <QuickLink title="" link="/" width="20%" height="65%" />
-                <QuickLink title="" link="/" width="20%" height="65%"/>
+                <QuickLink title="" link="/" width="20%" height="65%" />
               </div>
               <div className={`${styles.upcomingChangesContent} box`}></div>
             </div>
