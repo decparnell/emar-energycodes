@@ -123,7 +123,7 @@ app.prepare().then(() => {
     var options = { request_body: req.body };
     sp.post_assert(idp, options, function (err, saml_response) {
       session = req.session;
-      session.user = saml_response.user.name_id;
+      session.user = saml_response.user;
       console.error(session);
       if (err != null) {
         console.log("assert error ------ " + err);
@@ -143,8 +143,9 @@ app.prepare().then(() => {
   // Starting point for logout
   server.get("/logout", function (req, res) {
     //req.session.user ? req.session.user.name_id : " ";
-    var name = "";
-    var session_index = 1;
+    session = req.session;
+    var name = session.user.name_id;
+    var session_index = session.user.session_index;
     var options = {
       name_id: name,
       session_index: session_index,
@@ -159,7 +160,6 @@ app.prepare().then(() => {
   });
 
   server.all("*", (req, res) => {
-    var session = req.session;
     var email = session.user;
     if (email !== undefined) return handle(req, res);
 
