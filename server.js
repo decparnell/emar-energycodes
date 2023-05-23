@@ -35,6 +35,8 @@ app.prepare().then(() => {
 
   // a variable to save a session
   var session;
+  var name;
+  var session_index;
   // Production service provider
   /* var sp_options = {
     entity_id: "Recco.DigitalNavigator.Production",
@@ -124,6 +126,8 @@ app.prepare().then(() => {
     sp.post_assert(idp, options, function (err, saml_response) {
       session = req.session;
       session.user = saml_response.user;
+      name = session.user.name_id;
+      session_index = session.user.session_index;
       console.error(session);
       if (err != null) {
         console.log("assert error ------ " + err);
@@ -144,8 +148,6 @@ app.prepare().then(() => {
   server.get("/logout", function (req, res) {
     //req.session.user ? req.session.user.name_id : " ";
     session = req.session;
-    var name = session.user.name_id;
-    var session_index = session.user.session_index;
     var options = {
       name_id: name,
       session_index: session_index,
