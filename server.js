@@ -147,7 +147,7 @@ app.prepare().then(() => {
   // Starting point for logout
   server.get("/logout", function (req, res) {
     //req.session.user ? req.session.user.name_id : " ";
-    session = req.session;
+    //session = req.session;
     var options = {
       name_id: name,
       session_index: session_index,
