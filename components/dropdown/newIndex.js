@@ -27,7 +27,11 @@ const GlobalDropDown = (props) => {
           <em>None</em>
         </MenuItem>
         {items.map((item) => {
-          return <MenuItem value={item.value}>{item.title}</MenuItem>;
+          return (
+            <MenuItem value={item.value} key={item.title}>
+              {item.title}
+            </MenuItem>
+          );
         })}
       </Select>
     </FormControl>
