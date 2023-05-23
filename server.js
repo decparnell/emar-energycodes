@@ -162,7 +162,7 @@ app.prepare().then(() => {
   });
 
   server.all("*", (req, res) => {
-    if (session.user !== undefined) return handle(req, res);
+    if (session !== undefined) return handle(req, res);
 
     res.redirect("/login");
     //return handle(req, res);
