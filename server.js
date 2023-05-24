@@ -10,7 +10,7 @@ app.prepare().then(() => {
   var express = require("express");
   var server = express();
   var cookieParser = require("cookie-parser");
-  var sessions = require("cookie-session");
+  var cookieSession = require("cookie-session");
   // If you're using express <4.0:
   var bodyParser = require("body-parser");
   server.use(
@@ -23,11 +23,11 @@ app.prepare().then(() => {
   ////////////////////////////////////////////////////chanhe the resave to true
   //session middleware
   server.use(
-    sessions({
+    cookieSession({
+      name: "session",
       secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
-      saveUninitialized: true,
-      cookie: { maxAge: oneDay },
-      resave: false,
+      // Cookie Options
+      maxAge: oneDay, // 24 hours
     })
   );
   // cookie parser middleware
