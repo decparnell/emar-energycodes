@@ -1,7 +1,7 @@
-export const LogUserInfo = (props) => {
+export function LogUserInfo(action) {
   const options = {
     method: "POST",
-    body: `'{"action":"${props.action}"}'`,
+    body: `'{"action":"${action}"}'`,
   };
   fetch("/api/session", options)
     .then((response) => response.json())
@@ -11,4 +11,4 @@ export const LogUserInfo = (props) => {
     .catch((error) => {
       console.error("Error fetching session data:", error);
     });
-};
+}

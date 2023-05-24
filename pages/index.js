@@ -45,7 +45,7 @@ function HomePage({ sections, items, newsData }) {
   }, [currentSections]);
 
   useEffect(() => {
-    LogUserInfo((action = "HomePage"));
+    LogUserInfo("HomePage");
   }, []);
 
   const [insertError, setInsertError] = useState("");
