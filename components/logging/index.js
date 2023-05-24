@@ -1,5 +1,6 @@
 export const LogUserInfo = (action) => {
   const options = {
+    method: "POST",
     body: `'{"action":"${action}"}'`,
   };
   fetch("/api/session", options)
