@@ -126,6 +126,7 @@ app.prepare().then(() => {
       req.session.user = saml_response.user;
       console.log("SESSION 1:");
       console.log(req.session);
+      req.session.save();
       //name = saml_response.user.name_id;
       //session_index = saml_response.user.session_index;
       if (err != null) {
@@ -163,7 +164,6 @@ app.prepare().then(() => {
   });
 
   server.all("*", (req, res) => {
-    req.session.reload();
     console.log("SESSION 3:");
     console.log(req.session);
     if (req.session && typeof req.session.user !== "undefined")
