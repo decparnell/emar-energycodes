@@ -10,7 +10,7 @@ app.prepare().then(() => {
   var express = require("express");
   var server = express();
   var cookieParser = require("cookie-parser");
-  var cookieSession = require("cookie-session");
+  var session = require("express-session");
   // If you're using express <4.0:
   var bodyParser = require("body-parser");
   server.use(
@@ -18,30 +18,21 @@ app.prepare().then(() => {
       extended: true,
     })
   );
+
   // creating 24 hours from milliseconds
   const oneDay = 1000 * 60 * 60 * 24;
-  ////////////////////////////////////////////////////chanhe the resave to true
-  const expiryDate = new Date(Date.now() + oneDay);
-  server.use(
-    cookieSession({
-      name: "sessionDN",
-      keys: ["key1", "key2"],
-      cookie: {
-        secure: true,
-        httpOnly: true,
-        expires: expiryDate,
-      },
-    })
-  );
-  //session middleware
-  /* server.use(
-    cookieSession({
-      name: "session",
-      secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
-      // Cookie Options
-      maxAge: oneDay, // 24 hours
-    })
-  ); */
+  var sesh = {
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: oneDay },
+  };
+
+  if (server.get("env") === "production") {
+    server.set("trust proxy", 1); // trust first proxy
+    sess.cookie.secure = true; // serve secure cookies
+  }
+  server.use(session(sesh));
   // cookie parser middleware
   server.use(cookieParser());
 
@@ -165,17 +156,17 @@ app.prepare().then(() => {
 
     sp.create_logout_request_url(idp, options, function (err, logout_url) {
       if (err != null) return res.sendStatus(500);
-      req.session = null;
+      req.session.destroy();
       /* name_id = undefined; */
       res.redirect(logout_url);
     });
   });
 
   server.all("*", (req, res) => {
+    req.session.reload();
     console.log("SESSION 3:");
     console.log(req.session);
-    if (req.session.isPopulated)
-      //&& typeof session.user !== "undefined")
+    if (req.session && typeof req.session.user !== "undefined")
       return handle(req, res);
 
     res.redirect("/login");
