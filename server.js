@@ -124,9 +124,12 @@ app.prepare().then(() => {
   server.post("/assert", function (req, res) {
     var options = { request_body: req.body };
     sp.post_assert(idp, options, function (err, saml_response) {
-      session = req.session;
-      session.user = saml_response.user;
       req.session.user = saml_response.user;
+      console.log("REQ SESSION 1:" + String(req.session));
+      session = req.session;
+      console.log("SESSION 1:" + String(session));
+      session.user = saml_response.user;
+      console.log("SESSION 2:" + String(session));
       //name = saml_response.user.name_id;
       //session_index = saml_response.user.session_index;
       if (err != null) {
@@ -162,9 +165,10 @@ app.prepare().then(() => {
   });
 
   server.all("*", (req, res) => {
-    req.session.user = session.user;
-    console.log(req.session);
-    if (typeof session !== "undefined" && typeof session.user !== "undefined")
+    console.log("REQ SESSION 3:" + String(req.session));
+    console.log("SESSION 3:" + String(session));
+    if (typeof session !== "undefined")
+      //&& typeof session.user !== "undefined")
       return handle(req, res);
 
     res.redirect("/login");
