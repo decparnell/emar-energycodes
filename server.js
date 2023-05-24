@@ -10,7 +10,7 @@ app.prepare().then(() => {
   var express = require("express");
   var server = express();
   var cookieParser = require("cookie-parser");
-  var sessions = require("express-session");
+  var sessions = require("cookie-session");
   // If you're using express <4.0:
   var bodyParser = require("body-parser");
   server.use(
@@ -158,15 +158,15 @@ app.prepare().then(() => {
 
     sp.create_logout_request_url(idp, options, function (err, logout_url) {
       if (err != null) return res.sendStatus(500);
-      req.session.destroy();
+      req.session = null;
       /* name_id = undefined; */
       res.redirect(logout_url);
     });
   });
 
   server.all("*", (req, res) => {
-    console.log("REQ SESSION 3:" + String(req.session));
-    console.log("SESSION 3:" + String(session));
+    console.log("SESSION 3:");
+    console.log(req.session);
     if (typeof session !== "undefined")
       //&& typeof session.user !== "undefined")
       return handle(req, res);
