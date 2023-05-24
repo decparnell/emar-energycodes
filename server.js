@@ -27,7 +27,7 @@ app.prepare().then(() => {
       secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
       saveUninitialized: true,
       cookie: { maxAge: oneDay },
-      resave: true,
+      resave: false,
     })
   );
   // cookie parser middleware
@@ -124,8 +124,8 @@ app.prepare().then(() => {
   server.post("/assert", function (req, res) {
     var options = { request_body: req.body };
     sp.post_assert(idp, options, function (err, saml_response) {
-      /* session = req.session;
-      session.user = saml_response.user; */
+      session = req.session;
+      session.user = saml_response.user;
       req.session.user = saml_response.user;
       //name = saml_response.user.name_id;
       //session_index = saml_response.user.session_index;
@@ -162,11 +162,9 @@ app.prepare().then(() => {
   });
 
   server.all("*", (req, res) => {
+    req.session.user = session.user;
     console.log(req.session);
-    if (
-      typeof req.session !== "undefined" &&
-      typeof req.session.user !== "undefined"
-    )
+    if (typeof session !== "undefined" && typeof session.user !== "undefined")
       return handle(req, res);
 
     res.redirect("/login");
