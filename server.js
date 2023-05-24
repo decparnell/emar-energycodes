@@ -30,7 +30,7 @@ app.prepare().then(() => {
 
   if (server.get("env") === "production") {
     server.set("trust proxy", 1); // trust first proxy
-    sess.cookie.secure = true; // serve secure cookies
+    sesh.cookie.secure = true; // serve secure cookies
   }
   server.use(session(sesh));
   // cookie parser middleware
