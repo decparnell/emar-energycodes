@@ -22,7 +22,7 @@ app.prepare().then(() => {
   const oneDay = 1000 * 60 * 60 * 24;
   ////////////////////////////////////////////////////chanhe the resave to true
   const expiryDate = new Date(Date.now() + oneDay);
-  app.use(
+  server.use(
     cookieSession({
       name: "sessionDN",
       keys: ["key1", "key2"],
@@ -45,10 +45,6 @@ app.prepare().then(() => {
   // cookie parser middleware
   server.use(cookieParser());
 
-  // a variable to save a session
-  var session;
-  var name;
-  var session_index;
   // Production service provider
   /* var sp_options = {
     entity_id: "Recco.DigitalNavigator.Production",
@@ -160,6 +156,8 @@ app.prepare().then(() => {
   server.get("/logout", function (req, res) {
     //req.session.user ? req.session.user.name_id : " ";
     //session = req.session;
+    var name = "";
+    var session_index = "";
     var options = {
       name_id: name,
       session_index: session_index,
