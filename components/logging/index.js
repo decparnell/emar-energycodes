@@ -1,7 +1,7 @@
-export const LogUserInfo = (action) => {
+export const LogUserInfo = (props) => {
   const options = {
     method: "POST",
-    body: `'{"action":"${action}"}'`,
+    body: `'{"action":"${props.action}"}'`,
   };
   fetch("/api/session", options)
     .then((response) => response.json())
