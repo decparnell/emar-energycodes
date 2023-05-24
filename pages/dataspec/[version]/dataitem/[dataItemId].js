@@ -9,19 +9,19 @@ import removeNullValues from "../../../../components/dataspec/functions/removeNu
 import DataItemTables from "../../../../components/tables/dataItemTables";
 
 function DataItemDetailsPage({ searchResults }) {
-
   const pageId = "DataItemDetailsPage";
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
 
-
   let dashboard = [
-    { dashboardId: "BasicInformation", dashboardSectionName: "Basic Information", dashboardSectionOrder: 1 },
+    {
+      dashboardId: "BasicInformation",
+      dashboardSectionName: "Basic Information",
+      dashboardSectionOrder: 1,
+    },
   ];
 
-  let apiVarList = [
-    { obj: dashboard, name: "sections" },
-  ];
+  let apiVarList = [{ obj: dashboard, name: "sections" }];
 
   //Data and SearchResults
   const searchRes = checkIfsearchResultsAvailable(searchResults, pageId);
@@ -31,35 +31,47 @@ function DataItemDetailsPage({ searchResults }) {
 
   const dataItemInfo =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-      checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo")
+    checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo")
       ? searchResults[0]
       : null;
 
   const dataEnumerations =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-      checkIfItemsAvailableInArray(internalErrorLog, "dataEnumerations")
+    checkIfItemsAvailableInArray(internalErrorLog, "dataEnumerations")
       ? searchResults[2]
       : null;
 
-  dataEnumerations.length > 0 ? dashboard.push({ dashboardId: "DataEnumerations", dashboardSectionName: "Data Enumerations", dashboardSectionOrder: 2 }) : null
+  dataEnumerations.length > 0
+    ? dashboard.push({
+        dashboardId: "DataEnumerations",
+        dashboardSectionName: "Data Enumerations",
+        dashboardSectionOrder: 2,
+      })
+    : null;
 
   const mmForDataItem =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-      checkIfItemsAvailableInArray(internalErrorLog, "mmForDataItem")
+    checkIfItemsAvailableInArray(internalErrorLog, "mmForDataItem")
       ? searchResults[1]
       : null;
-  mmForDataItem.length > 0 ? dashboard.push({ dashboardId: "MarketMessages", dashboardSectionName: "Market Messages", dashboardSectionOrder: 3 }) : null
+  mmForDataItem.length > 0
+    ? dashboard.push({
+        dashboardId: "MarketMessages",
+        dashboardSectionName: "Market Messages",
+        dashboardSectionOrder: 3,
+      })
+    : null;
 
   const legacy =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-      checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo")
-      //if there is a null value , it replaces it with ""
-      ? removeNullValues(dataItemInfo.DTCLegacyReference) +
-      removeNullValues(dataItemInfo.SPAALegacyReference) +
-      removeNullValues(dataItemInfo.RGMALegacyReference) +
-      removeNullValues(dataItemInfo.UNCDataItemReference) +
-      removeNullValues(dataItemInfo.IUCDataItemReference) +
-      removeNullValues(dataItemInfo.DCUSADataItemReference)
+    checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo")
+      ? //if there is a null value , it replaces it with ""
+        removeNullValues(dataItemInfo.DTCLegacyReference) +
+        removeNullValues(dataItemInfo.SPAALegacyReference) +
+        removeNullValues(dataItemInfo.RGMALegacyReference) +
+        removeNullValues(dataItemInfo.UNCDataItemReference) +
+        removeNullValues(dataItemInfo.IUCDataItemReference) +
+        removeNullValues(dataItemInfo.DCUSADataItemReference)
       : null;
 
   //Left Navigation Bar
@@ -69,8 +81,7 @@ function DataItemDetailsPage({ searchResults }) {
     }
   });
 
-  useEffect(() => {
-  }, [currentSections]);
+  useEffect(() => {}, [currentSections]);
 
   return (
     <>
@@ -87,20 +98,31 @@ function DataItemDetailsPage({ searchResults }) {
         </div>
         <div className={`${styles.mainContentContainer}`}>
           <section id={dashboard[0].dashboardId}>
-            <DataItemTables keyTitle="Basic Information" latestDataSpecVersion={latestDataSpecVersion} dataBody={dataItemInfo} legacy={legacy} />
+            <DataItemTables
+              keyTitle="Basic Information"
+              latestDataSpecVersion={latestDataSpecVersion}
+              dataBody={dataItemInfo}
+              legacy={legacy}
+            />
           </section>
           <section id={dashboard[1]?.dashboardId}>
-            <DataItemTables keyTitle="Data Enumerations" latestDataSpecVersion={latestDataSpecVersion} dataBody={dataEnumerations} />
+            <DataItemTables
+              keyTitle="Data Enumerations"
+              latestDataSpecVersion={latestDataSpecVersion}
+              dataBody={dataEnumerations}
+            />
           </section>
           <section id={dashboard[2]?.dashboardId}>
-            <DataItemTables keyTitle="Market Messages" latestDataSpecVersion={latestDataSpecVersion} dataBody={mmForDataItem} />
+            <DataItemTables
+              keyTitle="Market Messages"
+              latestDataSpecVersion={latestDataSpecVersion}
+              dataBody={mmForDataItem}
+            />
           </section>
         </div>
       </div>
     </>
-  )
-
-
+  );
 }
 
 export default DataItemDetailsPage;
