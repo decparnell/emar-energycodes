@@ -127,10 +127,6 @@ app.prepare().then(() => {
       req.session.user = saml_response.user;
       console.log("SESSION 1:");
       console.log(req.session);
-      session = req.session;
-      console.log("SESSION 2:");
-      console.log(session);
-      session.user = saml_response.user;
       //name = saml_response.user.name_id;
       //session_index = saml_response.user.session_index;
       if (err != null) {
@@ -168,7 +164,7 @@ app.prepare().then(() => {
   server.all("*", (req, res) => {
     console.log("SESSION 3:");
     console.log(req.session);
-    if (typeof session !== "undefined")
+    if (req.session.isPopulated)
       //&& typeof session.user !== "undefined")
       return handle(req, res);
 
