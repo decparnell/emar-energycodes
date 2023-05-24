@@ -21,15 +21,27 @@ app.prepare().then(() => {
   // creating 24 hours from milliseconds
   const oneDay = 1000 * 60 * 60 * 24;
   ////////////////////////////////////////////////////chanhe the resave to true
+  const expiryDate = new Date(Date.now() + oneDay);
+  app.use(
+    cookieSession({
+      name: "sessionDN",
+      keys: ["key1", "key2"],
+      cookie: {
+        secure: true,
+        httpOnly: true,
+        expires: expiryDate,
+      },
+    })
+  );
   //session middleware
-  server.use(
+  /* server.use(
     cookieSession({
       name: "session",
       secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
       // Cookie Options
       maxAge: oneDay, // 24 hours
     })
-  );
+  ); */
   // cookie parser middleware
   server.use(cookieParser());
 
