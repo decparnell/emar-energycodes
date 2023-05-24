@@ -125,11 +125,12 @@ app.prepare().then(() => {
     var options = { request_body: req.body };
     sp.post_assert(idp, options, function (err, saml_response) {
       req.session.user = saml_response.user;
-      console.log("REQ SESSION 1:" + String(req.session));
+      console.log("SESSION 1:");
+      console.log(req.session);
       session = req.session;
-      console.log("SESSION 1:" + String(session));
+      console.log("SESSION 2:");
+      console.log(session);
       session.user = saml_response.user;
-      console.log("SESSION 2:" + String(session));
       //name = saml_response.user.name_id;
       //session_index = saml_response.user.session_index;
       if (err != null) {
