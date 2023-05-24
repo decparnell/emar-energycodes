@@ -20,14 +20,14 @@ app.prepare().then(() => {
   );
   // creating 24 hours from milliseconds
   const oneDay = 1000 * 60 * 60 * 24;
-
+  ////////////////////////////////////////////////////chanhe the resave to true
   //session middleware
   server.use(
     sessions({
       secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
       saveUninitialized: true,
       cookie: { maxAge: oneDay },
-      resave: false,
+      resave: true,
     })
   );
   // cookie parser middleware
