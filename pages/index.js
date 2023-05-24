@@ -10,6 +10,7 @@ import QuickLink from "../components/helperFunctions/quickLink";
 import SideNav from "../components/dashboardSideNav";
 import { BiRightArrow, BiSearchAlt2 } from "react-icons/bi";
 import Link from "next/link";
+import { LogUserInfo } from "../components/logging";
 
 function HomePage({ sections, items, newsData }) {
   const apiVarList = [
@@ -44,14 +45,7 @@ function HomePage({ sections, items, newsData }) {
   }, [currentSections]);
 
   useEffect(() => {
-    fetch("/api/session")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Session data:", data);
-      })
-      .catch((error) => {
-        console.error("Error fetching session data:", error);
-      });
+    LogUserInfo("HomePage");
   }, []);
 
   const [insertError, setInsertError] = useState("");
