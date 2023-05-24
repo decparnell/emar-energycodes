@@ -1,4 +1,4 @@
-export const LogUserInfo = (action) => {
+export function LogUserInfo(action) {
   const options = {
     method: "POST",
     body: `'{"action":"${action}"}'`,
@@ -11,4 +11,4 @@ export const LogUserInfo = (action) => {
     .catch((error) => {
       console.error("Error fetching session data:", error);
     });
-};
+}
