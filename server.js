@@ -163,6 +163,7 @@ app.prepare().then(() => {
   });
 
   server.all("*", (req, res) => {
+    req.session.reload();
     console.log("SESSION 3:");
     console.log(req.session);
     if (req.session && typeof req.session.user !== "undefined")
