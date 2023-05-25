@@ -1,7 +1,7 @@
 export function LogUserInfo(action) {
   const options = {
     method: "POST",
-    body: `'{"action":"${action}"}'`,
+    body: `'{"action":"HOMEPAGE"}'`,
   };
   fetch("/api/session", options)
     .then((response) => response.json())
