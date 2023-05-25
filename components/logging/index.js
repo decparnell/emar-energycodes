@@ -3,7 +3,7 @@ export function LogUserInfo(action) {
   const options = {
     method: "POST",
     body: JSON.stringify(data),
-    headers: { "Content-type": "application/json" },
+    headers: { "Content-Type": "application/json" },
   };
   fetch("/api/session", options)
     .then((response) => response.json())
