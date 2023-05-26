@@ -1,7 +1,10 @@
 export function LogUserInfo(action) {
   const data = { action: action };
   const body = JSON.stringify(data);
-  console.log(body);
+  console.log(
+    "BODYBODYBODY#############################################",
+    body
+  );
   const options = {
     method: "POST",
     body: JSON.stringify(data),
