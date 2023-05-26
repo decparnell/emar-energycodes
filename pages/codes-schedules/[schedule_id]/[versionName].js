@@ -114,12 +114,9 @@ function MeteringArrangementsPage({
           )}
         </div>
 
-        {/*
-          <div className={`${styles.contentContainer}`}>
-            <CreateSchedulesContent parts={parts} sections={sections} components={components} definitions={definitions} />
-          </div>
-          */
-        }
+        <div className={`${styles.contentContainer}`}>
+          <CreateSchedulesContent parts={parts} sections={sections} components={components} definitions={definitions} />
+        </div>
       </div>
 
     </div>

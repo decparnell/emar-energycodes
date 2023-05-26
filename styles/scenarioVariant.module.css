@@ -7,7 +7,7 @@
     height:83vh;
     width:20vw;
     position:fixed;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
