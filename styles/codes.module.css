@@ -31,6 +31,7 @@
 
 .partName {
   margin-left: 2vw;
+  text-align: center;
 }
 
 .sidebarPartName {
@@ -40,15 +41,14 @@
 
 .section {
   width: 90%;
-  margin-left: 5vw;
+  margin-left: 6vw;
   margin-bottom: 5vh;
   padding-left: 5vw;
   height: auto;
   padding: 20px;
-  border-radius: 5px;
-  background: #e7f4e4;
+  background-color: white;
   color: black;
-  box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
+  box-shadow: 0px 5px 24px rgba(0, 0, 0, 0.25);
 }
 
 .componentContainer {
@@ -138,6 +138,7 @@
   /* padding-left: 2vw; */
   /* border: 3px solid red; */
 }
+
 .sidebar {
   height: 100%;
   display: block;

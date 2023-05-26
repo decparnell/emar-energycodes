@@ -33,6 +33,17 @@ function SideNav(props) {
     }
   };
 
+  const panelBasedNBHandleClick = (item, e) => {
+    e.preventDefault();
+    props.stateSet(item);
+    const sectionId = item[props.dashboardId];
+    const section = document.getElementById(`sec${sectionId}`);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+
   const LocalNavBar = (props) => {
     return (
       <div className={`${styles.sideNav} box`}>
@@ -59,7 +70,7 @@ function SideNav(props) {
             {item[props.dashboardName].map((dashboardItem, id) => (
               <div className={`${styles.panelSideNavItem} ${props.stateVar[props.name] === dashboardItem[props.name] ? "green" : ""
                   }`}
-                onClick={(e) => handleClick(dashboardItem, e)}
+                onClick={(e) => panelBasedNBHandleClick(dashboardItem, e)}
                 key={i}
               >
                 {dashboardItem[props.name]}
