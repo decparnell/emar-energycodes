@@ -124,8 +124,6 @@ app.prepare().then(() => {
     var options = { request_body: req.body };
     sp.post_assert(idp, options, function (err, saml_response) {
       req.session.user = saml_response.user;
-      console.log("SESSION 1:");
-      console.log(req.session);
       req.session.save();
       //name = saml_response.user.name_id;
       //session_index = saml_response.user.session_index;
@@ -164,8 +162,6 @@ app.prepare().then(() => {
   });
 
   server.all("*", (req, res) => {
-    console.log("SESSION 3:");
-    console.log(req.session);
     if (req.session && typeof req.session.user !== "undefined")
       return handle(req, res);
 
