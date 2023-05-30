@@ -5,7 +5,7 @@ const SchedulesTables = (props) => {
     const tableId = props.tableId;
     const versions = props?.versions;
     const scheduleId = props?.scheduleId;
-    const versionName = props?.versionName;
+    const selectedVersion = props?.versionName;
     const parts = props?.parts;
     const mandatoryTable = props?.mandatoryTable;
 
@@ -32,11 +32,31 @@ const SchedulesTables = (props) => {
                                     key={versionName}
                                     passHref={true}
                                 >
-                                    <tr key={versionName}>
-                                        <td>{versionName ? versionName : "N/A"}</td>
-                                        <td>{implementationDate ? implementationDate : "N/A"}</td>
-                                        <td>{reason ? reason : "N/A"}</td>
+
+                                    <tr
+                                        className={`${selectedVersion == versionName ? styles.selected : ""}`}
+                                        key={versionName}
+                                    >
+                                        <td
+                                            className={`${selectedVersion == versionName ? styles.selected : ""
+                                                }`}
+                                        >
+                                            {versionName ? versionName : "N/A"}
+                                        </td>
+                                        <td
+                                            className={`${selectedVersion == versionName ? styles.selected : ""
+                                                }`}
+                                        >
+                                            {implementationDate ? implementationDate : "N/A"}
+                                        </td>
+                                        <td
+                                            className={`${selectedVersion == versionName ? styles.selected : ""
+                                                }`}
+                                        >
+                                            {reason ? reason : "N/A"}
+                                        </td>
                                     </tr>
+
                                 </Link>
                             );
                         })
