@@ -85,8 +85,8 @@
 }
 
 .flowStructure {
-  width: 90%;
-  margin-left: 5%;
+  width: 85%;
+  margin-left: 14%;
 }
 
 .collectionRow {
@@ -99,7 +99,7 @@
 
 .pointer {
   cursor: pointer;
-  color: #4d8934;
+  color: black;
 }
 
 .tableHearSide,

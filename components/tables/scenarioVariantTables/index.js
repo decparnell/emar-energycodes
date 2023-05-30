@@ -2,6 +2,7 @@ import styles from "../../../styles/tables.module.css";
 import removeNullValues from "../../dataspec/functions/removeNulls";
 import addPaddingToGroupId from "../../../components/dataspec/functions/addIdPadding";
 import Link from "next/link";
+import CreateFlowStructure from "../../../components/dataspec/createFlowStructure";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
 const ScenarioVariantTables = (props) => {
@@ -59,43 +60,7 @@ const ScenarioVariantTables = (props) => {
 
     const StructureTable = (props) => {
         return (
-            <table>
-                <thead>
-                    <tr>
-                        <th>Data Item Id</th>
-                        <th>Legacy Reference/s</th>
-                        <th>Data Item Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {props.svStructure.map((entry) => (
-                        <Link
-                            key={entry.EnergyMarketDataItemIdentifier}
-                            href={{
-                                pathname: `/dataspec/${latestDataSpecVersion}/dataitem/[di]`,
-                                query: {
-                                    di: entry.EnergyMarketDataItemIdentifier,
-                                },
-                            }}
-                            passHref={true}
-                        >
-                            <tr>
-                                <td>{entry.EnergyMarketDataItemIdentifier}</td>
-                                <td>
-                                    {/* if there is a null value , it replaces it with "" */}
-                                    {removeNullValues(entry.DTCLegacyReference) +
-                                        removeNullValues(entry.SPAALegacyReference) +
-                                        removeNullValues(entry.RGMALegacyReference) +
-                                        removeNullValues(entry.UNCDataItemReference) +
-                                        removeNullValues(entry.IUCDataItemReference) +
-                                        removeNullValues(entry.DCUSADataItemReference)}
-                                </td>
-                                <td>{entry.DataItemName}</td>
-                            </tr>
-                        </Link>
-                    ))}
-                </tbody>
-            </table>
+            CreateFlowStructure(props.svStructure)
         )
     }
 
