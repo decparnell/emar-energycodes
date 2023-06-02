@@ -12,7 +12,6 @@ function MeteringArrangementsPage({
   versions,
   parts,
   sections,
-  initialComponents,
   document,
   definitions,
   optionalityInfo,
@@ -21,7 +20,6 @@ function MeteringArrangementsPage({
     { obj: versions, name: "versions" },
     { obj: parts, name: "parts" },
     { obj: sections, name: "sections" },
-    { obj: initialComponents, name: "components" },
     { obj: document, name: "document" },
   ];
 
@@ -37,9 +35,10 @@ function MeteringArrangementsPage({
   const scheduleNumber = docInfo.scheduleNumber;
   const scheduleName = docInfo.documentName;
 
-  //const [data, setData] = useState(refreshData());
-  const [componentsData, setComponentsData] = useState(initialComponents);
+
+  const [componentsData, setComponentsData] = useState([]);
   const [startVal, setStartVal] = useState(0);
+  //const [totalLength, setTotalLength] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -47,6 +46,36 @@ function MeteringArrangementsPage({
   const [hasMoreData, setHasMoreData] = useState(true);
 
   const mandatoryTable = transformTable(optionalityInfo, parts);
+
+    /* ****FUNCTIONS**** */
+
+  //client-side fetch data, loading more components of each section
+  const fetchData = async () => {
+    const incrementalStartVal = 21;
+    setIsLoading(true);
+    setError(null);
+    //console.log("DATA", componentsData)
+    try {
+      const response = await fetch(
+        `https://prod-06.uksouth.logic.azure.com/workflows/77e02eb742f8439e8036ac554294f30c/triggers/request/paths/invoke/documentId/${scheduleId}/version/${versionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=wbnwIPxUSyYKnGUfsB4NFCDZO02dcJLEquai1Nw4Iao`
+      );
+      const dataResJson = await response.json();
+      const newDataComponents = dataResJson.components;
+      if (startVal === 0) {
+        setComponentsData(newDataComponents);
+      } else if (typeof newDataComponents === "undefined") {
+        setHasMoreData(false);
+      } else {
+        setComponentsData((prevData) => [...prevData, ...newDataComponents]);
+      }
+
+      setStartVal((prevVal) => prevVal + incrementalStartVal);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   /* create data for mandatory table, X axis being parts, Y axis optionality owners.
      structured as object with:
@@ -89,8 +118,6 @@ function MeteringArrangementsPage({
   }).filter(group => group !== undefined)
 
 
-  //console.log("groupSectionsAndComponents", groupSectionsAndComponents);
-
   // Left Navigation Bar
   const panelDashboard = parts.map((part) => {
     const dashboard = filterByFieldId(sections, "partId_FK", part.partId);
@@ -106,39 +133,9 @@ function MeteringArrangementsPage({
     return panelDashboard[0];
   });
 
-  /* ****FUNCTIONS**** */
-
-  //client-side fetch data, loading more components of each section
-  const fetchData = async () => {
-    const incrementalStartVal = 21;
-    setIsLoading(true);
-    setError(null);
-    //console.log("DATA", componentsData)
-    try {
-      const response = await fetch(
-        `https://prod-06.uksouth.logic.azure.com/workflows/77e02eb742f8439e8036ac554294f30c/triggers/request/paths/invoke/documentId/${scheduleId}/version/${versionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=wbnwIPxUSyYKnGUfsB4NFCDZO02dcJLEquai1Nw4Iao`
-      );
-      const dataResJson = await response.json();
-      const newDataComponents = dataResJson.components;
-      if (startVal === 0) {
-        setComponentsData(newDataComponents);
-      } else if (typeof newDataComponents === "undefined") {
-        setHasMoreData(false);
-      } else {
-        setComponentsData((prevData) => [...prevData, ...newDataComponents]);
-      }
-
-      setStartVal((prevVal) => prevVal + incrementalStartVal);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
     fetchData();
-  }, [currentSections]);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -171,23 +168,13 @@ function MeteringArrangementsPage({
         </div>
 
         <div className={`${styles.contentContainer}`}>
-
-          {/* <CreateSchedulesContent
+          <CreateSchedulesContent 
             parts={parts}
-            sections={sections}
-            definitions={definitions}
-            componentsData={componentsData}
-            setStartVal={setStartVal}
-            fetchData={fetchData}
-            hasMoreData={hasMoreData}
-            loadMoreData={fetchData}
-          />  */}
-          <CreateSchedulesContent parts={parts}
             definitions={definitions}
             data={groupSectionsAndComponents}
-            loadMoreData={fetchData}
             fetchData={fetchData}
-            hasMoreData={hasMoreData} />
+            hasMoreData={hasMoreData} 
+            totalLength={startVal}/>
         </div>
       </div>
 
@@ -205,10 +192,11 @@ export async function getServerSideProps(context) {
   );
 
   const dataJson = await initialDataReq.json();
+  
   const versions = dataJson.versions;
   const parts = dataJson.parts;
   const sections = dataJson.sections;
-  const initialComponents = dataJson.components;
+  //const initialComponents = dataJson.components;
   const document = dataJson.document;
 
   const definitionsReq = await fetch(
@@ -232,7 +220,6 @@ export async function getServerSideProps(context) {
       versions,
       parts,
       sections,
-      initialComponents: initialComponents,
       document,
       definitions,
       optionalityInfo,
