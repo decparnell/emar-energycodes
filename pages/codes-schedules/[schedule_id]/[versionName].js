@@ -12,7 +12,7 @@ function MeteringArrangementsPage({
   versions,
   parts,
   sections,
-  components,
+  initialComponents,
   document,
   definitions,
   optionalityInfo,
@@ -21,7 +21,7 @@ function MeteringArrangementsPage({
     { obj: versions, name: "versions" },
     { obj: parts, name: "parts" },
     { obj: sections, name: "sections" },
-    { obj: components, name: "components" },
+    { obj: initialComponents, name: "components" },
     { obj: document, name: "document" },
   ];
 
@@ -37,22 +37,23 @@ function MeteringArrangementsPage({
   const scheduleNumber = docInfo.scheduleNumber;
   const scheduleName = docInfo.documentName;
 
+  //const [data, setData] = useState(refreshData());
+  const [componentsData, setComponentsData] = useState(initialComponents);
+  const [startVal, setStartVal] = useState(0);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const [hasMoreData, setHasMoreData] = useState(true);
+
   const mandatoryTable = transformTable(optionalityInfo, parts);
 
-  const panelDashboard = parts.map((part) => {
-    const dashboard = filterByFieldId(sections, "partId_FK", part.partId);
-
-    return {
-      partId: part.partId,
-      panelTitle: part.partName,
-      dashboard
-    }
-  })
-
-  // create data for mandatory table, X axis being parts, Y axis optionality owners.
-  // structured as object with:
-  // keys being optionality.ownersName
-  // values being an array of optionality.optionalityNames (Mandatory, N/A)
+  /* create data for mandatory table, X axis being parts, Y axis optionality owners.
+     structured as object with:
+     keys being optionality.ownersName
+     values being an array of optionality.
+     optionalityNames (Mandatory, N/A)
+   */
   function transformTable(optionalities, parts) {
     let res = {};
     for (const el of optionalities) {
@@ -77,12 +78,67 @@ function MeteringArrangementsPage({
     return jsonData.filter((obj) => obj[field_name] === id);
   }
 
-  //Left Navigation Bar
+  const groupSectionsAndComponents = sections.map((section) => {
+    const components = filterByFieldId(componentsData, "sectionId_FK", section.sectionId);
+    if (components.length > 0) {
+      return {
+        ...section,
+        components
+      }
+    }
+  }).filter(group => group !== undefined)
+
+
+  //console.log("groupSectionsAndComponents", groupSectionsAndComponents);
+
+  // Left Navigation Bar
+  const panelDashboard = parts.map((part) => {
+    const dashboard = filterByFieldId(sections, "partId_FK", part.partId);
+
+    return {
+      partId: part.partId,
+      panelTitle: part.partName,
+      dashboard
+    }
+  })
+
   const [currentSections, setCurrentSections] = useState(() => {
     return panelDashboard[0];
   });
 
-  useEffect(() => { }, [currentSections]);
+  /* ****FUNCTIONS**** */
+
+  //client-side fetch data, loading more components of each section
+  const fetchData = async () => {
+    const incrementalStartVal = 21;
+    setIsLoading(true);
+    setError(null);
+    //console.log("DATA", componentsData)
+    try {
+      const response = await fetch(
+        `https://prod-06.uksouth.logic.azure.com/workflows/77e02eb742f8439e8036ac554294f30c/triggers/request/paths/invoke/documentId/${scheduleId}/version/${versionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=wbnwIPxUSyYKnGUfsB4NFCDZO02dcJLEquai1Nw4Iao`
+      );
+      const dataResJson = await response.json();
+      const newDataComponents = dataResJson.components;
+      if (startVal === 0) {
+        setComponentsData(newDataComponents);
+      } else if (typeof newDataComponents === "undefined") {
+        setHasMoreData(false);
+      } else {
+        setComponentsData((prevData) => [...prevData, ...newDataComponents]);
+      }
+
+      setStartVal((prevVal) => prevVal + incrementalStartVal);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [currentSections]);
 
   return (
     <div className={styles.container}>
@@ -115,7 +171,23 @@ function MeteringArrangementsPage({
         </div>
 
         <div className={`${styles.contentContainer}`}>
-          <CreateSchedulesContent parts={parts} sections={sections} components={components} definitions={definitions} />
+
+          {/* <CreateSchedulesContent
+            parts={parts}
+            sections={sections}
+            definitions={definitions}
+            componentsData={componentsData}
+            setStartVal={setStartVal}
+            fetchData={fetchData}
+            hasMoreData={hasMoreData}
+            loadMoreData={fetchData}
+          />  */}
+          <CreateSchedulesContent parts={parts}
+            definitions={definitions}
+            data={groupSectionsAndComponents}
+            loadMoreData={fetchData}
+            fetchData={fetchData}
+            hasMoreData={hasMoreData} />
         </div>
       </div>
 
@@ -127,15 +199,16 @@ export default MeteringArrangementsPage;
 
 export async function getServerSideProps(context) {
   //return the info about the latest version
-  const dataReq = await fetch(
-    `https://prod-17.uksouth.logic.azure.com/workflows/77a0b5ad93b64061b09df91f2c31533c/triggers/manual/paths/invoke/documentId/${context.params.schedule_id}/version/${context.params.versionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=BDD6aTd29eiNrUUfBH6cjUCM0puErQ5vJyjWzUKmKEI`
+  const intialStartVal = 0
+  const initialDataReq = await fetch(
+    `https://prod-06.uksouth.logic.azure.com/workflows/77e02eb742f8439e8036ac554294f30c/triggers/request/paths/invoke/documentId/${context.params.schedule_id}/version/${context.params.versionName}/startVal/${intialStartVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=wbnwIPxUSyYKnGUfsB4NFCDZO02dcJLEquai1Nw4Iao`
   );
 
-  const dataJson = await dataReq.json();
+  const dataJson = await initialDataReq.json();
   const versions = dataJson.versions;
   const parts = dataJson.parts;
   const sections = dataJson.sections;
-  const components = dataJson.components;
+  const initialComponents = dataJson.components;
   const document = dataJson.document;
 
   const definitionsReq = await fetch(
@@ -159,7 +232,7 @@ export async function getServerSideProps(context) {
       versions,
       parts,
       sections,
-      components,
+      initialComponents: initialComponents,
       document,
       definitions,
       optionalityInfo,
