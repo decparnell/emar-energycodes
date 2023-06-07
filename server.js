@@ -129,12 +129,16 @@ app.prepare().then(() => {
       );
       console.log(
         "THE SAML USER IS....",
-        typeof saml_response.user !== "undefined"
+        typeof saml_response !== "undefined" &&
+          typeof saml_response.user !== "undefined"
           ? saml_response.user.name_id
           : "____________"
       );
       req.session.user =
-        typeof saml_response.user !== "undefined" ? saml_response.user : "";
+        typeof saml_response !== "undefined" &&
+        typeof saml_response.user !== "undefined"
+          ? saml_response.user
+          : "";
 
       if (err != null) {
         console.log("assert error ------ " + err);
