@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styles from "../../styles/landing.module.css";
-
+import Head from "next/head";
 function Landing() {
   const LandingButton = (title, maintext, hrefLink) => {
     return (
@@ -15,6 +15,10 @@ function Landing() {
 
   return (
     <div className={styles.container}>
+      <Head>
+        <title>EMAR Landing</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
       <h1>Welcome to the Energy Market Architecture Repository (EMAR)</h1>
       <div className={styles.landingButtons}>
         {LandingButton(

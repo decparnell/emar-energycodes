@@ -10,7 +10,7 @@ app.prepare().then(() => {
   var express = require("express");
   var server = express();
   var cookieParser = require("cookie-parser");
-  var sessions = require("express-session");
+  var session = require("express-session");
   // If you're using express <4.0:
   var bodyParser = require("body-parser");
   server.use(
@@ -18,23 +18,23 @@ app.prepare().then(() => {
       extended: true,
     })
   );
+
   // creating 24 hours from milliseconds
   const oneDay = 1000 * 60 * 60 * 24;
+  var sesh = {
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: oneDay },
+  };
 
-  //session middleware
-  server.use(
-    sessions({
-      secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
-      saveUninitialized: true,
-      cookie: { maxAge: oneDay },
-      resave: false,
-    })
-  );
+  if (server.get("env") === "production") {
+    server.set("trust proxy", 1); // trust first proxy
+    sesh.cookie.secure = true; // serve secure cookies
+  }
+  server.use(session(sesh));
   // cookie parser middleware
   server.use(cookieParser());
-
-  // a variable to save a session
-  var session;
 
   // Production service provider
   /* var sp_options = {
@@ -123,9 +123,10 @@ app.prepare().then(() => {
   server.post("/assert", function (req, res) {
     var options = { request_body: req.body };
     sp.post_assert(idp, options, function (err, saml_response) {
-      session = req.session;
-      session.user = saml_response.user.name_id;
-      console.error(session);
+      req.session.user = saml_response.user;
+      req.session.save();
+      //name = saml_response.user.name_id;
+      //session_index = saml_response.user.session_index;
       if (err != null) {
         console.log("assert error ------ " + err);
         return res.send(err);
@@ -144,8 +145,9 @@ app.prepare().then(() => {
   // Starting point for logout
   server.get("/logout", function (req, res) {
     //req.session.user ? req.session.user.name_id : " ";
+    //session = req.session;
     var name = "";
-    var session_index = 1;
+    var session_index = "";
     var options = {
       name_id: name,
       session_index: session_index,
@@ -160,14 +162,9 @@ app.prepare().then(() => {
   });
 
   server.all("*", (req, res) => {
-    var session = req.session;
-    var email = session.user;
-    if (session !== undefined) {
-      /* got.post(
-        `https://prod-12.uksouth.logic.azure.com/workflows/a01770cba8f44c8a90274a6faa24955d/triggers/manual/paths/invoke/email/${email}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vm5xuq9xqyj6xN0P_NBrRPjDsElEJhOsWIWcmjfdzak`
-      ); */
+    if (req.session && typeof req.session.user !== "undefined")
       return handle(req, res);
-    }
+
     res.redirect("/login");
     //return handle(req, res);
   });

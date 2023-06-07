@@ -1,0 +1,11 @@
+.quickLink{
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    cursor:pointer;
+}
+.image{
+    width:100%;
+    height:50%;
+    margin-top:10%;
+}

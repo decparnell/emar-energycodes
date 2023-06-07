@@ -16,6 +16,13 @@ export const meniuItems = [
   { title: "Codes Road Map", link: "/codes-road-map" },
 ];
 
+export const tabs = [
+  { title: "Schedules", link: "/" },
+  { title: "Data Specification", link: "/dataspec" },
+  { title: "Codes Road Map", link: "/codes-road-map" },
+  { title: "Release Management", link: "/release-management" },
+];
+
 export const dashboards = [
   {
     dashboardId: 1,
@@ -29,4 +36,37 @@ export const dashboards = [
     dashboardColumns: 2,
     dashboardOrder: 2,
   },
+];
+
+export const dataSpecSerachTypes = [
+  { name: "Market Messages" },
+  { name: "Scenario Variants" },
+  { name: "Data Items" },
+];
+
+export const marketMessageHeaders = [
+  { title: "Identifier", dataColumn: "EnergyMarketMessageIdentifier" },
+  { title: "Local Reference", dataColumn: "LegacyIdentifier" },
+  { title: "Message Name", dataColumn: "Label" },
+];
+
+export const scenarioVariantHeaders = [
+  {
+    title: "Identifier",
+    dataColumn: "EnergyMarketMessageScenarioVariantIdentifier",
+  },
+  {
+    title: "Scenario Variant Name",
+    dataColumn: "EnergyMarketMessageScenarioVariantName",
+  },
+  { title: "Source", dataColumn: "SourceName" },
+  { title: "Target", dataColumn: "TargetName" },
+  { title: "Api Method", dataColumn: "ApiMethod" },
+  { title: "Api Route", dataColumn: "ApiRoute" },
+];
+
+export const dataItemHeaders = [
+  { title: "Identifier", dataColumn: "DataItemIdentifier" },
+  { title: "Local Reference", dataColumn: "LegacyIdentifier" },
+  { title: "Message Name", dataColumn: "DataItemName" },
 ];
