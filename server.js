@@ -127,6 +127,10 @@ app.prepare().then(() => {
         "THE REC USER IS....",
         req.session.user ? req.session.user.name_id : "____________"
       );
+      console.log(
+        "THE SAML USER IS....",
+        saml_response.user ? saml_response.user.name_id : "____________"
+      );
       req.session.user = saml_response.user;
       req.session.save();
 
