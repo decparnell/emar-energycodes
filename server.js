@@ -123,10 +123,13 @@ app.prepare().then(() => {
   server.post("/assert", function (req, res) {
     var options = { request_body: req.body };
     sp.post_assert(idp, options, function (err, saml_response) {
+      console.log(
+        "THE REC USER IS....",
+        req.session.user ? req.session.user.name_id : "____________"
+      );
       req.session.user = saml_response.user;
       req.session.save();
-      //name = saml_response.user.name_id;
-      //session_index = saml_response.user.session_index;
+
       if (err != null) {
         console.log("assert error ------ " + err);
         return res.send(err);
@@ -162,8 +165,9 @@ app.prepare().then(() => {
   });
 
   server.all("*", (req, res) => {
-    if (req.session && typeof req.session.user !== "undefined")
+    if (req.session && typeof req.session.user !== "undefined") {
       return handle(req, res);
+    }
 
     res.redirect("/login");
     //return handle(req, res);
