@@ -140,6 +140,7 @@ app.prepare().then(() => {
         typeof saml_response.user !== "undefined"
           ? saml_response.user
           : "";
+      req.session.save();
 
       if (err != null) {
         console.log("assert error ------ " + err);
