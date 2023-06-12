@@ -8,9 +8,9 @@ export function LogUserInfo(action) {
   const options = {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json;charset=utf-8",
     },
-    body: bodyData,
+    body: JSON.stringify(data),
   };
   console.log("options''''''''''", options);
   fetch("/api/session", options)

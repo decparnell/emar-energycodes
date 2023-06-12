@@ -3,11 +3,10 @@
 // pages/api/session.js
 export default function handler(req, res) {
   //add page name
-  console.log("reqqqqqqqqqqqqqqqqqqqqqq", req);
-  const { actionName } = req.body;
-  console.log("REQBODY------------------", req.body);
-  console.log("action--------------", actionName);
-  console.log("action2---------------", req.body.actionName);
+  const data = req.json();
+  console.log("data----------------", data);
+  console.log("data-body----------------", data.body);
+  console.log("data-actionName----------------", data.actionName);
   const body = JSON.parse(req.body);
   console.log("BODY------------------", body);
   fetch(
