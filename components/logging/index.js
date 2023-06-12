@@ -1,5 +1,5 @@
 export function LogUserInfo(action) {
-  const data = { action: action };
+  const data = { actionName: action };
   const body = JSON.stringify(data);
   console.log(
     "BODYBODYBODY#############################################",
@@ -7,8 +7,10 @@ export function LogUserInfo(action) {
   );
   const options = {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json" },
   };
   fetch("/api/session", options)
     .then((response) => response.json())
