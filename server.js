@@ -10,7 +10,8 @@ app.prepare().then(() => {
   var express = require("express");
   var server = express();
   var cookieParser = require("cookie-parser");
-  var session = require("cookie-session");
+  //cookies-session
+  var session = require("express-session");
   // If you're using express <4.0:
   var bodyParser = require("body-parser");
   server.use(
