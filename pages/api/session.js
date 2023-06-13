@@ -3,12 +3,10 @@
 // pages/api/session.js
 export default function handler(req, res) {
   //add page name
-  const data = req.json();
+  const data = JSON.parse(req.body);
   console.log("data----------------", data);
-  console.log("data-body----------------", data.body);
   console.log("data-actionName----------------", data.actionName);
-  const body = JSON.parse(req.body);
-  console.log("BODY------------------", body);
+  const actionName = data.actionName;
   fetch(
     `https://prod-12.uksouth.logic.azure.com/workflows/a01770cba8f44c8a90274a6faa24955d/triggers/manual/paths/invoke/email/${req.session.user.name_id}/action/${actionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vm5xuq9xqyj6xN0P_NBrRPjDsElEJhOsWIWcmjfdzak`
   )
