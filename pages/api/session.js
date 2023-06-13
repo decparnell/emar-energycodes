@@ -3,6 +3,7 @@
 // pages/api/session.js
 export default function handler(req, res) {
   //add page name
+  console.log(req.body);
   const data = JSON.parse(req.body);
   console.log("data----------------", data);
   console.log("data-actionName----------------", data.actionName);

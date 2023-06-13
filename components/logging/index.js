@@ -8,7 +8,7 @@ export function LogUserInfo(action) {
   const options = {
     method: "POST",
     headers: {
-      "Content-Type": "application/json;charset=utf-8",
+      "Content-Type": "text/plain",
     },
     body: JSON.stringify(data),
   };
