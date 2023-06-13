@@ -125,17 +125,6 @@ app.prepare().then(() => {
   server.post("/assert", function (req, res) {
     var options = { request_body: req.body };
     sp.post_assert(idp, options, function (err, saml_response) {
-      console.log(
-        "THE REC USER IS....",
-        req.session.user ? req.session.user.name_id : "____________"
-      );
-      console.log(
-        "THE SAML USER IS....",
-        typeof saml_response !== "undefined" &&
-          typeof saml_response.user !== "undefined"
-          ? saml_response.user.name_id
-          : "____________"
-      );
       req.session.user =
         typeof saml_response !== "undefined" &&
         typeof saml_response.user !== "undefined"
