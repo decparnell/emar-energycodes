@@ -1,18 +1,13 @@
 export function LogUserInfo(action) {
   const data = { actionName: action };
   const bodyData = JSON.stringify(data);
-  console.log(
-    "BODYBODYBODY#############################################",
-    bodyData
-  );
   const options = {
     method: "POST",
     headers: {
-      "Content-Type": "text/plain",
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
+    body: bodyData,
   };
-  console.log("options''''''''''", options);
   fetch("/api/session", options)
     .then((response) => response.json())
     .then((data) => {
