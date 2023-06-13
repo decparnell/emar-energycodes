@@ -12,7 +12,14 @@ app.prepare().then(() => {
   var cookieParser = require("cookie-parser");
   //cookies-session
   var session = require("express-session");
-  server.use(express.json());
+  // If you're using express <4.0:
+  var bodyParser = require("body-parser");
+  server.use(
+    bodyParser.urlencoded({
+      extended: true,
+    })
+  );
+  //bodyParser.json()
 
   // creating 24 hours from milliseconds
   const oneDay = 1000 * 60 * 60 * 24;
