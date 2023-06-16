@@ -10,6 +10,7 @@ import SideNav from "../../components/dashboardSideNav";
 import { BiRightArrow, BiSearchAlt2, BiData, BiTable } from "react-icons/bi";
 import { TiHtml5 } from "react-icons/ti";
 import Link from "next/link";
+import DashboardLink from "../../components/dashboardLink";
 
 function DataSpec({ sections, items }) {
   const apiVarList = [
@@ -76,14 +77,7 @@ function DataSpec({ sections, items }) {
               <h6 className="boxTitle">
                 {currentSections.dashboardSectionName}
               </h6>
-              {currentItems.map((item, i) => (
-                <Link href="/" className={styles.dashboardItem} key={i}>
-                  <div className={styles.dashboardItem}>
-                    <BiRightArrow />
-                    {item.dashboardSectionItemsName}
-                  </div>
-                </Link>
-              ))}
+              <DashboardLink currentItems={currentItems}/>
             </div>
             <div className={`${styles.right}`}>
               <div className={`${styles.quickLinkContainer}`}>

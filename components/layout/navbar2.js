@@ -6,6 +6,7 @@ import { Fragment } from "react";
 import styles from "../../styles/header2.module.css";
 import AsideDropDownMenu from "../AsideDropDownMenu";
 import TabNavbar2 from "./tabHeader2";
+import FeedbackForm from "../feedbackForm";
 
 function navbar(chosenTab) {
   return (
@@ -15,9 +16,7 @@ function navbar(chosenTab) {
           <Link className={styles.headLink} href="/">
             IBM Jazz
           </Link>
-          <Link className={styles.headLink} href="/">
-            Provide Feedback
-          </Link>
+          <FeedbackForm />
           <Link className={styles.headLink} href="/">
             REC Service Desk
           </Link>
