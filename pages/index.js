@@ -8,15 +8,16 @@ import { checkIfItemsAvailableInArray } from "../components/helperFunctions/chec
 import { logMessage } from "../components/helperFunctions/logMessage";
 import QuickLink from "../components/helperFunctions/quickLink";
 import SideNav from "../components/dashboardSideNav";
-import { BiRightArrow, BiSearchAlt2 } from "react-icons/bi";
-import Link from "next/link";
+import { BiSearchAlt2 } from "react-icons/bi";
 import { LogUserInfo } from "../components/logging";
+import DashboardLink from "../components/dashboardLink";
 
-function HomePage({ sections, items, newsData }) {
+function HomePage({ sections, items, newsData, latestVersionJson }) {
   const apiVarList = [
     { obj: newsData, name: "newsData" },
     { obj: items, name: "items" },
     { obj: sections, name: "sections" },
+    { obj: latestVersionJson, name: "latestVersionJson" },
   ];
   const value = useContext(AppContext);
   let { chosenButton, chosenTab } = value.state;
@@ -87,14 +88,7 @@ function HomePage({ sections, items, newsData }) {
               <h6 className="boxTitle">
                 {currentSections.dashboardSectionName}
               </h6>
-              {currentItems.map((item, i) => (
-                <Link href="/" className={styles.dashboardItem} key={i}>
-                  <div className={styles.dashboardItem}>
-                    <BiRightArrow />
-                    {item.dashboardSectionItemsName}
-                  </div>
-                </Link>
-              ))}
+              <DashboardLink currentItems={currentItems} versions={latestVersionJson}/>
             </div>
             <div className={`${styles.right}`}>
               <div className={`${styles.quickLinkContainer}`}>
@@ -137,6 +131,11 @@ export async function getServerSideProps({ req, res }) {
   const sections = dataJson.sections;
   const items = dataJson.items;
 
+  const getLatestVersions = await fetch(
+    `https://prod-31.uksouth.logic.azure.com:443/workflows/74c7d3ac4b93473c81b4fc762aea9133/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=uEnmZBZlGdrJ-pRJCcmTAMtoVJlLR2MIXiCYq3TXaf8`
+  );
+  const latestVersionJson = await getLatestVersions.json();
+
   /*   const newsDataReq = await fetch(
     "https://prod-22.uksouth.logic.azure.com:443/workflows/e36d26ad83b04a86bc67b618e20c9dc5/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Zymwu40i_cJZuIQhxAW9VZeDw22xzO97ie4sApLfizU"
   );
@@ -146,6 +145,7 @@ export async function getServerSideProps({ req, res }) {
   return {
     props: {
       sections,
+      latestVersionJson,
       items,
       //newsData,
     },
