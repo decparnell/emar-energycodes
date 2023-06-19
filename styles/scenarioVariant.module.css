@@ -7,10 +7,31 @@
     height:83vh;
     width:20vw;
     position:fixed;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .mainContentContainer {
     height:83vh;
     width:80vw;
     margin:0 1vw 0 20vw;
+}
+
+.headers{
+    text-align: center;
+}
+
+.tablesContainer{
+    margin: auto;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-left: -10vw;
+    margin-top: 2%;
+}
+
+.contentContainer{
+    height:100%;
+    width:97%;
+    margin-top: 2%;
+    margin-bottom: 7.5%;
 }

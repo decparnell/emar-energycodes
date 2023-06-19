@@ -60,3 +60,7 @@
     height: 4%;
     margin: auto;
 }
+
+.selected {
+    border: 1.5px solid black;
+}

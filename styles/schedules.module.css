@@ -1,0 +1,16 @@
+.container {
+    width: 100%;
+    display:flex;
+}
+
+.sideNavContainer {
+    height:83vh;
+    width:20vw;
+    position:fixed;
+}
+
+.mainContentContainer {
+    height:83vh;
+    width:80vw;
+    margin:0 1vw 0 20vw;
+}
