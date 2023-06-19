@@ -1,10 +1,11 @@
 .container {
     width: 100%;
     display:flex;
+
 }
 
 .sideNavContainer {
-    height:83vh;
+    height:85vh;
     width:20vw;
     position:fixed;
     overflow-y: auto;
@@ -12,7 +13,7 @@
 }
 
 .mainContentContainer {
-    height:83vh;
+    height:85vh;
     width:80vw;
     margin:0 1vw 0 20vw;
 }
@@ -33,5 +34,4 @@
     height:100%;
     width:97%;
     margin-top: 2%;
-    margin-bottom: 7.5%;
 }

@@ -1,4 +1,3 @@
-
 import { useRouter } from "next/router";
 import styles from "../../../styles/scenarioVariant.module.css";
 import { useState, useContext, useEffect } from "react";
@@ -35,7 +34,6 @@ function MeteringArrangementsPage({
   const scheduleNumber = docInfo.scheduleNumber;
   const scheduleName = docInfo.documentName;
 
-
   const [componentsData, setComponentsData] = useState([]);
   const [startVal, setStartVal] = useState(0);
   //const [totalLength, setTotalLength] = useState(0);
@@ -47,7 +45,7 @@ function MeteringArrangementsPage({
 
   const mandatoryTable = transformTable(optionalityInfo, parts);
 
-    /* ****FUNCTIONS**** */
+  /* ****FUNCTIONS**** */
 
   //client-side fetch data, loading more components of each section
   const fetchData = async () => {
@@ -57,10 +55,10 @@ function MeteringArrangementsPage({
     //console.log("DATA", componentsData)
     try {
       const response = await fetch(
-        `https://prod-06.uksouth.logic.azure.com/workflows/77e02eb742f8439e8036ac554294f30c/triggers/request/paths/invoke/documentId/${scheduleId}/version/${versionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=wbnwIPxUSyYKnGUfsB4NFCDZO02dcJLEquai1Nw4Iao`
+        `https://prod-15.uksouth.logic.azure.com/workflows/05ebc2734c5340bb83e78396ae4ca88f/triggers/request/paths/invoke/documentId/${scheduleId}/version/${versionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=-7jIZukmQmoddagifC2Z1FxKEWg7VLMfp2mcg-sAKPE`
       );
       const dataResJson = await response.json();
-      const newDataComponents = dataResJson.components;
+      const newDataComponents = dataResJson;
       if (startVal === 0) {
         setComponentsData(newDataComponents);
       } else if (typeof newDataComponents === "undefined") {
@@ -100,23 +98,28 @@ function MeteringArrangementsPage({
       }
     }
     return res;
-  };
+  }
 
   //Filter JSON object by specific field and id
   function filterByFieldId(jsonData, field_name, id) {
     return jsonData.filter((obj) => obj[field_name] === id);
   }
 
-  const groupSectionsAndComponents = sections.map((section) => {
-    const components = filterByFieldId(componentsData, "sectionId_FK", section.sectionId);
-    if (components.length > 0) {
-      return {
-        ...section,
-        components
+  const groupSectionsAndComponents = sections
+    .map((section) => {
+      const components = filterByFieldId(
+        componentsData,
+        "sectionId_FK",
+        section.sectionId
+      );
+      if (components.length > 0) {
+        return {
+          ...section,
+          components,
+        };
       }
-    }
-  }).filter(group => group !== undefined)
-
+    })
+    .filter((group) => group !== undefined);
 
   // Left Navigation Bar
   const panelDashboard = parts.map((part) => {
@@ -125,9 +128,9 @@ function MeteringArrangementsPage({
     return {
       partId: part.partId,
       panelTitle: part.partName,
-      dashboard
-    }
-  })
+      dashboard,
+    };
+  });
 
   const [currentSections, setCurrentSections] = useState(() => {
     return panelDashboard[0];
@@ -155,48 +158,57 @@ function MeteringArrangementsPage({
         <h3 className={styles.headers}>
           {scheduleNumber
             ? `${scheduleName} - Schedule ${scheduleNumber}`
-            : scheduleName}</h3>
+            : scheduleName}
+        </h3>
         <div className={styles.tablesContainer}>
-          <SchedulesTables tableId="Version Table" versions={versions} scheduleId={scheduleId} versionName={versionName} />
+          <SchedulesTables
+            tableId="Version Table"
+            versions={versions}
+            scheduleId={scheduleId}
+            versionName={versionName}
+          />
         </div>
 
         <div className={styles.tablesContainer}>
           {/* if there is at least one optionality show a mandatory table */}
           {optionalityInfo[0].optionalityId && (
-            <SchedulesTables tableId="Mandatory Table" parts={parts} mandatoryTable={mandatoryTable} />
+            <SchedulesTables
+              tableId="Mandatory Table"
+              parts={parts}
+              mandatoryTable={mandatoryTable}
+            />
           )}
         </div>
 
         <div className={`${styles.contentContainer}`}>
-          <CreateSchedulesContent 
+          <CreateSchedulesContent
             parts={parts}
             definitions={definitions}
             data={groupSectionsAndComponents}
             fetchData={fetchData}
-            hasMoreData={hasMoreData} 
-            totalLength={startVal}/>
+            hasMoreData={hasMoreData}
+            totalLength={startVal}
+          />
         </div>
       </div>
-
     </div>
-  )
+  );
 }
 
 export default MeteringArrangementsPage;
 
 export async function getServerSideProps(context) {
   //return the info about the latest version
-  const intialStartVal = 0
+
   const initialDataReq = await fetch(
-    `https://prod-06.uksouth.logic.azure.com/workflows/77e02eb742f8439e8036ac554294f30c/triggers/request/paths/invoke/documentId/${context.params.schedule_id}/version/${context.params.versionName}/startVal/${intialStartVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=wbnwIPxUSyYKnGUfsB4NFCDZO02dcJLEquai1Nw4Iao`
+    `https://prod-06.uksouth.logic.azure.com/workflows/77e02eb742f8439e8036ac554294f30c/triggers/request/paths/invoke/documentId/${context.params.schedule_id}/version/${context.params.versionName}/?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=wbnwIPxUSyYKnGUfsB4NFCDZO02dcJLEquai1Nw4Iao`
   );
 
   const dataJson = await initialDataReq.json();
-  
+
   const versions = dataJson.versions;
   const parts = dataJson.parts;
   const sections = dataJson.sections;
-  //const initialComponents = dataJson.components;
   const document = dataJson.document;
 
   const definitionsReq = await fetch(
@@ -213,7 +225,6 @@ export async function getServerSideProps(context) {
   );
   const optionalityInfo = await optionalityReq.json();
 
-
   //Pass data to the page via props
   return {
     props: {
@@ -223,7 +234,6 @@ export async function getServerSideProps(context) {
       document,
       definitions,
       optionalityInfo,
-    }
-  }
-
+    },
+  };
 }

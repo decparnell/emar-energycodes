@@ -123,8 +123,7 @@ function addLinkedComponentsToOutput(
   text,
   CustomTag,
   customClassName,
-  definitions,
-  clauseComponentId
+  definitions
 ) {
   //create an array of the text to display including all links using split text function
   if (CustomTag === "Image") {
@@ -140,13 +139,7 @@ function addLinkedComponentsToOutput(
   } else {
     const linkedText = LinkTextFromDefinitions(text, definitions);
     clauseJsx.push(
-      <CustomTag
-        className={customClassName}
-        key={`${clauseComponentId}`}
-        id={`${clauseComponentId}`}
-      >
-        {linkedText}
-      </CustomTag>
+      <CustomTag className={customClassName}>{linkedText}</CustomTag>
     );
   }
 }
