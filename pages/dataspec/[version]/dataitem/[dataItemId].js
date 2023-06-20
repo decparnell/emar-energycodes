@@ -7,6 +7,7 @@ import { checkIfsearchResultsAvailable } from "../../../../components/helperFunc
 import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable/index";
 import removeNullValues from "../../../../components/dataspec/functions/removeNulls";
 import DataItemTables from "../../../../components/tables/dataItemTables";
+import SecondNavbar from "../../../../components/layout/secondHeader";
 
 function DataItemDetailsPage({ searchResults }) {
   const pageId = "DataItemDetailsPage";
@@ -87,16 +88,17 @@ function DataItemDetailsPage({ searchResults }) {
     <>
       <div className={styles.container}>
         <div className={`${styles.sideNavContainer}`}>
-          <SideNav
+          <SideNav 
             navbarType="ContentBasedNavBar"
             items={dashboard}
             dashboardId="dashboardId"
             name="dashboardSectionName"
             stateVar={currentSections}
-            stateSet={setCurrentSections}
+            stateSet={setCurrentSections} 
           />
         </div>
         <div className={`${styles.mainContentContainer}`}>
+          <SecondNavbar />
           <section id={dashboard[0].dashboardId}>
             <DataItemTables
               keyTitle="Basic Information"
