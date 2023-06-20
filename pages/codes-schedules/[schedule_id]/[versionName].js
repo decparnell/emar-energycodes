@@ -1,4 +1,3 @@
-
 import { useRouter } from "next/router";
 import styles from "../../../styles/scenarioVariant.module.css";
 import { useState, useContext, useEffect } from "react";
@@ -45,9 +44,9 @@ function MeteringArrangementsPage({
     return {
       partId: part.partId,
       panelTitle: part.partName,
-      dashboard
-    }
-  })
+      dashboard,
+    };
+  });
 
   // create data for mandatory table, X axis being parts, Y axis optionality owners.
   // structured as object with:
@@ -70,7 +69,7 @@ function MeteringArrangementsPage({
       }
     }
     return res;
-  };
+  }
 
   //Filter JSON object by specific field and id
   function filterByFieldId(jsonData, field_name, id) {
@@ -82,45 +81,65 @@ function MeteringArrangementsPage({
     return panelDashboard[0];
   });
 
-  useEffect(() => { }, [currentSections]);
+  useEffect(() => {}, [currentSections]);
 
   return (
-    <div className={styles.container}>
-      <div className={`${styles.sideNavContainer}`}>
-        <SideNav
-          navbarType="PanelBasedNavBar"
-          items={panelDashboard}
-          dashboardId="sectionId"
-          name="sectionName"
-          panelTitle="panelTitle"
-          dashboardName="dashboard"
-          stateVar={currentSections}
-          stateSet={setCurrentSections}
-        />
+    <>
+      <Head>
+        <title>EMAR - {docInfo ? docInfo.documentName : null}</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
+      <div className={styles.container}>
+        <div className={`${styles.sideNavContainer}`}>
+          <SideNav
+            navbarType="PanelBasedNavBar"
+            items={panelDashboard}
+            dashboardId="sectionId"
+            name="sectionName"
+            panelTitle="panelTitle"
+            dashboardName="dashboard"
+            stateVar={currentSections}
+            stateSet={setCurrentSections}
+          />
+        </div>
+        <div className={`${styles.mainContentContainer}`}>
+          <h3 className={styles.headers}>
+            {scheduleNumber
+              ? `${scheduleName} - Schedule ${scheduleNumber}`
+              : scheduleName}
+          </h3>
+          <div className={styles.tablesContainer}>
+            <SchedulesTables
+              tableId="Version Table"
+              versions={versions}
+              scheduleId={scheduleId}
+              versionName={versionName}
+            />
+          </div>
+
+          <div className={styles.tablesContainer}>
+            {/* if there is at least one optionality show a mandatory table */}
+            {optionalityInfo[0].optionalityId && (
+              <SchedulesTables
+                tableId="Mandatory Table"
+                parts={parts}
+                mandatoryTable={mandatoryTable}
+              />
+            )}
+          </div>
+
+          <div className={`${styles.contentContainer}`}>
+            <CreateSchedulesContent
+              parts={parts}
+              sections={sections}
+              components={components}
+              definitions={definitions}
+            />
+          </div>
+        </div>
       </div>
-      <div className={`${styles.mainContentContainer}`}>
-        <h3 className={styles.headers}>
-          {scheduleNumber
-            ? `${scheduleName} - Schedule ${scheduleNumber}`
-            : scheduleName}</h3>
-        <div className={styles.tablesContainer}>
-          <SchedulesTables tableId="Version Table" versions={versions} scheduleId={scheduleId} versionName={versionName} />
-        </div>
-
-        <div className={styles.tablesContainer}>
-          {/* if there is at least one optionality show a mandatory table */}
-          {optionalityInfo[0].optionalityId && (
-            <SchedulesTables tableId="Mandatory Table" parts={parts} mandatoryTable={mandatoryTable} />
-          )}
-        </div>
-
-        <div className={`${styles.contentContainer}`}>
-          <CreateSchedulesContent parts={parts} sections={sections} components={components} definitions={definitions} />
-        </div>
-      </div>
-
-    </div>
-  )
+    </>
+  );
 }
 
 export default MeteringArrangementsPage;
@@ -152,7 +171,6 @@ export async function getServerSideProps(context) {
   );
   const optionalityInfo = await optionalityReq.json();
 
-
   //Pass data to the page via props
   return {
     props: {
@@ -163,7 +181,6 @@ export async function getServerSideProps(context) {
       document,
       definitions,
       optionalityInfo,
-    }
-  }
-
+    },
+  };
 }
