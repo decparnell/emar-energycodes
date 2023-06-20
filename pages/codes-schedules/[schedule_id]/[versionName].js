@@ -6,8 +6,8 @@ import { checkIfVariablesAreAvailable } from "../../../components/helperFunction
 import { checkIfItemsAvailableInArray } from "../../../components/helperFunctions/checkIfItemsAvailableInArray";
 import SchedulesTables from "../../../components/tables/schedulesTables";
 import CreateSchedulesContent from "../../../components/scheduleId/createSchedulesContent";
-
-function MeteringArrangementsPage({
+import Head from "next/head";
+function Schedules({
   versions,
   parts,
   sections,
@@ -142,7 +142,7 @@ function MeteringArrangementsPage({
   );
 }
 
-export default MeteringArrangementsPage;
+export default Schedules;
 
 export async function getServerSideProps(context) {
   //return the info about the latest version
