@@ -43,14 +43,14 @@ function SideNav(props) {
     }
   };
 
-
   const LocalNavBar = (props) => {
     return (
       <div className={`${styles.sideNav} box`}>
         {props.items.map((item, i) => (
           <div
-            className={`${styles.sideNavItem} ${props.stateVar[props.name] === item[props.name] ? "green" : ""
-              }`}
+            className={`${styles.sideNavItem} ${
+              props.stateVar[props.name] === item[props.name] ? "green" : ""
+            }`}
             onClick={(e) => handleClick(item, e)}
             key={i}
           >
@@ -65,13 +65,17 @@ function SideNav(props) {
     return (
       <div className={`${styles.panelSideNav} box`}>
         {props.items.map((item, i) => (
-          <div className={styles.panelBorder}>
-            <h6 className={styles.panelHeader} >{item[props.panelTitle]}</h6>
+          <div className={styles.panelBorder} key={i}>
+            <h6 className={styles.panelHeader}>{item[props.panelTitle]}</h6>
             {item[props.dashboardName].map((dashboardItem, id) => (
-              <div className={`${styles.panelSideNavItem} ${props.stateVar[props.name] === dashboardItem[props.name] ? "green" : ""
-                  }`}
+              <div
+                className={`${styles.panelSideNavItem} ${
+                  props.stateVar[props.name] === dashboardItem[props.name]
+                    ? "green"
+                    : ""
+                }`}
                 onClick={(e) => panelBasedNBHandleClick(dashboardItem, e)}
-                key={i}
+                key={id}
               >
                 {dashboardItem[props.name]}
               </div>
@@ -83,13 +87,13 @@ function SideNav(props) {
   };
 
   const ContentBasedNavBar = (props) => {
-
     return (
       <div className={`${styles.sideNav} box`}>
         {props.items.map((item, i) => (
           <div
-            className={`${styles.sideNavItem} ${props.stateVar[props.name] === item[props.name] ? "green" : ""
-              }`}
+            className={`${styles.sideNavItem} ${
+              props.stateVar[props.name] === item[props.name] ? "green" : ""
+            }`}
             onClick={(e) => contentBasedNBHandleClick(item, e)}
             key={i}
           >
@@ -103,37 +107,40 @@ function SideNav(props) {
   const NavigationBar = (props) => {
     switch (props.k) {
       case "ContentBasedNavBar":
-        return <ContentBasedNavBar
-          items={props.props.items}
-          name={props.props.name}
-          stateVar={props.props.stateVar}
-          stateSet={props.props.stateSet}
-          dashboardId={props.props.dashboardId}
-        />
+        return (
+          <ContentBasedNavBar
+            items={props.props.items}
+            name={props.props.name}
+            stateVar={props.props.stateVar}
+            stateSet={props.props.stateSet}
+            dashboardId={props.props.dashboardId}
+          />
+        );
       case "PanelBasedNavBar":
-        return <PanelBasedNavBar
-          items={props.props.items}
-          dashboardId={props.props.dashboardId}
-          name={props.props.name}
-          panelTitle={props.props.panelTitle}
-          dashboardName={props.props.dashboardName}
-          stateVar={props.props.stateVar}
-          stateSet={props.props.stateSet}
-        />
+        return (
+          <PanelBasedNavBar
+            items={props.props.items}
+            dashboardId={props.props.dashboardId}
+            name={props.props.name}
+            panelTitle={props.props.panelTitle}
+            dashboardName={props.props.dashboardName}
+            stateVar={props.props.stateVar}
+            stateSet={props.props.stateSet}
+          />
+        );
       default:
-        return <LocalNavBar
-          items={props.props.items}
-          name={props.props.name}
-          stateVar={props.props.stateVar}
-          stateSet={props.props.stateSet}
-        />
+        return (
+          <LocalNavBar
+            items={props.props.items}
+            name={props.props.name}
+            stateVar={props.props.stateVar}
+            stateSet={props.props.stateSet}
+          />
+        );
     }
-  }
+  };
 
-  return (
-    <NavigationBar k={props?.navbarType} props={props} />
-  )
-
+  return <NavigationBar k={props?.navbarType} props={props} />;
 }
 
 export default SideNav;
