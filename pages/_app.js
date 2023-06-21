@@ -2,10 +2,14 @@ import "../styles/globals.css";
 import Layout from "../components/layout/layout";
 import AppContext from "../components/context/AppContext";
 import Router from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Script from "next/script";
-function Loading({ setAllDataSpecVersions, setLatestDataSpecVersion }) {
-  const [loading, setLoading] = useState(true);
+function Loading() {
+  //appcontext variables
+  const value = useContext(AppContext);
+  let { loading } = value.state;
+  //appcontext methods
+  const {setLoading, setAllDataSpecVersions, setLatestDataSpecVersion} = useContext(AppContext);
 
   useEffect(() => {
     const handleStart = (url) => url !== Router.asPath && setLoading(true);
@@ -22,6 +26,7 @@ function Loading({ setAllDataSpecVersions, setLatestDataSpecVersion }) {
     };
   }, [Router]);
 
+  //TO-DO: performance improvement, fetchRecVersions should be triggered only certain type of page are being invoked
   useEffect(() => {
     const fetchRecVersions = async () => {
       try {
@@ -52,6 +57,7 @@ function Loading({ setAllDataSpecVersions, setLatestDataSpecVersion }) {
 }
 
 function MyApp({ Component, pageProps }) {
+  const [loading, setLoading] = useState(true);
   const [allDataSpecVersions, setAllDataSpecVersions] = useState([]);
   const [latestDataSpecVersion, setLatestDataSpecVersion] = useState("");
 
@@ -78,12 +84,10 @@ function MyApp({ Component, pageProps }) {
         });
     `}
       </Script>
-        <Loading
-          setAllDataSpecVersions={setAllDataSpecVersions}
-          setLatestDataSpecVersion={setLatestDataSpecVersion} />
         <AppContext.Provider
           value={{
             state: {
+              loading: loading,
               latestDataSpecVersion: latestDataSpecVersion,
               allDataSpecVersions: allDataSpecVersions,
               newsItems: newsItems,
@@ -91,6 +95,7 @@ function MyApp({ Component, pageProps }) {
               chosenButton: chosenButton,
               errorLog: errorLog,
             },
+            setLoading: setLoading,
             setLatestDataSpecVersion: setLatestDataSpecVersion,
             setAllDataSpecVersions: setAllDataSpecVersions,
             setNewsItems: setNewsItems,
@@ -99,6 +104,7 @@ function MyApp({ Component, pageProps }) {
             setErrorLog: setErrorLog,
           }}
         >
+          <Loading />
           <Layout chosenTab={chosenTab}>
             <Component {...pageProps} />
           </Layout>

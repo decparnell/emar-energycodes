@@ -6,7 +6,8 @@ import React, { useState, useContext } from "react";
 import AppContext from "../context/AppContext";
 function VersionDropDown() {
   const value = useContext(AppContext);
-  let { latestDataSpecVersion, allDataSpecVersions } = value.state;
+  let { loading , allDataSpecVersions } = value.state;
+  const {setLoading} = useContext(AppContext);
   const router = useRouter();
   const { version } = router.query;
 
@@ -15,22 +16,21 @@ function VersionDropDown() {
   const setDropdownValue = value.setLatestDataSpecVersion;
 
   const handleDropdownSelect = (option) => {
-    console.log("Option", option)
     setDropdownOpen((current) => !current);
     setDropdownValue(option);
     setDropdownOpen((current) => !current);
     if (option !== version) {
       const query = router.query;
       query.version = option;
-      console.log("query",query)
-      console.log("router.pathname",router.pathname)
       router.push(
         {
           pathname: router.pathname,
           query: query,
         },
         { shallow: false }
-      );
+      ).then(() => {
+        setLoading(false);
+      });  
     }
   };
 

@@ -105,7 +105,6 @@ function DataSpecSearchPage() {
     e.preventDefault();
     refreshData();
     fetchData();
-    console.log(searchValue);
   };
 
   return (
