@@ -36,7 +36,9 @@ function DashboardLink(props) {
                             rel="noreferrer"
                             className={styles.dashboardItem}
                         >
-                            <BiRightArrow />
+                            <span className={styles.arrowContainer}>
+                                <BiRightArrow className={styles.arrowIcon} />
+                            </span>
                             {item.dashboardSectionItemsName}
                         </a>
                     </div>
@@ -48,14 +50,18 @@ function DashboardLink(props) {
                             rel="noreferrer"
                             className={styles.dashboardItem}
                         >
-                            <BiRightArrow />
+                            <span className={styles.arrowContainer}>
+                                <BiRightArrow className={styles.arrowIcon} />
+                            </span>
                             {item.dashboardSectionItemsName}
                         </a>
                     </div>
                 ) : (
                     <div className={styles.dashboardItemsPanel} >
                         <a href={dashboardHref} className={styles.dashboardItem} key={i}>
-                            <BiRightArrow />
+                            <span className={styles.arrowContainer}>
+                                <BiRightArrow className={styles.arrowIcon} />
+                            </span>
                             {item.dashboardSectionItemsName}
                         </a>
                     </div>)
