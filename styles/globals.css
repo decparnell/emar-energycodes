@@ -197,6 +197,26 @@ div {
   cursor: pointer;
 }
 
+.container-flex{
+  width: 100%;
+  display:flex;
+}
+
+.side-nav-container-fixed {
+  height:83vh;
+  width:20vw;
+  position:fixed;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.side-nav-container {
+  height: 83vh;
+  width: 20vw;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 20px;

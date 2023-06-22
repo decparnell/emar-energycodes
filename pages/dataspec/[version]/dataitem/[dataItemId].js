@@ -1,4 +1,5 @@
-import styles from "../../../../styles/scenarioVariant.module.css";
+import styles from "../../../../styles/schedules-dataspec.module.css";
+import Head from "next/head";
 import SideNav from "../../../../components/dashboardSideNav";
 import AppContext from "../../../../components/context/AppContext";
 import { useState, useContext, useEffect } from "react";
@@ -31,47 +32,47 @@ function DataItemDetailsPage({ searchResults }) {
 
   const dataItemInfo =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-    checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo")
+      checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo")
       ? searchResults[0]
       : null;
 
   const dataEnumerations =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-    checkIfItemsAvailableInArray(internalErrorLog, "dataEnumerations")
+      checkIfItemsAvailableInArray(internalErrorLog, "dataEnumerations")
       ? searchResults[2]
       : null;
 
   dataEnumerations.length > 0
     ? dashboard.push({
-        dashboardId: "DataEnumerations",
-        dashboardSectionName: "Data Enumerations",
-        dashboardSectionOrder: 2,
-      })
+      dashboardId: "DataEnumerations",
+      dashboardSectionName: "Data Enumerations",
+      dashboardSectionOrder: 2,
+    })
     : null;
 
   const mmForDataItem =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-    checkIfItemsAvailableInArray(internalErrorLog, "mmForDataItem")
+      checkIfItemsAvailableInArray(internalErrorLog, "mmForDataItem")
       ? searchResults[1]
       : null;
   mmForDataItem.length > 0
     ? dashboard.push({
-        dashboardId: "MarketMessages",
-        dashboardSectionName: "Market Messages",
-        dashboardSectionOrder: 3,
-      })
+      dashboardId: "MarketMessages",
+      dashboardSectionName: "Market Messages",
+      dashboardSectionOrder: 3,
+    })
     : null;
 
   const legacy =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-    checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo")
+      checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo")
       ? //if there is a null value , it replaces it with ""
-        removeNullValues(dataItemInfo.DTCLegacyReference) +
-        removeNullValues(dataItemInfo.SPAALegacyReference) +
-        removeNullValues(dataItemInfo.RGMALegacyReference) +
-        removeNullValues(dataItemInfo.UNCDataItemReference) +
-        removeNullValues(dataItemInfo.IUCDataItemReference) +
-        removeNullValues(dataItemInfo.DCUSADataItemReference)
+      removeNullValues(dataItemInfo.DTCLegacyReference) +
+      removeNullValues(dataItemInfo.SPAALegacyReference) +
+      removeNullValues(dataItemInfo.RGMALegacyReference) +
+      removeNullValues(dataItemInfo.UNCDataItemReference) +
+      removeNullValues(dataItemInfo.IUCDataItemReference) +
+      removeNullValues(dataItemInfo.DCUSADataItemReference)
       : null;
 
   //Left Navigation Bar
@@ -81,12 +82,16 @@ function DataItemDetailsPage({ searchResults }) {
     }
   });
 
-  useEffect(() => {}, [currentSections]);
+  useEffect(() => { }, [currentSections]);
 
   return (
     <>
-      <div className={styles.container}>
-        <div className={`${styles.sideNavContainer}`}>
+      <Head>
+        <title>EMAR - {dataItemInfo.DataItemName}</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
+      <div className={"container-flex"}>
+        <div className={"side-nav-container-fixed"}>
           <SideNav
             navbarType="ContentBasedNavBar"
             items={dashboard}
