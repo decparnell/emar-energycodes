@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useState, useContext, useEffect } from "react";
 import Head from "next/head";
 import { TextField, Button } from "@mui/material";
+import { response } from "express";
 function Test({}) {
   const [query, setQuery] = useState("");
   const [answer, setAnswer] = useState("");
@@ -16,7 +17,6 @@ function Test({}) {
     const data = { query: query };
     const bodyData = JSON.stringify(data);
     const options = {
-      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -29,6 +29,7 @@ function Test({}) {
     )
       .then((response) => response.json())
       .then((data) => {
+        console.log("REPSONSE:", response);
         console.log("Session data:", data);
         setAnswer(data);
       })
