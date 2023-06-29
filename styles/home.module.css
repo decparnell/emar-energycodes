@@ -24,8 +24,6 @@
 .right {
   width: 50%;
   height: 95%;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .quickLinkContainer {
@@ -40,6 +38,8 @@
 .upcomingChangesContent {
   height: 60%;
   width: 98%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .prereleaseContent {

@@ -11,18 +11,21 @@ import SideNav from "../components/dashboardSideNav";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { LogUserInfo } from "../components/logging";
 import DashboardLink from "../components/dashboardLink";
+import ChangeRequestStages from "../components/changeRequestStages";
 
-function HomePage({ sections, items, newsData, latestVersionJson }) {
+function HomePage({ sections, items, newsData, latestVersionJson, processStageData }) {
   const apiVarList = [
     { obj: newsData, name: "newsData" },
     { obj: items, name: "items" },
     { obj: sections, name: "sections" },
     { obj: latestVersionJson, name: "latestVersionJson" },
+    { obj: processStageData, name: "processStageData" },
   ];
+
   const value = useContext(AppContext);
   let { chosenButton, chosenTab } = value.state;
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
-
+  
   const [currentSections, setCurrentSections] = useState(() => {
     if (checkIfItemsAvailableInArray(internalErrorLog, "sections")) {
       return sections[0];
@@ -102,7 +105,9 @@ function HomePage({ sections, items, newsData, latestVersionJson }) {
                 <QuickLink title="" link="/" width="20%" height="65%" />
                 <QuickLink title="" link="/" width="20%" height="65%" />
               </div>
-              <div className={`${styles.upcomingChangesContent} box`}></div>
+              <div className={`${styles.upcomingChangesContent} box`}>
+                <ChangeRequestStages processStageData={processStageData}/>
+              </div>
             </div>
           </div>
           <div className={`${styles.prereleaseContent} box`}>
@@ -136,6 +141,10 @@ export async function getServerSideProps({ req, res }) {
   );
   const latestVersionJson = await getLatestVersions.json();
 
+
+  const getProcessStgData = await fetch("https://get-changerequest-from-recportal.azurewebsites.net/api/getchangerequestfromrecportal");
+  const processStageData = await getProcessStgData.json();
+
   /*   const newsDataReq = await fetch(
     "https://prod-22.uksouth.logic.azure.com:443/workflows/e36d26ad83b04a86bc67b618e20c9dc5/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Zymwu40i_cJZuIQhxAW9VZeDw22xzO97ie4sApLfizU"
   );
@@ -147,6 +156,7 @@ export async function getServerSideProps({ req, res }) {
       sections,
       latestVersionJson,
       items,
+      processStageData,
       //newsData,
     },
   };
