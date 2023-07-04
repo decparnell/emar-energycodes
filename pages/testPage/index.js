@@ -3,7 +3,7 @@ import { useState, useContext, useEffect } from "react";
 import Head from "next/head";
 import { TextField, Button } from "@mui/material";
 import { response } from "express";
-function Test({}) {
+function Test() {
   const [query, setQuery] = useState("");
   const [answer, setAnswer] = useState("");
 
