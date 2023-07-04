@@ -55,6 +55,7 @@ export const scenarioVariantHeaders = [
     title: "Identifier",
     dataColumn: "EnergyMarketMessageScenarioVariantIdentifier",
   },
+  { title: "Local Reference", dataColumn: "LegacyIdentifier" },
   {
     title: "Scenario Variant Name",
     dataColumn: "EnergyMarketMessageScenarioVariantName",
