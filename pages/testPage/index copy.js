@@ -27,8 +27,8 @@ function Test() {
     };
     const bodyData = JSON.stringify(data);
     const options = {
-      method: "POST",
       headers: {
+        method: "POST",
         "Content-Type": "application/json",
       },
       body: bodyData,
@@ -38,13 +38,7 @@ function Test() {
       "https://recco-openai-qa.azurewebsites.net/api/answer_query?code=WVTZzRNJ3Hi2fH_tKF3hHiXJsirhpa8qQATso6LFTqIOAzFuFICWGQ==",
       options
     )
-      .then((response) => {
-        console.log(response);
-        if (!response.ok) {
-          throw new Error("Error occurred while fetching session data");
-        }
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         console.log("REPSONSE:", response);
         console.log("Session data:", data);

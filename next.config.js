@@ -14,12 +14,12 @@ module.exports = {
   // generation before timing out
   staticPageGenerationTimeout: 1000,
 };
-
+/* 
 module.exports = {
   webpack5: true,
   webpack: (config) => {
-    config.resolve.fallback = { fs: false };
+    config.resolve.fallback = { fs: false, zlib: false };
 
     return config;
   },
-};
+}; */

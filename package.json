@@ -24,8 +24,6 @@
     "got": "^12.6.0",
     "minimist": "^1.2.6",
     "next": "12.1.0",
-    "passport": "^0.6.0",
-    "passport-saml": "^3.2.3",
     "react": "17.0.2",
     "react-bootstrap": "^2.5.0",
     "react-dom": "17.0.2",
