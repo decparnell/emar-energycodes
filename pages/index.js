@@ -37,12 +37,17 @@ function HomePage({ sections, items, newsData, latestVersionJson }) {
   });
 
   useEffect(() => {
-    setCurrentItems(
-      items.filter(
-        (item) =>
-          item.dashboardSectionId_FK === currentSections.dashboardSectionId
-      )
-    );
+
+    if (currentSections.dashboardSectionName === "All") {
+      setCurrentItems(items);
+    } else {
+      setCurrentItems(
+        items.filter(
+          (item) =>
+            item.dashboardSectionId_FK === currentSections.dashboardSectionId
+        )
+      );
+    }
   }, [currentSections]);
 
   useEffect(() => {
@@ -88,7 +93,7 @@ function HomePage({ sections, items, newsData, latestVersionJson }) {
               <h6 className="boxTitle">
                 {currentSections.dashboardSectionName}
               </h6>
-              <DashboardLink currentItems={currentItems} versions={latestVersionJson}/>
+              <DashboardLink currentItems={currentItems} versions={latestVersionJson} />
             </div>
             <div className={`${styles.right}`}>
               <div className={`${styles.quickLinkContainer}`}>
@@ -129,6 +134,8 @@ export async function getServerSideProps({ req, res }) {
   );
   const dataJson = await dataReq.json();
   const sections = dataJson.sections;
+  const lastDashboardSectionOrder = (sections[sections.length-1].dashboardSectionOrder)+1;
+  sections.push({dashboardId_FK: null, dashboardSectionId: null, dashboardSectionName:"All", dashboardSectionOrder: lastDashboardSectionOrder});
   const items = dataJson.items;
 
   const getLatestVersions = await fetch(
