@@ -1,0 +1,27 @@
+
+.chatItem {
+  width: 98%;
+  margin: 1%;
+  display: flex;
+  align-items: center;
+  border-color: black;
+}
+
+.chatResponse {
+  width: 98%;
+  margin: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-flow: row-reverse;
+  border-color: black;
+}
+
+.chatMessage {
+    margin: 0.5% 1%;
+    padding: 1%;
+    border-width: 1.5px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: grey;
+}
