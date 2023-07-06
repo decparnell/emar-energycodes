@@ -47,7 +47,7 @@ function Test() {
       })
       .then((data) => {
         console.log("Session data:", data);
-        setAnswer(data.answer);
+        setAnswer(data.response.answer);
       })
       .catch((error) => {
         console.error("Error fetching session data:", error);
