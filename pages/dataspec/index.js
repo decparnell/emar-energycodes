@@ -34,12 +34,18 @@ function DataSpec({ sections, items }) {
   });
 
   useEffect(() => {
-    setCurrentItems(
-      items.filter(
-        (item) =>
-          item.dashboardSectionId_FK === currentSections.dashboardSectionId
-      )
-    );
+
+    if (currentSections.dashboardSectionName === "All") {
+      setCurrentItems(items);
+    } else {
+      setCurrentItems(
+        items.filter(
+          (item) =>
+            item.dashboardSectionId_FK === currentSections.dashboardSectionId
+        )
+      );
+    }
+
   }, [currentSections]);
 
   const [insertError, setInsertError] = useState("");
@@ -122,6 +128,8 @@ export async function getServerSideProps({ req, res }) {
   );
   const dataJson = await dataReq.json();
   const sections = dataJson.sections;
+  const lastDashboardSectionOrder = (sections[sections.length-1].dashboardSectionOrder)+1;
+  sections.push({dashboardId_FK: null, dashboardSectionId: null, dashboardSectionName:"All", dashboardSectionOrder: lastDashboardSectionOrder});
   const items = dataJson.items;
   // Pass data to the page via props
   return {
