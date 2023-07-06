@@ -1,4 +1,5 @@
-import styles from "../../../../styles/scenarioVariant.module.css";
+import styles from "../../../../styles/schedules-dataspec.module.css";
+import Head from "next/head";
 import AppContext from "../../../../components/context/AppContext";
 import SideNav from "../../../../components/dashboardSideNav";
 import { useState, useContext, useEffect } from "react";
@@ -28,7 +29,7 @@ function ScenarioPage({ scenarioVariantInfo, structure, marketMsgInfo }) {
   const svInfo = scenarioVariantInfo ? scenarioVariantInfo[0] : null;
   const mmInfo = marketMsgInfo ? marketMsgInfo[0] : null;
 
-  let svInfoBody = {...svInfo, DTCDcode: mmInfo.DTCDcode, MessageVersionNumber: mmInfo.MessageVersionNumber}
+  let svInfoBody = { ...svInfo, DTCDcode: mmInfo.DTCDcode, MessageVersionNumber: mmInfo.MessageVersionNumber }
 
   //Left Navigation Bar
   const [currentSections, setCurrentSections] = useState(() => {
@@ -42,8 +43,14 @@ function ScenarioPage({ scenarioVariantInfo, structure, marketMsgInfo }) {
 
   return (
     <>
-      <div className={styles.container}>
-        <div className={`${styles.sideNavContainer}`}>
+      <Head>
+        <title>
+          EMAR - {svInfo.EnergyMarketMessageScenarioVariantName}
+        </title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
+      <div className={"container-flex"}>
+        <div className={"side-nav-container-fixed"}>
           <SideNav
             navbarType="ContentBasedNavBar"
             items={dashboard}

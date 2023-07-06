@@ -1,4 +1,5 @@
-import styles from "../../../../styles/scenarioVariant.module.css";
+import styles from "../../../../styles/schedules-dataspec.module.css";
+import Head from "next/head";
 import AppContext from "../../../../components/context/AppContext";
 import { useState, useContext, useEffect } from "react";
 import SideNav from "../../../../components/dashboardSideNav";
@@ -43,30 +44,30 @@ function MarketMessagePage({ searchResults }) {
 
   const marketMessageInfo =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-    checkIfItemsAvailableInArray(internalErrorLog, "marketMessageInfo")
+      checkIfItemsAvailableInArray(internalErrorLog, "marketMessageInfo")
       ? searchResults[0]
       : null;
 
   const svForMarketMessage =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-    checkIfItemsAvailableInArray(internalErrorLog, "svForMarketMessage")
+      checkIfItemsAvailableInArray(internalErrorLog, "svForMarketMessage")
       ? searchResults[1]
       : null;
 
   const dataItems =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-    checkIfItemsAvailableInArray(internalErrorLog, "dataItems")
+      checkIfItemsAvailableInArray(internalErrorLog, "dataItems")
       ? searchResults[2]
       : null;
 
   const legacy =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-    checkIfItemsAvailableInArray(internalErrorLog, "marketMessageInfo")
+      checkIfItemsAvailableInArray(internalErrorLog, "marketMessageInfo")
       ? removeNullValues(marketMessageInfo.DTCDcode) +
-        removeNullValues(marketMessageInfo.CSSMessageIdentifier) +
-        removeNullValues(marketMessageInfo.LegacyRGMAMessageIdentifier) +
-        removeNullValues(marketMessageInfo.LegacySPAAMessageIdentifier) +
-        removeNullValues(marketMessageInfo.UNCMessageIdentifier)
+      removeNullValues(marketMessageInfo.CSSMessageIdentifier) +
+      removeNullValues(marketMessageInfo.LegacyRGMAMessageIdentifier) +
+      removeNullValues(marketMessageInfo.LegacySPAAMessageIdentifier) +
+      removeNullValues(marketMessageInfo.UNCMessageIdentifier)
       : null;
 
   const showApiColumns =
@@ -80,12 +81,16 @@ function MarketMessagePage({ searchResults }) {
     }
   });
 
-  useEffect(() => {}, [currentSections]);
+  useEffect(() => { }, [currentSections]);
 
   return (
     <>
-      <div className={styles.container}>
-        <div className={`${styles.sideNavContainer}`}>
+      <Head>
+        <title>EMAR - {marketMessageInfo.Label}</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
+      <div className={"container-flex"}>
+        <div className={"side-nav-container-fixed"}>
           <SideNav
             navbarType="ContentBasedNavBar"
             items={dashboard}

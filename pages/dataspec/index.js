@@ -7,9 +7,8 @@ import { checkIfItemsAvailableInArray } from "../../components/helperFunctions/c
 import { logMessage } from "../../components/helperFunctions/logMessage";
 import QuickLink from "../../components/helperFunctions/quickLink";
 import SideNav from "../../components/dashboardSideNav";
-import { BiRightArrow, BiSearchAlt2, BiData, BiTable } from "react-icons/bi";
+import { BiSearchAlt2, BiData, BiTable } from "react-icons/bi";
 import { TiHtml5 } from "react-icons/ti";
-import Link from "next/link";
 import DashboardLink from "../../components/dashboardLink";
 
 function DataSpec({ sections, items }) {
@@ -58,12 +57,12 @@ function DataSpec({ sections, items }) {
       {insertError && (
         <div className={styles.errorBox}>{logMessage(insertError)}</div>
       )}
-      <div className={styles.container}>
+      <div className={"container-flex"}>
         <Head>
           <title>EMAR Dashboards</title>
           <meta property="og:title" content="My page title" key="title" />
         </Head>
-        <div className={`${styles.sideNavContainer}`}>
+        <div className={"side-nav-container"}>
           <SideNav
             items={sections}
             name="dashboardSectionName"

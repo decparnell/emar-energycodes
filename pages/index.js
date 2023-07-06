@@ -1,8 +1,7 @@
 import styles from "../styles/home.module.css";
 import Head from "next/head";
-import Dashboard from "../components/dashboard";
-import { useState, useEffect, useContext } from "react";
 import AppContext from "../components/context/AppContext";
+import { useState, useEffect, useContext } from "react";
 import { checkIfVariablesAreAvailable } from "../components/helperFunctions/checkIfVariablesAreAvailable";
 import { checkIfItemsAvailableInArray } from "../components/helperFunctions/checkIfItemsAvailableInArray";
 import { logMessage } from "../components/helperFunctions/logMessage";
@@ -69,12 +68,12 @@ function HomePage({ sections, items, newsData, latestVersionJson }) {
       {insertError && (
         <div className={styles.errorBox}>{logMessage(insertError)}</div>
       )}
-      <div className={styles.container}>
+      <div className={"container-flex"}>
         <Head>
           <title>EMAR Dashboards</title>
           <meta property="og:title" content="My page title" key="title" />
         </Head>
-        <div className={`${styles.sideNavContainer}`}>
+        <div className={"side-nav-container"}>
           <SideNav
             items={sections}
             name="dashboardSectionName"
