@@ -14,7 +14,7 @@ function Test() {
   const fetchData = async () => {
     console.log(query);
     const data = {
-      query: "What is the SDES?",
+      query: query,
       api_params: {
         engine: "gpt-35-turbo-0301",
         temperature: 0.1,
@@ -46,9 +46,8 @@ function Test() {
         return response.json();
       })
       .then((data) => {
-        console.log("REPSONSE:", response);
         console.log("Session data:", data);
-        setAnswer(data);
+        setAnswer(data.answer);
       })
       .catch((error) => {
         console.error("Error fetching session data:", error);
