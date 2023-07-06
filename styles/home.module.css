@@ -51,11 +51,11 @@
   color: black;
   margin: 0 -.25rem;
   padding: 0 .25rem;
-  transition: color .1s ease-in-out, box-shadow .1s ease-in-out;
+  transition: color .1s ease-in-out;
   text-decoration: none;
 }
 
-.dashboardItem:hover {
+.dashboardItem:hover .arrowIcon {
   box-shadow: inset 100vw -1.5rem 0 0 #4e8934;
   color: white;
 }
@@ -63,6 +63,10 @@
 .dashboardItemsPanel{
   padding-left: 5%;
   padding-bottom: 2px;
+}
+
+.arrowContainer {
+  display: inline-block;
 }
 
 /* .dashboardItem:after {

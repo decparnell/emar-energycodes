@@ -5,7 +5,6 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 app.prepare().then(() => {
   var saml2 = require("saml2-js");
-  var fs = require("fs");
   var express = require("express");
   var server = express();
   var cookieParser = require("cookie-parser");

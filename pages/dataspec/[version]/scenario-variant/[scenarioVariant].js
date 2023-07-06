@@ -6,6 +6,7 @@ import { useState, useContext, useEffect } from "react";
 import { checkIfItemsAvailableInArray } from "../../../../components/helperFunctions/checkIfItemsAvailableInArray";
 import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable";
 import ScenarioVariantTables from "../../../../components/tables/scenarioVariantTables";
+import SecondNavbar from "../../../../components/layout/secondHeader";
 
 function ScenarioPage({ scenarioVariantInfo, structure, marketMsgInfo }) {
 
@@ -60,6 +61,7 @@ function ScenarioPage({ scenarioVariantInfo, structure, marketMsgInfo }) {
           />
         </div>
         <div className={`${styles.mainContentContainer}`}>
+          <SecondNavbar />
           <section id={dashboard[0].dashboardId}>
             <ScenarioVariantTables keyTitle="Basic Information" latestDataSpecVersion={latestDataSpecVersion} dataBody={svInfoBody} />
           </section>

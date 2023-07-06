@@ -8,6 +8,7 @@ import { checkIfVariablesAreAvailable } from "../../../../components/helperFunct
 import { checkIfItemsAvailableInArray } from "../../../../components/helperFunctions/checkIfItemsAvailableInArray";
 import { checkIfsearchResultsAvailable } from "../../../../components/helperFunctions/checkIfsearchResultsAvailable";
 import MarketMessageTables from "../../../../components/tables/marketMessageTables";
+import SecondNavbar from "../../../../components/layout/secondHeader";
 
 function MarketMessagePage({ searchResults }) {
   const pageId = "MarketMessagePage";
@@ -100,6 +101,7 @@ function MarketMessagePage({ searchResults }) {
           />
         </div>
         <div className={`${styles.mainContentContainer}`}>
+          <SecondNavbar />
           <section id={dashboard[0].dashboardId}>
             <MarketMessageTables
               keyTitle="Basic Information"
