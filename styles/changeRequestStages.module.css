@@ -1,0 +1,37 @@
+.changeRqstNavigator {
+    justify-content: space-evenly;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-top: 2%;
+}
+
+.changeRqstList{
+    margin-right: 2%;
+    margin-top: 3%;
+}
+
+.changeRqstList a {
+    display: block;
+    padding-left: 5%;
+    padding-bottom: 3px;
+    text-decoration: none;
+}
+
+.leftBtn{
+    font-size: 30px;
+    margin-top: 2%;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -90%;
+}
+
+.rightBtn {
+    font-size: 30px;
+    margin-top: 2%;
+    cursor: pointer;
+    position: absolute;
+    margin-left: 90%;
+}
+
+
