@@ -49,6 +49,7 @@ function DataSpecSearchPage() {
     const mappedTarget = target === "" ? "-" : target;
     const mappedSearch = searchValue === "" ? "-" : searchValue;
     try {
+      //Logic App: getAllDataSpecData-LogicApp-v2
       const response = await fetch(
         `https://prod-17.uksouth.logic.azure.com/workflows/f977e7f523164a488ec1500b8d81a7cd/triggers/manual/paths/invoke/searchType/${searchType.name}/startVal/${startVal}/source/${mappedSource}/target/${mappedTarget}/search/${mappedSearch}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=gRmq-WU9sVpROu8kyaVtadjAtqEm4HfILr_kGqNMZPU`
       );
