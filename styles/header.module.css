@@ -32,7 +32,7 @@
 .navLinks {
   float: right;
   height: 100%;
-  margin-right: 2%;
+  margin-right: 6%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -54,7 +54,8 @@
 .dataSpecDropDown {
   border: 0.5px solid black;
   font-weight: bold;
-  padding: 3px;
+  /* padding: 3px; */
+  margin-left: 20px;
 }
 
 .tabHeader {
