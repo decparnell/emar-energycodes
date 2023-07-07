@@ -34,7 +34,7 @@ function ChatBox(props) {
     }, 1000);
   }, []);
 
-  const botMessage = (
+  const botPrompt = (
     <div className={`${styles.chatItem}`}>
       {botIcon}
       <p className={`${styles.chatMessage}`}>
@@ -46,12 +46,18 @@ function ChatBox(props) {
 
   return (
     <Fragment>
-      {showComponent && botMessage}
+      {showComponent && botPrompt}
       {props.messageResponse.map((message) => (
-        <div key={message.id} className={`${styles.chatResponse}`}>
-          {userIcon}
-          <p className={`${styles.chatMessage}`}>{message.content}</p>
-        </div>
+        <>
+          <div key={message.id} className={`${styles.chatResponse}`}>
+            {userIcon}
+            <p className={`${styles.chatMessage}`}>{message.question}</p>
+          </div>
+          <div className={`${styles.chatItem}`}>
+            {botIcon}
+            <p className={`${styles.chatMessage}`}>{message.answer}</p>
+          </div>
+        </>
       ))}
     </Fragment>
   );

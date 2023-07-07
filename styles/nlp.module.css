@@ -21,8 +21,13 @@
   margin-left: 10%;
   padding-top: 1%;
   overflow-y: auto;
+  scroll-snap-type: y proximity;
   background-color: white;
 }
+
+.chatBox > div > div:last-child {
+    scroll-snap-align: end;
+  }
 
 .questionBox {
   width: 75%;
