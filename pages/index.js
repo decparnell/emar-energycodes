@@ -101,7 +101,7 @@ function HomePage({ sections, items, newsData, latestVersionJson, processStageDa
               <div className={`${styles.quickLinkContainer}`}>
                 <QuickLink
                   title="Search"
-                  link="/"
+                  link="/codes-schedules/search"
                   image={search}
                   width="20%"
                   height="65%"

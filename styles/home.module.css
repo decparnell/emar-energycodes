@@ -14,6 +14,8 @@
 .right {
   width: 50%;
   height: 95%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .quickLinkContainer {

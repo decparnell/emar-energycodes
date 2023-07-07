@@ -7,7 +7,11 @@ const GlobalDropDown = (props) => {
   const label = props.label;
   const items = props.items;
   const value = props.stateVal;
+  const labelValue = props.labelValue;
+  const labelKey = props.labelKey;
   const handleChange = props.handleChange;
+  // searchTyp : {Market Messages, Scenario Variant, Schedules code}
+  const searchType = props.searchType;
 
   return (
     <FormControl sx={{ m: 1, minWidth: 200 }}>
@@ -26,13 +30,28 @@ const GlobalDropDown = (props) => {
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        {items.map((item) => {
-          return (
-            <MenuItem value={item.value} key={item.title}>
-              {item.title}
-            </MenuItem>
-          );
-        })}
+        {
+          searchType === "Codes Schedules" ?
+            items.map((item) => {
+              return (
+                <MenuItem value={item} key={item[labelKey]}>
+                  {item[labelValue]}
+                </MenuItem>
+              );
+            })
+            :
+            items.map((item) => {
+              return (
+                <MenuItem value={item[labelValue]} key={item[labelKey]}>
+                  {item[labelValue]}
+                </MenuItem>
+              );
+            })
+
+        }
+
+
+
       </Select>
     </FormControl>
   );
