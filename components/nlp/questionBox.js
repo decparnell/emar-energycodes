@@ -21,8 +21,6 @@ function QuestionBox(props) {
     if (enteredQuestion.trim().length === 0) {
       return;
     }
-
-    console.log(enteredQuestion);
     props.onAskQuestion(enteredQuestion);
     setEnteredQuestion("");
   };

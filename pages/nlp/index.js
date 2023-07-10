@@ -1,40 +1,74 @@
 import styles from "../../styles/nlp.module.css";
 import Head from "next/head";
 import React, { useState } from "react";
-import { BiBot } from "react-icons/bi";
 import ChatBox from "../../components/nlp/chatBox";
 import QuestionBox from "../../components/nlp/questionBox";
 
 function NLP() {
-  const DUMMY_ANSWERS = [
-    "This is the answer to your question",
-    "You can find additional information on the faq page on our website",
-    "I don't quite understand your question, please try asking it again",
-    "Sure I can help you! Here is some more information",
-  ];
-
   const [messageResponse, setMessageResonse] = useState([]);
-  const [randomAnswer, setRandomQuestion] = useState(0);
+  const [botAnswer, setBotAnswer] = useState("");
 
-  const questionHandler = (userQuestion) => {
-    
-    //get a random response and put it into the variable botResponse
-    const generateRandomAnswer = () => {
-      const randomAnswer = Math.floor(Math.random() * DUMMY_ANSWERS.length);
-      setRandomQuestion(randomAnswer);
-    };
-    const botResponse = DUMMY_ANSWERS[randomAnswer];
+  const questionHandler = (event) => {
+    event.preventDefault();
+    fetchData();
 
-    setMessageResonse((prevQuestionAnswer) => {
-      return [
-        ...prevQuestionAnswer,
-        {
-          question: userQuestion,
-          answer: botResponse,
-          id: Math.round(Math.random() * 100).toString(),
+    const fetchData = async () => {
+      console.log(query);
+
+      const data = {
+        query: query,
+        api_params: {
+          engine: "gpt-35-turbo-0301",
+          temperature: 0.1,
+          max_tokens: 500,
         },
-      ];
-    });
+        logging: {
+          user_name: "user@example.com",
+          timestamp: 1234,
+        },
+      };
+
+      const bodyData = JSON.stringify(data);
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: bodyData,
+      };
+
+      fetch(
+        "https://recco-openai-qa.azurewebsites.net/api/answer_query?code=WVTZzRNJ3Hi2fH_tKF3hHiXJsirhpa8qQATso6LFTqIOAzFuFICWGQ==",
+        options
+      )
+        .then((response) => {
+          console.log(response);
+          if (!response.ok) {
+            throw new Error("Error occurred while fetching session data");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Session data:", data);
+          setBotAnswer(data.response.answer);
+        })
+        .then((userQuestion) => {
+          setMessageResonse((prevQuestionAnswer) => {
+            return [
+              ...prevQuestionAnswer,
+              {
+                question: userQuestion,
+                answer: botAnswer,
+                id: Math.round(Math.random() * 100).toString(),
+              },
+            ];
+          });
+          setBotAnswer("");
+        })
+        .catch((error) => {
+          console.error("Error fetching session data:", error);
+        });
+    };
   };
 
   return (

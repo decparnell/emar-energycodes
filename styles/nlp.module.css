@@ -20,14 +20,9 @@
   width: 80%;
   margin-left: 10%;
   padding-top: 1%;
-  overflow-y: auto;
-  scroll-snap-type: y proximity;
   background-color: white;
+  overflow-y: auto;
 }
-
-.chatBox > div > div:last-child {
-    scroll-snap-align: end;
-  }
 
 .questionBox {
   width: 75%;
@@ -37,7 +32,7 @@
 
 .sendMessage {
   margin-top: 7%;
-  padding: 2% 1%;
+  padding-right: 1%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -46,6 +41,7 @@
 
 .input {
   width: 95%;
+  padding: 2% 1%;
   border: none;
   font-size: 15px;
   font-family: "Open Sans", cursive;
@@ -66,4 +62,5 @@
   background-color: white;
   border: none;
   box-shadow: none;
+  cursor: pointer;
 }
