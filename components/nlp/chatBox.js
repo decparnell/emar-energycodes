@@ -2,6 +2,8 @@ import React, { Fragment, useState } from "react";
 import { BiBot, BiUser } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import { useEffect } from "react";
+import UserQuestion from "./userQuestion";
+import BotResponse from "./botResponse";
 
 function ChatBox(props) {
   const botIcon = (
@@ -47,17 +49,15 @@ function ChatBox(props) {
   return (
     <Fragment>
       {showComponent && botPrompt}
+      {props.question.map((message) => (
+        <div key={message.id}>
+          <UserQuestion messageValue={message.question} />
+        </div>
+      ))}
       {props.messageResponse.map((message) => (
-        <>
-          <div key={message.id} className={`${styles.userQuestion}`}>
-            {userIcon}
-            <p className={`${styles.chatMessage}`}>{message.question}</p>
-          </div>
-          <div className={`${styles.botResponse}`}>
-            {botIcon}
-            <p className={`${styles.chatMessage}`}>{message.answer}</p>
-          </div>
-        </>
+        <div key={message.id}>
+          <BotResponse messageValue={message.answer} />
+        </div>
       ))}
     </Fragment>
   );

@@ -1,13 +1,24 @@
 import styles from "../../styles/nlp.module.css";
 import Head from "next/head";
 import React, { useState } from "react";
-import ChatBox from "../../components/nlp/chatBox";
 import QuestionBox from "../../components/nlp/questionBox";
+import ChatBox from "../../components/nlp/chatBox";
 
 function NLP() {
-  const [messageResponse, setMessageResonse] = useState([]);
+
+  const [question, setQuestion] = useState([]);
+  const [response, setResonse] = useState([]);
 
   const questionHandler = async (userQuestion) => {
+    setQuestion((prevQuestion) => {
+      return [
+        ...prevQuestion,
+        {
+          question: userQuestion,
+          id: Math.round(Math.random() * 100).toString(),
+        },
+      ];
+    });
 
     const data = {
       query: userQuestion,
@@ -43,7 +54,7 @@ function NLP() {
       })
       .then((data) => {
         const botAnswer = data.response.answer;
-        setMessageResonse((prevQuestionAnswer) => {
+        setResonse((prevQuestionAnswer) => {
           return [
             ...prevQuestionAnswer,
             {
@@ -69,7 +80,7 @@ function NLP() {
         <h1 className={styles.title}>NLP</h1>
         <section className={`${styles.mainContentContainer} `}>
           <div className={`${styles.chatBox} box`}>
-            <ChatBox messageResponse={messageResponse} />
+            <ChatBox messageResponse={response} question={question}/>
           </div>
         </section>
         <QuestionBox onAskQuestion={questionHandler} />
