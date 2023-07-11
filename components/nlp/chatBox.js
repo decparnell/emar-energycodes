@@ -35,7 +35,7 @@ function ChatBox(props) {
   }, []);
 
   const botPrompt = (
-    <div className={`${styles.chatItem}`}>
+    <div className={`${styles.botResponse}`}>
       {botIcon}
       <p className={`${styles.chatMessage}`}>
         Hi, I am your RECCo assistant, here to help you with any REC related
@@ -49,11 +49,11 @@ function ChatBox(props) {
       {showComponent && botPrompt}
       {props.messageResponse.map((message) => (
         <>
-          <div key={message.id} className={`${styles.chatResponse}`}>
+          <div key={message.id} className={`${styles.userQuestion}`}>
             {userIcon}
             <p className={`${styles.chatMessage}`}>{message.question}</p>
           </div>
-          <div className={`${styles.chatItem}`}>
+          <div className={`${styles.botResponse}`}>
             {botIcon}
             <p className={`${styles.chatMessage}`}>{message.answer}</p>
           </div>
