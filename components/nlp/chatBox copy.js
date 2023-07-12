@@ -18,14 +18,14 @@ function ChatBox(props) {
   );
 
   const botTypingIcon = (
-    <BiMessageDots
-      style={{
-        height: "100%",
-        width: "100%",
-        color: "green",
-        paddingBottom: "0.5%",
-      }}
-    />
+      <BiMessageDots
+        style={{
+          height: "100%",
+          width: "100%",
+          color: "green",
+          paddingBottom: "0.5%",
+        }}
+      />
   );
 
   const [showComponent, setShowComponent] = useState(false);
@@ -49,10 +49,19 @@ function ChatBox(props) {
   return (
     <Fragment>
       {showComponent && botPrompt}
-      {props.chatlog}
+      {props.question.map((message) => (
+        <div key={message.id}>
+          <UserQuestion messageValue={message.question} />
+        </div>
+      ))}
+      {props.messageResponse.map((message) => (
+        <div key={message.id}>
+          <BotResponse messageValue={message.answer} />
+        </div>
+      ))}
       <div className={`${styles.typingContainer}`}>
-        {!showComponent && botTypingIcon}
-        {props.isTyping && botTypingIcon}
+      {!showComponent && botTypingIcon}
+      {props.isTyping && botTypingIcon}
       </div>
     </Fragment>
   );

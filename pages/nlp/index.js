@@ -3,14 +3,15 @@ import Head from "next/head";
 import React, { useState } from "react";
 import QuestionBox from "../../components/nlp/questionBox";
 import ChatBox from "../../components/nlp/chatBox";
+import UserQuestion from "../../components/nlp/userQuestion";
 
 function NLP() {
   const [question, setQuestion] = useState([]);
   const [response, setResonse] = useState([]);
   const [botIsTyping, setBotIsTyping] = useState(false);
-
+  const [chatLog, setChatLog] = useState([]);
   const questionHandler = async (userQuestion) => {
-    setQuestion((prevQuestion) => {
+    /* setQuestion((prevQuestion) => {
       return [
         ...prevQuestion,
         {
@@ -18,10 +19,15 @@ function NLP() {
           id: Math.round(Math.random() * 100).toString(),
         },
       ];
-    });
+    }); */
 
     setBotIsTyping(true);
-
+    console.log(chatLog);
+    //adding question to chat log
+    setChatLog((prevChat) => {
+      return [...prevChat, <UserQuestion messageValue={userQuestion} />];
+    });
+    console.log(chatLog);
     const data = {
       query: userQuestion,
       api_params: {
@@ -56,7 +62,13 @@ function NLP() {
       })
       .then((data) => {
         const botAnswer = data.response.answer;
-        setResonse((prevQuestionAnswer) => {
+
+        //add botans comp to chat log///////////////////////////////////////////////////////////////////
+        setChatLog((prevChat) => {
+          return [...prevChat, <botAnswer messageValue={botAnswer} />];
+        });
+
+        /* setResonse((prevQuestionAnswer) => {
           return [
             ...prevQuestionAnswer,
             {
@@ -65,7 +77,7 @@ function NLP() {
               id: Math.round(Math.random() * 100).toString(),
             },
           ];
-        });
+        }); */
         setBotIsTyping(false);
       })
       .catch((error) => {
@@ -87,6 +99,7 @@ function NLP() {
               messageResponse={response}
               question={question}
               isTyping={botIsTyping}
+              chatLog={chatLog}
             />
           </div>
         </section>

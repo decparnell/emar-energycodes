@@ -14,13 +14,12 @@ function BotResponse(props) {
     />
   );
 
-
   return (
     <Fragment>
-          <div className={`${styles.botResponse}`}>
-            {botIcon}
-            <p className={`${styles.chatMessage}`}>{props.messageValue}</p>
-          </div>
+      <div className={`${styles.botResponse}`}>
+        {botIcon}
+        <p className={`${styles.chatMessage}`}>{props.messageValue}</p>
+      </div>
     </Fragment>
   );
 }
