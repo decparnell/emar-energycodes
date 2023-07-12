@@ -71,3 +71,9 @@ export const dataItemHeaders = [
   { title: "Local Reference", dataColumn: "LegacyIdentifier" },
   { title: "Message Name", dataColumn: "DataItemName" },
 ];
+
+export const codeSchdulesHeaders = [
+  { title: "Document Name", dataColumn: "documentName" },
+  { title: "Clause Reference", dataColumn: "clauseReference" },
+  { title: "Clause Text", dataColumn: "componentText" },
+]

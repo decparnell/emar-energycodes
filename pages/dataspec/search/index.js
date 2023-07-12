@@ -13,8 +13,13 @@ import {
   dataItemHeaders,
 } from "../../../components/settings";
 import { Button, TextField } from "@mui/material";
+import {
+  getDistinctValuesSource,
+  getDistinctValuesTarget,
+} from "../../../components/dropdown/functions/formatDropdownItems"
 
-function DataSpecSearchPage() {
+function DataSpecSearchPage({ dataSpecSearchList }) {
+
   const [data, setData] = useState([]);
   const [source, setSource] = useState("");
   const [target, setTarget] = useState("");
@@ -24,22 +29,17 @@ function DataSpecSearchPage() {
   const [error, setError] = useState(null);
   const [hasMore, setHasMore] = useState(true);
   const [searchType, setSearchType] = useState({ name: "Market Messages" });
+
   const headers =
     searchType.name === "Market Messages"
       ? marketMessageHeaders
       : searchType.name === "Scenario Variants"
-      ? scenarioVariantHeaders
-      : dataItemHeaders;
-  const dropdownItems = [
-    {
-      title: "Half Hourly Data Collector",
-      value: "Half Hourly Data Collector",
-    },
-    {
-      title: "Distribution Network Operator",
-      value: "Distribution Network Operator",
-    },
-  ];
+        ? scenarioVariantHeaders
+        : dataItemHeaders;
+
+  const sourceOptions = getDistinctValuesSource(dataSpecSearchList);
+  const targetOptions = getDistinctValuesTarget(dataSpecSearchList);
+
   ///////////////FUNCTIONS/////////////////////////
   //fetch data for the results table (before an actual search has been done)
   const fetchData = async () => {
@@ -55,15 +55,22 @@ function DataSpecSearchPage() {
       );
       const dataSpecDataJson = await response.json();
       const newData = dataSpecDataJson.Table1;
-      if (startVal === 0) {
-        setData(newData);
-      } else if (typeof newData === "undefined") {
-        setHasMore(false);
-      } else {
-        setData((prevData) => [...prevData, ...newData]);
-      }
 
-      setStartVal((prevVal) => prevVal + 51);
+      if (newData.length > 0) {
+        if (startVal === 0) {
+          setData(newData);
+          if(newData.length < 50){
+            setHasMore(false);
+          }
+        } else if (typeof newData === "undefined") {
+          setHasMore(false);
+        } else {
+          setData((prevData) => [...prevData, ...newData]);
+        }
+
+        setStartVal((prevVal) => prevVal + 51);
+      }
+      
     } catch (error) {
       setError(error);
     } finally {
@@ -74,6 +81,7 @@ function DataSpecSearchPage() {
   useEffect(() => {
     fetchData();
   }, [searchType, source, target]);
+
 
   //////////////HANDLING FUNCTIONS/////////////////
   //scroll to the top of the page when the button is clicked
@@ -155,14 +163,20 @@ function DataSpecSearchPage() {
           <div className={styles.filterContainer}>
             <GlobalDropDown
               label="Filter the Source:"
+              labelValue="sourceNameValue"
+              labelKey="sourceNameTitle"
+              searchType={searchType.name}
               value={source}
-              items={dropdownItems}
+              items={sourceOptions}
               handleChange={handleSourceChange}
             />
             <GlobalDropDown
               label="Filter the Target:"
+              labelValue="targetNameValue"
+              labelKey="targetNameValue"
+              searchType={searchType.name}
               value={target}
-              items={dropdownItems}
+              items={targetOptions}
               handleChange={handleTargetChange}
             />
           </div>
@@ -176,6 +190,7 @@ function DataSpecSearchPage() {
             searchType={searchType}
             fetchData={fetchData}
             hasMore={hasMore}
+            isLoading={isLoading}
           />
         </div>
       </div>
@@ -184,3 +199,20 @@ function DataSpecSearchPage() {
 }
 
 export default DataSpecSearchPage;
+
+export async function getServerSideProps(context) {
+
+  //Logic App: getDataSpecSearchList-LogicApp
+  //TO-DO: change 3.5.0 to versionNumber when dropdown for the version selection will be implemented
+
+  const dataSpecReq = await fetch(
+    `https://prod-00.uksouth.logic.azure.com/workflows/d0c53a8711d9426d8f0a400b24e9a305/triggers/request/paths/invoke/versionNumber/3.5.0?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=skIfVKyKRwy-wAiTWKFjg3Q6vXwYK8ct2mQ8aSbB6Fk`
+  );
+  const dataSpecSearchListJSON = await dataSpecReq.json();
+  const dataSpecSearchList = dataSpecSearchListJSON.mmsv
+  return {
+    props: {
+      dataSpecSearchList,
+    }
+  };
+}

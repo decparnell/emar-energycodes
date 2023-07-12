@@ -17,7 +17,10 @@ const ResultsTable = (props) => {
   //the api address to call to get the next batch of data
   const fetchData = props.fetchData;
 
+  // has more data on the props.data - required for the infinite scroll
   const hasMore = props.hasMore;
+  // isloading - is the fetchData still executing the api
+  const isLoading = props.isLoading;
 
   function returnTableDataForHeaders(item) {
     let jsxArray = [];
@@ -26,13 +29,13 @@ const ResultsTable = (props) => {
     });
     return jsxArray;
   }
-
+  
   return (
     <InfiniteScroll
       dataLength={data.length}
       next={fetchData}
       hasMore={hasMore}
-      loader={<p>Loading...</p>}
+      loader={data.length === 0 && !isLoading ? <p>No data available.</p> : <p>Loading...</p>}
       endMessage={<p>No more data to load.</p>}
       className={styles.scroll}
     >
