@@ -15,13 +15,15 @@
 
 .chatBox {
   height: fit-content;
-  max-height: 350px;
-  min-height: 200px;
+  max-height: 22rem;
+  min-height: 12.5rem;
   width: 80%;
   margin-left: 10%;
   padding-top: 1%;
+  padding-bottom: 2%;
   background-color: white;
   overflow-y: auto;
+  position: relative;
 }
 
 .questionBox {

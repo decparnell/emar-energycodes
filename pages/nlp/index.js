@@ -5,9 +5,9 @@ import QuestionBox from "../../components/nlp/questionBox";
 import ChatBox from "../../components/nlp/chatBox";
 
 function NLP() {
-
   const [question, setQuestion] = useState([]);
   const [response, setResonse] = useState([]);
+  const [botIsTyping, setBotIsTyping] = useState(false);
 
   const questionHandler = async (userQuestion) => {
     setQuestion((prevQuestion) => {
@@ -19,6 +19,8 @@ function NLP() {
         },
       ];
     });
+
+    setBotIsTyping(true);
 
     const data = {
       query: userQuestion,
@@ -64,6 +66,7 @@ function NLP() {
             },
           ];
         });
+        setBotIsTyping(false);
       })
       .catch((error) => {
         console.error("Error fetching session data:", error);
@@ -80,7 +83,11 @@ function NLP() {
         <h1 className={styles.title}>NLP</h1>
         <section className={`${styles.mainContentContainer} `}>
           <div className={`${styles.chatBox} box`}>
-            <ChatBox messageResponse={response} question={question}/>
+            <ChatBox
+              messageResponse={response}
+              question={question}
+              isTyping={botIsTyping}
+            />
           </div>
         </section>
         <QuestionBox onAskQuestion={questionHandler} />
