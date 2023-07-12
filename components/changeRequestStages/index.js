@@ -80,7 +80,7 @@ function ChangeRequestStages(props) {
     <div>
       <div className={styles.changeRqstNavigator}>
         {leftBtnIcon}
-        <h6>{currentProcessStg}</h6>
+        <h6>{processStageList.length === 0 ? "Data not available" : currentProcessStg}</h6>
         {rightBtnIcon}
       </div>
       <div className={styles.changeRqstList}>
@@ -90,9 +90,12 @@ function ChangeRequestStages(props) {
             href={name["Link to CP page"]}
             target="_blank"
             rel="noreferrer"
+            className={styles.dashboardItem}
           >
-            <BiRightArrow />
-            {name["Change Proposal Title"]}
+            <span className={styles.arrowContainer}>
+              <BiRightArrow className={styles.arrowIcon} />
+            </span>
+            {name["Change Proposal Name"]}
           </a>
         ))}
       </div>

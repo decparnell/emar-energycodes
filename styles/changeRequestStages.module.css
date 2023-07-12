@@ -6,7 +6,7 @@
     margin-top: 2%;
 }
 
-.changeRqstList{
+.changeRqstList {
     margin-right: 2%;
     margin-top: 3%;
 }
@@ -18,7 +18,7 @@
     text-decoration: none;
 }
 
-.leftBtn{
+.leftBtn {
     font-size: 30px;
     margin-top: 2%;
     cursor: pointer;
@@ -34,4 +34,20 @@
     margin-left: 90%;
 }
 
+.dashboardItem {
+    box-shadow: inset 0 0 0 0 #a8d395;
+    color: black;
+    margin: 0 -.25rem;
+    padding: 0 .25rem;
+    transition: color .1s ease-in-out;
+    text-decoration: none;
+}
 
+.dashboardItem:hover .arrowIcon {
+    box-shadow: inset 100vw -1.5rem 0 0 #4e8934;
+    color: white;
+}
+
+.arrowContainer {
+    display: inline-block;
+}
