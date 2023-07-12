@@ -4,30 +4,23 @@ import React, { useState } from "react";
 import QuestionBox from "../../components/nlp/questionBox";
 import ChatBox from "../../components/nlp/chatBox";
 import UserQuestion from "../../components/nlp/userQuestion";
+import BotResponse from "../../components/nlp/botResponse";
 
 function NLP() {
-  const [question, setQuestion] = useState([]);
-  const [response, setResonse] = useState([]);
   const [botIsTyping, setBotIsTyping] = useState(false);
   const [chatLog, setChatLog] = useState([]);
+
   const questionHandler = async (userQuestion) => {
-    /* setQuestion((prevQuestion) => {
-      return [
-        ...prevQuestion,
-        {
-          question: userQuestion,
-          id: Math.round(Math.random() * 100).toString(),
-        },
-      ];
-    }); */
 
     setBotIsTyping(true);
-    console.log(chatLog);
-    //adding question to chat log
+
     setChatLog((prevChat) => {
-      return [...prevChat, <UserQuestion messageValue={userQuestion} />];
+      return [
+        ...prevChat, 
+        <UserQuestion messageValue={userQuestion} />
+      ];
     });
-    console.log(chatLog);
+
     const data = {
       query: userQuestion,
       api_params: {
@@ -63,21 +56,13 @@ function NLP() {
       .then((data) => {
         const botAnswer = data.response.answer;
 
-        //add botans comp to chat log///////////////////////////////////////////////////////////////////
         setChatLog((prevChat) => {
-          return [...prevChat, <botAnswer messageValue={botAnswer} />];
+          return [
+            ...prevChat, 
+            <BotResponse messageValue={botAnswer} />
+          ];
         });
 
-        /* setResonse((prevQuestionAnswer) => {
-          return [
-            ...prevQuestionAnswer,
-            {
-              question: userQuestion,
-              answer: botAnswer,
-              id: Math.round(Math.random() * 100).toString(),
-            },
-          ];
-        }); */
         setBotIsTyping(false);
       })
       .catch((error) => {
@@ -96,8 +81,6 @@ function NLP() {
         <section className={`${styles.mainContentContainer} `}>
           <div className={`${styles.chatBox} box`}>
             <ChatBox
-              messageResponse={response}
-              question={question}
               isTyping={botIsTyping}
               chatLog={chatLog}
             />

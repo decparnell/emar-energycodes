@@ -2,8 +2,6 @@ import React, { Fragment, useState } from "react";
 import { BiBot, BiMessageDots } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import { useEffect } from "react";
-import UserQuestion from "./userQuestion";
-import BotResponse from "./botResponse";
 
 function ChatBox(props) {
   const botIcon = (
@@ -49,7 +47,7 @@ function ChatBox(props) {
   return (
     <Fragment>
       {showComponent && botPrompt}
-      {props.chatlog}
+      {props.chatLog}
       <div className={`${styles.typingContainer}`}>
         {!showComponent && botTypingIcon}
         {props.isTyping && botTypingIcon}
