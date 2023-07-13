@@ -1,5 +1,6 @@
 export function LogUserInfo(action) {
   const data = { actionName: action };
+
   const bodyData = JSON.stringify(data);
   const options = {
     method: "POST",

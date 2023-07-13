@@ -12,7 +12,13 @@ import { LogUserInfo } from "../components/logging";
 import DashboardLink from "../components/dashboardLink";
 import ChangeRequestStages from "../components/changeRequestStages";
 
-function HomePage({ sections, items, newsData, latestVersionJson, processStageData }) {
+function HomePage({
+  sections,
+  items,
+  newsData,
+  latestVersionJson,
+  processStageData,
+}) {
   const apiVarList = [
     { obj: newsData, name: "newsData" },
     { obj: items, name: "items" },
@@ -24,7 +30,7 @@ function HomePage({ sections, items, newsData, latestVersionJson, processStageDa
   const value = useContext(AppContext);
   let { chosenButton, chosenTab } = value.state;
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
-  
+
   const [currentSections, setCurrentSections] = useState(() => {
     if (checkIfItemsAvailableInArray(internalErrorLog, "sections")) {
       return sections[0];
@@ -39,7 +45,6 @@ function HomePage({ sections, items, newsData, latestVersionJson, processStageDa
   });
 
   useEffect(() => {
-
     if (currentSections.dashboardSectionName === "All") {
       setCurrentItems(items);
     } else {
@@ -95,7 +100,10 @@ function HomePage({ sections, items, newsData, latestVersionJson, processStageDa
               <h6 className="boxTitle">
                 {currentSections.dashboardSectionName}
               </h6>
-              <DashboardLink currentItems={currentItems} versions={latestVersionJson} />
+              <DashboardLink
+                currentItems={currentItems}
+                versions={latestVersionJson}
+              />
             </div>
             <div className={`${styles.right}`}>
               <div className={`${styles.quickLinkContainer}`}>
@@ -110,7 +118,7 @@ function HomePage({ sections, items, newsData, latestVersionJson, processStageDa
                 <QuickLink title="" link="/" width="20%" height="65%" />
               </div>
               <div className={`${styles.upcomingChangesContent} box`}>
-                <ChangeRequestStages processStageData={processStageData}/>
+                <ChangeRequestStages processStageData={processStageData} />
               </div>
             </div>
           </div>
@@ -138,8 +146,14 @@ export async function getServerSideProps({ req, res }) {
   );
   const dataJson = await dataReq.json();
   const sections = dataJson.sections;
-  const lastDashboardSectionOrder = (sections[sections.length-1].dashboardSectionOrder)+1;
-  sections.push({dashboardId_FK: null, dashboardSectionId: null, dashboardSectionName:"All", dashboardSectionOrder: lastDashboardSectionOrder});
+  const lastDashboardSectionOrder =
+    sections[sections.length - 1].dashboardSectionOrder + 1;
+  sections.push({
+    dashboardId_FK: null,
+    dashboardSectionId: null,
+    dashboardSectionName: "All",
+    dashboardSectionOrder: lastDashboardSectionOrder,
+  });
   const items = dataJson.items;
 
   const getLatestVersions = await fetch(
@@ -147,8 +161,9 @@ export async function getServerSideProps({ req, res }) {
   );
   const latestVersionJson = await getLatestVersions.json();
 
-
-  const getProcessStgData = await fetch("https://get-changerequest-from-recportal.azurewebsites.net/api/getchangerequestfromrecportal");
+  const getProcessStgData = await fetch(
+    "https://get-changerequest-from-recportal.azurewebsites.net/api/getchangerequestfromrecportal"
+  );
   const processStageData = await getProcessStgData.json();
 
   /*   const newsDataReq = await fetch(
