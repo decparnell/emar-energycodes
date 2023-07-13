@@ -1,13 +1,13 @@
 import { useRouter } from "next/router";
-import styles from "../../../styles/scenarioVariant.module.css";
+import styles from "../../styles/scenarioVariant.module.css";
 import { useState, useContext, useEffect } from "react";
-import SideNav from "../../../components/dashboardSideNav";
-import { checkIfVariablesAreAvailable } from "../../../components/helperFunctions/checkIfVariablesAreAvailable";
-import { checkIfItemsAvailableInArray } from "../../../components/helperFunctions/checkIfItemsAvailableInArray";
-import SchedulesTables from "../../../components/tables/schedulesTables";
-import CreateSchedulesContent from "../../../components/scheduleId/createSchedulesContent";
+import SideNav from "../../components/dashboardSideNav";
+import { checkIfVariablesAreAvailable } from "../../components/helperFunctions/checkIfVariablesAreAvailable";
+import { checkIfItemsAvailableInArray } from "../../components/helperFunctions/checkIfItemsAvailableInArray";
+import SchedulesTables from "../../components/tables/schedulesTables";
+import CreateSchedulesContent from "../../components/scheduleId/createSchedulesContent";
 
-function Schedules({
+function DecTEst({
   versions,
   parts,
   sections,
@@ -56,7 +56,7 @@ function Schedules({
     //console.log("DATA", componentsData)
     try {
       const response = await fetch(
-        `https://prod-15.uksouth.logic.azure.com/workflows/05ebc2734c5340bb83e78396ae4ca88f/triggers/request/paths/invoke/documentId/${scheduleId}/version/${versionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=-7jIZukmQmoddagifC2Z1FxKEWg7VLMfp2mcg-sAKPE`
+        `https://prod-15.uksouth.logic.azure.com/workflows/05ebc2734c5340bb83e78396ae4ca88f/triggers/request/paths/invoke/documentId/914/version/3.4.0/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=-7jIZukmQmoddagifC2Z1FxKEWg7VLMfp2mcg-sAKPE`
       );
       const dataResJson = await response.json();
       const newDataComponents = dataResJson;
@@ -143,6 +143,44 @@ function Schedules({
 
   return (
     <div className={styles.container}>
+      {/* <div className={`${styles.sideNavContainer}`}>
+        <SideNav
+          navbarType="PanelBasedNavBar"
+          items={panelDashboard}
+          dashboardId="sectionId"
+          name="sectionName"
+          panelTitle="panelTitle"
+          dashboardName="dashboard"
+          stateVar={currentSections}
+          stateSet={setCurrentSections}
+        />
+      </div>
+      <div className={`${styles.mainContentContainer}`}>
+        <h3 className={styles.headers}>
+          {scheduleNumber
+            ? `${scheduleName} - Schedule ${scheduleNumber}`
+            : scheduleName}
+        </h3>
+        <div className={styles.tablesContainer}>
+          <SchedulesTables
+            tableId="Version Table"
+            versions={versions}
+            scheduleId={scheduleId}
+            versionName={versionName}
+          />
+        </div>
+
+        <div className={styles.tablesContainer}>
+          {/* if there is at least one optionality show a mandatory table 
+          {optionalityInfo[0].optionalityId && (
+            <SchedulesTables
+              tableId="Mandatory Table"
+              parts={parts}
+              mandatoryTable={mandatoryTable}
+            />
+          )}
+        </div> */}
+
       <div className={`${styles.sideNavContainer}`}>
         <SideNav
           navbarType="PanelBasedNavBar"
@@ -155,54 +193,27 @@ function Schedules({
           stateSet={setCurrentSections}
         />
       </div>
-      {/*
-      This line is the issue line
-       <div className={`${styles.mainContentContainer}`}> */}
-      <h3 className={styles.headers}>
-        {scheduleNumber
-          ? `${scheduleName} - Schedule ${scheduleNumber}`
-          : scheduleName}
-      </h3>
-      <div className={styles.tablesContainer}>
-        <SchedulesTables
-          tableId="Version Table"
-          versions={versions}
-          scheduleId={scheduleId}
-          versionName={versionName}
+      <div style={{ width: "100%", alignItems: "center" }}>
+        <CreateSchedulesContent
+          parts={parts}
+          definitions={definitions}
+          data={groupSectionsAndComponents}
+          fetchData={fetchData}
+          hasMoreData={hasMoreData}
+          totalLength={startVal}
         />
       </div>
-
-      <div className={styles.tablesContainer}>
-        {/* if there is at least one optionality show a mandatory table */}
-        {optionalityInfo[0].optionalityId && (
-          <SchedulesTables
-            tableId="Mandatory Table"
-            parts={parts}
-            mandatoryTable={mandatoryTable}
-          />
-        )}
-      </div>
-
-      <CreateSchedulesContent
-        parts={parts}
-        definitions={definitions}
-        data={groupSectionsAndComponents}
-        fetchData={fetchData}
-        hasMoreData={hasMoreData}
-        totalLength={startVal}
-      />
     </div>
-    /* </div> */
   );
 }
 
-export default Schedules;
+export default DecTEst;
 
 export async function getServerSideProps(context) {
   //return the info about the latest version
 
   const initialDataReq = await fetch(
-    `https://prod-06.uksouth.logic.azure.com/workflows/77e02eb742f8439e8036ac554294f30c/triggers/request/paths/invoke/documentId/${context.params.schedule_id}/version/${context.params.versionName}/?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=wbnwIPxUSyYKnGUfsB4NFCDZO02dcJLEquai1Nw4Iao`
+    `https://prod-06.uksouth.logic.azure.com/workflows/77e02eb742f8439e8036ac554294f30c/triggers/request/paths/invoke/documentId/914/version/3.4.0/?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=wbnwIPxUSyYKnGUfsB4NFCDZO02dcJLEquai1Nw4Iao`
   );
 
   const dataJson = await initialDataReq.json();
@@ -222,7 +233,7 @@ export async function getServerSideProps(context) {
   definitions = definitions.concat(scheduleLinks).concat(dataSpecLinks);
 
   const optionalityReq = await fetch(
-    `https://prod-14.uksouth.logic.azure.com/workflows/4f3b0f9b10f14137afd1fca0686b8119/triggers/manual/paths/invoke/documentId/${document[0].documentId}/versionId/${context.params.versionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lVJcdlsL4DY-LixBpllt8Ats8IO9LiJjpjs6FxZovjg`
+    `https://prod-14.uksouth.logic.azure.com/workflows/4f3b0f9b10f14137afd1fca0686b8119/triggers/manual/paths/invoke/documentId/914/versionId/3.4.0?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lVJcdlsL4DY-LixBpllt8Ats8IO9LiJjpjs6FxZovjg`
   );
   const optionalityInfo = await optionalityReq.json();
 

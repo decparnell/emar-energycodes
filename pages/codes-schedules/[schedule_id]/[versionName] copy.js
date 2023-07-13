@@ -7,7 +7,7 @@ import { checkIfItemsAvailableInArray } from "../../../components/helperFunction
 import SchedulesTables from "../../../components/tables/schedulesTables";
 import CreateSchedulesContent from "../../../components/scheduleId/createSchedulesContent";
 
-function Schedules({
+function MeteringArrangementsPage({
   versions,
   parts,
   sections,
@@ -34,7 +34,6 @@ function Schedules({
   const scheduleNumber = docInfo.scheduleNumber;
   const scheduleName = docInfo.documentName;
 
-  //use this method DEC
   const [componentsData, setComponentsData] = useState([]);
   const [startVal, setStartVal] = useState(0);
   //const [totalLength, setTotalLength] = useState(0);
@@ -155,48 +154,48 @@ function Schedules({
           stateSet={setCurrentSections}
         />
       </div>
-      {/*
-      This line is the issue line
-       <div className={`${styles.mainContentContainer}`}> */}
-      <h3 className={styles.headers}>
-        {scheduleNumber
-          ? `${scheduleName} - Schedule ${scheduleNumber}`
-          : scheduleName}
-      </h3>
-      <div className={styles.tablesContainer}>
-        <SchedulesTables
-          tableId="Version Table"
-          versions={versions}
-          scheduleId={scheduleId}
-          versionName={versionName}
-        />
-      </div>
-
-      <div className={styles.tablesContainer}>
-        {/* if there is at least one optionality show a mandatory table */}
-        {optionalityInfo[0].optionalityId && (
+      <div className={`${styles.mainContentContainer}`}>
+        <h3 className={styles.headers}>
+          {scheduleNumber
+            ? `${scheduleName} - Schedule ${scheduleNumber}`
+            : scheduleName}
+        </h3>
+        <div className={styles.tablesContainer}>
           <SchedulesTables
-            tableId="Mandatory Table"
-            parts={parts}
-            mandatoryTable={mandatoryTable}
+            tableId="Version Table"
+            versions={versions}
+            scheduleId={scheduleId}
+            versionName={versionName}
           />
-        )}
-      </div>
+        </div>
 
-      <CreateSchedulesContent
-        parts={parts}
-        definitions={definitions}
-        data={groupSectionsAndComponents}
-        fetchData={fetchData}
-        hasMoreData={hasMoreData}
-        totalLength={startVal}
-      />
+        <div className={styles.tablesContainer}>
+          {/* if there is at least one optionality show a mandatory table */}
+          {optionalityInfo[0].optionalityId && (
+            <SchedulesTables
+              tableId="Mandatory Table"
+              parts={parts}
+              mandatoryTable={mandatoryTable}
+            />
+          )}
+        </div>
+
+        <div className={`${styles.contentContainer}`}>
+          <CreateSchedulesContent
+            parts={parts}
+            definitions={definitions}
+            data={groupSectionsAndComponents}
+            fetchData={fetchData}
+            hasMoreData={hasMoreData}
+            totalLength={startVal}
+          />
+        </div>
+      </div>
     </div>
-    /* </div> */
   );
 }
 
-export default Schedules;
+export default MeteringArrangementsPage;
 
 export async function getServerSideProps(context) {
   //return the info about the latest version

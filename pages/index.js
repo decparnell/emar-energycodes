@@ -44,9 +44,9 @@ function HomePage({ sections, items, newsData }) {
     );
   }, [currentSections]);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     LogUserInfo("HomePage");
-  }, []);
+  }, []); */
 
   const [insertError, setInsertError] = useState("");
 
