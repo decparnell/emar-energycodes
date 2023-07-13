@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import {
   BiChevronLeftCircle,
   BiChevronRightCircle,
-  BiRightArrow,
 } from "react-icons/bi";
+import { CustomBoxLink } from "../customComponents/customBoxLink";
 import styles from "../../styles/changeRequestStages.module.css";
+import Tooltip from "@mui/material/Tooltip";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
 function ChangeRequestStages(props) {
   // JSON file retrived from the Change Proposal Register file
@@ -78,25 +79,30 @@ function ChangeRequestStages(props) {
 
   return (
     <div>
-      <div className={styles.changeRqstNavigator}>
+      <div className={styles.help}>
+        <Tooltip
+          placement="top-start"
+          title="Displayed below are the industry changes listed on the REC Portal. They are sorted by current status which can be seen in the title."
+        >
+          <HelpOutlineIcon className={styles.helpIcon} />
+        </Tooltip>
+      </div>
+      <h4 className={styles.changeRqstTitle}>Industry Changes</h4>
+      <div className={`${styles.changeRqstNavigator}`}>
         {leftBtnIcon}
-        <h6>{processStageList.length === 0 ? "Data not available" : currentProcessStg}</h6>
+        <p className={styles.changeRqstNavTitle} >{processStageList.length === 0 ? "Data not available" : currentProcessStg}</p>
         {rightBtnIcon}
       </div>
       <div className={styles.changeRqstList}>
         {currentProcessStgItems.map((name, index) => (
-          <a
-            key={index}
+          <CustomBoxLink
             href={name["Link to CP page"]}
+            key={index}
             target="_blank"
             rel="noreferrer"
-            className={styles.dashboardItem}
           >
-            <span className={styles.arrowContainer}>
-              <BiRightArrow className={styles.arrowIcon} />
-            </span>
             {name["Change Proposal Name"]}
-          </a>
+          </CustomBoxLink>
         ))}
       </div>
     </div>
