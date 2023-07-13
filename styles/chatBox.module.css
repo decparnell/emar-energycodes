@@ -6,6 +6,19 @@
   border-color: black;
 }
 
+.botMessage {
+  margin: 0.5% 1%;
+  padding: 1%;
+  border-width: 5px 1.5px 1.5px;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: grey;
+}
+
+.p {
+  margin: 0.5rem 0;
+}
+
 .userQuestion {
   width: 98%;
   margin: 1%;
@@ -27,10 +40,73 @@
 
 .typingContainer {
   height: 20%;
-  width: 2.5%;
+  width: 80%;
   position: absolute;
   margin-left: 0.6%;
   padding-left: 0.5%;
   bottom: 0;
   overflow-y: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.typingRow {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.dotsContainer {
+  position: relative;
+  padding-left: 1.5rem;
+  width: 30%;
+}
+
+.dotsTyping {
+  position: relative;
+  left: -9999px;
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: 0.3125rem;
+  color: green;
+  box-shadow: 9984px 0 0 0 green, 9999px 0 0 0 green, 10014px 0 0 0 green;
+  animation: dotTyping 1.5s infinite linear;
+}
+
+@keyframes dotTyping {
+  0% {
+    box-shadow: 9984px 0 0 0 green, 9999px 0 0 0 green, 10014px 0 0 0 green;
+  }
+  16.667% {
+    box-shadow: 9984px -10px 0 0 green, 9999px 0 0 0 green, 10014px 0 0 0 green;
+  }
+  33.333% {
+    box-shadow: 9984px 0 0 0 green, 9999px 0 0 0 green, 10014px 0 0 0 green;
+  }
+  50% {
+    box-shadow: 9984px 0 0 0 green, 9999px -10px 0 0 green, 10014px 0 0 0 green;
+  }
+  66.667% {
+    box-shadow: 9984px 0 0 0 green, 9999px 0 0 0 green, 10014px 0 0 0 green;
+  }
+  83.333% {
+    box-shadow: 9984px 0 0 0 green, 9999px 0 0 0 green, 10014px -10px 0 0 green;
+  }
+  100% {
+    box-shadow: 9984px 0 0 0 green, 9999px 0 0 0 green, 10014px 0 0 0 green;
+  }
+}
+
+.options {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button {
+  width: 16%;
+  padding-right: 0%;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  background-color: white;
 }

@@ -1,27 +1,25 @@
 import React, { Fragment, useState } from "react";
-import { BiBot, BiMessageDots } from "react-icons/bi";
+import { BiSupport } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import { useEffect } from "react";
 
 function ChatBox(props) {
   const botIcon = (
-    <BiBot
+    <BiSupport
       style={{
         height: "4%",
         width: "4%",
         color: "green",
-        paddingBottom: "0.5%",
       }}
     />
   );
 
-  const botTypingIcon = (
-    <BiMessageDots
+  const typingBotIcon = (
+    <BiSupport
       style={{
-        height: "100%",
-        width: "100%",
+        height: "80%",
+        width: "2.5%",
         color: "green",
-        paddingBottom: "0.5%",
       }}
     />
   );
@@ -44,13 +42,22 @@ function ChatBox(props) {
     </div>
   );
 
+  const typingDots = (
+    <Fragment className={`${styles.typingRow}`}>
+      {typingBotIcon}
+      <div className={`${styles.dotsContainer}`}>
+        <div className={`${styles.dotsTyping}`}></div>
+      </div>
+    </Fragment>
+  );
+
   return (
     <Fragment>
       {showComponent && botPrompt}
       {props.chatLog}
       <div className={`${styles.typingContainer}`}>
-        {!showComponent && botTypingIcon}
-        {props.isTyping && botTypingIcon}
+        {!showComponent && typingDots}
+        {props.isTyping && typingDots}
       </div>
     </Fragment>
   );
