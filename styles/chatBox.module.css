@@ -42,7 +42,8 @@
   height: 20%;
   width: 80%;
   position: absolute;
-  margin-left: 0.6%;
+  margin-left: 0.4%;
+  margin-bottom: 0.4%;
   padding-left: 0.5%;
   bottom: 0;
   overflow-y: hidden;
@@ -109,4 +110,37 @@
   box-shadow: none;
   cursor: pointer;
   background-color: white;
+}
+
+
+.clipboardIcon {
+  height: 100%;
+  width: 100%;
+  color: black;
+  margin-right: 3%;
+}
+
+.clipboardIcon:hover {
+  color: #77A465 !important;
+}
+
+.dislikeIcon {
+  height: 100%;
+  width: 100%;
+  color: black;
+  margin-right: 3%;
+}
+
+.dislikeIcon:hover {
+  color: red !important;
+}
+
+.likeIcon {
+  height: 100%;
+  width: 100%;
+  color: black;
+}
+
+.likeIcon:hover {
+  color: #77A465 !important;
 }

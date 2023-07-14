@@ -1,6 +1,7 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { BiSupport, BiDislike, BiLike, BiClipboard } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
+import Modal from "../modal/index.js";
 
 function BotResponse(props) {
   const botIcon = (
@@ -15,47 +16,39 @@ function BotResponse(props) {
 
   const clipboardIcon = (
     <BiClipboard
-      style={{
-        height: "100%",
-        width: "100%",
-        color: "black",
-        marginRight: "3%",
-      }}
+    className={`${styles.clipboardIcon}`}
     />
   );
 
   const dislikeIcon = (
     <BiDislike
-      style={{
-        height: "100%",
-        width: "100%",
-        color: "black",
-        marginRight: "3%",
-      }}
+    className={`${styles.dislikeIcon}`}
     />
   );
 
   const likeIcon = (
     <BiLike
-      style={{
-        height: "100%",
-        width: "100%",
-        color: "black",
-      }}
+    className={`${styles.likeIcon}`}
     />
   );
 
-  const clipboardHandler = () => {
+  const [copyText, setCopyText] = useState("");
+  const [openModal, setOpenModal] = useState(false);
 
-  }
+  const copyToClipboardHandler = () => {
+    console.log(props.messageValue);
+    setCopyText(props.messageValue);
+    copy(copyText);
+    console.log("Copied");
+  };
 
-  const dislikeHandler = () => {
-    
-  }
+  const feedbackHandler = () => {
+    setOpenModal(true);
+  };
 
-  const likeHandler = () => {
-    
-  }
+  const closeModal = () => {
+    setOpenModal(false);
+  };
 
   return (
     <Fragment>
@@ -63,19 +56,29 @@ function BotResponse(props) {
         {botIcon}
         <div className={`${styles.botMessage}`}>
           <div className={`${styles.options}`}>
-            <button type="submit" className={`${styles.button}`} onClick={clipboardHandler}>
-            {clipboardIcon}
+            <button
+              className={`${styles.button}`}
+              onClick={copyToClipboardHandler}
+            >
+              {clipboardIcon}
             </button>
-            <button type="submit" className={`${styles.button}`} onClick={dislikeHandler}>
-            {dislikeIcon}
+            <button
+              className={`${styles.button}`}
+              onClick={feedbackHandler}
+            >
+              {dislikeIcon}
             </button>
-            <button type="submit" className={`${styles.button}`} onClick={likeHandler}>
-            {likeIcon}
+            <button
+              className={`${styles.button}`}
+              onClick={feedbackHandler}
+            >
+              {likeIcon}
             </button>
           </div>
           <p className={`${styles.p}`}>{props.messageValue}</p>
         </div>
       </div>
+      <Modal open={openModal} onClose={closeModal}/>
     </Fragment>
   );
 }

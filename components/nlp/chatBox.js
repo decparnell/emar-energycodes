@@ -29,7 +29,7 @@ function ChatBox(props) {
   useEffect(() => {
     setInterval(() => {
       setShowComponent(true);
-    }, 1000);
+    }, 2000);
   }, []);
 
   const botPrompt = (
