@@ -1,7 +1,7 @@
 .container {
   width: 100%;
   margin-bottom: 2%;
-  display: table;
+  display: flex;
   flex-direction: column;
 }
 
@@ -14,28 +14,27 @@
   justify-content: space-evenly;
 }
 
+.conversationContainer {
+  width: 100%;
+}
+
 .chatBox {
   height: fit-content;
   max-height: 22rem;
-  min-height: 12.5rem;
-  width: 80%;
+  min-height: 7.5rem;
+  width: 95%;
   padding-top: 1%;
   padding-bottom: 2%;
   background-color: white;
   overflow-y: auto;
   position: relative;
+  margin-left: 2.5%;
 }
 
 .questionBox {
-  width: 75%;
-  margin-left: 13%;
+  width: 91%;
+  margin-left: 4%;
   margin-top: 1%;
-}
-
-.questionBoxRight {
-  width: 73%;
-    margin-left: 25%;
-    margin-top: 1%;
 }
 
 .sendMessage {
