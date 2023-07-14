@@ -1,0 +1,36 @@
+.questionHistory {
+  height: fit-content;
+  max-height: 22rem;
+  min-height: 12.5rem;
+  width: auto;
+  min-width: 20%;
+  margin: 0 1% 0 1.5%;
+  padding: 0.5% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: white;
+  overflow-y: auto;  
+}
+
+.questionContainer {
+  display: flex;
+  align-items: flex-start;
+  width: 90%;
+  margin: 3% 0;
+  padding: 4%;
+  justify-content: flex-start;
+  border-bottom: solid;
+  border-color: lightgrey;
+  border-bottom-width: 2px;
+}
+
+.questionHistoryItem {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  padding-left: 3%;
+  padding-top: 1%;
+}

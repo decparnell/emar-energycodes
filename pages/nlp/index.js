@@ -5,19 +5,25 @@ import QuestionBox from "../../components/nlp/questionBox";
 import ChatBox from "../../components/nlp/chatBox";
 import UserQuestion from "../../components/nlp/userQuestion";
 import BotResponse from "../../components/nlp/botResponse";
+import QuestionHistory from "../../components/nlp/questionHistory";
+import QuestionHistoryItem from "../../components/nlp/questionHistoryItem";
 
 function NLP() {
   const [botIsTyping, setBotIsTyping] = useState(false);
   const [chatLog, setChatLog] = useState([]);
+  const [questionHistory, setQuestionHistory] = useState([]);
 
   const questionHandler = async (userQuestion) => {
-
     setBotIsTyping(true);
 
     setChatLog((prevChat) => {
+      return [...prevChat, <UserQuestion messageValue={userQuestion} />];
+    });
+
+    setQuestionHistory((prevQuestion) => {
       return [
-        ...prevChat, 
-        <UserQuestion messageValue={userQuestion} />
+        ...prevQuestion,
+        <QuestionHistoryItem messageValue={userQuestion} />,
       ];
     });
 
@@ -57,10 +63,7 @@ function NLP() {
         const botAnswer = data.response.answer;
 
         setChatLog((prevChat) => {
-          return [
-            ...prevChat, 
-            <BotResponse messageValue={botAnswer} />
-          ];
+          return [...prevChat, <BotResponse messageValue={botAnswer} />];
         });
 
         setBotIsTyping(false);
@@ -69,6 +72,10 @@ function NLP() {
         console.error("Error fetching session data:", error);
       });
   };
+
+  const showQuestionHistory = questionHistory.length > 0 && (
+    <QuestionHistory questionHistory={questionHistory} />
+  );
 
   return (
     <>
@@ -79,11 +86,9 @@ function NLP() {
       <div className={styles.container}>
         <h1 className={styles.title}>NLP</h1>
         <section className={`${styles.mainContentContainer} `}>
+          {showQuestionHistory}
           <div className={`${styles.chatBox} box`}>
-            <ChatBox
-              isTyping={botIsTyping}
-              chatLog={chatLog}
-            />
+            <ChatBox isTyping={botIsTyping} chatLog={chatLog} />
           </div>
         </section>
         <QuestionBox onAskQuestion={questionHandler} />

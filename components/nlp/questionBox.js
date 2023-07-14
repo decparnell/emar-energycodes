@@ -30,24 +30,26 @@ function QuestionBox(props) {
   };
 
   return (
-    <form className={`${styles.questionBox}`} onSubmit={askQuestionHandler}>
-      <div className={`${styles.sendMessage} box`}>
-        <textarea
-          className={`${styles.input}`}
-          id="username"
-          placeholder="Send a message"
-          name="Question box"
-          rows="2"
-          cols="11"
-          wrap="soft"
-          value={enteredQuestion}
-          onChange={questionChangeHandler}
-        ></textarea>
-        <button type="submit" className={`${styles.button}`}>
-          {sendIcon}
-        </button>
-      </div>
-    </form>
+    <div >
+      <form className={`${styles.questionBox}`} onSubmit={askQuestionHandler}>
+        <div className={`${styles.sendMessage} box`}>
+          <textarea
+            className={`${styles.input}`}
+            id="username"
+            placeholder="Send a message"
+            name="Question box"
+            rows="2"
+            cols="11"
+            wrap="soft"
+            value={enteredQuestion}
+            onChange={questionChangeHandler}
+          ></textarea>
+          <button type="submit" className={`${styles.button}`}>
+            {sendIcon}
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }
 

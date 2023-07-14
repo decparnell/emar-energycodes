@@ -9,7 +9,7 @@ function ChatBox(props) {
       style={{
         height: "4%",
         width: "4%",
-        color: "green",
+        color: "#77A465",
       }}
     />
   );
@@ -19,7 +19,7 @@ function ChatBox(props) {
       style={{
         height: "80%",
         width: "2.5%",
-        color: "green",
+        color: "#77A465",
       }}
     />
   );

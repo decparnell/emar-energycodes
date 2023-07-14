@@ -11,6 +11,7 @@
   margin: auto;
   margin-bottom: 1%;
   display: flex;
+  justify-content: space-evenly;
 }
 
 .chatBox {
@@ -18,7 +19,6 @@
   max-height: 22rem;
   min-height: 12.5rem;
   width: 80%;
-  margin-left: 10%;
   padding-top: 1%;
   padding-bottom: 2%;
   background-color: white;
@@ -30,6 +30,12 @@
   width: 75%;
   margin-left: 13%;
   margin-top: 1%;
+}
+
+.questionBoxRight {
+  width: 73%;
+    margin-left: 25%;
+    margin-top: 1%;
 }
 
 .sendMessage {

@@ -8,7 +8,7 @@ function BotResponse(props) {
       style={{
         height: "4%",
         width: "4%",
-        color: "green",
+        color: "#77A465",
       }}
     />
   );
