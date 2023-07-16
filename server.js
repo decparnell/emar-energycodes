@@ -165,7 +165,7 @@ app.prepare().then(() => {
     });
   });
 
-  server.post("/api/session", (req, res) => {
+  /*   server.post("/api/session", (req, res) => {
     //add page name
     const { actionName } = req.body;
     console.log(actionName);
@@ -179,7 +179,7 @@ app.prepare().then(() => {
       .catch((error) => {
         console.error("Error fetching session data:", error);
       });
-  });
+  }); */
 
   server.all("*", (req, res) => {
     if (req.session && typeof req.session.user !== "undefined") {
