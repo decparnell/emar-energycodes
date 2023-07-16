@@ -11,6 +11,8 @@ export default function handler(req, res) {
     action: actionName,
   };
 
+  console.log("data:", data);
+
   const bodyData = JSON.stringify(data);
   const options = {
     method: "POST",

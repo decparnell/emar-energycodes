@@ -2,7 +2,7 @@ export default function handler(req, res) {
   // Get data submitted in request's body.
 
   const body = req.body;
-  console.log(body);
+  //console.log(body);
   const options = {
     method: "POST",
     headers: {
