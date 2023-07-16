@@ -48,7 +48,9 @@
 }
  */
 
-.dashboardItem {
+/* 
+  //version 2
+  .dashboardItem {
   box-shadow: inset 0 0 0 0 #a8d395;
   color: black;
   margin: 0 -.25rem;
@@ -60,7 +62,16 @@
 .dashboardItem:hover .arrowIcon {
   box-shadow: inset 100vw -1.5rem 0 0 #4e8934;
   color: white;
+} */
+
+.dashboardItem {
+  transition: color .1s ease-in-out;
+  text-decoration: none;
 }
+
+.arrowIcon {
+  color: #4e8934;
+} 
 
 .dashboardItemsPanel{
   padding-left: 5%;
