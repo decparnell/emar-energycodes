@@ -169,6 +169,7 @@ app.prepare().then(() => {
     //add page name
     const actionName1 = req.body.actionName;
     const { actionName } = req.body;
+    console.log("body:", req.body);
     console.log("actionName1:", actionName1);
     console.log("actionName:", actionName);
     const userName = req.session.user.name_id;

@@ -7,15 +7,15 @@ export default function handler(req, res) {
   const queryTimestamp = body.timestamp;
 
   const data = {
+    user_id: "user@example.com",
+    query_timestamp: queryTimestamp,
+    query_id: "1234",
+    ui_version: "1.0.0",
     query: query,
     api_params: {
       engine: "gpt-35-turbo-0301",
       temperature: 0.1,
       max_tokens: 500,
-    },
-    logging: {
-      user_name: "user@example.com",
-      timestamp: queryTimestamp,
     },
   };
   console.log("query:", query);
