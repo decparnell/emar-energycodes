@@ -17,7 +17,9 @@ function SchedulesSearchPage({ codesSchedulesDataJson }) {
     const [startVal, setStartVal] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [errorMessage, setErrorMessage] = useState("");
     const [hasMore, setHasMore] = useState(true);
+    const [isSearchValuePresent , setIsSearchValuePresent] = useState(true);
 
     const searchType = "Codes Schedules";
 
@@ -56,6 +58,8 @@ function SchedulesSearchPage({ codesSchedulesDataJson }) {
                 }
 
                 setStartVal((prevVal) => prevVal + 51);
+            } else {
+                setErrorMessage(`No results found for "${searchValue}"`);
             }
 
             if (newData.length === 0) {
@@ -70,6 +74,7 @@ function SchedulesSearchPage({ codesSchedulesDataJson }) {
 
         } catch (error) {
             setError(error);
+            setErrorMessage(`No results found for "${searchValue}"`);
         } finally {
             setIsLoading(false);
         }
@@ -93,9 +98,15 @@ function SchedulesSearchPage({ codesSchedulesDataJson }) {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        refreshData();
-        fetchData();
+        if(searchValue!==""){
+            setIsSearchValuePresent(true);
+            e.preventDefault();
+            refreshData();
+            fetchData();
+        }else {
+            setIsSearchValuePresent(false);
+            e.preventDefault();
+        }
     };
 
 
@@ -108,8 +119,6 @@ function SchedulesSearchPage({ codesSchedulesDataJson }) {
         else
             setSchedulesValue(schedulesVal);
     };
-
-
 
     return (
         <div className={styles.container}>
@@ -160,18 +169,21 @@ function SchedulesSearchPage({ codesSchedulesDataJson }) {
                         />
                     </div>
                 </div>
+                {!isSearchValuePresent ? <p className={styles.errorMessage}>Please search for a term above in order to see results.</p>:null}
                 <div className={`${styles.searchResults}`}>
-
+                    {data.length !== 0  || isLoading ? 
                     <ResultsTable
                         data={data}
                         setStartVal={setStartVal}
                         headers={codeSchdulesHeaders}
                         baseLink="/dataspec/3.3.0/marketmessage"
-                        searchType={null}
+                        searchType={searchType}
+                        searchValue={searchValue}
                         fetchData={fetchData}
                         hasMore={hasMore}
                         isLoading={isLoading}
-                    />
+                        errorMessage={errorMessage}
+                    /> : null }
                 </div>
             </div>
         </div>

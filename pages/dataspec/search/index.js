@@ -27,6 +27,7 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
   const [startVal, setStartVal] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
   const [hasMore, setHasMore] = useState(true);
   const [searchType, setSearchType] = useState({ name: "Market Messages" });
 
@@ -69,10 +70,13 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
         }
 
         setStartVal((prevVal) => prevVal + 51);
+      }else{
+        setErrorMessage(`No results found for "${searchValue}"`);
       }
       
     } catch (error) {
       setError(error);
+      setErrorMessage(`No results found for "${searchValue}"`);
     } finally {
       setIsLoading(false);
     }
@@ -187,10 +191,12 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
             setStartVal={setStartVal}
             headers={headers}
             baseLink="/dataspec/3.3.0/marketmessage"
-            searchType={searchType}
+            searchType={searchType.name}
+            searchValue={searchValue}
             fetchData={fetchData}
             hasMore={hasMore}
             isLoading={isLoading}
+            errorMessage={errorMessage}
           />
         </div>
       </div>
