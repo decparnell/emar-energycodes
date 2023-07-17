@@ -167,7 +167,9 @@ app.prepare().then(() => {
 
   server.post("/api/session", (req, res) => {
     //add page name
-    const actionName = req.body.actionName;
+    const actionName1 = req.body.actionName;
+    const { actionName } = req.body;
+    console.log("actionName1:", actionName1);
     console.log("actionName:", actionName);
     const userName = req.session.user.name_id;
     console.log("userName:", userName);
