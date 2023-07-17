@@ -18,7 +18,8 @@ export default function handler(req, res) {
       timestamp: queryTimestamp,
     },
   };
-
+  console.log("query:", query);
+  console.log("queryTimestamp:", queryTimestamp);
   const bodyData = JSON.stringify(data);
   const options = {
     method: "POST",
@@ -27,17 +28,17 @@ export default function handler(req, res) {
     },
     body: bodyData,
   };
-
+  console.log("options:", options);
   fetch(
     "https://recco-openai-qa.azurewebsites.net/api/answer_query?code=WVTZzRNJ3Hi2fH_tKF3hHiXJsirhpa8qQATso6LFTqIOAzFuFICWGQ==",
     options
   )
     .then((response) => response.json())
     .then((data) => {
-      console.log("Session data:", data);
+      console.log("NLP Response:", data);
       res.json(data);
     })
     .catch((error) => {
-      console.error("Error fetching session data:", error);
+      console.error("Error fetching NLP response:", error);
     });
 }
