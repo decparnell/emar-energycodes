@@ -23,10 +23,8 @@
   max-height: 22rem;
   min-height: 7.5rem;
   width: 95%;
-  padding-top: 1%;
   padding-bottom: 2%;
   background-color: white;
-  overflow-y: auto;
   position: relative;
   margin-left: 2.5%;
 }

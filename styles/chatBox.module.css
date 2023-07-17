@@ -39,7 +39,7 @@
 }
 
 .typingContainer {
-  height: 20%;
+  height: 10%;
   width: 80%;
   position: absolute;
   margin-left: 0.4%;
@@ -114,8 +114,8 @@
 
 
 .clipboardIcon {
-  height: 100%;
-  width: 100%;
+  height: 108%;
+  width: 108%;
   color: black;
   margin-right: 3%;
 }

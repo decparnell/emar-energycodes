@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import copy from "copy-to-clipboard";
-import { BiSupport, BiDislike, BiLike, BiClipboard } from "react-icons/bi";
+import { BiSupport, BiCopyAlt, BiDislike, BiLike } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
 
@@ -15,7 +15,7 @@ function BotResponse(props) {
     />
   );
 
-  const clipboardIcon = <BiClipboard className={`${styles.clipboardIcon}`} />;
+  const clipboardIcon = <BiCopyAlt className={`${styles.clipboardIcon}`} />;
 
   const dislikeIcon = <BiDislike className={`${styles.dislikeIcon}`} />;
 
@@ -25,10 +25,8 @@ function BotResponse(props) {
   const [openModal, setOpenModal] = useState(false);
 
   const copyToClipboardHandler = () => {
-    console.log(props.messageValue);
     setCopiedText(props.messageValue);
     copy(copiedText);
-    console.log("Copied");
   };
 
   const feedbackHandler = () => {

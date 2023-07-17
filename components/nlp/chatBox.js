@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import ScrollableFeed from 'react-scrollable-feed'
 import { BiSupport } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import { useEffect } from "react";
@@ -52,14 +53,14 @@ function ChatBox(props) {
   );
 
   return (
-    <Fragment>
+    <ScrollableFeed>
       {showComponent && botPrompt}
       {props.chatLog}
       <div className={`${styles.typingContainer}`}>
         {!showComponent && typingDots}
         {props.isTyping && typingDots}
       </div>
-    </Fragment>
+    </ScrollableFeed>
   );
 }
 
