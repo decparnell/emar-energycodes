@@ -21,6 +21,7 @@ function QuestionBox(props) {
     if (enteredQuestion.trim().length === 0) {
       return;
     }
+    console.log(enteredQuestion);
     props.onAskQuestion(enteredQuestion);
     setEnteredQuestion("");
   };
@@ -43,7 +44,7 @@ function QuestionBox(props) {
           value={enteredQuestion}
           onChange={questionChangeHandler}
         ></textarea>
-        <button type="submit" className={`${styles.button}`}>
+        <button title="Submit" type="submit" className={`${styles.button}`}>
           {sendIcon}
         </button>
       </div>

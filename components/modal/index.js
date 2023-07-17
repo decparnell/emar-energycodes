@@ -25,7 +25,6 @@ const ModalOverlay = (props) => {
 
   const submitFeedbackHandler = (event) => {
     event.preventDefault();
-    console.log(enteredFeedback);
 
     if (enteredFeedback.trim().length === 0) {
       return;

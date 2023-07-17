@@ -18,7 +18,7 @@ function ChatBox(props) {
     <BiSupport
       style={{
         height: "80%",
-        width: "2.5%",
+        width: "50%",
         color: "#77A465",
       }}
     />
@@ -43,12 +43,12 @@ function ChatBox(props) {
   );
 
   const typingDots = (
-    <Fragment className={`${styles.typingRow}`}>
+    <div className={`${styles.typingRow}`}>
       {typingBotIcon}
       <div className={`${styles.dotsContainer}`}>
         <div className={`${styles.dotsTyping}`}></div>
       </div>
-    </Fragment>
+    </div>
   );
 
   return (
