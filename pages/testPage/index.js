@@ -15,15 +15,7 @@ function Test() {
     console.log(query);
     const data = {
       query: query,
-      api_params: {
-        engine: "gpt-35-turbo-0301",
-        temperature: 0.1,
-        max_tokens: 500,
-      },
-      logging: {
-        user_name: "user@example.com",
-        timestamp: 1234,
-      },
+      timestamp: 1234,
     };
     const bodyData = JSON.stringify(data);
     const options = {
@@ -34,10 +26,7 @@ function Test() {
       body: bodyData,
     };
 
-    fetch(
-      "https://recco-openai-qa.azurewebsites.net/api/answer_query?code=WVTZzRNJ3Hi2fH_tKF3hHiXJsirhpa8qQATso6LFTqIOAzFuFICWGQ==",
-      options
-    )
+    fetch("/api/testApi", options)
       .then((response) => {
         console.log(response);
         if (!response.ok) {
