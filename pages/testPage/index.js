@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState, useContext, useEffect } from "react";
 import Head from "next/head";
 import { TextField, Button } from "@mui/material";
-import { uuid } from "uuidv4";
+import { v4 as uuidv4 } from "uuid";
 import { uiVersion } from "../../components/settings";
 function Test() {
   const [query, setQuery] = useState("");
@@ -14,7 +14,7 @@ function Test() {
   };
 
   const fetchData = async () => {
-    const queryId = uuid();
+    const queryId = uuidv4();
     const data = {
       query: query,
       timestamp: new Date(Date.now()).toISOString(),

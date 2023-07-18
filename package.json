@@ -32,7 +32,7 @@
     "reactjs-popup": "^2.0.5",
     "request": "^2.88.2",
     "saml2-js": "^4.0.0",
-    "uuidv4": "^6.2.13"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "eslint": "8.11.0",
