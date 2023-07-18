@@ -12,6 +12,7 @@ app.prepare().then(() => {
   var session = require("express-session");
   // If you're using express <4.0:
   var bodyParser = require("body-parser");
+  var jsonParser = bodyParser.json();
   server.use(
     bodyParser.urlencoded({
       extended: true,
@@ -165,7 +166,7 @@ app.prepare().then(() => {
     });
   });
 
-  server.post("/api/session", (req, res) => {
+  server.post("/api/session", jsonParser, (req, res) => {
     //add page name
     const actionName1 = req.body.actionName;
     const { actionName } = req.body;
