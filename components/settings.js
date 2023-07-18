@@ -76,4 +76,6 @@ export const codeSchdulesHeaders = [
   { title: "Document Name", dataColumn: "documentName" },
   { title: "Clause Reference", dataColumn: "clauseReference" },
   { title: "Clause Text", dataColumn: "componentText" },
-]
+];
+
+export const uiVersion = "V2.4.0 - 31/07/23";

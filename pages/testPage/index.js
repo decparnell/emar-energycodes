@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import { useState, useContext, useEffect } from "react";
 import Head from "next/head";
 import { TextField, Button } from "@mui/material";
+import { uuid } from "uuidv4";
+import { uiVersion } from "../../components/settings";
 function Test() {
   const [query, setQuery] = useState("");
   const [answer, setAnswer] = useState("");
@@ -12,10 +14,12 @@ function Test() {
   };
 
   const fetchData = async () => {
-    console.log(query);
+    const queryId = uuid();
     const data = {
       query: query,
-      timestamp: 1234,
+      timestamp: new Date(Date.now()).toISOString(),
+      queryId: queryId,
+      uiVersion: uiVersion,
     };
     const bodyData = JSON.stringify(data);
     const options = {

@@ -31,7 +31,8 @@
     "react-infinite-scroll-component": "^6.1.0",
     "reactjs-popup": "^2.0.5",
     "request": "^2.88.2",
-    "saml2-js": "^4.0.0"
+    "saml2-js": "^4.0.0",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "eslint": "8.11.0",
