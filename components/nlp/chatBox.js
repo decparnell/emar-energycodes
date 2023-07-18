@@ -1,29 +1,13 @@
-import React, { Fragment, useState } from "react";
-import ScrollableFeed from 'react-scrollable-feed'
+import React, { useState } from "react";
+import ScrollableFeed from "react-scrollable-feed";
 import { BiSupport } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import { useEffect } from "react";
 
 function ChatBox(props) {
-  const botIcon = (
-    <BiSupport
-      style={{
-        height: "4%",
-        width: "4%",
-        color: "#77A465",
-      }}
-    />
-  );
+  const botIcon = <BiSupport className={`${styles.botIcon}`} />;
 
-  const typingBotIcon = (
-    <BiSupport
-      style={{
-        height: "80%",
-        width: "50%",
-        color: "#77A465",
-      }}
-    />
-  );
+  const typingBotIcon = <BiSupport className={`${styles.typingBotIcon}`} />;
 
   const [showComponent, setShowComponent] = useState(false);
 
@@ -58,6 +42,8 @@ function ChatBox(props) {
       {props.chatLog}
       <div className={`${styles.typingContainer}`}>
         {!showComponent && typingDots}
+      </div>
+      <div className={`${styles.typingContainerSmall}`}>
         {props.isTyping && typingDots}
       </div>
     </ScrollableFeed>

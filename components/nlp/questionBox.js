@@ -2,15 +2,7 @@ import styles from "../../styles/nlp.module.css";
 import React, { useState } from "react";
 import { BiSend } from "react-icons/bi";
 
-const sendIcon = (
-  <BiSend
-    style={{
-      height: "100%",
-      width: "100%",
-      color: "black",
-    }}
-  />
-);
+const sendIcon = <BiSend className={`${styles.sendIcon}`} />;
 
 function QuestionBox(props) {
   const [enteredQuestion, setEnteredQuestion] = useState("");

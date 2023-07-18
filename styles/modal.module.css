@@ -34,6 +34,13 @@
   padding: 0;
 }
 
+.closeIcon {
+  height: 90%;
+  width: 90%;
+  color: #77A465;
+  cursor: pointer;
+}
+
 .content {
   display: flex;
   flex-direction: column;

@@ -5,17 +5,9 @@ import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
 
 function BotResponse(props) {
-  const botIcon = (
-    <BiSupport
-      style={{
-        height: "4%",
-        width: "4%",
-        color: "#77A465",
-      }}
-    />
-  );
+  const botIcon = <BiSupport className={`${styles.botIcon}`} />;
 
-  const clipboardIcon = <BiCopyAlt className={`${styles.clipboardIcon}`} />;
+  const clipboardIcon = <BiCopyAlt className={isClicked ? `${styles.copyIconClicked}` : `${styles.copyIcon}`} />;
 
   const dislikeIcon = <BiDislike className={`${styles.dislikeIcon}`} />;
 
@@ -23,8 +15,11 @@ function BotResponse(props) {
 
   const [copiedText, setCopiedText] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  
+  const [isClicked, setIsCliked] = useState(false)
 
   const copyToClipboardHandler = () => {
+    setIsCliked(true);
     setCopiedText(props.messageValue);
     copy(copiedText);
   };

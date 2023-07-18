@@ -1,23 +1,27 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { BiMessage } from "react-icons/bi";
 import styles from "../../styles/questionHistory.module.css";
 
 function QuestionHistoryItem(props) {
-  const messageIcon = (
-    <BiMessage
-      style={{
-        height: "15%",
-        width: "15%",
-        color: "#77A465",
-      }}
-    />
-  );
+  const messageIcon = <BiMessage className={`${styles.messageIcon}`} />;
+
+  const [questionHistoryItem, setQuestionHistoryItem] = useState("");
+
+  const askQuestionHandler = () => {
+    console.log(props.messageValue);
+    setQuestionHistoryItem(props.messageValue);
+    props.onReAskQuestion(questionHistoryItem);
+    setQuestionHistoryItem("");
+  };
 
   return (
     <Fragment>
       <div className={`${styles.questionContainer}`}>
         {messageIcon}
-        <div className={`${styles.questionHistoryItem}`}>
+        <div
+          onClick={askQuestionHandler}
+          className={`${styles.questionHistoryItem}`}
+        >
           {props.messageValue}
         </div>
       </div>

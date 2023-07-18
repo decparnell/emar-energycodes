@@ -23,7 +23,10 @@ function NLP() {
     setQuestionHistory((prevQuestion) => {
       return [
         ...prevQuestion,
-        <QuestionHistoryItem messageValue={userQuestion} />,
+        <QuestionHistoryItem
+          messageValue={userQuestion}
+          onReAskQuestion={reAskQuestionHandler}
+        />,
       ];
     });
 
@@ -55,6 +58,15 @@ function NLP() {
     )
       .then((response) => {
         if (!response.ok) {
+          setBotIsTyping(false);
+          setChatLog((prevChat) => {
+            return [
+              ...prevChat,
+              <BotResponse
+                messageValue={"An error occurred, please try again later"}
+              />,
+            ];
+          });
           throw new Error("Error occurred while fetching session data");
         }
         return response.json();
@@ -69,8 +81,17 @@ function NLP() {
         setBotIsTyping(false);
       })
       .catch((error) => {
+        setBotIsTyping(false);
         console.error("Error fetching session data:", error);
       });
+  };
+
+  const reAskQuestionHandler = (previousQuestion) => {
+    console.log(previousQuestion);
+
+    setChatLog((prevChat) => {
+      return [...prevChat, <UserQuestion messageValue={previousQuestion} />];
+    });
   };
 
   const showQuestionHistory = questionHistory.length > 0 && (
@@ -91,7 +112,7 @@ function NLP() {
             <div className={`${styles.chatBox} box`}>
               <ChatBox isTyping={botIsTyping} chatLog={chatLog} />
             </div>
-              <QuestionBox onAskQuestion={questionHandler} />
+            <QuestionBox onAskQuestion={questionHandler} />
           </div>
         </section>
       </div>

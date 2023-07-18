@@ -2,24 +2,28 @@ import React, { Fragment, useState } from "react";
 import styles from "../../styles/modal.module.css";
 import { BiX } from "react-icons/bi";
 
-//This component receives props from the parent component App.js
 const Backdrop = (props) => {
-  //This will also receive an onClick prop that points to the forwarded onClose prop from the App
   return <div className={`${styles.backdrop}`} onClick={props.onClose} />;
 };
 
-//This component receives props from the parent's child component in Cart.js where it will display the cartItems
-const ModalOverlay = (props) => {
-  const closeIcon = (
-    <BiX
-      style={{
-        height: "90%",
-        width: "90%",
-        color: "#77A465",
-        cursor: "pointer",
-      }}
-    />
+const SuccessModal = (props) => {
+  const closeIcon = <BiX className={`${styles.closeIcon}`} />;
+  return (
+    <div className={`${styles.modal}`}>
+      <div className={`${styles.closeContainer}`}>
+        <button className={`${styles.close}`} onClick={props.onClose}>
+          {closeIcon}
+        </button>
+      </div>
+      <div className={`${styles.content}`}>
+        <p>Thank you for your feedback and helping to improve this service</p>
+      </div>
+    </div>
   );
+};
+
+const ModalOverlay = (props) => {
+  const closeIcon = <BiX className={`${styles.closeIcon}`} />;
 
   const [enteredFeedback, setEnteredFeedback] = useState("");
 
@@ -32,6 +36,8 @@ const ModalOverlay = (props) => {
     //props.onSubmitFeedback(enteredFeedback);
     console.log(enteredFeedback);
     setEnteredFeedback("");
+    props.onClose();
+    <SuccessModal onClose={props.onClose} />;
   };
 
   const feedbackChangeHandler = (event) => {
@@ -41,7 +47,9 @@ const ModalOverlay = (props) => {
   return (
     <div className={`${styles.modal}`}>
       <div className={`${styles.closeContainer}`}>
-      <button className={`${styles.close}`} onClick={props.onClose}>{closeIcon}</button>
+        <button className={`${styles.close}`} onClick={props.onClose}>
+          {closeIcon}
+        </button>
       </div>
       <div className={`${styles.content}`}>
         <form className={`${styles.feedback}`} onSubmit={submitFeedbackHandler}>
@@ -57,10 +65,10 @@ const ModalOverlay = (props) => {
               onChange={feedbackChangeHandler}
             ></textarea>
           </div>
+          <button type="submit" className={`${styles.button}`}>
+            Submit
+          </button>
         </form>
-        <button type="submit" className={`${styles.button}`}>
-          Submit
-        </button>
       </div>
     </div>
   );

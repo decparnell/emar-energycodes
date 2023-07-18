@@ -39,11 +39,24 @@
 }
 
 .typingContainer {
-  height: 10%;
+  height: 22%;
   width: 80%;
   position: absolute;
   margin-left: 0.4%;
-  margin-bottom: 0.4%;
+  margin-bottom: 0.8%;
+  padding-left: 0.5%;
+  bottom: 0;
+  overflow-y: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.typingContainerSmall {
+  height: 16%;
+  width: 80%;
+  position: absolute;
+  margin-left: 0.5%;
+  margin-bottom: 0.5%;
   padding-left: 0.5%;
   bottom: 0;
   overflow-y: hidden;
@@ -70,31 +83,38 @@
   height: 0.4375rem;
   border-radius: 0.3125rem;
   color: green;
-  box-shadow: 9984px 0 0 0 #77A465, 9999px 0 0 0 #77A465, 10014px 0 0 0 #77A465;
+  box-shadow: 9984px 0 0 0 #77a465, 9999px 0 0 0 #77a465, 10014px 0 0 0 #77a465;
   animation: dotTyping 1.5s infinite linear;
 }
 
 @keyframes dotTyping {
   0% {
-    box-shadow: 9984px 0 0 0 #77A465, 9999px 0 0 0 #77A465, 10014px 0 0 0 #77A465;
+    box-shadow: 9984px 0 0 0 #77a465, 9999px 0 0 0 #77a465,
+      10014px 0 0 0 #77a465;
   }
   16.667% {
-    box-shadow: 9984px -10px 0 0 #77A465, 9999px 0 0 0 #77A465, 10014px 0 0 0 #77A465;
+    box-shadow: 9984px -10px 0 0 #77a465, 9999px 0 0 0 #77a465,
+      10014px 0 0 0 #77a465;
   }
   33.333% {
-    box-shadow: 9984px 0 0 0 #77A465, 9999px 0 0 0 #77A465, 10014px 0 0 0 #77A465;
+    box-shadow: 9984px 0 0 0 #77a465, 9999px 0 0 0 #77a465,
+      10014px 0 0 0 #77a465;
   }
   50% {
-    box-shadow: 9984px 0 0 0 #77A465, 9999px -10px 0 0 #77A465, 10014px 0 0 0 #77A465;
+    box-shadow: 9984px 0 0 0 #77a465, 9999px -10px 0 0 #77a465,
+      10014px 0 0 0 #77a465;
   }
   66.667% {
-    box-shadow: 9984px 0 0 0 #77A465, 9999px 0 0 0 #77A465, 10014px 0 0 0 #77A465;
+    box-shadow: 9984px 0 0 0 #77a465, 9999px 0 0 0 #77a465,
+      10014px 0 0 0 #77a465;
   }
   83.333% {
-    box-shadow: 9984px 0 0 0 #77A465, 9999px 0 0 0 #77A465, 10014px -10px 0 0 #77A465;
+    box-shadow: 9984px 0 0 0 #77a465, 9999px 0 0 0 #77a465,
+      10014px -10px 0 0 #77a465;
   }
   100% {
-    box-shadow: 9984px 0 0 0 #77A465, 9999px 0 0 0 #77A465, 10014px 0 0 0 #77A465;
+    box-shadow: 9984px 0 0 0 #77a465, 9999px 0 0 0 #77a465,
+      10014px 0 0 0 #77a465;
   }
 }
 
@@ -104,24 +124,49 @@
 }
 
 .button {
-  width: 16%;
-  padding-right: 0%;
+  width: 12%;
+  padding-right: 1%;
   border: none;
   box-shadow: none;
   cursor: pointer;
   background-color: white;
 }
 
+.botIcon {
+  height: 4%;
+  width: 4%;
+  color: #77a465;
+}
 
-.clipboardIcon {
+.userIcon {
+  height: 4%;
+  width: 4%;
+  color: #77a465;
+  padding-bottom: 0.5%;
+}
+
+.typingBotIcon {
+  height: 80%;
+  width: 50%;
+  color: #77a465;
+}
+
+.copyIcon {
   height: 108%;
   width: 108%;
   color: black;
   margin-right: 3%;
 }
 
-.clipboardIcon:hover {
-  color: #77A465 !important;
+.copyIcon:hover {
+  color: #77a465 !important;
+}
+
+.copyIconClicked {
+  height: 108%;
+  width: 108%;
+  color: #77a465;
+  margin-right: 3%;
 }
 
 .dislikeIcon {
@@ -141,6 +186,6 @@
   color: black;
 }
 
-.likeIcon:hover {
-  color: #77A465 !important;
+.likeIcon:visited {
+  color: #77a465 !important;
 }

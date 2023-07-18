@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: space-evenly;
   background-color: white;
-  overflow-y: auto;  
+  overflow-y: auto;
 }
 
 .questionContainer {
@@ -24,6 +24,12 @@
   border-bottom: solid;
   border-color: lightgrey;
   border-bottom-width: 2px;
+}
+
+.messageIcon {
+  height: 15%;
+  width: 15%;
+  color: #77a465;
 }
 
 .questionHistoryItem {

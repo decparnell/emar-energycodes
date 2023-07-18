@@ -69,3 +69,9 @@
   box-shadow: none;
   cursor: pointer;
 }
+
+.sendIcon {
+  height: 100%;
+  width: 100%;
+  color: black;
+}
