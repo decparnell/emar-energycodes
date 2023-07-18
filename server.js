@@ -14,7 +14,7 @@ app.prepare().then(() => {
   // If you're using express <4.0:
   var bodyParser = require("body-parser");
   var jsonParser = bodyParser.json();
-  var AES = require("../../components/helperFunctions/AES");
+  var AES = require("../components/helperFunctions/AES");
   server.use(
     bodyParser.urlencoded({
       extended: true,
