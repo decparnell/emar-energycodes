@@ -80,10 +80,12 @@ export default ScenarioPage;
 
 // This gets called on every request
 export async function getServerSideProps(context) {
-  // Fetch data from external API
+  // Fetch data from external API  
+  //getScenarioVariantFlowStructure-LogicApp-v2
   const dataReq = await fetch(
-    `https://prod-12.uksouth.logic.azure.com/workflows/a8f5052aac70469c8e4de8990ef5289f/triggers/manual/paths/invoke/scenarioVariant/${context.params.scenarioVariant}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Y8zRRQl2HM4BzMaVYcwnXoBCKqWgY3CHveRGzkstYIg`
+    `https://prod-05.uksouth.logic.azure.com/workflows/e1ef29bc721e4135a5e3627156ab461b/triggers/manual/paths/invoke/scenarioVariant/${context.params.scenarioVariant}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=oNkEfItUN3uR584yHQuV8_52nIOYoDdYDXpTv896Hk4`
   );
+
   const dataJson = await dataReq.json();
   const scenarioVariantInfo = dataJson.scenarioVariantInfo;
   const structure = dataJson.structure;
