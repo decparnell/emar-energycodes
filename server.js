@@ -3,6 +3,8 @@ const port = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
+const encryptWithAES = import("../../components/helperFunctions/AES");
+
 app.prepare().then(() => {
   var saml2 = require("saml2-js");
   var express = require("express");
@@ -169,7 +171,7 @@ app.prepare().then(() => {
   server.post("/api/session", jsonParser, (req, res) => {
     //add page name
     const { actionName } = req.body;
-    const userName = req.session.user.name_id;
+    const userName = encryptWithAES(req.session.user.name_id);
     const data = {
       user: userName,
       action: actionName,
@@ -202,7 +204,7 @@ app.prepare().then(() => {
 
     const { query, queryTimestamp, queryId, uiVersion } = req.body;
     const data = {
-      user_id: req.session.user.name_id,
+      user_id: encryptWithAES(req.session.user.name_id),
       query_timestamp: queryTimestamp,
       query_id: queryId,
       ui_version: uiVersion,

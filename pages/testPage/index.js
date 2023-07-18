@@ -4,6 +4,7 @@ import Head from "next/head";
 import { TextField, Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import { uiVersion } from "../../components/settings";
+
 function Test() {
   const [query, setQuery] = useState("");
   const [answer, setAnswer] = useState("");
@@ -14,6 +15,7 @@ function Test() {
   };
 
   const fetchData = async () => {
+    //write function to store queryid & user
     const queryId = uuidv4();
     const data = {
       query: query,
