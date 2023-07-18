@@ -5,13 +5,8 @@ import styles from "../../styles/questionHistory.module.css";
 function QuestionHistoryItem(props) {
   const messageIcon = <BiMessage className={`${styles.messageIcon}`} />;
 
-  const [questionHistoryItem, setQuestionHistoryItem] = useState("");
-
-  const askQuestionHandler = () => {
-    console.log(props.messageValue);
-    setQuestionHistoryItem(props.messageValue);
-    props.onReAskQuestion(questionHistoryItem);
-    setQuestionHistoryItem("");
+  const questionHistoryHandler = () => {
+    props.onAskQuestionFromHistory(props.messageValue);
   };
 
   return (
@@ -19,7 +14,7 @@ function QuestionHistoryItem(props) {
       <div className={`${styles.questionContainer}`}>
         {messageIcon}
         <div
-          onClick={askQuestionHandler}
+          onClick={questionHistoryHandler}
           className={`${styles.questionHistoryItem}`}
         >
           {props.messageValue}

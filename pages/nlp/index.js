@@ -25,7 +25,7 @@ function NLP() {
         ...prevQuestion,
         <QuestionHistoryItem
           messageValue={userQuestion}
-          onReAskQuestion={reAskQuestionHandler}
+          onAskQuestionFromHistory={questionHistoryItemHandler}
         />,
       ];
     });
@@ -86,7 +86,7 @@ function NLP() {
       });
   };
 
-  const reAskQuestionHandler = (previousQuestion) => {
+  const questionHistoryItemHandler = (previousQuestion) => {
     console.log(previousQuestion);
 
     setChatLog((prevChat) => {
