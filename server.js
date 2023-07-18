@@ -3,7 +3,6 @@ const port = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
-const AES = import("../../components/helperFunctions/AES");
 
 app.prepare().then(() => {
   var saml2 = require("saml2-js");
@@ -15,6 +14,7 @@ app.prepare().then(() => {
   // If you're using express <4.0:
   var bodyParser = require("body-parser");
   var jsonParser = bodyParser.json();
+  var AES = require("../../components/helperFunctions/AES");
   server.use(
     bodyParser.urlencoded({
       extended: true,
