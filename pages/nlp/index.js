@@ -58,7 +58,7 @@ function NLP() {
     )
       .then((response) => {
         if (!response.ok) {
-          setBotIsTyping(false);
+
           setChatLog((prevChat) => {
             return [
               ...prevChat,
@@ -67,6 +67,8 @@ function NLP() {
               />,
             ];
           });
+
+          setBotIsTyping(false);
           throw new Error("Error occurred while fetching session data");
         }
         return response.json();

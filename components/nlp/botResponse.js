@@ -7,25 +7,27 @@ import Modal from "../modal/index.js";
 function BotResponse(props) {
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;
 
-  const clipboardIcon = <BiCopyAlt className={isClicked ? `${styles.copyIconClicked}` : `${styles.copyIcon}`} />;
-
-  const dislikeIcon = <BiDislike className={`${styles.dislikeIcon}`} />;
-
-  const likeIcon = <BiLike className={`${styles.likeIcon}`} />;
-
   const [copiedText, setCopiedText] = useState("");
   const [openModal, setOpenModal] = useState(false);
   
-  const [isClicked, setIsCliked] = useState(false)
+  const [copyIconClicked, setCopyIconClicked] = useState(false)
+  const [dislikeIconClicked, setDislikeIconClicked] = useState(false)
+  const [likeIconClicked, setLikeIconClicked] = useState(false)
 
   const copyToClipboardHandler = () => {
-    setIsCliked(true);
+    setCopyIconClicked(true);
     setCopiedText(props.messageValue);
     copy(copiedText);
   };
 
-  const feedbackHandler = () => {
+  const dislikeFeedbackHandler = () => {
     setOpenModal(true);
+    setDislikeIconClicked(true);
+  };
+
+  const likeFeedbackHandler = () => {
+    setOpenModal(true);
+    setLikeIconClicked(true);
   };
 
   const closeModal = () => {
@@ -39,13 +41,13 @@ function BotResponse(props) {
         <div className={`${styles.botMessage}`}>
           <div className={`${styles.options}`}>
             <button title="Copy to clipboard" className={`${styles.button}`} onClick={copyToClipboardHandler}>
-              {clipboardIcon}
+              <BiCopyAlt className={copyIconClicked ? `${styles.copyIconClicked}` : `${styles.copyIcon}`} />
             </button>
-            <button title="Dislike Response" className={`${styles.button}`} onClick={feedbackHandler}>
-              {dislikeIcon}
+            <button title="Dislike Response" className={`${styles.button}`} onClick={dislikeFeedbackHandler}>
+              <BiDislike className={dislikeIconClicked ? `${styles.dislikeIconClicked}` :`${styles.dislikeIcon}`} />
             </button>
-            <button title="Like Response" className={`${styles.button}`} onClick={feedbackHandler}>
-              {likeIcon}
+            <button title="Like Response" className={`${styles.button}`} onClick={likeFeedbackHandler}>
+              <BiLike className={likeIconClicked ? `${styles.likeIconClicked}` :`${styles.likeIcon}`} />
             </button>
           </div>
           <p className={`${styles.p}`}>{props.messageValue}</p>

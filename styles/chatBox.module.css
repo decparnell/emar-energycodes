@@ -180,12 +180,25 @@
   color: red !important;
 }
 
+.dislikeIconClicked {
+  height: 100%;
+  width: 100%;
+  color: red;
+  margin-right: 3%;
+}
+
 .likeIcon {
   height: 100%;
   width: 100%;
   color: black;
 }
 
-.likeIcon:visited {
+.likeIcon:hover {
   color: #77a465 !important;
+}
+
+.likeIconClicked {
+  height: 100%;
+  width: 100%;
+  color: #77a465;
 }
