@@ -34,7 +34,6 @@ const ModalOverlay = (props) => {
       return;
     }
     //props.onSubmitFeedback(enteredFeedback);
-    console.log(enteredFeedback);
     setEnteredFeedback("");
     props.onClose();
     <SuccessModal onClose={props.onClose} />;

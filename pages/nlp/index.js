@@ -87,8 +87,6 @@ function NLP() {
   };
 
   const questionHistoryItemHandler = (previousQuestion) => {
-    console.log(previousQuestion);
-
     setChatLog((prevChat) => {
       return [...prevChat, <UserQuestion messageValue={previousQuestion} />];
     });
