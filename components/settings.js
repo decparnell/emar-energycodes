@@ -79,4 +79,3 @@ export const codeSchdulesHeaders = [
 ];
 
 export const uiVersion = "V2.4.0 - 31/07/23";
-export const usePhrase = "oi45ionsdo23424vin4nrener5634346bfuihdf";

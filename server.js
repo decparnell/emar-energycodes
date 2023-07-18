@@ -4,7 +4,7 @@ const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 const AES = require("./components/helperFunctions/AES");
-
+const seshPhrase = require("../../moduleSettings");
 app.prepare().then(() => {
   var saml2 = require("saml2-js");
   var express = require("express");
@@ -24,7 +24,7 @@ app.prepare().then(() => {
   // creating 24 hours from milliseconds
   const oneDay = 1000 * 60 * 60 * 24;
   var sesh = {
-    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    secret: seshPhrase,
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: oneDay },
