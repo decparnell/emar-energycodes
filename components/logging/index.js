@@ -1,3 +1,4 @@
+import { encryptWithAES } from "../helperFunctions/AES";
 export function LogUserInfo(action) {
   const data = { actionName: action };
   const bodyData = JSON.stringify(data);
@@ -8,7 +9,6 @@ export function LogUserInfo(action) {
     },
     body: bodyData,
   };
-
   fetch("/api/session", options)
     .then((response) => response.json())
     .then((data) => {

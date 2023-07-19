@@ -1,11 +1,11 @@
-const CryptoJS = require("crypto-js");
-const usePhrase = require("../../moduleSettings");
+var AES = require("crypto-js/aes");
+const moduleSettings = require("../../moduleSettings");
 
 const encryptWithAES = (text) => {
-  return CryptoJS.AES.encrypt(text, usePhrase).toString();
+  return AES.encrypt(text, moduleSettings.usePhrase).toString();
 };
 const decryptWithAES = (ciphertext) => {
-  const bytes = CryptoJS.AES.decrypt(ciphertext, usePhrase);
+  const bytes = AES.decrypt(ciphertext, usePhrase);
   const originalText = bytes.toString(CryptoJS.enc.Utf8);
   return originalText;
 };
