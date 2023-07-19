@@ -4,10 +4,15 @@ import Head from "next/head";
 import { TextField, Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import { uiVersion } from "../../components/settings";
+import { LogUserInfo } from "../../components/logging";
 
 function Test() {
   const [query, setQuery] = useState("");
   const [answer, setAnswer] = useState("");
+
+  useEffect(() => {
+    LogUserInfo("NLP TEst Page");
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();

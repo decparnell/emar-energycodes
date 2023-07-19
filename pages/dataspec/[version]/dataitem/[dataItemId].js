@@ -9,6 +9,7 @@ import { checkIfVariablesAreAvailable } from "../../../../components/helperFunct
 import removeNullValues from "../../../../components/dataspec/functions/removeNulls";
 import DataItemTables from "../../../../components/tables/dataItemTables";
 import SecondNavbar from "../../../../components/layout/secondHeader";
+import { LogUserInfo } from "../../../../components/logging";
 
 function DataItemDetailsPage({ searchResults }) {
   const pageId = "DataItemDetailsPage";
@@ -33,47 +34,47 @@ function DataItemDetailsPage({ searchResults }) {
 
   const dataItemInfo =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-      checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo")
+    checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo")
       ? searchResults[0]
       : null;
 
   const dataEnumerations =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-      checkIfItemsAvailableInArray(internalErrorLog, "dataEnumerations")
+    checkIfItemsAvailableInArray(internalErrorLog, "dataEnumerations")
       ? searchResults[2]
       : null;
 
   dataEnumerations.length > 0
     ? dashboard.push({
-      dashboardId: "DataEnumerations",
-      dashboardSectionName: "Data Enumerations",
-      dashboardSectionOrder: 2,
-    })
+        dashboardId: "DataEnumerations",
+        dashboardSectionName: "Data Enumerations",
+        dashboardSectionOrder: 2,
+      })
     : null;
 
   const mmForDataItem =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-      checkIfItemsAvailableInArray(internalErrorLog, "mmForDataItem")
+    checkIfItemsAvailableInArray(internalErrorLog, "mmForDataItem")
       ? searchResults[1]
       : null;
   mmForDataItem.length > 0
     ? dashboard.push({
-      dashboardId: "MarketMessages",
-      dashboardSectionName: "Market Messages",
-      dashboardSectionOrder: 3,
-    })
+        dashboardId: "MarketMessages",
+        dashboardSectionName: "Market Messages",
+        dashboardSectionOrder: 3,
+      })
     : null;
 
   const legacy =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-      checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo")
+    checkIfItemsAvailableInArray(internalErrorLog, "dataItemInfo")
       ? //if there is a null value , it replaces it with ""
-      removeNullValues(dataItemInfo.DTCLegacyReference) +
-      removeNullValues(dataItemInfo.SPAALegacyReference) +
-      removeNullValues(dataItemInfo.RGMALegacyReference) +
-      removeNullValues(dataItemInfo.UNCDataItemReference) +
-      removeNullValues(dataItemInfo.IUCDataItemReference) +
-      removeNullValues(dataItemInfo.DCUSADataItemReference)
+        removeNullValues(dataItemInfo.DTCLegacyReference) +
+        removeNullValues(dataItemInfo.SPAALegacyReference) +
+        removeNullValues(dataItemInfo.RGMALegacyReference) +
+        removeNullValues(dataItemInfo.UNCDataItemReference) +
+        removeNullValues(dataItemInfo.IUCDataItemReference) +
+        removeNullValues(dataItemInfo.DCUSADataItemReference)
       : null;
 
   //Left Navigation Bar
@@ -83,8 +84,13 @@ function DataItemDetailsPage({ searchResults }) {
     }
   });
 
-  useEffect(() => { }, [currentSections]);
+  useEffect(() => {}, [currentSections]);
 
+  useEffect(() => {
+    LogUserInfo(
+      `${dataItemInfo.DataItemIdentifier} ${dataItemInfo.DataItemName}`
+    );
+  });
   return (
     <>
       <Head>
@@ -99,7 +105,7 @@ function DataItemDetailsPage({ searchResults }) {
             dashboardId="dashboardId"
             name="dashboardSectionName"
             stateVar={currentSections}
-            stateSet={setCurrentSections} 
+            stateSet={setCurrentSections}
           />
         </div>
         <div className={`${styles.mainContentContainer}`}>

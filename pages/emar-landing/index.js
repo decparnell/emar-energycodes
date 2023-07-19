@@ -1,7 +1,12 @@
 import Link from "next/link";
 import styles from "../../styles/landing.module.css";
 import Head from "next/head";
+import { LogUserInfo } from "../../components/logging";
+
 function Landing() {
+  useEffect(() => {
+    LogUserInfo("Landing Page");
+  }, []);
   const LandingButton = (title, maintext, hrefLink) => {
     return (
       <Link href={String(hrefLink)} className={styles.landingButtonLink}>
