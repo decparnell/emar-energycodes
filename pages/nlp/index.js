@@ -12,44 +12,47 @@ function NLP() {
   const [botIsTyping, setBotIsTyping] = useState(false);
   const [chatLog, setChatLog] = useState([]);
   const [questionHistory, setQuestionHistory] = useState([]);
+  const [isCurrentQuestion, setIsCurrentQuestion] = useState();
+  const [userQuestion, setUserQuestion] = useState("");
+  const [previousQuestion, setPreviousQuestion] = useState("");
 
-  const questionHandler = async (userQuestion) => {
-    setBotIsTyping(true);
+  const fetchData = () => {
+    if (isCurrentQuestion === true) {
+      //Asked question data
+      const data = {
+        query: userQuestion,
+        api_params: {
+          engine: "gpt-35-turbo-0301",
+          temperature: 0.1,
+          max_tokens: 500,
+        },
+        logging: {
+          user_name: "user@example.com",
+          timestamp: 1234,
+        },
+      };
+    } else if (isCurrentQuestion === false) {
+      //Previously asked question data
+      const data = {
+        query: previousQuestion,
+        api_params: {
+          engine: "gpt-35-turbo-0301",
+          temperature: 0.1,
+          max_tokens: 500,
+        },
+        logging: {
+          user_name: "user@example.com",
+          timestamp: 1234,
+        },
+      };
+    }
 
-    setChatLog((prevChat) => {
-      return [...prevChat, <UserQuestion messageValue={userQuestion} />];
-    });
-
-    setQuestionHistory((prevQuestion) => {
-      return [
-        ...prevQuestion,
-        <QuestionHistoryItem
-          messageValue={userQuestion}
-          onAskQuestionFromHistory={questionHistoryItemHandler}
-        />,
-      ];
-    });
-
-    const data = {
-      query: userQuestion,
-      api_params: {
-        engine: "gpt-35-turbo-0301",
-        temperature: 0.1,
-        max_tokens: 500,
-      },
-      logging: {
-        user_name: "user@example.com",
-        timestamp: 1234,
-      },
-    };
-
-    const bodyData = JSON.stringify(data);
     const options = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: bodyData,
+      body: JSON.stringify(data),
     };
 
     fetch(
@@ -58,7 +61,6 @@ function NLP() {
     )
       .then((response) => {
         if (!response.ok) {
-
           setChatLog((prevChat) => {
             return [
               ...prevChat,
@@ -88,10 +90,37 @@ function NLP() {
       });
   };
 
+  const questionHandler = async (userQuestion) => {
+    setBotIsTyping(true);
+    setIsCurrentQuestion(true);
+    setUserQuestion(userQuestion);
+
+    setChatLog((prevChat) => {
+      return [...prevChat, <UserQuestion messageValue={userQuestion} />];
+    });
+
+    setQuestionHistory((prevQuestion) => {
+      return [
+        ...prevQuestion,
+        <QuestionHistoryItem
+          messageValue={userQuestion}
+          onAskQuestionFromHistory={questionHistoryItemHandler}
+        />,
+      ];
+    });
+
+    fetchData();
+  };
+
   const questionHistoryItemHandler = (previousQuestion) => {
+    setIsCurrentQuestion(false);
+    setPreviousQuestion(previousQuestion);
+
     setChatLog((prevChat) => {
       return [...prevChat, <UserQuestion messageValue={previousQuestion} />];
     });
+
+    fetchData();
   };
 
   const showQuestionHistory = questionHistory.length > 0 && (
