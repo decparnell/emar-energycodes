@@ -1,4 +1,3 @@
-import { encryptWithAES } from "../helperFunctions/AES";
 export function LogUserInfo(action) {
   const data = { actionName: action };
   const bodyData = JSON.stringify(data);

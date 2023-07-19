@@ -19,7 +19,7 @@ function Test() {
     const queryId = uuidv4();
     const data = {
       query: query,
-      timestamp: new Date(Date.now()).toISOString(),
+      queryTimestamp: new Date(Date.now()).toISOString(),
       queryId: queryId,
       uiVersion: uiVersion,
     };
@@ -32,6 +32,7 @@ function Test() {
       body: bodyData,
     };
 
+    console.log("loggingData", data);
     fetch("/api/testApi", options)
       .then((response) => {
         console.log(response);

@@ -220,6 +220,8 @@ app.prepare().then(() => {
       ui_version: uiVersion,
     };
 
+    console.log("serverData:", data);
+
     const bodyData = JSON.stringify(data);
     const options = {
       method: "POST",
