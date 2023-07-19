@@ -17,7 +17,7 @@ import {
   getDistinctValuesSource,
   getDistinctValuesTarget,
 } from "../../../components/dropdown/functions/formatDropdownItems";
-import { LogUserInfo } from "../../components/logging";
+import { LogUserInfo } from "../../../components/logging";
 
 function DataSpecSearchPage({ dataSpecSearchList }) {
   const [data, setData] = useState([]);

@@ -9,7 +9,7 @@ import { checkIfItemsAvailableInArray } from "../../../../components/helperFunct
 import { checkIfsearchResultsAvailable } from "../../../../components/helperFunctions/checkIfsearchResultsAvailable";
 import MarketMessageTables from "../../../../components/tables/marketMessageTables";
 import SecondNavbar from "../../../../components/layout/secondHeader";
-import { LogUserInfo } from "../../components/logging";
+import { LogUserInfo } from "../../../../components/logging";
 
 function MarketMessagePage({ searchResults }) {
   const pageId = "MarketMessagePage";

@@ -7,7 +7,7 @@ import { checkIfItemsAvailableInArray } from "../../../../components/helperFunct
 import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable";
 import ScenarioVariantTables from "../../../../components/tables/scenarioVariantTables";
 import SecondNavbar from "../../../../components/layout/secondHeader";
-import { LogUserInfo } from "../../components/logging";
+import { LogUserInfo } from "../../../../components/logging";
 
 function ScenarioPage({ scenarioVariantInfo, structure, marketMsgInfo }) {
   const value = useContext(AppContext);
