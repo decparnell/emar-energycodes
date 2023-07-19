@@ -203,17 +203,21 @@ app.prepare().then(() => {
     // Get data submitted in request's body.
 
     const { query, queryTimestamp, queryId, uiVersion } = req.body;
+    console.log("query", query);
+    console.log("queryTimestamp", queryTimestamp);
+    console.log("queryId", queryId);
+    console.log("uiVersion", uiVersion);
+
     const data = {
+      query: query,
+      api_params: {
+        temperature: 0.1,
+        max_tokens: 500,
+      },
       user_id: AES.encryptWithAES(req.session.user.name_id),
       query_timestamp: queryTimestamp,
       query_id: queryId,
       ui_version: uiVersion,
-      query: query,
-      api_params: {
-        engine: "gpt-35-turbo-0301",
-        temperature: 0.1,
-        max_tokens: 500,
-      },
     };
 
     const bodyData = JSON.stringify(data);
