@@ -203,10 +203,6 @@ app.prepare().then(() => {
     // Get data submitted in request's body.
 
     const { query, queryTimestamp, queryId, uiVersion } = req.body;
-    console.log("query", query);
-    console.log("queryTimestamp", queryTimestamp);
-    console.log("queryId", queryId);
-    console.log("uiVersion", uiVersion);
 
     const data = {
       query: query,
@@ -219,8 +215,6 @@ app.prepare().then(() => {
       query_id: queryId,
       ui_version: uiVersion,
     };
-
-    console.log("serverData:", data);
 
     const bodyData = JSON.stringify(data);
     const options = {

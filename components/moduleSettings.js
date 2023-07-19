@@ -1,3 +1,3 @@
-const usePhrase = "random";
+const usePhrase = "edfgjbufiubnfiwebnfifnfnwefbn";
 const seshPhrase = "wedfboaipweruibnapuihbnfpiuahnvpavnhpnvn";
 module.exports = { usePhrase, seshPhrase };
