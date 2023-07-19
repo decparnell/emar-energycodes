@@ -113,6 +113,7 @@ function NLP() {
   };
 
   const questionHistoryItemHandler = (previousQuestion) => {
+    setBotIsTyping(true);
     setIsCurrentQuestion(false);
     setPreviousQuestion(previousQuestion);
 

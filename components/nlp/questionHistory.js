@@ -5,7 +5,7 @@ function QuestionHistory(props) {
 
   return (
     <Fragment>
-      <div className={`${styles.questionHistory} box`}>
+      <div title="Click to ask again" className={`${styles.questionHistory} box`}>
         {props.questionHistory}
       </div>
     </Fragment>

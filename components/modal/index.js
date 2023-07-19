@@ -7,12 +7,11 @@ const Backdrop = (props) => {
 };
 
 const SuccessModal = (props) => {
-  const closeIcon = <BiX className={`${styles.closeIcon}`} />;
   return (
     <div className={`${styles.modal}`}>
       <div className={`${styles.closeContainer}`}>
         <button className={`${styles.close}`} onClick={props.onClose}>
-          {closeIcon}
+        <BiX title={"Close"} className={`${styles.closeIcon}`} />
         </button>
       </div>
       <div className={`${styles.content}`}>
@@ -23,8 +22,6 @@ const SuccessModal = (props) => {
 };
 
 const ModalOverlay = (props) => {
-  const closeIcon = <BiX className={`${styles.closeIcon}`} />;
-
   const [enteredFeedback, setEnteredFeedback] = useState("");
 
   const submitFeedbackHandler = (event) => {
@@ -47,7 +44,7 @@ const ModalOverlay = (props) => {
     <div className={`${styles.modal}`}>
       <div className={`${styles.closeContainer}`}>
         <button className={`${styles.close}`} onClick={props.onClose}>
-          {closeIcon}
+          <BiX title={"Close"} className={`${styles.closeIcon}`} />
         </button>
       </div>
       <div className={`${styles.content}`}>
