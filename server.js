@@ -171,7 +171,6 @@ app.prepare().then(() => {
   server.post("/api/session", jsonParser, (req, res) => {
     //add page name
     const { actionName } = req.body;
-    console.log("declan", AES.encryptWithAES("declan"));
     const userName = AES.encryptWithAES(req.session.user.name_id);
     const data = {
       user: userName,
