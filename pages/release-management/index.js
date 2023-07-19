@@ -4,7 +4,7 @@ import QuickLink from "../../components/helperFunctions/quickLink";
 import React from "react";
 import ReleaseTable from "../../components/releaseTable";
 import { LogUserInfo } from "../../components/logging";
-
+import { useEffect } from "react";
 function ReleaseManagement({ recVersionAndChangesJSON }) {
   const apiResList = [
     { obj: recVersionAndChangesJSON, name: "recVersionAndChangesJSON" },
