@@ -11,7 +11,7 @@ const SuccessModal = (props) => {
     <div className={`${styles.modal}`}>
       <div className={`${styles.closeContainer}`}>
         <button className={`${styles.close}`} onClick={props.onClose}>
-        <BiX title={"Close"} className={`${styles.closeIcon}`} />
+          <BiX title={"Close"} className={`${styles.closeIcon}`} />
         </button>
       </div>
       <div className={`${styles.content}`}>
