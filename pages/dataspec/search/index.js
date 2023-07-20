@@ -43,6 +43,19 @@ function DataSpecSearchPage({ dataSpecSearchList, mmsv }) {
       ? scenarioVariantHeaders
       : dataItemHeaders;
 
+/*
+  const pathName = 
+  searchType.name === "Market Messages" 
+    ? "marketmessage" 
+    : searchType.name === "Scenario Variants"
+    ? "scenario-variant"
+    : "dataitem";
+
+  const sourceOptions = getDistinctValuesSource(dataSpecSearchList);
+  const targetOptions = getDistinctValuesTarget(dataSpecSearchList);
+
+*/
+  const latestRecVersion = '3.5.0';
 
   ///////////////FUNCTIONS/////////////////////////
   //fetch data for the results table (before an actual search has been done)
@@ -53,10 +66,11 @@ function DataSpecSearchPage({ dataSpecSearchList, mmsv }) {
     const mappedTarget = target === "" ? "-" : target;
     const mappedSearch = searchValue === "" ? "-" : searchValue;
     try {
-      //Logic App: getAllDataSpecData-LogicApp-v2
+      //Logic App: getAllDataSpecData-LogicApp-v3
       const response = await fetch(
-        `https://prod-17.uksouth.logic.azure.com/workflows/f977e7f523164a488ec1500b8d81a7cd/triggers/manual/paths/invoke/searchType/${searchType.name}/startVal/${startVal}/source/${mappedSource}/target/${mappedTarget}/search/${mappedSearch}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=gRmq-WU9sVpROu8kyaVtadjAtqEm4HfILr_kGqNMZPU`
+        `https://prod-21.uksouth.logic.azure.com/workflows/7c36ed459a774082956345055c9c70ef/triggers/manual/paths/invoke/searchType/${searchType.name}/startVal/${startVal}/source/${mappedSource}/target/${mappedTarget}/search/${mappedSearch}/versionNumber/${latestRecVersion}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=VieTZy8bvqkgfrZnz_nwMPD6zXcSxK6sMFMcbHkrqBA`
       );
+
       const dataSpecDataJson = await response.json();
       const newData = dataSpecDataJson.Table1;
 
@@ -236,7 +250,8 @@ function DataSpecSearchPage({ dataSpecSearchList, mmsv }) {
             data={data}
             setStartVal={setStartVal}
             headers={headers}
-            baseLink="/dataspec/3.3.0/marketmessage"
+
+            baseLink={`/dataspec/${latestRecVersion}/${pathName}`}
             searchType={searchType.name}
             searchValue={searchValue}
             fetchData={fetchData}
@@ -255,9 +270,9 @@ export default DataSpecSearchPage;
 export async function getServerSideProps(context) {
   //Logic App: getDataSpecSearchList-LogicApp
   //TO-DO: change 3.5.0 to versionNumber when dropdown for the version selection will be implemented
-
+  const latestRecVersion = '3.5.0';
   const dataSpecReq = await fetch(
-    `https://prod-00.uksouth.logic.azure.com/workflows/d0c53a8711d9426d8f0a400b24e9a305/triggers/request/paths/invoke/versionNumber/3.5.0?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=skIfVKyKRwy-wAiTWKFjg3Q6vXwYK8ct2mQ8aSbB6Fk`
+    `https://prod-00.uksouth.logic.azure.com/workflows/d0c53a8711d9426d8f0a400b24e9a305/triggers/request/paths/invoke/versionNumber/${latestRecVersion}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=skIfVKyKRwy-wAiTWKFjg3Q6vXwYK8ct2mQ8aSbB6Fk`
   );
   const dataSpecSearchListJSON = await dataSpecReq.json();
 
