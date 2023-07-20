@@ -64,3 +64,15 @@
     background-color: #4d8934;
     opacity: 100%;
 }
+
+.errorMessage{
+    color: red;
+}
+
+.errorContainer{
+    text-align: center;
+}
+
+.spaceContainer{
+    padding-bottom: 3%;
+}
