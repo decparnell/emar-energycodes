@@ -37,17 +37,14 @@ function Test() {
       body: bodyData,
     };
 
-    console.log("loggingData", data);
     fetch("/api/testApi", options)
       .then((response) => {
-        console.log(response);
         if (!response.ok) {
           throw new Error("Error occurred while fetching session data");
         }
         return response.json();
       })
       .then((data) => {
-        console.log("Session data:", data);
         setAnswer(data.response.answer);
       })
       .catch((error) => {

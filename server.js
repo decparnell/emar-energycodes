@@ -168,7 +168,7 @@ app.prepare().then(() => {
   });
 
   ////////////////////// API TO LOG USER ACTIVITY
-  server.post("/api/session", jsonParser, (req, res) => {
+  /* server.post("/api/session", jsonParser, (req, res) => {
     //add page name
     const { actionName } = req.body;
     const userName = AES.encryptWithAES(req.session.user.name_id);
@@ -197,9 +197,9 @@ app.prepare().then(() => {
       .catch((error) => {
         console.error("Error fetching session data:", error);
       });
-  });
+  }); */
   ////////////////////// CALL NLP FUNCTION
-  server.post("/api/testApi", jsonParser, (req, res) => {
+  /*  server.post("/api/testApi", jsonParser, (req, res) => {
     // Get data submitted in request's body.
 
     const { query, queryTimestamp, queryId, uiVersion } = req.body;
@@ -236,7 +236,7 @@ app.prepare().then(() => {
       .catch((error) => {
         console.error("Error fetching NLP response:", error);
       });
-  });
+  }); */
 
   server.all("*", (req, res) => {
     if (req.session && typeof req.session.user !== "undefined") {
