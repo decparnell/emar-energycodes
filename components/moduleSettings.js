@@ -1,3 +1,3 @@
-const usePhrase = "edfgjbufiubnfiwebnfifnfnwefbn";
-const seshPhrase = "wedfboaipweruibnapuihbnfpiuahnvpavnhpnvn";
-module.exports = { usePhrase, seshPhrase };
+export const usePhrase = "edfgjbufiubnfiwebnfifnfnwefbn";
+export const seshPhrase = "wedfboaipweruibnapuihbnfpiuahnvpavnhpnvn";
+//module.exports = { usePhrase, seshPhrase };

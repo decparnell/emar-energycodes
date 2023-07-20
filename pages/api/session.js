@@ -1,4 +1,4 @@
-import encryptWithAES from "../../components/helperFunctions/AES";
+import { encryptWithAES } from "../../components/helperFunctions/AES";
 
 export default function handler(req, res) {
   //add page name
