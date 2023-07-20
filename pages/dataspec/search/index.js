@@ -43,7 +43,7 @@ function DataSpecSearchPage({ dataSpecSearchList, mmsv }) {
       ? scenarioVariantHeaders
       : dataItemHeaders;
 
-/*
+
   const pathName = 
   searchType.name === "Market Messages" 
     ? "marketmessage" 
@@ -51,10 +51,9 @@ function DataSpecSearchPage({ dataSpecSearchList, mmsv }) {
     ? "scenario-variant"
     : "dataitem";
 
-  const sourceOptions = getDistinctValuesSource(dataSpecSearchList);
-  const targetOptions = getDistinctValuesTarget(dataSpecSearchList);
+  // const sourceOptions = getDistinctValuesSource(dataSpecSearchList);
+  // const targetOptions = getDistinctValuesTarget(dataSpecSearchList);
 
-*/
   const latestRecVersion = '3.5.0';
 
   ///////////////FUNCTIONS/////////////////////////
