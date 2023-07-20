@@ -9,6 +9,7 @@ import { checkIfItemsAvailableInArray } from "../../../../components/helperFunct
 import { checkIfsearchResultsAvailable } from "../../../../components/helperFunctions/checkIfsearchResultsAvailable";
 import MarketMessageTables from "../../../../components/tables/marketMessageTables";
 import SecondNavbar from "../../../../components/layout/secondHeader";
+import { LogUserInfo } from "../../../../components/logging";
 
 function MarketMessagePage({ searchResults }) {
   const pageId = "MarketMessagePage";
@@ -44,30 +45,30 @@ function MarketMessagePage({ searchResults }) {
 
   const marketMessageInfo =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-      checkIfItemsAvailableInArray(internalErrorLog, "marketMessageInfo")
+    checkIfItemsAvailableInArray(internalErrorLog, "marketMessageInfo")
       ? searchResults[0]
       : null;
 
   const svForMarketMessage =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-      checkIfItemsAvailableInArray(internalErrorLog, "svForMarketMessage")
+    checkIfItemsAvailableInArray(internalErrorLog, "svForMarketMessage")
       ? searchResults[1]
       : null;
 
   const dataItems =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-      checkIfItemsAvailableInArray(internalErrorLog, "dataItems")
+    checkIfItemsAvailableInArray(internalErrorLog, "dataItems")
       ? searchResults[2]
       : null;
 
   const legacy =
     checkIfItemsAvailableInArray(internalErrorLog, "searchResults") &&
-      checkIfItemsAvailableInArray(internalErrorLog, "marketMessageInfo")
+    checkIfItemsAvailableInArray(internalErrorLog, "marketMessageInfo")
       ? removeNullValues(marketMessageInfo.DTCDcode) +
-      removeNullValues(marketMessageInfo.CSSMessageIdentifier) +
-      removeNullValues(marketMessageInfo.LegacyRGMAMessageIdentifier) +
-      removeNullValues(marketMessageInfo.LegacySPAAMessageIdentifier) +
-      removeNullValues(marketMessageInfo.UNCMessageIdentifier)
+        removeNullValues(marketMessageInfo.CSSMessageIdentifier) +
+        removeNullValues(marketMessageInfo.LegacyRGMAMessageIdentifier) +
+        removeNullValues(marketMessageInfo.LegacySPAAMessageIdentifier) +
+        removeNullValues(marketMessageInfo.UNCMessageIdentifier)
       : null;
 
   const showApiColumns =
@@ -81,7 +82,13 @@ function MarketMessagePage({ searchResults }) {
     }
   });
 
-  useEffect(() => { }, [currentSections]);
+  useEffect(() => {}, [currentSections]);
+
+  useEffect(() => {
+    LogUserInfo(
+      `${marketMessageInfo.EnergyMarketMessageIdentifier} - ${marketMessageInfo.Label}`
+    );
+  }, []);
 
   return (
     <>

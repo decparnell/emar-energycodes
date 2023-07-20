@@ -6,10 +6,36 @@ import GlobalDropDown from "../../../components/dropdown/newIndex";
 import { useState } from "react";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { Button, TextField } from "@mui/material";
-import { codeSchdulesHeaders } from "../../../components/settings"
-
+import { codeSchdulesHeaders } from "../../../components/settings";
+import { LogUserInfo } from "../../../components/logging";
 function SchedulesSearchPage({ codesSchedulesDataJson }) {
+  const [data, setData] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [schedulesValue, setSchedulesValue] = useState("Filter Schedules:");
+  const [startVal, setStartVal] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [hasMore, setHasMore] = useState(true);
 
+  const searchType = "Codes Schedules";
+
+  useEffect(() => {
+    LogUserInfo("Codes Schedules Search");
+  }, []);
+
+  ///////////////FUNCTIONS/////////////////////////
+  //fetch data for the results table (before an actual search has been done)
+  const fetchData = async () => {
+    setIsLoading(true);
+    setError(null);
+    const mappedSearch = searchValue === "" ? "-" : searchValue;
+
+    let documentId = "";
+    if (typeof schedulesValue == "object") {
+      documentId = schedulesValue.documentId;
+    } else {
+      documentId = schedulesValue;
+    }
     const [data, setData] = useState([]);
     const [searchValue, setSearchValue] = useState("");
     const [schedulesValue, setSchedulesValue] = useState("Filter Schedules:");
@@ -33,9 +59,8 @@ function SchedulesSearchPage({ codesSchedulesDataJson }) {
         if (typeof schedulesValue == "object") {
             documentId = schedulesValue.documentId;
         } else {
-            documentId = schedulesValue;
+          setData((prevData) => [...prevData, ...newData]);
         }
-
         try {
             // get data from api based on search phrase and documentId
             let dataReq = await fetch(
@@ -185,23 +210,25 @@ function SchedulesSearchPage({ codesSchedulesDataJson }) {
                     /> : null }
                 </div>
             </div>
+
         </div>
-    )
+      </div>
+    </div>
+  );
 }
 
 export default SchedulesSearchPage;
 
 export async function getServerSideProps(context) {
+  //Logic App: getAllCodeSchedules-LogicApp
+  const codesSchedulesDataReq = await fetch(
+    `https://prod-04.uksouth.logic.azure.com:443/workflows/51e9e129f1b645ee96aa180a68a2033f/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Cg3T-VLyFtcRDJvXkEEYDLpftYytyNtWpBiD15qXosg`
+  );
+  const codesSchedulesDataJson = await codesSchedulesDataReq.json();
 
-    //Logic App: getAllCodeSchedules-LogicApp
-    const codesSchedulesDataReq = await fetch(
-        `https://prod-04.uksouth.logic.azure.com:443/workflows/51e9e129f1b645ee96aa180a68a2033f/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Cg3T-VLyFtcRDJvXkEEYDLpftYytyNtWpBiD15qXosg`
-    );
-    const codesSchedulesDataJson = await codesSchedulesDataReq.json();
-
-    return {
-        props: {
-            codesSchedulesDataJson,
-        }
-    };
+  return {
+    props: {
+      codesSchedulesDataJson,
+    },
+  };
 }

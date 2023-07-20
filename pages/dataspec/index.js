@@ -10,8 +10,13 @@ import SideNav from "../../components/dashboardSideNav";
 import { BiSearchAlt2, BiData, BiTable } from "react-icons/bi";
 import { TiHtml5 } from "react-icons/ti";
 import DashboardLink from "../../components/dashboardLink";
+import { LogUserInfo } from "../../components/logging";
 
 function DataSpec({ sections, items }) {
+  useEffect(() => {
+    LogUserInfo("Data Spec Page");
+  }, []);
+
   const apiVarList = [
     { obj: items, name: "items" },
     { obj: sections, name: "sections" },
@@ -34,7 +39,6 @@ function DataSpec({ sections, items }) {
   });
 
   useEffect(() => {
-
     if (currentSections.dashboardSectionName === "All") {
       setCurrentItems(items);
     } else {
@@ -45,7 +49,6 @@ function DataSpec({ sections, items }) {
         )
       );
     }
-
   }, [currentSections]);
 
   const [insertError, setInsertError] = useState("");
@@ -82,7 +85,7 @@ function DataSpec({ sections, items }) {
               <h6 className="boxTitle">
                 {currentSections.dashboardSectionName}
               </h6>
-              <DashboardLink currentItems={currentItems}/>
+              <DashboardLink currentItems={currentItems} />
             </div>
             <div className={`${styles.right}`}>
               <div className={`${styles.quickLinkContainer}`}>
@@ -128,8 +131,14 @@ export async function getServerSideProps({ req, res }) {
   );
   const dataJson = await dataReq.json();
   const sections = dataJson.sections;
-  const lastDashboardSectionOrder = (sections[sections.length-1].dashboardSectionOrder)+1;
-  sections.push({dashboardId_FK: null, dashboardSectionId: null, dashboardSectionName:"All", dashboardSectionOrder: lastDashboardSectionOrder});
+  const lastDashboardSectionOrder =
+    sections[sections.length - 1].dashboardSectionOrder + 1;
+  sections.push({
+    dashboardId_FK: null,
+    dashboardSectionId: null,
+    dashboardSectionName: "All",
+    dashboardSectionOrder: lastDashboardSectionOrder,
+  });
   const items = dataJson.items;
   // Pass data to the page via props
   return {

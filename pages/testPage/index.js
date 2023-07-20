@@ -2,9 +2,17 @@ import { useRouter } from "next/router";
 import { useState, useContext, useEffect } from "react";
 import Head from "next/head";
 import { TextField, Button } from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
+import { uiVersion } from "../../components/settings";
+import { LogUserInfo } from "../../components/logging";
+
 function Test() {
   const [query, setQuery] = useState("");
   const [answer, setAnswer] = useState("");
+
+  useEffect(() => {
+    LogUserInfo("NLP TEst Page");
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,10 +20,13 @@ function Test() {
   };
 
   const fetchData = async () => {
-    console.log(query);
+    //write function to store queryid & user
+    const queryId = uuidv4();
     const data = {
       query: query,
-      timestamp: 1234,
+      queryTimestamp: new Date(Date.now()).toISOString(),
+      queryId: queryId,
+      uiVersion: uiVersion,
     };
     const bodyData = JSON.stringify(data);
     const options = {
@@ -28,14 +39,12 @@ function Test() {
 
     fetch("/api/testApi", options)
       .then((response) => {
-        console.log(response);
         if (!response.ok) {
           throw new Error("Error occurred while fetching session data");
         }
         return response.json();
       })
       .then((data) => {
-        console.log("Session data:", data);
         setAnswer(data.response.answer);
       })
       .catch((error) => {

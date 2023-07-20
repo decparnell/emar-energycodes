@@ -7,6 +7,7 @@ import { checkIfItemsAvailableInArray } from "../../../components/helperFunction
 import SchedulesTables from "../../../components/tables/schedulesTables";
 import CreateSchedulesContent from "../../../components/scheduleId/createSchedulesContent";
 import Head from "next/head";
+import { LogUserInfo } from "../../../components/logging";
 function Schedules({
   versions,
   parts,
@@ -82,11 +83,15 @@ function Schedules({
   });
 
   useEffect(() => {}, [currentSections]);
-
+  useEffect(() => {
+    LogUserInfo(`${docInfo.documentName} V${versionName}`);
+  }, []);
   return (
     <>
       <Head>
-        <title>EMAR - {docInfo ? docInfo.documentName : "code schedules"}</title>
+        <title>
+          EMAR - {docInfo ? docInfo.documentName : "code schedules"}
+        </title>
         <meta property="og:title" content="My page title" key="title" />
       </Head>
       <div className={"container-flex"}>

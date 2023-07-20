@@ -3,6 +3,8 @@ const port = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
+const AES = require("./components/helperFunctions/AES");
+const moduleSettings = require("./components/moduleSettings");
 app.prepare().then(() => {
   var saml2 = require("saml2-js");
   var express = require("express");
@@ -12,17 +14,17 @@ app.prepare().then(() => {
   var session = require("express-session");
   // If you're using express <4.0:
   var bodyParser = require("body-parser");
+  var jsonParser = bodyParser.json();
   server.use(
     bodyParser.urlencoded({
       extended: true,
     })
   );
-  //bodyParser.json()
 
   // creating 24 hours from milliseconds
   const oneDay = 1000 * 60 * 60 * 24;
   var sesh = {
-    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    secret: moduleSettings.seshPhrase,
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: oneDay },
@@ -165,21 +167,15 @@ app.prepare().then(() => {
     });
   });
 
-  server.post("/api/session", (req, res) => {
+  ////////////////////// API TO LOG USER ACTIVITY
+  /* server.post("/api/session", jsonParser, (req, res) => {
     //add page name
-    const actionName1 = req.body.actionName;
     const { actionName } = req.body;
-    console.log("body:", req.body);
-    console.log("actionName1:", actionName1);
-    console.log("actionName:", actionName);
-    const userName = req.session.user.name_id;
-    console.log("userName:", userName);
+    const userName = AES.encryptWithAES(req.session.user.name_id);
     const data = {
       user: userName,
       action: actionName,
     };
-
-    console.log("data:", data);
 
     const bodyData = JSON.stringify(data);
     const options = {
@@ -201,7 +197,46 @@ app.prepare().then(() => {
       .catch((error) => {
         console.error("Error fetching session data:", error);
       });
-  });
+  }); */
+  ////////////////////// CALL NLP FUNCTION
+  /*  server.post("/api/testApi", jsonParser, (req, res) => {
+    // Get data submitted in request's body.
+
+    const { query, queryTimestamp, queryId, uiVersion } = req.body;
+
+    const data = {
+      query: query,
+      api_params: {
+        temperature: 0.1,
+        max_tokens: 500,
+      },
+      user_id: AES.encryptWithAES(req.session.user.name_id),
+      query_timestamp: queryTimestamp,
+      query_id: queryId,
+      ui_version: uiVersion,
+    };
+
+    const bodyData = JSON.stringify(data);
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: bodyData,
+    };
+    fetch(
+      "https://recco-openai-qa.azurewebsites.net/api/answer_query?code=WVTZzRNJ3Hi2fH_tKF3hHiXJsirhpa8qQATso6LFTqIOAzFuFICWGQ==",
+      options
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("NLP Response:", data);
+        res.json(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching NLP response:", error);
+      });
+  }); */
 
   server.all("*", (req, res) => {
     if (req.session && typeof req.session.user !== "undefined") {

@@ -7,15 +7,23 @@ import { checkIfItemsAvailableInArray } from "../../../../components/helperFunct
 import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable";
 import ScenarioVariantTables from "../../../../components/tables/scenarioVariantTables";
 import SecondNavbar from "../../../../components/layout/secondHeader";
+import { LogUserInfo } from "../../../../components/logging";
 
 function ScenarioPage({ scenarioVariantInfo, structure, marketMsgInfo }) {
-
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
 
   let dashboard = [
-    { dashboardId: "BasicInformation", dashboardSectionName: "Basic Information", dashboardSectionOrder: 1 },
-    { dashboardId: "Structure", dashboardSectionName: "Structure", dashboardSectionOrder: 2 },
+    {
+      dashboardId: "BasicInformation",
+      dashboardSectionName: "Basic Information",
+      dashboardSectionOrder: 1,
+    },
+    {
+      dashboardId: "Structure",
+      dashboardSectionName: "Structure",
+      dashboardSectionOrder: 2,
+    },
   ];
 
   const apiVarList = [
@@ -29,7 +37,11 @@ function ScenarioPage({ scenarioVariantInfo, structure, marketMsgInfo }) {
   const svInfo = scenarioVariantInfo ? scenarioVariantInfo[0] : null;
   const mmInfo = marketMsgInfo ? marketMsgInfo[0] : null;
 
-  let svInfoBody = { ...svInfo, DTCDcode: mmInfo.DTCDcode, MessageVersionNumber: mmInfo.MessageVersionNumber }
+  let svInfoBody = {
+    ...svInfo,
+    DTCDcode: mmInfo.DTCDcode,
+    MessageVersionNumber: mmInfo.MessageVersionNumber,
+  };
 
   //Left Navigation Bar
   const [currentSections, setCurrentSections] = useState(() => {
@@ -38,15 +50,18 @@ function ScenarioPage({ scenarioVariantInfo, structure, marketMsgInfo }) {
     }
   });
 
+  useEffect(() => {}, [currentSections]);
+
   useEffect(() => {
-  }, [currentSections]);
+    LogUserInfo(
+      `${svInfo.EnergyMarketMessageScenarioVariantIdentifier} - ${svInfo.EnergyMarketMessageScenarioVariantName}`
+    );
+  }, []);
 
   return (
     <>
       <Head>
-        <title>
-          EMAR - {svInfo.EnergyMarketMessageScenarioVariantName}
-        </title>
+        <title>EMAR - {svInfo.EnergyMarketMessageScenarioVariantName}</title>
         <meta property="og:title" content="My page title" key="title" />
       </Head>
       <div className={"container-flex"}>
@@ -63,17 +78,23 @@ function ScenarioPage({ scenarioVariantInfo, structure, marketMsgInfo }) {
         <div className={`${styles.mainContentContainer}`}>
           <SecondNavbar />
           <section id={dashboard[0].dashboardId}>
-            <ScenarioVariantTables keyTitle="Basic Information" latestDataSpecVersion={latestDataSpecVersion} dataBody={svInfoBody} />
+            <ScenarioVariantTables
+              keyTitle="Basic Information"
+              latestDataSpecVersion={latestDataSpecVersion}
+              dataBody={svInfoBody}
+            />
           </section>
           <section id={dashboard[1].dashboardId}>
-            <ScenarioVariantTables keyTitle="Structure" latestDataSpecVersion={latestDataSpecVersion} dataBody={structure} />
+            <ScenarioVariantTables
+              keyTitle="Structure"
+              latestDataSpecVersion={latestDataSpecVersion}
+              dataBody={structure}
+            />
           </section>
         </div>
       </div>
     </>
-  )
-
-
+  );
 }
 
 export default ScenarioPage;
