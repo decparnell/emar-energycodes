@@ -52,7 +52,7 @@
 }
 
 .typingContainerSmall {
-  height: 10%;
+  height: 14%;
   width: 80%;
   position: absolute;
   margin-left: 0.5%;
@@ -187,6 +187,13 @@
   margin-right: 3%;
 }
 
+.dislikeIconDisabled {
+  height: 100%;
+  width: 100%;
+  color: lightgray;
+  margin-right: 3%;
+}
+
 .likeIcon {
   height: 100%;
   width: 100%;
@@ -201,4 +208,10 @@
   height: 100%;
   width: 100%;
   color: #77a465;
+}
+
+.likeIconDisabled {
+  height: 100%;
+  width: 100%;
+  color: lightgray;
 }
