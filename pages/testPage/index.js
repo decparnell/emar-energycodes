@@ -11,7 +11,7 @@ function Test() {
   const [answer, setAnswer] = useState("");
 
   useEffect(() => {
-    LogUserInfo("NLP TEst Page");
+    LogUserInfo("NLP Test Page");
   }, []);
 
   const handleSubmit = (e) => {
