@@ -1,7 +1,6 @@
 import { encryptWithAES } from "../../components/helperFunctions/AES";
 
 export default function handler(req, res) {
-  //add page name
   const { actionName } = req.body;
   const userName = encryptWithAES(req.session.user.name_id);
   const data = {
