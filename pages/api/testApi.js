@@ -25,7 +25,7 @@ export default function handler(req, res) {
     },
     body: bodyData,
   };
-  fetch(
+  return fetch(
     "https://recco-openai-qa.azurewebsites.net/api/answer_query?code=WVTZzRNJ3Hi2fH_tKF3hHiXJsirhpa8qQATso6LFTqIOAzFuFICWGQ==",
     options
   )
