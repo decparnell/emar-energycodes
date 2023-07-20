@@ -3,39 +3,13 @@ import Head from "next/head";
 import Tooltip from "@mui/material/Tooltip";
 import ResultsTable from "../../../components/infiniteScrollTable";
 import GlobalDropDown from "../../../components/dropdown/newIndex";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { Button, TextField } from "@mui/material";
 import { codeSchdulesHeaders } from "../../../components/settings";
 import { LogUserInfo } from "../../../components/logging";
+
 function SchedulesSearchPage({ codesSchedulesDataJson }) {
-  const [data, setData] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
-  const [schedulesValue, setSchedulesValue] = useState("Filter Schedules:");
-  const [startVal, setStartVal] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [hasMore, setHasMore] = useState(true);
-
-  const searchType = "Codes Schedules";
-
-  useEffect(() => {
-    LogUserInfo("Codes Schedules Search");
-  }, []);
-
-  ///////////////FUNCTIONS/////////////////////////
-  //fetch data for the results table (before an actual search has been done)
-  const fetchData = async () => {
-    setIsLoading(true);
-    setError(null);
-    const mappedSearch = searchValue === "" ? "-" : searchValue;
-
-    let documentId = "";
-    if (typeof schedulesValue == "object") {
-      documentId = schedulesValue.documentId;
-    } else {
-      documentId = schedulesValue;
-    }
     const [data, setData] = useState([]);
     const [searchValue, setSearchValue] = useState("");
     const [schedulesValue, setSchedulesValue] = useState("Filter Schedules:");
@@ -44,9 +18,14 @@ function SchedulesSearchPage({ codesSchedulesDataJson }) {
     const [error, setError] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
     const [hasMore, setHasMore] = useState(true);
-    const [isSearchValuePresent , setIsSearchValuePresent] = useState(true);
+    const [isSearchValuePresent, setIsSearchValuePresent] = useState(true);
 
     const searchType = "Codes Schedules";
+
+    useEffect(() => {
+        LogUserInfo("Codes Schedules Search");
+    }, []);
+
 
     ///////////////FUNCTIONS/////////////////////////
     //fetch data for the results table (before an actual search has been done)
@@ -59,7 +38,7 @@ function SchedulesSearchPage({ codesSchedulesDataJson }) {
         if (typeof schedulesValue == "object") {
             documentId = schedulesValue.documentId;
         } else {
-          setData((prevData) => [...prevData, ...newData]);
+            documentId = schedulesValue;
         }
         try {
             // get data from api based on search phrase and documentId
@@ -122,12 +101,12 @@ function SchedulesSearchPage({ codesSchedulesDataJson }) {
     };
 
     const handleSubmit = (e) => {
-        if(searchValue!==""){
+        if (searchValue !== "") {
             setIsSearchValuePresent(true);
             e.preventDefault();
             refreshData();
             fetchData();
-        }else {
+        } else {
             setIsSearchValuePresent(false);
             e.preventDefault();
         }
@@ -193,42 +172,39 @@ function SchedulesSearchPage({ codesSchedulesDataJson }) {
                         />
                     </div>
                 </div>
-                {!isSearchValuePresent ? <p className={styles.errorMessage}>Please search for a term above in order to see results.</p>:null}
+                {!isSearchValuePresent ? <p className={styles.errorMessage}>Please search for a term above in order to see results.</p> : null}
                 <div className={`${styles.searchResults}`}>
-                    {data.length !== 0  || isLoading ? 
-                    <ResultsTable
-                        data={data}
-                        setStartVal={setStartVal}
-                        headers={codeSchdulesHeaders}
-                        baseLink="/dataspec/3.3.0/marketmessage"
-                        searchType={searchType}
-                        searchValue={searchValue}
-                        fetchData={fetchData}
-                        hasMore={hasMore}
-                        isLoading={isLoading}
-                        errorMessage={errorMessage}
-                    /> : null }
+                    {data.length !== 0 || isLoading ?
+                        <ResultsTable
+                            data={data}
+                            setStartVal={setStartVal}
+                            headers={codeSchdulesHeaders}
+                            baseLink="/dataspec/3.3.0/marketmessage"
+                            searchType={searchType}
+                            searchValue={searchValue}
+                            fetchData={fetchData}
+                            hasMore={hasMore}
+                            isLoading={isLoading}
+                            errorMessage={errorMessage}
+                        /> : null}
                 </div>
             </div>
-
         </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default SchedulesSearchPage;
 
 export async function getServerSideProps(context) {
-  //Logic App: getAllCodeSchedules-LogicApp
-  const codesSchedulesDataReq = await fetch(
-    `https://prod-04.uksouth.logic.azure.com:443/workflows/51e9e129f1b645ee96aa180a68a2033f/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Cg3T-VLyFtcRDJvXkEEYDLpftYytyNtWpBiD15qXosg`
-  );
-  const codesSchedulesDataJson = await codesSchedulesDataReq.json();
+    //Logic App: getAllCodeSchedules-LogicApp
+    const codesSchedulesDataReq = await fetch(
+        `https://prod-04.uksouth.logic.azure.com:443/workflows/51e9e129f1b645ee96aa180a68a2033f/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Cg3T-VLyFtcRDJvXkEEYDLpftYytyNtWpBiD15qXosg`
+    );
+    const codesSchedulesDataJson = await codesSchedulesDataReq.json();
 
-  return {
-    props: {
-      codesSchedulesDataJson,
-    },
-  };
+    return {
+        props: {
+            codesSchedulesDataJson,
+        },
+    };
 }
