@@ -67,5 +67,12 @@
 
 .errorMessage{
     color: red;
+}
+
+.errorContainer{
     text-align: center;
+}
+
+.spaceContainer{
+    padding-bottom: 3%;
 }

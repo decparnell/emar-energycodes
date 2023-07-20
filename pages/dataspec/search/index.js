@@ -18,11 +18,9 @@ import {
   getDistinctValuesTarget,
 } from "../../../components/dropdown/functions/formatDropdownItems"
 
-function DataSpecSearchPage({ dataSpecSearchList }) {
+function DataSpecSearchPage({ dataSpecSearchList, mmsv }) {
 
   const [data, setData] = useState([]);
-  const [source, setSource] = useState("");
-  const [target, setTarget] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [startVal, setStartVal] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,6 +28,12 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [hasMore, setHasMore] = useState(true);
   const [searchType, setSearchType] = useState({ name: "Market Messages" });
+  const [sourceTargetList, setsourceTargetList] = useState(dataSpecSearchList);
+  const [sourceOptions, setsourceOptions] = useState(getDistinctValuesSource(sourceTargetList));
+  const [targetOptions, settargetOptions] = useState(getDistinctValuesTarget(sourceTargetList));
+  const [source, setSource] = useState("");
+  const [target, setTarget] = useState("");
+  const [isSearchValuePresent, setIsSearchValuePresent] = useState(true);
 
   const headers =
     searchType.name === "Market Messages"
@@ -38,8 +42,6 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
         ? scenarioVariantHeaders
         : dataItemHeaders;
 
-  const sourceOptions = getDistinctValuesSource(dataSpecSearchList);
-  const targetOptions = getDistinctValuesTarget(dataSpecSearchList);
 
   ///////////////FUNCTIONS/////////////////////////
   //fetch data for the results table (before an actual search has been done)
@@ -60,7 +62,7 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
       if (newData.length > 0) {
         if (startVal === 0) {
           setData(newData);
-          if(newData.length < 50){
+          if (newData.length < 50) {
             setHasMore(false);
           }
         } else if (typeof newData === "undefined") {
@@ -70,10 +72,10 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
         }
 
         setStartVal((prevVal) => prevVal + 51);
-      }else{
+      } else {
         setErrorMessage(`No results found for "${searchValue}"`);
       }
-      
+
     } catch (error) {
       setError(error);
       setErrorMessage(`No results found for "${searchValue}"`);
@@ -96,6 +98,7 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
   const refreshData = () => {
     setStartVal(0);
     setData([]);
+    setHasMore(true);
     handleScrollToTop();
   };
   //handle click of search type buttons
@@ -106,18 +109,56 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
 
   const handleSourceChange = (e) => {
     refreshData();
-    setSource(e.target.value);
+    const sourceVal = e.target.value;
+    setSource(sourceVal);
+
+    if (sourceVal === "") {
+      resetDropdownFilter();
+    } else {
+      const filteredTargets = sourceTargetList.filter((result) => result.SourceName == sourceVal)
+      settargetOptions(getDistinctValuesTarget(filteredTargets));
+    }
   };
 
   const handleTargetChange = (e) => {
     refreshData();
-    setTarget(e.target.value);
+    const sourceVal = e.target.value;
+    setTarget(sourceVal);
+    if (sourceVal === "") {
+      resetDropdownFilter();
+    } else {
+      const filteredSource = sourceTargetList.filter((result) => result.TargetName == sourceVal)
+      setsourceOptions(getDistinctValuesSource(filteredSource));
+    }
   };
 
+  function resetDropdownFilter() {
+    setsourceOptions(getDistinctValuesSource(sourceTargetList));
+    settargetOptions(getDistinctValuesTarget(sourceTargetList));
+    if (searchValue === "") {
+      refreshData();
+    }
+  }
+
   const handleSubmit = (e) => {
-    e.preventDefault();
-    refreshData();
-    fetchData();
+    console.log(data.length);
+    if (searchValue !== "") {
+      setIsSearchValuePresent(true);
+      e.preventDefault();
+      refreshData();
+      fetchData();
+    } else if (searchValue == "" && source == "" && target == ""){
+      setIsSearchValuePresent(true);
+      e.preventDefault();
+      //forcing to refresh the data
+      refreshData();
+      if(startVal === 0){
+        fetchData();
+      }
+    } else {
+      setIsSearchValuePresent(false);
+      e.preventDefault();
+    }
   };
 
   return (
@@ -164,27 +205,29 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
               Search
             </Button>
           </form>
-          <div className={styles.filterContainer}>
-            <GlobalDropDown
-              label="Filter the Source:"
-              labelValue="sourceNameValue"
-              labelKey="sourceNameTitle"
-              searchType={searchType.name}
-              value={source}
-              items={sourceOptions}
-              handleChange={handleSourceChange}
-            />
-            <GlobalDropDown
-              label="Filter the Target:"
-              labelValue="targetNameValue"
-              labelKey="targetNameValue"
-              searchType={searchType.name}
-              value={target}
-              items={targetOptions}
-              handleChange={handleTargetChange}
-            />
-          </div>
+          {searchType.name !== "Data Items" ?
+            <div className={styles.filterContainer}>
+              <GlobalDropDown
+                label="Filter the Source:"
+                labelValue="sourceNameValue"
+                labelKey="sourceNameTitle"
+                searchType={searchType.name}
+                value={source}
+                items={sourceOptions}
+                handleChange={handleSourceChange}
+              />
+              <GlobalDropDown
+                label="Filter the Target:"
+                labelValue="targetNameValue"
+                labelKey="targetNameValue"
+                searchType={searchType.name}
+                value={target}
+                items={targetOptions}
+                handleChange={handleTargetChange}
+              />
+            </div> : <div className={styles.spaceContainer}></div>}
         </div>
+        {!isSearchValuePresent ? <div className={styles.errorContainer}><span className={styles.errorMessage}>{searchType.name} Search field</span><span> cannot be blank</span></div> : null}
         <div className={`${styles.searchResults}`}>
           <ResultsTable
             data={data}
@@ -216,9 +259,16 @@ export async function getServerSideProps(context) {
   );
   const dataSpecSearchListJSON = await dataSpecReq.json();
   const dataSpecSearchList = dataSpecSearchListJSON.mmsv
+
+  const dataSpecData = await fetch(
+    `https://prod2-25.uksouth.logic.azure.com:443/workflows/bc7a8128d44d4d1ea8cb95e2bac0b1b2/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=nKbYkRaRysRGNTguW8HeX5HhgtlfHDFwNCBwqRr8OdQ`
+  );
+  const dataSpecDataJson = await dataSpecData.json();
+  const mmsv = dataSpecDataJson.mmsv;
   return {
     props: {
       dataSpecSearchList,
+      mmsv,
     }
   };
 }

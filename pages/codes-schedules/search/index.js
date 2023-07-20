@@ -2,9 +2,8 @@ import styles from "../../../styles/dataSpecSearch.module.css";
 import Head from "next/head";
 import Tooltip from "@mui/material/Tooltip";
 import ResultsTable from "../../../components/infiniteScrollTable";
-import SideNav from "../../../components/dashboardSideNav";
 import GlobalDropDown from "../../../components/dropdown/newIndex";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { Button, TextField } from "@mui/material";
 import { codeSchdulesHeaders } from "../../../components/settings"

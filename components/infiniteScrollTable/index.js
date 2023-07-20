@@ -28,21 +28,6 @@ const ResultsTable = (props) => {
   const errorMessage = props.errorMessage;
 
 
-  let tableHeader = "";
-  let tableBody = "";
-
-
-  // if errorMessage is not set then create table header and body
-  // TO DO modify this method
-  if (!errorMessage && searchType === "Codes Schedules" ) {
-    const codesSchedulesSearch = CodesSchedulesSearchResults(
-      data,
-      searchValue
-    );
-    tableHeader = codesSchedulesSearch[0];
-    tableBody = codesSchedulesSearch[1];
-  }
-
   /////////FUNCTIONS///////////////
   // escape regex patterns in a string to produce a string-matching regex from it.
   // regex is used for highlighting search phrase in results
