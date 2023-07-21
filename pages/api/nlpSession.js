@@ -2,14 +2,14 @@ import { encryptWithAES } from "../../components/helperFunctions/AES";
 
 export default function handler(req, res) {
   // Get data submitted in request's body.
-  const { query, queryTimestamp, queryId, uiVersion } = req.body;
+  const { userQuestion, queryTimestamp, queryId, uiVersion } = req.body;
   const data = {
-    query: query,
+    query: userQuestion,
     api_params: {
       temperature: 0.1,
       max_tokens: 1000,
     },
-    user_id: encryptWithAES(req.session.user.name_id),
+    user_id: encryptWithAES("req.session.user.name_id"),
     query_timestamp: queryTimestamp,
     query_id: queryId,
     ui_version: uiVersion,
