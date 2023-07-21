@@ -18,32 +18,24 @@ function NLP() {
 
   const fetchData = () => {
     if (isCurrentQuestion === true) {
+      //Storing queryid & user
+      const queryId = uuidv4();
       //Asked question data
       const data = {
         query: userQuestion,
-        api_params: {
-          engine: "gpt-35-turbo-0301",
-          temperature: 0.1,
-          max_tokens: 500,
-        },
-        logging: {
-          user_name: "user@example.com",
-          timestamp: 1234,
-        },
+        queryTimestamp: new Date(Date.now()).toISOString(),
+        queryId: queryId,
+        uiVersion: uiVersion,
       };
     } else if (isCurrentQuestion === false) {
+      //Storing queryid & user
+      const queryId = uuidv4();
       //Previously asked question data
       const data = {
         query: previousQuestion,
-        api_params: {
-          engine: "gpt-35-turbo-0301",
-          temperature: 0.1,
-          max_tokens: 500,
-        },
-        logging: {
-          user_name: "user@example.com",
-          timestamp: 1234,
-        },
+        queryTimestamp: new Date(Date.now()).toISOString(),
+        queryId: queryId,
+        uiVersion: uiVersion,
       };
     }
 
@@ -55,10 +47,7 @@ function NLP() {
       body: JSON.stringify(data),
     };
 
-    fetch(
-      "https://recco-openai-qa.azurewebsites.net/api/answer_query?code=WVTZzRNJ3Hi2fH_tKF3hHiXJsirhpa8qQATso6LFTqIOAzFuFICWGQ==",
-      options
-    )
+    fetch("/api/testApi", options)
       .then((response) => {
         if (!response.ok) {
           setChatLog((prevChat) => {
