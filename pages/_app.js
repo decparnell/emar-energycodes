@@ -9,7 +9,8 @@ function Loading() {
   const value = useContext(AppContext);
   let { loading } = value.state;
   //appcontext methods
-  const {setLoading, setAllDataSpecVersions, setLatestDataSpecVersion} = useContext(AppContext);
+  const { setLoading, setAllDataSpecVersions, setLatestDataSpecVersion } =
+    useContext(AppContext);
 
   useEffect(() => {
     const handleStart = (url) => url !== Router.asPath && setLoading(true);
@@ -30,14 +31,19 @@ function Loading() {
   useEffect(() => {
     const fetchRecVersions = async () => {
       try {
-        const response = await fetch('https://prod-07.uksouth.logic.azure.com:443/workflows/8920bdcc74c94f6fa6a7b157b83f933a/triggers/request/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=Bz5tW3QlJj53K4zrqYFw3h6cPg8-A62iRqIN_Q9ktWY');
+        const response = await fetch(
+          "https://prod-07.uksouth.logic.azure.com:443/workflows/8920bdcc74c94f6fa6a7b157b83f933a/triggers/request/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=Bz5tW3QlJj53K4zrqYFw3h6cPg8-A62iRqIN_Q9ktWY"
+        );
         const data = await response.json();
         const recVersions = data.RecVersions;
         setAllDataSpecVersions(recVersions);
-        setLatestDataSpecVersion(recVersions.filter((version) => version.status === "Live")[0]?.name || "");
+        setLatestDataSpecVersion(
+          recVersions.filter((version) => version.status === "Live")[0]?.name ||
+            ""
+        );
         //setLatestDataSpecVersion(allDataSpecVersions.filter((version) => version.status === "Live")[0].name);
       } catch (error) {
-        console.error('Error fetching recVersions:', error);
+        console.error("Error fetching recVersions:", error);
       } finally {
         setLoading(false);
       }
@@ -45,7 +51,6 @@ function Loading() {
 
     fetchRecVersions();
   }, [setAllDataSpecVersions, setLatestDataSpecVersion, setLoading]);
-
 
   return (
     loading && (
@@ -62,8 +67,6 @@ function MyApp({ Component, pageProps }) {
   const [latestDataSpecVersion, setLatestDataSpecVersion] = useState("");
 
   const [newsItems, setNewsItems] = useState();
-  const [chosenTab, setChosenTab] = useState("Schedules");
-  const [chosenButton, setChosenButton] = useState(1);
 
   const [errorLog, setErrorLog] = useState([]);
   return (
@@ -84,31 +87,27 @@ function MyApp({ Component, pageProps }) {
         });
     `}
       </Script>
-        <AppContext.Provider
-          value={{
-            state: {
-              loading: loading,
-              latestDataSpecVersion: latestDataSpecVersion,
-              allDataSpecVersions: allDataSpecVersions,
-              newsItems: newsItems,
-              chosenTab: chosenTab,
-              chosenButton: chosenButton,
-              errorLog: errorLog,
-            },
-            setLoading: setLoading,
-            setLatestDataSpecVersion: setLatestDataSpecVersion,
-            setAllDataSpecVersions: setAllDataSpecVersions,
-            setNewsItems: setNewsItems,
-            setChosenTab: setChosenTab,
-            setChosenButton: setChosenButton,
-            setErrorLog: setErrorLog,
-          }}
-        >
-          <Loading />
-          <Layout chosenTab={chosenTab}>
-            <Component {...pageProps} />
-          </Layout>
-        </AppContext.Provider>
+      <AppContext.Provider
+        value={{
+          state: {
+            loading: loading,
+            latestDataSpecVersion: latestDataSpecVersion,
+            allDataSpecVersions: allDataSpecVersions,
+            newsItems: newsItems,
+            errorLog: errorLog,
+          },
+          setLoading: setLoading,
+          setLatestDataSpecVersion: setLatestDataSpecVersion,
+          setAllDataSpecVersions: setAllDataSpecVersions,
+          setNewsItems: setNewsItems,
+          setErrorLog: setErrorLog,
+        }}
+      >
+        <Loading />
+        <Layout chosenTab={chosenTab}>
+          <Component {...pageProps} />
+        </Layout>
+      </AppContext.Provider>
     </>
   );
 }
