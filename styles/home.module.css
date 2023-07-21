@@ -1,13 +1,3 @@
-.container {
-  width: 100%;
-  display: flex;
-}
-
-.sideNavContainer {
-  height: 83vh;
-  width: 20vw;
-}
-
 .mainContentContainer {
   height: 83vh;
   width: 80vw;
@@ -40,6 +30,8 @@
 .upcomingChangesContent {
   height: 60%;
   width: 98%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .prereleaseContent {
@@ -56,23 +48,38 @@
 }
  */
 
-.dashboardItem {
+/* 
+  //version 2
+  .dashboardItem {
   box-shadow: inset 0 0 0 0 #a8d395;
   color: black;
   margin: 0 -.25rem;
   padding: 0 .25rem;
-  transition: color .1s ease-in-out, box-shadow .1s ease-in-out;
+  transition: color .1s ease-in-out;
   text-decoration: none;
 }
 
-.dashboardItem:hover {
+.dashboardItem:hover .arrowIcon {
   box-shadow: inset 100vw -1.5rem 0 0 #4e8934;
   color: white;
+} */
+
+.dashboardItem {
+  transition: color .1s ease-in-out;
+  text-decoration: none;
 }
+
+.arrowIcon {
+  color: #4e8934;
+} 
 
 .dashboardItemsPanel{
   padding-left: 5%;
   padding-bottom: 2px;
+}
+
+.arrowContainer {
+  display: inline-block;
 }
 
 /* .dashboardItem:after {

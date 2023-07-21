@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import styles from "../../../styles/scenarioVariant.module.css";
+import styles from "../../../styles/schedules-dataspec.module.css";
 import { useState, useContext, useEffect } from "react";
 import SideNav from "../../../components/dashboardSideNav";
 import { checkIfVariablesAreAvailable } from "../../../components/helperFunctions/checkIfVariablesAreAvailable";
@@ -7,6 +7,7 @@ import { checkIfItemsAvailableInArray } from "../../../components/helperFunction
 import SchedulesTables from "../../../components/tables/schedulesTables";
 import CreateSchedulesContent from "../../../components/scheduleId/createSchedulesContent";
 import Head from "next/head";
+import { LogUserInfo } from "../../../components/logging";
 function Schedules({
   versions,
   parts,
@@ -82,15 +83,19 @@ function Schedules({
   });
 
   useEffect(() => {}, [currentSections]);
-
+  useEffect(() => {
+    LogUserInfo(`${docInfo.documentName} V${versionName}`);
+  }, []);
   return (
     <>
       <Head>
-        <title>EMAR - {docInfo ? docInfo.documentName : null}</title>
+        <title>
+          EMAR - {docInfo ? docInfo.documentName : "code schedules"}
+        </title>
         <meta property="og:title" content="My page title" key="title" />
       </Head>
-      <div className={styles.container}>
-        <div className={`${styles.sideNavContainer}`}>
+      <div className={"container-flex"}>
+        <div className={"side-nav-container-fixed"}>
           <SideNav
             navbarType="PanelBasedNavBar"
             items={panelDashboard}

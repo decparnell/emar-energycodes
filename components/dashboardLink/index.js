@@ -1,6 +1,5 @@
-import Link from "next/link";
 import styles from "../../styles/home.module.css";
-import { BiRightArrow } from "react-icons/bi";
+import { CustomBoxLink } from "../customComponents/customBoxLink";
 
 function DashboardLink(props) {
     //currentItems per each schedule sections
@@ -8,9 +7,8 @@ function DashboardLink(props) {
     //latest versions for eact currentItems
     const versions = props.versions;
 
-
     return (
-        currentItems.map((item, i) => {
+        currentItems.map((item, id) => {
             let dashboardHref = "/";
             if (
                 item.dashboardSectionItemsLinkType == "SCHEDULE" &&
@@ -29,35 +27,36 @@ function DashboardLink(props) {
             return (
                 item.dashboardSectionItemsLinkType == "DOWNLOAD" ? (
                     <div className={styles.dashboardItemsPanel} >
-                        <a
+                        <CustomBoxLink
                             href={item.dashboardSectionItemsLink}
-                            download={item.dashboardSectionItemsName}
+                            key={id}
                             target="_blank"
                             rel="noreferrer"
-                            className={styles.dashboardItem}
+                            download={item.dashboardSectionItemsName}
                         >
-                            <BiRightArrow />
                             {item.dashboardSectionItemsName}
-                        </a>
+                        </CustomBoxLink>
                     </div>
                 ) : item.dashboardSectionItemsLinkType == "EXTERNAL" ? (
                     <div className={styles.dashboardItemsPanel} >
-                        <a
+                        <CustomBoxLink
                             href={item.dashboardSectionItemsLink}
+                            key={id}
                             target="_blank"
                             rel="noreferrer"
-                            className={styles.dashboardItem}
                         >
-                            <BiRightArrow />
                             {item.dashboardSectionItemsName}
-                        </a>
+                        </CustomBoxLink>
+                        
                     </div>
                 ) : (
                     <div className={styles.dashboardItemsPanel} >
-                        <a href={dashboardHref} className={styles.dashboardItem} key={i}>
-                            <BiRightArrow />
+                        <CustomBoxLink
+                            href={dashboardHref}
+                            key={id}
+                        >
                             {item.dashboardSectionItemsName}
-                        </a>
+                        </CustomBoxLink>
                     </div>)
             )
         })

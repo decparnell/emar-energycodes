@@ -7,12 +7,16 @@ import { checkIfItemsAvailableInArray } from "../../components/helperFunctions/c
 import { logMessage } from "../../components/helperFunctions/logMessage";
 import QuickLink from "../../components/helperFunctions/quickLink";
 import SideNav from "../../components/dashboardSideNav";
-import { BiRightArrow, BiSearchAlt2, BiData, BiTable } from "react-icons/bi";
+import { BiSearchAlt2, BiData, BiTable } from "react-icons/bi";
 import { TiHtml5 } from "react-icons/ti";
-import Link from "next/link";
 import DashboardLink from "../../components/dashboardLink";
+import { LogUserInfo } from "../../components/logging";
 
 function DataSpec({ sections, items }) {
+  useEffect(() => {
+    LogUserInfo("Data Spec Page");
+  }, []);
+
   const apiVarList = [
     { obj: items, name: "items" },
     { obj: sections, name: "sections" },
@@ -35,12 +39,16 @@ function DataSpec({ sections, items }) {
   });
 
   useEffect(() => {
-    setCurrentItems(
-      items.filter(
-        (item) =>
-          item.dashboardSectionId_FK === currentSections.dashboardSectionId
-      )
-    );
+    if (currentSections.dashboardSectionName === "All") {
+      setCurrentItems(items);
+    } else {
+      setCurrentItems(
+        items.filter(
+          (item) =>
+            item.dashboardSectionId_FK === currentSections.dashboardSectionId
+        )
+      );
+    }
   }, [currentSections]);
 
   const [insertError, setInsertError] = useState("");
@@ -58,12 +66,12 @@ function DataSpec({ sections, items }) {
       {insertError && (
         <div className={styles.errorBox}>{logMessage(insertError)}</div>
       )}
-      <div className={styles.container}>
+      <div className={"container-flex"}>
         <Head>
           <title>EMAR Dashboards</title>
           <meta property="og:title" content="My page title" key="title" />
         </Head>
-        <div className={`${styles.sideNavContainer}`}>
+        <div className={"side-nav-container"}>
           <SideNav
             items={sections}
             name="dashboardSectionName"
@@ -77,7 +85,7 @@ function DataSpec({ sections, items }) {
               <h6 className="boxTitle">
                 {currentSections.dashboardSectionName}
               </h6>
-              <DashboardLink currentItems={currentItems}/>
+              <DashboardLink currentItems={currentItems} />
             </div>
             <div className={`${styles.right}`}>
               <div className={`${styles.quickLinkContainer}`}>
@@ -123,6 +131,14 @@ export async function getServerSideProps({ req, res }) {
   );
   const dataJson = await dataReq.json();
   const sections = dataJson.sections;
+  const lastDashboardSectionOrder =
+    sections[sections.length - 1].dashboardSectionOrder + 1;
+  sections.push({
+    dashboardId_FK: null,
+    dashboardSectionId: null,
+    dashboardSectionName: "All",
+    dashboardSectionOrder: lastDashboardSectionOrder,
+  });
   const items = dataJson.items;
   // Pass data to the page via props
   return {

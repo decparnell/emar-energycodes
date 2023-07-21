@@ -1,7 +1,23 @@
+import { encryptWithAES } from "../../components/helperFunctions/AES";
+
 export default function handler(req, res) {
   // Get data submitted in request's body.
-  const body = req.body;
-  const data = { query: body.query };
+
+  const { query, queryTimestamp, queryId, uiVersion } = req.body;
+
+  const data = {
+    query: query,
+    api_params: {
+      temperature: 0.1,
+      max_tokens: 1000,
+    },
+    user_id: encryptWithAES(req.session.user.name_id),
+    query_timestamp: queryTimestamp,
+    query_id: queryId,
+    ui_version: uiVersion,
+    embeddings: "all_embeddings_20_Jul",
+  };
+
   const bodyData = JSON.stringify(data);
   const options = {
     method: "POST",
@@ -10,17 +26,15 @@ export default function handler(req, res) {
     },
     body: bodyData,
   };
-
-  fetch(
-    "https://recco-openai-qa.azurewebsites.net/api/query_gpt?code=bMm0xwEqnfU3M6LeN__Xid8PWpJwre2TtAdHqTv47xbpAzFuP75RDw==",
+  return fetch(
+    "https://recco-openai-qa.azurewebsites.net/api/answer_query?code=WVTZzRNJ3Hi2fH_tKF3hHiXJsirhpa8qQATso6LFTqIOAzFuFICWGQ==",
     options
   )
     .then((response) => response.json())
     .then((data) => {
-      console.log("Session data:", data);
       res.json(data);
     })
     .catch((error) => {
-      console.error("Error fetching session data:", error);
+      console.error("Error fetching NLP response:", error);
     });
 }

@@ -1,9 +1,9 @@
 import styles from "../../styles/codesRoadMap.module.css";
 import Head from "next/head";
 import QuickLink from "../../components/helperFunctions/quickLink";
-import React from "react";
+import React, { useEffect } from "react";
 import { BiDownload } from "react-icons/bi";
-
+import { LogUserInfo } from "../../components/logging";
 function CodesRoadMap({ latestCodesRoadMapLinkJSON }) {
   const apiResList = [
     { obj: latestCodesRoadMapLinkJSON, name: "latestCodesRoadMapLinkJSON" },
@@ -17,49 +17,60 @@ function CodesRoadMap({ latestCodesRoadMapLinkJSON }) {
         height: "10%",
         width: "8%",
         color: "green",
-        marginLeft: "-7%"
+        marginLeft: "-7%",
       }}
     />
   );
+
+  useEffect(() => {
+    LogUserInfo("Codes Road Map");
+  }, []);
 
   return (
     <>
       <Head>
         <title>Codes Road Map</title>
-        <meta property="og:title" content="Codes Road Map" key="codes-road-map" />
+        <meta
+          property="og:title"
+          content="Codes Road Map"
+          key="codes-road-map"
+        />
       </Head>
       <div className={styles.container}>
         <h1 className={styles.title}>The Code Road Map</h1>
 
         <section className={`${styles.mainContentContainer} `}>
-
           <div className={`${styles.left} box`}>
             <h4 className={styles.title}>What is it?</h4>
             <p className={styles.paragraph}>
-              The REC Code Roadmap provides a view of the key areas of
-              strategic change that RECCo and the REC Code Manager will
-              focus on over the next three years. These are areas of the REC
-              where significant benefit could be gained for all REC
-              stakeholders including consumers, within the long-term energy
-              retail landscape.
+              The REC Code Roadmap provides a view of the key areas of strategic
+              change that RECCo and the REC Code Manager will focus on over the
+              next three years. These are areas of the REC where significant
+              benefit could be gained for all REC stakeholders including
+              consumers, within the long-term energy retail landscape.
             </p>
             <p className={styles.paragraph}>
-              The ‘epics’ are the work items that will deliver the change.
-              The roadmap presents the epics that are active now and those
-              that are due to be initiated in the coming months, so you can
-              see what may be of interest to you and how you can get
-              involved in shaping the solutions.
+              The ‘epics’ are the work items that will deliver the change. The
+              roadmap presents the epics that are active now and those that are
+              due to be initiated in the coming months, so you can see what may
+              be of interest to you and how you can get involved in shaping the
+              solutions.
             </p>
           </div>
 
           <div className={`${styles.right} `}>
             <div className={`${styles.leftContainer} box`}>
               {latestCodesRoadMapLinkJSON.map((item) => (
-                <a href={item.link} key={item.codesRoadMapLinksId} download className={styles.downloadLink}>
-                  <div>Spreadsheet to download containing the roadmap</div>{downloadIcon}
+                <a
+                  href={item.link}
+                  key={item.codesRoadMapLinksId}
+                  download
+                  className={styles.downloadLink}
+                >
+                  <div>Spreadsheet to download containing the roadmap</div>
+                  {downloadIcon}
                 </a>
               ))}
-
             </div>
 
             <div className={styles.bottomContainer}>
@@ -100,7 +111,6 @@ function CodesRoadMap({ latestCodesRoadMapLinkJSON }) {
             <QuickLink title="" link="/" width="25%" height="65%" />
             <QuickLink title="" link="/" width="25%" height="65%" />
             <QuickLink title="" link="/" width="25%" height="65%" />
-
           </div>
           <div className={`${styles.upcomingChangesContent} box`}></div>
         </div>

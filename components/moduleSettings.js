@@ -76,4 +76,5 @@ module.exports = {
   prod_idp_options,
   test_idp_options,
   dev_idp_options,
-}
+};
+
