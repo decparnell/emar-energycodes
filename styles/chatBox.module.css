@@ -1,0 +1,247 @@
+.botResponse {
+  width: 98%;
+  margin: 1%;
+  display: flex;
+  align-items: center;
+  border-color: black;
+}
+
+.botMessage {
+  margin: 0.5% 1%;
+  padding: 1%;
+  border-width: 5px 1.5px 1.5px;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: grey;
+}
+
+.p {
+  margin: 0.5rem 0;
+}
+
+.userQuestion {
+  width: 98%;
+  margin: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-flow: row-reverse;
+  border-color: black;
+}
+
+.chatMessage {
+  margin: 0.5% 1%;
+  padding: 1%;
+  border-width: 1.5px;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: grey;
+}
+
+.typingContainer {
+  height: 22%;
+  width: 80%;
+  position: absolute;
+  margin-left: 0.4%;
+  margin-bottom: 0.8%;
+  padding-left: 0.5%;
+  bottom: 0;
+  overflow-y: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.typingContainerSmall {
+  height: 14%;
+  width: 80%;
+  position: absolute;
+  margin-left: 0.5%;
+  margin-bottom: 0.5%;
+  padding-left: 0.5%;
+  bottom: 0;
+  overflow-y: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.typingRow {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.dotsContainer {
+  position: relative;
+  padding-left: 1.5rem;
+  width: 30%;
+}
+
+.dotsTyping {
+  position: relative;
+  left: -9999px;
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: 0.3125rem;
+  color: green;
+  box-shadow: 9984px 0 0 0 #77a465, 9999px 0 0 0 #77a465, 10014px 0 0 0 #77a465;
+  animation: dotTyping 1.5s infinite linear;
+}
+
+@keyframes dotTyping {
+  0% {
+    box-shadow: 9984px 0 0 0 #77a465, 9999px 0 0 0 #77a465,
+      10014px 0 0 0 #77a465;
+  }
+  16.667% {
+    box-shadow: 9984px -10px 0 0 #77a465, 9999px 0 0 0 #77a465,
+      10014px 0 0 0 #77a465;
+  }
+  33.333% {
+    box-shadow: 9984px 0 0 0 #77a465, 9999px 0 0 0 #77a465,
+      10014px 0 0 0 #77a465;
+  }
+  50% {
+    box-shadow: 9984px 0 0 0 #77a465, 9999px -10px 0 0 #77a465,
+      10014px 0 0 0 #77a465;
+  }
+  66.667% {
+    box-shadow: 9984px 0 0 0 #77a465, 9999px 0 0 0 #77a465,
+      10014px 0 0 0 #77a465;
+  }
+  83.333% {
+    box-shadow: 9984px 0 0 0 #77a465, 9999px 0 0 0 #77a465,
+      10014px -10px 0 0 #77a465;
+  }
+  100% {
+    box-shadow: 9984px 0 0 0 #77a465, 9999px 0 0 0 #77a465,
+      10014px 0 0 0 #77a465;
+  }
+}
+
+.options {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button {
+  width: 12%;
+  padding-right: 1%;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  background-color: white;
+}
+
+.botIcon {
+  height: 4%;
+  width: 4%;
+  color: #77a465;
+}
+
+.userIcon {
+  height: 4%;
+  width: 4%;
+  color: #77a465;
+  padding-bottom: 0.5%;
+}
+
+.typingBotIcon {
+  height: 80%;
+  width: 50%;
+  color: #77a465;
+}
+
+.copyIcon {
+  height: 108%;
+  width: 108%;
+  color: black;
+  margin-right: 3%;
+}
+
+.copyIcon:hover {
+  color: #77a465 !important;
+}
+
+.copyIconClicked {
+  height: 108%;
+  width: 108%;
+  color: #77a465;
+  margin-right: 3%;
+}
+
+.dislikeIcon {
+  height: 100%;
+  width: 100%;
+  color: black;
+  margin-right: 3%;
+}
+
+.dislikeIcon:hover {
+  color: red !important;
+}
+
+.dislikeIconClicked {
+  height: 100%;
+  width: 100%;
+  color: red;
+  margin-right: 3%;
+}
+
+.dislikeIconDisabled {
+  height: 100%;
+  width: 100%;
+  color: lightgray;
+  margin-right: 3%;
+  cursor: default;
+}
+
+.likeIcon {
+  height: 100%;
+  width: 100%;
+  color: black;
+}
+
+.likeIcon:hover {
+  color: #77a465 !important;
+}
+
+.likeIconClicked {
+  height: 100%;
+  width: 100%;
+  color: #77a465;
+}
+
+.likeIconDisabled {
+  height: 100%;
+  width: 100%;
+  color: lightgray;
+  cursor: default;
+}
+
+.feedback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.feedbackBox {
+  margin: 1rem;
+  border: none;
+}
+
+.input {
+  font-size: 15px;
+  font-family: "Open Sans", cursive;
+}
+
+.submit {
+  width: 17%;
+  padding: 0.5%;
+  background-color: #77a465;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 15px;
+  color: white;
+  font-family: "Open Sans", cursive;
+}

@@ -5,6 +5,7 @@ const moduleSettings = require("../../moduleSettings");
 const encryptWithAES = (text) => {
   return AES.encrypt(text, moduleSettings.usePhrase).toString();
 };
+
 const decryptWithAES = (ciphertext) => {
   const bytes = AES.decrypt(ciphertext, moduleSettings.usePhrase);
   const originalText = bytes.toString(ENC);

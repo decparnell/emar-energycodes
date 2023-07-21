@@ -12,6 +12,7 @@ const prod_sp_options = {
   sign_get_request: true,
   allow_unencrypted_assertion: true,
 };
+
 //Test Service provider
 const test_sp_options = {
   entity_id: "Recco.DigitalNavigator.Test",
@@ -23,6 +24,7 @@ const test_sp_options = {
   sign_get_request: true,
   allow_unencrypted_assertion: true,
 };
+
 //Dev Service provider
 const dev_sp_options = {
   entity_id: "Recco.DigitalNavigator.Dev",
@@ -34,6 +36,7 @@ const dev_sp_options = {
   sign_get_request: true,
   allow_unencrypted_assertion: true,
 };
+
 // Production identity provider
 const prod_idp_options = {
   sso_login_url:
@@ -43,6 +46,7 @@ const prod_idp_options = {
   certificates:
     "MIIDKjCCAhKgAwIBAgIQLIrr7E/rda5D1H4sqEOUczANBgkqhkiG9w0BAQsFADAoMSYwJAYDVQQDDB1yZWNtYW5hZ2VyYjJjLm9ubWljcm9zb2Z0LmNvbTAeFw0yMTA2MDcwNzEyMTJaFw0yMzA2MDcwNzIyMTJaMCgxJjAkBgNVBAMMHXJlY21hbmFnZXJiMmMub25taWNyb3NvZnQuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0WLTtiEB9QRrzN05rMY9osdZd1Udk8UHwR5sqVal9k2jANxYPsZj/Qcw4DE/fDUlresdvJFz3fPHgddIbE1+Nh+tkNqKBYrmqrCcpU1vb8px8p8jj+7YBWl+r4i7VC7VSm2GObpK30fIaiS5PAmHhMHQ5iHPtr8mgwgPzpXdlP9yBqwRobkRFxfGv4M2ltUKKnYwxCvZjZQQFfe/MXcbGh6C0Ipb45nAUOa2TzeHi2sdQRjHdgNR837Fic1fHUfCL560QcLVgMO+CtkLXap3hInDtIko4rmFcClojXo1K4YvGvj6DMQZ56LmJuyj+VDRCioWRIAYzBJIkyGim7lmeQIDAQABo1AwTjAOBgNVHQ8BAf8EBAMCB4AwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMB0GA1UdDgQWBBStOmpqfv1YPv6yf40Kd3TpmNpBPjANBgkqhkiG9w0BAQsFAAOCAQEAcvtVnLwGi+KwM59LfOAphuWjhgshXnxmmBl90GlZ9JSaghUjHEq+rr2kfsQ+uFR93rL3WGBzTZ9L6R29xJK2uJiOLasugyIzw+hctA+O2MN3QvY2/OiZTJvzhKzbMQGcHa/b8nBuMQmSekMv/9nVweWLHiRkpD6ulh/9+Lxmpdik2sjpIoUJ74uaYyQoNyQR8NymCNjAHGjt4tV/CLtgS8JyZWDsZMlhBdzNLubidtZ9Lxhbd9Dr2E1LktzMU0koO4DtAPA6/NL7H+ye4jHtsg8V+q0DXjkIi2Sm2ZBcei+JdCUrC+ntOu4yqvxmzCNjgIaEtwN9rQbXvuJ5+JEW4Q==",
 };
+
 // Test identity provider/
 const test_idp_options = {
   sso_login_url:
@@ -52,6 +56,7 @@ const test_idp_options = {
   certificates:
     "MIIDTjCCAjagAwIBAgIQN3kFheD4satF+WTZjDtipzANBgkqhkiG9w0BAQsFADA6MTgwNgYDVQQDDC9yZWNwb3J0YWx0ZXN0LnJlY21hbmFnZXJ0ZXN0YjJjLm9ubWljcm9zb2Z0LmNvbTAeFw0yMzA2MDUwOTI1MTdaFw0yNTA2MDUwOTM1MTdaMDoxODA2BgNVBAMML3JlY3BvcnRhbHRlc3QucmVjbWFuYWdlcnRlc3RiMmMub25taWNyb3NvZnQuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAycMOzJw0/tSvvSs9yTPf0JsclkGXSQhvTgKxWJyS3FFBbbZq+kaVdXjQjf2++vgdREKONy9tWJBaiJVwHi4YJ8aaQNYWxYmOYBP1SDoscnPQnRSrUoY8x+dmLWi09mGqkOUB3tT+93GSchVl89uaL/TUzg6O8xZvnadSaayoZo+FFggGuJeaWBinW/MiqXMfU5gX+Llcm0sOSbUxC8iUyM9JA0TqPnNkhBCfyLS7+lkzDrgbiALKk39eCHrMY5a0TBDp9S9WZjVWfqac7ZkBJGmMVaYQORHHXQ2DA4tMZGZrfL1SKpac7JsoHCvBHPDRmwdStIQR19h3BSoMpH8MwQIDAQABo1AwTjAOBgNVHQ8BAf8EBAMCB4AwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMB0GA1UdDgQWBBScGGjc0t3qzL4Jv4ka+q+ke4HR0DANBgkqhkiG9w0BAQsFAAOCAQEATKkj+C++Xu7CTYUu4IHZqrWI670S8wMPDaYoyYN8NxwbKd+3wEl0PzwCLMEEOz19altgMWwauFrCKFtLki+jXfU8eEzztA259sEPoPX8Hn9g8+l6uU+/r0jyGTimKi+dPmKpmzJlCaEbubdPzvMMhdSzb1wFtClVc8DlYB+LB3cRIRj3hYzSAlVCXTg7pO3CF4Vx4HdCGw8SURFGEzRZii92II/d+Q+ayXXvr8C9c0JIHAL+vES5+LeZo0RWiBnISs+ykobGXhPDRmvUASTSZLhoUSMq2puyRCbHldxiLXemJfT908g5SH5PCTf2GW3DijSU4U3r18XlI9XVVsVEDw==",
 };
+
 // Development identity provider
 const dev_idp_options = {
   sso_login_url:
@@ -61,6 +66,7 @@ const dev_idp_options = {
   certificates:
     "MIIDMDCCAhigAwIBAgIQGZ/eHAVY8rtL8TY4nKMDQzANBgkqhkiG9w0BAQsFADArMSkwJwYDVQQDDCByZWNtYW5hZ2VyZGV2YjJjLm9ubWljcm9zb2Z0LmNvbTAeFw0yMjA1MDQwOTI0NDRaFw0yMzA1MDQwOTM0NDNaMCsxKTAnBgNVBAMMIHJlY21hbmFnZXJkZXZiMmMub25taWNyb3NvZnQuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsmx4Pkrv+het3Y7E159EsJ0wxcMm7Gwj0fWBKFxiNhDKkaa3byOSxWOFE1dRlgAxjaBfgcKhqs1SdReNr81Y0OsOjYVC+LnArfUmC/vZj5DdtOZetoTxP1ghd/GQhdlIjoCLShIQ/rNCTkkwiG8O8K+UCJciHwvPVJiaS6v/oS/040L2JRevRofVtKoV1OS4zi0PN449Jq/Wup9d3PAq4z4HX5wymeprClWLksMmuFLnheo2MztCDgNotAGjL1ps13Y/lnbAL8Wld/g6vflzR1d17STFJEN2GmS7sg/RpGdhY6s6VzeKE0mcbdwcZTd0NJRoMWSnY+4oD7NIBDGJxQIDAQABo1AwTjAOBgNVHQ8BAf8EBAMCB4AwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMB0GA1UdDgQWBBSYUdSEZyr+Ob4dL69vKpxRDA0OXjANBgkqhkiG9w0BAQsFAAOCAQEAGCcqysNVitLebe/N9mlPtRObSg+RiWExlJbZzcAyjXAs/m9qZlHZbrA/HS1A6YI7Z8RoUzdYtsft8nPAIgIh9zmgKeBhfWdroVyvruR0IopH8pMlCdfJlfebc5rdEqIHKnaOd0DDHmpoKKTTPK5tH/SBGt+IG29ILifCVSuS4H6S94K9FCIp3A7YYrvpDluHdLpF1O/P/gHwsNcNn9qDRS6YcGhzKRnvySTmmUBvMckuMFiC3rkr8RWiq0fLLcJ/+2z2WIB8TW79NV9nKSzbZkw8Br4dQAVVkJKnGDKE4EEA9SG2BLS+jCAoRD5Jpn8ZAAB6DZ/Q1PilwBRDcGMRjA==",
 };
+
 module.exports = {
   usePhrase,
   seshPhrase,
@@ -71,3 +77,4 @@ module.exports = {
   test_idp_options,
   dev_idp_options,
 };
+
