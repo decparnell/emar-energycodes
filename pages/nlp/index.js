@@ -47,7 +47,7 @@ function NLP() {
       body: JSON.stringify(data),
     };
 
-    fetch("/api/testApi", options)
+    fetch("/api/nlpSession", options)
       .then((response) => {
         if (!response.ok) {
           setChatLog((prevChat) => {
