@@ -1,8 +1,21 @@
 .container {
     width: 100%;
     display:flex;
-
 }
+
+.infinitescrollContainer{
+    overflow-x: hidden;
+}
+
+.mainContentContainer{
+    width: 100%;
+    display:table;
+    height:85vh;
+    width:80vw;
+    margin:0 1vw 0 20vw;
+    overflow-x: hidden; 
+}
+
 
 .sideNavContainer {
     height:85vh;
@@ -12,7 +25,7 @@
     overflow-x: hidden;
 }
 
-.mainContentContainer {
+.mainContentContainer2 {
     height:85vh;
     width:80vw;
     margin:0 1vw 0 20vw;
@@ -28,6 +41,7 @@
     justify-content: space-evenly;
     margin-left: -10vw;
     margin-top: 2%;
+    margin-bottom: 2%;
 }
 
 .contentContainer{

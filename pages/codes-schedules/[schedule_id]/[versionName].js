@@ -142,7 +142,7 @@ function Schedules({
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.infinitescrollContainer}>
       <div className={`${styles.sideNavContainer}`}>
         <SideNav
           navbarType="PanelBasedNavBar"
@@ -155,42 +155,44 @@ function Schedules({
           stateSet={setCurrentSections}
         />
       </div>
-      {/*
+      <div className={styles.mainContentContainer}>
+        {/*
       This line is the issue line
        <div className={`${styles.mainContentContainer}`}> */}
-      <h3 className={styles.headers}>
-        {scheduleNumber
-          ? `${scheduleName} - Schedule ${scheduleNumber}`
-          : scheduleName}
-      </h3>
-      <div className={styles.tablesContainer}>
-        <SchedulesTables
-          tableId="Version Table"
-          versions={versions}
-          scheduleId={scheduleId}
-          versionName={versionName}
+        <h3 className={styles.headers}>
+          {scheduleNumber
+            ? `${scheduleName} - Schedule ${scheduleNumber}`
+            : scheduleName}
+        </h3>
+        <div className={styles.tablesContainer}>
+          <SchedulesTables
+            tableId="Version Table"
+            versions={versions}
+            scheduleId={scheduleId}
+            versionName={versionName}
+          />
+        </div>
+
+        <div className={styles.tablesContainer}>
+          {/* if there is at least one optionality show a mandatory table */}
+          {optionalityInfo[0].optionalityId && (
+            <SchedulesTables
+              tableId="Mandatory Table"
+              parts={parts}
+              mandatoryTable={mandatoryTable}
+            />
+          )}
+        </div>
+
+        <CreateSchedulesContent
+          parts={parts}
+          definitions={definitions}
+          data={groupSectionsAndComponents}
+          fetchData={fetchData}
+          hasMoreData={hasMoreData}
+          totalLength={startVal}
         />
       </div>
-
-      <div className={styles.tablesContainer}>
-        {/* if there is at least one optionality show a mandatory table */}
-        {optionalityInfo[0].optionalityId && (
-          <SchedulesTables
-            tableId="Mandatory Table"
-            parts={parts}
-            mandatoryTable={mandatoryTable}
-          />
-        )}
-      </div>
-
-      <CreateSchedulesContent
-        parts={parts}
-        definitions={definitions}
-        data={groupSectionsAndComponents}
-        fetchData={fetchData}
-        hasMoreData={hasMoreData}
-        totalLength={startVal}
-      />
     </div>
     /* </div> */
   );
