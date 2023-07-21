@@ -65,7 +65,7 @@ function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(true);
   const [allDataSpecVersions, setAllDataSpecVersions] = useState([]);
   const [latestDataSpecVersion, setLatestDataSpecVersion] = useState("");
-
+  const [chosenTab, setChosenTab] = useState("Codes Schedules");
   const [newsItems, setNewsItems] = useState();
 
   const [errorLog, setErrorLog] = useState([]);
@@ -95,12 +95,14 @@ function MyApp({ Component, pageProps }) {
             allDataSpecVersions: allDataSpecVersions,
             newsItems: newsItems,
             errorLog: errorLog,
+            chosenTab: chosenTab,
           },
           setLoading: setLoading,
           setLatestDataSpecVersion: setLatestDataSpecVersion,
           setAllDataSpecVersions: setAllDataSpecVersions,
           setNewsItems: setNewsItems,
           setErrorLog: setErrorLog,
+          setChosenTab: setChosenTab,
         }}
       >
         <Loading />

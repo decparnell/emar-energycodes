@@ -13,20 +13,17 @@ function NLP() {
   const [botIsTyping, setBotIsTyping] = useState(false);
   const [chatLog, setChatLog] = useState([]);
   const [questionHistory, setQuestionHistory] = useState([]);
-  const [isCurrentQuestion, setIsCurrentQuestion] = useState();
-  const [userQuestion, setUserQuestion] = useState("");
+  const [isCurrentQuestion, setIsCurrentQuestion] = useState(true);
+  const [query, setQuery] = useState("");
   const [previousQuestion, setPreviousQuestion] = useState("");
 
-  const fetchData = (queryId) => {
-    //dec change to add query to reduce dupe
-    var query = "";
-    if (isCurrentQuestion === true) {
-      //Asked question data
-      query = userQuestion;
-    } else if (isCurrentQuestion === false) {
+  const fetchData = async (queryId) => {
+    /* if (isCurrentQuestion === false) {
       //Previously asked question data
       query = previousQuestion;
-    }
+    } else {
+      query = userQ;
+    } */
 
     const data = {
       query: query,
@@ -63,6 +60,7 @@ function NLP() {
         return response.json();
       })
       .then((data) => {
+        console.log(data);
         const botAnswer = data.response.answer;
 
         setChatLog((prevChat) => {
@@ -78,42 +76,42 @@ function NLP() {
         setBotIsTyping(false);
         console.error("Error fetching session data:", error);
       });
+
+    setQuery("");
   };
   /////////////////////////dec comments:THIS BIT IS GOOD - just added keys & moved query id down to here to avoid dupe and to give continuity
-  const questionHandler = async (userQuestion) => {
+  const questionHandler = () => {
     //Storing queryid & user
     const queryId = uuidv4();
-    setBotIsTyping(true);
-    setIsCurrentQuestion(true);
-    setUserQuestion(userQuestion);
-
     setChatLog((prevChat) => {
       return [
         ...prevChat,
-        <UserQuestion messageValue={userQuestion} key={`${queryId}_USER`} />,
+        <UserQuestion messageValue={query} key={`${queryId}_USER`} />,
       ];
     });
-    console.log(chatLog);
+    setBotIsTyping(true);
+
+    fetchData(queryId);
+
+    // setIsCurrentQuestion(true);
+
     /////////////////////////dec comments: Dont get why we need state arrays for the history and the chat log, this can be infered from the chat log
     setQuestionHistory((prevQuestion) => {
       return [
         ...prevQuestion,
         <QuestionHistoryItem
-          messageValue={userQuestion}
+          messageValue={query}
           onAskQuestionFromHistory={questionHistoryItemHandler}
           key={`${queryId}_PREV`}
         />,
       ];
     });
-
-    console.log(questionHistory);
-    fetchData(queryId);
   };
 
   const questionHistoryItemHandler = (previousQuestion) => {
     setBotIsTyping(true);
     setIsCurrentQuestion(false);
-    setPreviousQuestion(previousQuestion);
+    setQuery(previousQuestion);
 
     setChatLog((prevChat) => {
       return [
@@ -125,10 +123,6 @@ function NLP() {
     fetchData();
   };
 
-  const showQuestionHistory = questionHistory.length > 0 && (
-    <QuestionHistory questionHistory={questionHistory} />
-  );
-
   return (
     <>
       <Head>
@@ -138,12 +132,18 @@ function NLP() {
       <div className={styles.container}>
         <h1 className={styles.title}>NLP</h1>
         <section className={`${styles.mainContentContainer} `}>
-          {showQuestionHistory}
+          {questionHistory.length > 0 && (
+            <QuestionHistory questionHistory={questionHistory} />
+          )}
           <div className={`${styles.conversationContainer} `}>
             <div className={`${styles.chatBox} box`}>
               <ChatBox isTyping={botIsTyping} chatLog={chatLog} />
             </div>
-            <QuestionBox onAskQuestion={questionHandler} />
+            <QuestionBox
+              onAskQuestion={questionHandler}
+              setQuery={setQuery}
+              query={query}
+            />
           </div>
         </section>
       </div>
