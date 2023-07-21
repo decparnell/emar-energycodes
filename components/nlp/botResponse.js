@@ -9,11 +9,13 @@ function BotResponse(props) {
 
   const [copiedText, setCopiedText] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
+  const [enteredFeedback, setEnteredFeedback] = useState("");
   const [copyIconClicked, setCopyIconClicked] = useState(false);
   const [dislikeIconClicked, setDislikeIconClicked] = useState(false);
   const [likeIconClicked, setLikeIconClicked] = useState(false);
-  const [disableLikeButton, setdisableLikeButton] = useState(false);
-  const [disableDislikeButton, setdisableDislikeButton] = useState(false);
+  const [disableLikeButton, setDisableLikeButton] = useState(false);
+  const [disableDislikeButton, setDisableDislikeButton] = useState(false);
 
   const copyToClipboardHandler = () => {
     setCopyIconClicked(true);
@@ -22,20 +24,70 @@ function BotResponse(props) {
   };
 
   const dislikeFeedbackHandler = () => {
+    setOpenFeedbackModal(false);
     setOpenModal(true);
     setDislikeIconClicked(true);
-    setdisableLikeButton(true);
+    setDisableLikeButton(true);
   };
 
   const likeFeedbackHandler = () => {
+    setOpenFeedbackModal(false);
     setOpenModal(true);
     setLikeIconClicked(true);
-    setdisableDislikeButton(true);
+    setDisableDislikeButton(true);
   };
 
   const closeModal = () => {
     setOpenModal(false);
   };
+
+  const closeFeedbackModal = () => {
+    setOpenFeedbackModal(false);
+  };
+
+  const submitFeedbackHandler = (event) => {
+    event.preventDefault();
+
+    if (enteredFeedback.trim().length === 0) {
+      return;
+    }
+    //props.onSubmitFeedback(enteredFeedback);
+    setEnteredFeedback("");
+    closeModal();
+    setOpenFeedbackModal(true);
+  };
+
+  const feedbackChangeHandler = (event) => {
+    setEnteredFeedback(event.target.value);
+  };
+
+  const feedbackModal = (
+    <Modal open={openModal} onClose={closeModal}>
+      <form className={`${styles.feedback}`} onSubmit={submitFeedbackHandler}>
+        Please give some feedback
+        <div className={`${styles.feedbackBox}`}>
+          <textarea
+            className={`${styles.input}`}
+            name="Feedback box"
+            rows="5"
+            cols="70"
+            wrap="soft"
+            value={enteredFeedback}
+            onChange={feedbackChangeHandler}
+          ></textarea>
+        </div>
+        <button type="submit" className={`${styles.submit}`}>
+          Submit
+        </button>
+      </form>
+    </Modal>
+  );
+
+  const showSuccessModal = (
+    <Modal open={openFeedbackModal} onClose={closeFeedbackModal}>
+      <p>Thank you for your feedback and helping to improve this service</p>
+    </Modal>
+  );
 
   return (
     <Fragment>
@@ -92,7 +144,8 @@ function BotResponse(props) {
           <p className={`${styles.p}`}>{props.messageValue}</p>
         </div>
       </div>
-      <Modal open={openModal} onClose={closeModal} />
+      {feedbackModal}
+      {openFeedbackModal && showSuccessModal}
     </Fragment>
   );
 }
