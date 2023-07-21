@@ -7,7 +7,6 @@ const sendIcon = <BiSend className={`${styles.sendIcon}`} />;
 function QuestionBox(props) {
   const askQuestionHandler = (event) => {
     event.preventDefault();
-
     props.onAskQuestion();
   };
 

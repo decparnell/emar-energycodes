@@ -6,7 +6,7 @@ import Modal from "../modal/index.js";
 
 function BotResponse(props) {
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;
-
+  //maybe make some of these into an array... its busy
   const [copiedText, setCopiedText] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
@@ -93,7 +93,16 @@ function BotResponse(props) {
     <Fragment>
       <div className={`${styles.botResponse}`}>
         {botIcon}
-        <div className={`${styles.botMessage}`}>
+        <div
+          className={`${styles.botMessage}`}
+          style={
+            props.botSentiment === "complete_answer"
+              ? { borderColor: "green" }
+              : props.botSentiment === "partial_answer"
+              ? { borderColor: "yellow" }
+              : { borderColor: "red" }
+          }
+        >
           <div className={`${styles.options}`}>
             <button
               title="Copy to clipboard"

@@ -15,16 +15,8 @@ function NLP() {
   const [questionHistory, setQuestionHistory] = useState([]);
   const [isCurrentQuestion, setIsCurrentQuestion] = useState(true);
   const [query, setQuery] = useState("");
-  const [previousQuestion, setPreviousQuestion] = useState("");
 
   const fetchData = async (queryId) => {
-    /* if (isCurrentQuestion === false) {
-      //Previously asked question data
-      query = previousQuestion;
-    } else {
-      query = userQ;
-    } */
-
     const data = {
       query: query,
       queryTimestamp: new Date(Date.now()).toISOString(),
@@ -60,13 +52,16 @@ function NLP() {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         const botAnswer = data.response.answer;
-
+        const botSentiment = data.status;
         setChatLog((prevChat) => {
           return [
             ...prevChat,
-            <BotResponse messageValue={botAnswer} key={`${queryId}_BOT`} />,
+            <BotResponse
+              messageValue={botAnswer}
+              key={`${queryId}_BOT`}
+              botSentiment={botSentiment}
+            />,
           ];
         });
 
@@ -94,33 +89,6 @@ function NLP() {
     fetchData(queryId);
 
     // setIsCurrentQuestion(true);
-
-    /////////////////////////dec comments: Dont get why we need state arrays for the history and the chat log, this can be infered from the chat log
-    setQuestionHistory((prevQuestion) => {
-      return [
-        ...prevQuestion,
-        <QuestionHistoryItem
-          messageValue={query}
-          onAskQuestionFromHistory={questionHistoryItemHandler}
-          key={`${queryId}_PREV`}
-        />,
-      ];
-    });
-  };
-
-  const questionHistoryItemHandler = (previousQuestion) => {
-    setBotIsTyping(true);
-    setIsCurrentQuestion(false);
-    setQuery(previousQuestion);
-
-    setChatLog((prevChat) => {
-      return [
-        ...prevChat,
-        <UserQuestion messageValue={previousQuestion} key={123} />,
-      ];
-    });
-
-    fetchData();
   };
 
   return (
@@ -132,8 +100,12 @@ function NLP() {
       <div className={styles.container}>
         <h1 className={styles.title}>NLP</h1>
         <section className={`${styles.mainContentContainer} `}>
-          {questionHistory.length > 0 && (
-            <QuestionHistory questionHistory={questionHistory} />
+          {chatLog.length > 0 && (
+            <QuestionHistory
+              chatLog={chatLog}
+              questionHistory={questionHistory}
+              setQuery={setQuery}
+            />
           )}
           <div className={`${styles.conversationContainer} `}>
             <div className={`${styles.chatBox} box`}>
