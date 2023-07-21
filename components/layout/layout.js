@@ -1,9 +1,9 @@
 import Navbar from "./navbar2";
 
-export default function Layout({ children }, chosenTab) {
+export default function Layout({ children }) {
   return (
     <>
-      <Navbar chosenTab={chosenTab} />
+      <Navbar />
       <main>{children}</main>
     </>
   );

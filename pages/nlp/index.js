@@ -8,7 +8,7 @@ import BotResponse from "../../components/nlp/botResponse";
 import QuestionHistory from "../../components/nlp/questionHistory";
 import QuestionHistoryItem from "../../components/nlp/questionHistoryItem";
 import { v4 as uuidv4 } from "uuid";
-
+import { uiVersion } from "../../components/settings";
 function NLP() {
   const [botIsTyping, setBotIsTyping] = useState(false);
   const [chatLog, setChatLog] = useState([]);
@@ -18,23 +18,22 @@ function NLP() {
   const [previousQuestion, setPreviousQuestion] = useState("");
 
   const fetchData = (queryId) => {
+    //dec change to add query to reduce dupe
+    var query = "";
     if (isCurrentQuestion === true) {
       //Asked question data
-      const data = {
-        query: userQuestion,
-        queryTimestamp: new Date(Date.now()).toISOString(),
-        queryId: queryId,
-        uiVersion: uiVersion,
-      };
+      query = userQuestion;
     } else if (isCurrentQuestion === false) {
       //Previously asked question data
-      const data = {
-        query: previousQuestion,
-        queryTimestamp: new Date(Date.now()).toISOString(),
-        queryId: queryId,
-        uiVersion: uiVersion,
-      };
+      query = previousQuestion;
     }
+
+    const data = {
+      query: query,
+      queryTimestamp: new Date(Date.now()).toISOString(),
+      queryId: queryId,
+      uiVersion: uiVersion,
+    };
 
     const options = {
       method: "POST",
@@ -44,6 +43,7 @@ function NLP() {
       body: JSON.stringify(data),
     };
 
+    ////////////////////////////////////dec comments:THIS BIT IS GOOD - just added keys
     fetch("/api/nlpSession", options)
       .then((response) => {
         if (!response.ok) {
@@ -79,7 +79,7 @@ function NLP() {
         console.error("Error fetching session data:", error);
       });
   };
-
+  /////////////////////////dec comments:THIS BIT IS GOOD - just added keys & moved query id down to here to avoid dupe and to give continuity
   const questionHandler = async (userQuestion) => {
     //Storing queryid & user
     const queryId = uuidv4();
@@ -93,7 +93,8 @@ function NLP() {
         <UserQuestion messageValue={userQuestion} key={`${queryId}_USER`} />,
       ];
     });
-
+    console.log(chatLog);
+    /////////////////////////dec comments: Dont get why we need state arrays for the history and the chat log, this can be infered from the chat log
     setQuestionHistory((prevQuestion) => {
       return [
         ...prevQuestion,
@@ -105,6 +106,7 @@ function NLP() {
       ];
     });
 
+    console.log(questionHistory);
     fetchData(queryId);
   };
 

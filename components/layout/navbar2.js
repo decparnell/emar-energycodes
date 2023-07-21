@@ -8,7 +8,7 @@ import AsideDropDownMenu from "../AsideDropDownMenu";
 import TabNavbar2 from "./tabHeader2";
 import FeedbackForm from "../feedbackForm";
 
-function navbar(chosenTab) {
+function navbar() {
   return (
     <div className={styles.joinedHeader}>
       <div className={`${styles.header} green`}>

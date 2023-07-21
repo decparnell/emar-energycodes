@@ -104,7 +104,7 @@ function MyApp({ Component, pageProps }) {
         }}
       >
         <Loading />
-        <Layout chosenTab={chosenTab}>
+        <Layout>
           <Component {...pageProps} />
         </Layout>
       </AppContext.Provider>
