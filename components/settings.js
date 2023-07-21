@@ -55,6 +55,7 @@ export const scenarioVariantHeaders = [
     title: "Identifier",
     dataColumn: "EnergyMarketMessageScenarioVariantIdentifier",
   },
+  { title: "Local Reference", dataColumn: "LegacyIdentifier" },
   {
     title: "Scenario Variant Name",
     dataColumn: "EnergyMarketMessageScenarioVariantName",
@@ -70,3 +71,11 @@ export const dataItemHeaders = [
   { title: "Local Reference", dataColumn: "LegacyIdentifier" },
   { title: "Message Name", dataColumn: "DataItemName" },
 ];
+
+export const codeSchdulesHeaders = [
+  { title: "Document Name", dataColumn: "documentName" },
+  { title: "Clause Reference", dataColumn: "clauseReference" },
+  { title: "Clause Text", dataColumn: "componentText" },
+];
+
+export const uiVersion = "V2.4.0 - 31/07/23";

@@ -1,4 +1,5 @@
-import styles from "../../../../styles/scenarioVariant.module.css";
+import styles from "../../../../styles/schedules-dataspec.module.css";
+import Head from "next/head";
 import SideNav from "../../../../components/dashboardSideNav";
 import AppContext from "../../../../components/context/AppContext";
 import { useState, useContext, useEffect } from "react";
@@ -7,6 +8,8 @@ import { checkIfsearchResultsAvailable } from "../../../../components/helperFunc
 import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable/index";
 import removeNullValues from "../../../../components/dataspec/functions/removeNulls";
 import DataItemTables from "../../../../components/tables/dataItemTables";
+import SecondNavbar from "../../../../components/layout/secondHeader";
+import { LogUserInfo } from "../../../../components/logging";
 
 function DataItemDetailsPage({ searchResults }) {
   const pageId = "DataItemDetailsPage";
@@ -83,10 +86,19 @@ function DataItemDetailsPage({ searchResults }) {
 
   useEffect(() => {}, [currentSections]);
 
+  useEffect(() => {
+    LogUserInfo(
+      `${dataItemInfo.DataItemIdentifier} ${dataItemInfo.DataItemName}`
+    );
+  });
   return (
     <>
-      <div className={styles.container}>
-        <div className={`${styles.sideNavContainer}`}>
+      <Head>
+        <title>EMAR - {dataItemInfo.DataItemName}</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
+      <div className={"container-flex"}>
+        <div className={"side-nav-container-fixed"}>
           <SideNav
             navbarType="ContentBasedNavBar"
             items={dashboard}
@@ -97,6 +109,7 @@ function DataItemDetailsPage({ searchResults }) {
           />
         </div>
         <div className={`${styles.mainContentContainer}`}>
+          <SecondNavbar />
           <section id={dashboard[0].dashboardId}>
             <DataItemTables
               keyTitle="Basic Information"

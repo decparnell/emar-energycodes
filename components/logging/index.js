@@ -1,21 +1,19 @@
 export function LogUserInfo(action) {
-  const data = { action: action };
-  const body = JSON.stringify(data);
-  console.log(
-    "BODYBODYBODY#############################################",
-    body
-  );
+  const data = { actionName: action };
+  const bodyData = JSON.stringify(data);
   const options = {
     method: "POST",
-    body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: bodyData,
   };
   fetch("/api/session", options)
     .then((response) => response.json())
     .then((data) => {
-      console.log("Session data:", data);
+      console.log("Logging Data:", data);
     })
     .catch((error) => {
-      console.error("Error fetching session data:", error);
+      console.error("Error logging Data:", error);
     });
 }

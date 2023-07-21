@@ -1,11 +1,13 @@
 import { useRouter } from "next/router";
-import styles from "../../../styles/scenarioVariant.module.css";
+import styles from "../../../styles/schedules-dataspec.module.css";
 import { useState, useContext, useEffect } from "react";
 import SideNav from "../../../components/dashboardSideNav";
 import { checkIfVariablesAreAvailable } from "../../../components/helperFunctions/checkIfVariablesAreAvailable";
 import { checkIfItemsAvailableInArray } from "../../../components/helperFunctions/checkIfItemsAvailableInArray";
 import SchedulesTables from "../../../components/tables/schedulesTables";
 import CreateSchedulesContent from "../../../components/scheduleId/createSchedulesContent";
+import Head from "next/head";
+import { LogUserInfo } from "../../../components/logging";
 
 function Schedules({
   versions,
@@ -47,7 +49,6 @@ function Schedules({
   const mandatoryTable = transformTable(optionalityInfo, parts);
 
   /* ****FUNCTIONS**** */
-
   //client-side fetch data, loading more components of each section
   const fetchData = async () => {
     const incrementalStartVal = 21;
@@ -140,6 +141,10 @@ function Schedules({
   useEffect(() => {
     fetchData();
   }, []);
+  useEffect(() => { }, [currentSections]);
+  useEffect(() => {
+    LogUserInfo(`${docInfo.documentName} V${versionName}`);
+  }, []);
 
   return (
     <div className={styles.infinitescrollContainer}>
@@ -157,8 +162,8 @@ function Schedules({
       </div>
       <div className={styles.mainContentContainer}>
         {/*
-      This line is the issue line
-       <div className={`${styles.mainContentContainer}`}> */}
+    This line is the issue line
+     <div className={`${styles.mainContentContainer}`}> */}
         <h3 className={styles.headers}>
           {scheduleNumber
             ? `${scheduleName} - Schedule ${scheduleNumber}`

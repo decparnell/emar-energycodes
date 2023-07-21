@@ -3,6 +3,8 @@ import Head from "next/head";
 import QuickLink from "../../components/helperFunctions/quickLink";
 import React from "react";
 import ReleaseTable from "../../components/releaseTable";
+import { LogUserInfo } from "../../components/logging";
+import { useEffect } from "react";
 function ReleaseManagement({ recVersionAndChangesJSON }) {
   const apiResList = [
     { obj: recVersionAndChangesJSON, name: "recVersionAndChangesJSON" },
@@ -14,6 +16,10 @@ function ReleaseManagement({ recVersionAndChangesJSON }) {
   const changeInRecVersion = recVersionAndChangesJSON.ChangeInRecVersion;
   const changeAffectedSchedules =
     recVersionAndChangesJSON.ChangeAffectedSchedules;
+
+  useEffect(() => {
+    LogUserInfo("Release Management Page");
+  }, []);
 
   return (
     <>

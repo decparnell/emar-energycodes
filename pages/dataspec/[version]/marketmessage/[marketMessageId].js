@@ -1,4 +1,5 @@
-import styles from "../../../../styles/scenarioVariant.module.css";
+import styles from "../../../../styles/schedules-dataspec.module.css";
+import Head from "next/head";
 import AppContext from "../../../../components/context/AppContext";
 import { useState, useContext, useEffect } from "react";
 import SideNav from "../../../../components/dashboardSideNav";
@@ -7,6 +8,8 @@ import { checkIfVariablesAreAvailable } from "../../../../components/helperFunct
 import { checkIfItemsAvailableInArray } from "../../../../components/helperFunctions/checkIfItemsAvailableInArray";
 import { checkIfsearchResultsAvailable } from "../../../../components/helperFunctions/checkIfsearchResultsAvailable";
 import MarketMessageTables from "../../../../components/tables/marketMessageTables";
+import SecondNavbar from "../../../../components/layout/secondHeader";
+import { LogUserInfo } from "../../../../components/logging";
 
 function MarketMessagePage({ searchResults }) {
   const pageId = "MarketMessagePage";
@@ -81,10 +84,20 @@ function MarketMessagePage({ searchResults }) {
 
   useEffect(() => {}, [currentSections]);
 
+  useEffect(() => {
+    LogUserInfo(
+      `${marketMessageInfo.EnergyMarketMessageIdentifier} - ${marketMessageInfo.Label}`
+    );
+  }, []);
+
   return (
     <>
-      <div className={styles.container}>
-        <div className={`${styles.sideNavContainer}`}>
+      <Head>
+        <title>EMAR - {marketMessageInfo.Label}</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
+      <div className={"container-flex"}>
+        <div className={"side-nav-container-fixed"}>
           <SideNav
             navbarType="ContentBasedNavBar"
             items={dashboard}
@@ -95,6 +108,7 @@ function MarketMessagePage({ searchResults }) {
           />
         </div>
         <div className={`${styles.mainContentContainer}`}>
+          <SecondNavbar />
           <section id={dashboard[0].dashboardId}>
             <MarketMessageTables
               keyTitle="Basic Information"
@@ -134,9 +148,11 @@ export async function getServerSideProps(context) {
   );
 
   //Content Data
+  //getMarketMessageFlowStructure-LogicApp-v2
   const dataReq = await fetch(
-    `https://prod-00.uksouth.logic.azure.com/workflows/5274b717bcf04104a6e99b41704c1698/triggers/manual/paths/invoke/searchType/{searchType}/searchValue/${context.params.marketMessageId}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xmOj_s9acsMTWSJyIwmmg__Qomwbd2rns4FuXcgklDo`
+    `https://prod-27.uksouth.logic.azure.com/workflows/928cf6d8fa974b3ca55ae021f119e4bb/triggers/manual/paths/invoke/searchType/{searchType}/searchValue/${context.params.marketMessageId}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=oUMwgTRLhqptkIX8IjSR1y6MB2B0wAMgZiQCKpMaGw0`
   );
+
   const dataJson = await dataReq.json();
   const searchResults = [
     dataJson.marketMessageInfo[0],

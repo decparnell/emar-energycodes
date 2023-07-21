@@ -1,4 +1,9 @@
 /*Form elements*/
+.feedbackLabel{
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .contactForm {
   width: 280px;
   right: 0;
