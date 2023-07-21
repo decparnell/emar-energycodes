@@ -36,8 +36,8 @@ app.prepare().then(() => {
     sp_options = moduleSettings.prod_sp_options;
     idp_options = moduleSettings.prod_idp_options;
   } else {
-    sp_options = moduleSettings.prod_sp_options;
-    idp_options = moduleSettings.prod_idp_options;
+    sp_options = moduleSettings.test_sp_options;
+    idp_options = moduleSettings.test_idp_options;
   }
   server.use(session(sesh));
   // cookie parser middleware
