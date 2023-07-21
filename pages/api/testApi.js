@@ -32,7 +32,6 @@ export default function handler(req, res) {
   )
     .then((response) => response.json())
     .then((data) => {
-      console.log("NLP Response:", data);
       res.json(data);
     })
     .catch((error) => {
