@@ -6,34 +6,19 @@ import React, { useState, useContext } from "react";
 import AppContext from "../context/AppContext";
 function VersionDropDown() {
   const value = useContext(AppContext);
-  let { allDataSpecVersions } = value.state;
+  let { allDataSpecVersions, latestDataSpecVersion } = value.state;
   const { setLoading } = useContext(AppContext);
   const router = useRouter();
   const { version } = router.query;
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownValue = version;
+  const dropdownValue = latestDataSpecVersion;
   const setDropdownValue = value.setLatestDataSpecVersion;
 
   const handleDropdownSelect = (option) => {
     setDropdownOpen((current) => !current);
     setDropdownValue(option);
     setDropdownOpen((current) => !current);
-    if (option !== version) {
-      const query = router.query;
-      query.version = option;
-      router
-        .push(
-          {
-            pathname: router.pathname,
-            query: query,
-          },
-          { shallow: false }
-        )
-        .then(() => {
-          setLoading(false);
-        });
-    }
   };
 
   const prepareDropdownOption = (option) => {
@@ -46,7 +31,7 @@ function VersionDropDown() {
 
   return (
     <div
-      className={`${stylesHead.dataSpecDropDown} ${styles.dropdown} pointer`}
+      className={`pointer ${stylesHead.dataSpecDropDown} ${styles.dropdown}`}
       onClick={() => setDropdownOpen((current) => !current)}
     >
       REC Version: {dropdownValue}
@@ -60,19 +45,22 @@ function VersionDropDown() {
             <AiFillCaretUp />
           </div>
           <div className={styles.versionOptions}>
-            {allDataSpecVersions.map((option, index) => (
-              <div
-                className={
-                  option.name == dropdownValue
-                    ? `${styles.option} ${styles.chosen} `
-                    : `${styles.option} `
-                }
-                key={index}
-                onClick={() => handleDropdownSelect(option.name)}
-              >
-                {prepareDropdownOption(option.name)} - {option.status}
-              </div>
-            ))}
+            {allDataSpecVersions
+              .sort()
+              .reverse()
+              .map((option, index) => (
+                <div
+                  className={
+                    option.name == dropdownValue
+                      ? `${styles.option} ${styles.chosen} `
+                      : `${styles.option} `
+                  }
+                  key={index}
+                  onClick={() => handleDropdownSelect(option.name)}
+                >
+                  {prepareDropdownOption(option.name)} - {option.status}
+                </div>
+              ))}
           </div>
         </>
       )}

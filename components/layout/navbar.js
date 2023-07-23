@@ -2,6 +2,7 @@ import Link from "next/link";
 import styles from "../../styles/header2.module.css";
 import TabNavbar from "./tabHeader";
 import FeedbackForm from "../feedbackForm";
+import SecondNavbar from "./secondHeader";
 
 function Navbar() {
   return (
@@ -18,6 +19,7 @@ function Navbar() {
         </div>
       </div>
       <TabNavbar />
+      <SecondNavbar />
     </div>
   );
 }
