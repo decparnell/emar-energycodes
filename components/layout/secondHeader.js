@@ -1,7 +1,3 @@
-import { useRouter } from "next/router";
-import AppContext from "../context/AppContext";
-import { useContext } from "react";
-import Dropdown from "../dropdown";
 import styles from "../../styles/header.module.css";
 import VersionDropDown from "../dropdown/version";
 function SecondNavbar() {

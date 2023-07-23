@@ -6,8 +6,8 @@ import React, { useState, useContext } from "react";
 import AppContext from "../context/AppContext";
 function VersionDropDown() {
   const value = useContext(AppContext);
-  let { loading , allDataSpecVersions } = value.state;
-  const {setLoading} = useContext(AppContext);
+  let { allDataSpecVersions } = value.state;
+  const { setLoading } = useContext(AppContext);
   const router = useRouter();
   const { version } = router.query;
 
@@ -22,15 +22,17 @@ function VersionDropDown() {
     if (option !== version) {
       const query = router.query;
       query.version = option;
-      router.push(
-        {
-          pathname: router.pathname,
-          query: query,
-        },
-        { shallow: false }
-      ).then(() => {
-        setLoading(false);
-      });  
+      router
+        .push(
+          {
+            pathname: router.pathname,
+            query: query,
+          },
+          { shallow: false }
+        )
+        .then(() => {
+          setLoading(false);
+        });
     }
   };
 
@@ -49,7 +51,6 @@ function VersionDropDown() {
     >
       REC Version: {dropdownValue}
       {dropdownOpen == false ? (
-
         <div className={styles.caretIcon}>
           <AiFillCaretDown />
         </div>

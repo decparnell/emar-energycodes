@@ -12,23 +12,16 @@ import { LogUserInfo } from "../components/logging";
 import DashboardLink from "../components/dashboardLink";
 import ChangeRequestStages from "../components/changeRequestStages";
 
-function HomePage({
-  sections,
-  items,
-  newsData,
-  latestVersionJson,
-  processStageData,
-}) {
+function HomePage({ sections, items, newsData, processStageData }) {
   const apiVarList = [
     { obj: newsData, name: "newsData" },
     { obj: items, name: "items" },
     { obj: sections, name: "sections" },
-    { obj: latestVersionJson, name: "latestVersionJson" },
     { obj: processStageData, name: "processStageData" },
   ];
 
   const value = useContext(AppContext);
-  let { chosenButton, chosenTab } = value.state;
+  let { latestDataSpecVersion, currentVersionMapping } = value.state;
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
   const [currentSections, setCurrentSections] = useState(() => {
@@ -102,7 +95,7 @@ function HomePage({
               </h6>
               <DashboardLink
                 currentItems={currentItems}
-                versions={latestVersionJson}
+                versions={currentVersionMapping}
               />
             </div>
             <div className={`${styles.right}`}>
@@ -156,11 +149,6 @@ export async function getServerSideProps({ req, res }) {
   });
   const items = dataJson.items;
 
-  const getLatestVersions = await fetch(
-    `https://prod-31.uksouth.logic.azure.com:443/workflows/74c7d3ac4b93473c81b4fc762aea9133/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=uEnmZBZlGdrJ-pRJCcmTAMtoVJlLR2MIXiCYq3TXaf8`
-  );
-  const latestVersionJson = await getLatestVersions.json();
-
   const getProcessStgData = await fetch(
     "https://get-changerequest-from-recportal.azurewebsites.net/api/getchangerequestfromrecportal"
   );
@@ -175,7 +163,6 @@ export async function getServerSideProps({ req, res }) {
   return {
     props: {
       sections,
-      latestVersionJson,
       items,
       processStageData,
       //newsData,

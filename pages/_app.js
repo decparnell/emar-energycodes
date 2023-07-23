@@ -1,74 +1,53 @@
 import "../styles/globals.css";
 import Layout from "../components/layout/layout";
 import AppContext from "../components/context/AppContext";
-import Router from "next/router";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import Script from "next/script";
-function Loading() {
-  //appcontext variables
-  const value = useContext(AppContext);
-  let { loading } = value.state;
-  //appcontext methods
-  const { setLoading, setAllDataSpecVersions, setLatestDataSpecVersion } =
-    useContext(AppContext);
+import Loading from "../components/loading";
+import { fetchVersionMapping } from "../components/helperFunctions/versioning";
 
-  useEffect(() => {
-    const handleStart = (url) => url !== Router.asPath && setLoading(true);
-    const handleComplete = (url) => url == Router.asPath && setLoading(false);
-
-    Router.events.on("routeChangeStart", handleStart);
-    Router.events.on("routeChangeComplete", handleComplete);
-    Router.events.on("routeChangeError", handleComplete);
-
-    return () => {
-      Router.events.off("routeChangeStart", handleStart);
-      Router.events.off("routeChangeComplete", handleComplete);
-      Router.events.off("routeChangeError", handleComplete);
-    };
-  }, [Router]);
-
-  //TO-DO: performance improvement, fetchRecVersions should be triggered only certain type of page are being invoked
-  useEffect(() => {
-    const fetchRecVersions = async () => {
-      try {
-        const response = await fetch(
-          "https://prod-07.uksouth.logic.azure.com:443/workflows/8920bdcc74c94f6fa6a7b157b83f933a/triggers/request/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=Bz5tW3QlJj53K4zrqYFw3h6cPg8-A62iRqIN_Q9ktWY"
-        );
-        const data = await response.json();
-        const recVersions = data.RecVersions;
-        setAllDataSpecVersions(recVersions);
-        setLatestDataSpecVersion(
-          recVersions.filter((version) => version.status === "Live")[0]?.name ||
-            ""
-        );
-        //setLatestDataSpecVersion(allDataSpecVersions.filter((version) => version.status === "Live")[0].name);
-      } catch (error) {
-        console.error("Error fetching recVersions:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRecVersions();
-  }, [setAllDataSpecVersions, setLatestDataSpecVersion, setLoading]);
-
-  return (
-    loading && (
-      <div className="spinner-wrapper">
-        <div className="spinner"></div>
-      </div>
-    )
+MyApp.getInitialProps = async () => {
+  const recVersionResponse = await fetch(
+    "https://prod-07.uksouth.logic.azure.com:443/workflows/8920bdcc74c94f6fa6a7b157b83f933a/triggers/request/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=Bz5tW3QlJj53K4zrqYFw3h6cPg8-A62iRqIN_Q9ktWY"
   );
-}
+  const recVersionData = await recVersionResponse.json();
+  const allVersions = recVersionData.RecVersions;
+  const liveVersion =
+    allVersions.filter((version) => version.status === "Live")[0]?.name || "";
 
-function MyApp({ Component, pageProps }) {
-  const [loading, setLoading] = useState(true);
-  const [allDataSpecVersions, setAllDataSpecVersions] = useState([]);
-  const [latestDataSpecVersion, setLatestDataSpecVersion] = useState("");
-  const [chosenTab, setChosenTab] = useState("Codes Schedules");
+  const versionMappingResponse = await fetch(
+    `https://prod-15.uksouth.logic.azure.com/workflows/82a99e91c7b8468bb1eda20842ec26c1/triggers/manual/paths/invoke/recVersion/${liveVersion}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=UdfTkCt6-fScMlY692_H3A_3RwfuGkHN0GmEzIrwots`
+  );
+  const versionMappingData = await versionMappingResponse.json();
+  const versionMapping = versionMappingData.versionMapping;
+  return {
+    allVersions: allVersions,
+    liveVersion: liveVersion,
+    versionMapping: versionMapping,
+  };
+};
+
+function MyApp({
+  Component,
+  pageProps,
+  allVersions,
+  liveVersion,
+  versionMapping,
+}) {
+  const [loading, setLoading] = useState(false);
+  const [allDataSpecVersions, setAllDataSpecVersions] = useState(allVersions);
+  const [latestDataSpecVersion, setLatestDataSpecVersion] =
+    useState(liveVersion);
+  const [chosenTab, setChosenTab] = useState("Schedules");
   const [newsItems, setNewsItems] = useState();
-
+  const [currentVersionMapping, setCurrentVersionMapping] =
+    useState(versionMapping);
   const [errorLog, setErrorLog] = useState([]);
+
+  useEffect(() => {
+    fetchVersionMapping(latestDataSpecVersion, setCurrentVersionMapping);
+  }, [latestDataSpecVersion]);
+
   return (
     <>
       <Script
@@ -96,6 +75,7 @@ function MyApp({ Component, pageProps }) {
             newsItems: newsItems,
             errorLog: errorLog,
             chosenTab: chosenTab,
+            currentVersionMapping: currentVersionMapping,
           },
           setLoading: setLoading,
           setLatestDataSpecVersion: setLatestDataSpecVersion,
@@ -103,6 +83,7 @@ function MyApp({ Component, pageProps }) {
           setNewsItems: setNewsItems,
           setErrorLog: setErrorLog,
           setChosenTab: setChosenTab,
+          setCurrentVersionMapping: setCurrentVersionMapping,
         }}
       >
         <Loading />
