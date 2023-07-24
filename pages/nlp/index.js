@@ -90,6 +90,7 @@ function NLP() {
     // setIsCurrentQuestion(true);
   };
   useEffect(() => {
+    console.log(chatLog);
     chatLog.length > 0
       ? setQuestionHistory([
           ...new Map(
