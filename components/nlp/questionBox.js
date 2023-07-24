@@ -2,12 +2,27 @@ import styles from "../../styles/nlp.module.css";
 import React, { useState } from "react";
 import { BiSend } from "react-icons/bi";
 
-const sendIcon = <BiSend className={`${styles.sendIcon}`} />;
-
 function QuestionBox(props) {
+  const sendIcon = (
+    <BiSend
+      className={
+        props.isTyping ? `${styles.sendIconDisabled}` : `${styles.sendIcon}`
+      }
+    />
+  );
+
+  const [disableSubmitButton, setDisableSubmitButton] = useState(false);
+
+  const disableButton = () => {
+    props.isTyping
+      ? setDisableSubmitButton(true)
+      : setDisableSubmitButton(false);
+  }
+
   const askQuestionHandler = (event) => {
     event.preventDefault();
     props.onAskQuestion();
+    disableButton();
   };
 
   const questionChangeHandler = (event) => {
@@ -15,11 +30,12 @@ function QuestionBox(props) {
   };
 
   const pressEnterHandler = (event) => {
-    if(event.keyCode == 13 && event.shiftKey == false) {
+    if (event.keyCode == 13 && event.shiftKey == false) {
       event.preventDefault();
       props.onAskQuestion();
+      disableButton();
     }
-  }
+  };
 
   return (
     <form className={`${styles.questionBox}`} onSubmit={askQuestionHandler}>
@@ -36,7 +52,12 @@ function QuestionBox(props) {
           value={props.query}
           onKeyDown={pressEnterHandler}
         ></textarea>
-        <button title="Submit" type="submit" className={`${styles.button}`}>
+        <button
+          title="Submit"
+          type="submit"
+          className={`${styles.button}`}
+          disabled={disableSubmitButton}
+        >
           {sendIcon}
         </button>
       </div>

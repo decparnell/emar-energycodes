@@ -6,9 +6,9 @@ import ChatBox from "../../components/nlp/chatBox";
 import UserQuestion from "../../components/nlp/userQuestion";
 import BotResponse from "../../components/nlp/botResponse";
 import QuestionHistory from "../../components/nlp/questionHistory";
-import QuestionHistoryItem from "../../components/nlp/questionHistoryItem";
 import { v4 as uuidv4 } from "uuid";
 import { uiVersion } from "../../components/settings";
+
 function NLP() {
   const [botIsTyping, setBotIsTyping] = useState(false);
   const [chatLog, setChatLog] = useState([]);
@@ -127,6 +127,7 @@ function NLP() {
               onAskQuestion={questionHandler}
               setQuery={setQuery}
               query={query}
+              isTyping={botIsTyping}
             />
           </div>
         </section>
