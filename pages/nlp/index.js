@@ -90,13 +90,12 @@ function NLP() {
     // setIsCurrentQuestion(true);
   };
   useEffect(() => {
-    console.log(chatLog);
     chatLog.length > 0
       ? setQuestionHistory([
           ...new Map(
             chatLog
               .filter(function (el) {
-                return el.type.name === "UserQuestion";
+                return el.key.includes("USER");
               })
               .map((item) => [item.props.messageValue, item])
           ).values(),
