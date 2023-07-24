@@ -13,6 +13,7 @@
   border-radius: 5px;
   border-style: solid;
   border-color: grey;
+  max-width: 70%;
 }
 
 .p {
@@ -124,7 +125,7 @@
 }
 
 .button {
-  width: 12%;
+  width: 2.2rem;
   padding-right: 1%;
   border: none;
   box-shadow: none;
@@ -177,13 +178,13 @@
 }
 
 .dislikeIcon:hover {
-  color: red !important;
+  color: orangered !important;
 }
 
 .dislikeIconClicked {
   height: 100%;
   width: 100%;
-  color: red;
+  color: orangered;
   margin-right: 3%;
 }
 

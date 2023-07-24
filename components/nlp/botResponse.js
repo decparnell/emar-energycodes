@@ -97,10 +97,10 @@ function BotResponse(props) {
           className={`${styles.botMessage}`}
           style={
             props.botSentiment === "complete_answer"
-              ? { borderColor: "green" }
+              ? { borderColor: "forestgreen" }
               : props.botSentiment === "partial_answer"
-              ? { borderColor: "yellow" }
-              : { borderColor: "red" }
+              ? { borderColor: "#FFEB3A" }
+              : { borderColor: "orangered" }
           }
         >
           <div className={`${styles.options}`}>
