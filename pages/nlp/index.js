@@ -1,6 +1,6 @@
 import styles from "../../styles/nlp.module.css";
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import QuestionBox from "../../components/nlp/questionBox";
 import ChatBox from "../../components/nlp/chatBox";
 import UserQuestion from "../../components/nlp/userQuestion";
@@ -12,8 +12,7 @@ import { uiVersion } from "../../components/settings";
 function NLP() {
   const [botIsTyping, setBotIsTyping] = useState(false);
   const [chatLog, setChatLog] = useState([]);
-  const [questionHistory, setQuestionHistory] = useState([]);
-  const [isCurrentQuestion, setIsCurrentQuestion] = useState(true);
+  const [userQuestionHistory, setQuestionHistory] = useState([]);
   const [query, setQuery] = useState("");
 
   const fetchData = async (queryId) => {
@@ -74,7 +73,7 @@ function NLP() {
 
     setQuery("");
   };
-  /////////////////////////dec comments:THIS BIT IS GOOD - just added keys & moved query id down to here to avoid dupe and to give continuity
+
   const questionHandler = () => {
     //Storing queryid & user
     const queryId = uuidv4();
@@ -90,6 +89,19 @@ function NLP() {
 
     // setIsCurrentQuestion(true);
   };
+  useEffect(() => {
+    chatLog.length > 0
+      ? setQuestionHistory([
+          ...new Map(
+            chatLog
+              .filter(function (el) {
+                return el.type.name === "UserQuestion";
+              })
+              .map((item) => [item.props.messageValue, item])
+          ).values(),
+        ])
+      : null;
+  }, [chatLog]);
 
   return (
     <>
@@ -102,8 +114,7 @@ function NLP() {
         <section className={`${styles.mainContentContainer} `}>
           {chatLog.length > 0 && (
             <QuestionHistory
-              chatLog={chatLog}
-              questionHistory={questionHistory}
+              questionHistory={userQuestionHistory}
               setQuery={setQuery}
             />
           )}
