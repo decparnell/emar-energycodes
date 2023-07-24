@@ -27,7 +27,7 @@ export default function Loading() {
 
   //TO-DO: performance improvement, fetchRecVersions should be triggered only certain type of page are being invoked
   /*   useEffect(() => {
-    fetchRecVersions();
+    FetchRecVersions();
   }, [loading]); */
 
   return (

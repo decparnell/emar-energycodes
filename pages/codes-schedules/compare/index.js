@@ -1,4 +1,4 @@
-import Dropdown from "../../../components/dropdown";
+/* import Dropdown from "../../../components/dropdown";
 import { useState } from "react";
 import styles from "../../../styles/compare.module.css";
 function Compare({ dataJson }) {
@@ -168,3 +168,4 @@ export async function getStaticProps({ params }) {
     props: { dataJson },
   };
 }
+ */
