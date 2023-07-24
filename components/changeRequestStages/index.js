@@ -28,6 +28,8 @@ function ChangeRequestStages(props) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  console.log("currentProcessStgItems",currentProcessStgItems);
+
   const handleClickLeft = () => {
     // Update previous stage
     if (currentIndex > 0) {
@@ -101,7 +103,7 @@ function ChangeRequestStages(props) {
             target="_blank"
             rel="noreferrer"
           >
-            {name["Change Proposal Name"]}
+            {name["Change Proposal Reference"] + " - " + name["Change Proposal Name"]}
           </CustomBoxLink>
         ))}
       </div>

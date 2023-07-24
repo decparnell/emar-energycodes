@@ -62,12 +62,14 @@ function SideNav(props) {
   };
 
   const PanelBasedNavBar = (props) => {
+    console.log("props.items", props.items);
     return (
       <div className={`${styles.panelSideNav} box`}>
         {props.items.map((item, i) => (
-          <div className={styles.panelBorder} key={i}>
+          <div className={styles.panelBorder} key={`${i}_panelBorder`}>
             <h6 className={styles.panelHeader}>{item[props.panelTitle]}</h6>
             {item[props.dashboardName].map((dashboardItem, id) => (
+              
               <div
                 className={`${styles.panelSideNavItem} ${
                   props.stateVar[props.name] === dashboardItem[props.name]
@@ -75,9 +77,12 @@ function SideNav(props) {
                     : ""
                 }`}
                 onClick={(e) => panelBasedNBHandleClick(dashboardItem, e)}
-                key={id}
+                key={`${id}_item`}
               >
-                {dashboardItem[props.name]}
+                
+                {dashboardItem.sectionOrder !=="" ?
+                  dashboardItem.sectionOrder + " - " + dashboardItem[props.name] :
+                  dashboardItem[props.name] }
               </div>
             ))}
           </div>

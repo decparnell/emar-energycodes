@@ -106,8 +106,23 @@
 }
 
 .preicon {
-  width: 8%;
-  height: 8%;
+  width: 20%;
+  height: 20%;
   margin-top: -2%;
+  margin-bottom: -8%;
+  margin-left: 40%;
   font-weight: lighter;
+  align-items: center;
+}
+
+.pretext{
+  font-weight: bold;
+  text-align: center;
+}
+
+.image{
+  width:30%;
+  height: 90%;
+  display: table;
+  align-items: center;
 }
