@@ -22,7 +22,7 @@ export async function fetchVersionMapping(
   }
 }
 
-export async function fetchRecVersions() {
+export async function FetchRecVersions() {
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
   try {

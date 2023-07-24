@@ -1,7 +1,7 @@
 import Router from "next/router";
 import { useEffect, useContext } from "react";
 import AppContext from "../context/AppContext";
-import { fetchRecVersions } from "../helperFunctions/versioning";
+import { FetchRecVersions } from "../helperFunctions/versioning";
 
 export default function Loading() {
   //appcontext variables
