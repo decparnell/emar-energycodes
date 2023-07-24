@@ -14,6 +14,13 @@ function QuestionBox(props) {
     props.setQuery(event.target.value);
   };
 
+  const pressEnterHandler = (event) => {
+    if(event.keyCode == 13 && event.shiftKey == false) {
+      event.preventDefault();
+      props.onAskQuestion();
+    }
+  }
+
   return (
     <form className={`${styles.questionBox}`} onSubmit={askQuestionHandler}>
       <div className={`${styles.sendMessage} box`}>
@@ -27,6 +34,7 @@ function QuestionBox(props) {
           wrap="soft"
           onChange={questionChangeHandler}
           value={props.query}
+          onKeyDown={pressEnterHandler}
         ></textarea>
         <button title="Submit" type="submit" className={`${styles.button}`}>
           {sendIcon}
