@@ -6,7 +6,11 @@ function QuestionBox(props) {
   const sendIcon = (
     <BiSend
       className={
-        props.isTyping ? `${styles.sendIconDisabled}` : `${styles.sendIcon}`
+        props.isTyping
+          ? `${styles.sendIconDisabled}`
+          : props.query === ""
+          ? `${styles.sendIconDisabled}`
+          : `${styles.sendIcon}`
       }
     />
   );
@@ -17,12 +21,16 @@ function QuestionBox(props) {
     props.isTyping
       ? setDisableSubmitButton(true)
       : setDisableSubmitButton(false);
-  }
+  };
 
   const askQuestionHandler = (event) => {
-    event.preventDefault();
-    props.onAskQuestion();
-    disableButton();
+    if (props.query === "") {
+      setDisableSubmitButton(true);
+    } else {
+      event.preventDefault();
+      props.onAskQuestion();
+      disableButton();
+    }
   };
 
   const questionChangeHandler = (event) => {
