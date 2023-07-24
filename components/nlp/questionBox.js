@@ -6,9 +6,7 @@ function QuestionBox(props) {
   const sendIcon = (
     <BiSend
       className={
-        props.isTyping
-          ? `${styles.sendIconDisabled}`
-          : props.query === ""
+        props.isTyping || props.query === ""
           ? `${styles.sendIconDisabled}`
           : `${styles.sendIcon}`
       }
