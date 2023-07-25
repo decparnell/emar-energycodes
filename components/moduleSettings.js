@@ -1,4 +1,5 @@
-const usePhrase = "edfgjbufiubnfiwebnfifnfnwefbnsjo";
+const usePhrase = "4330eb44CA27ef597C5bc81894dA2727";
+const iv = "DF0E01BB0b4954EECD7D33445823E23E";
 const seshPhrase = "wedfboaipweruibnapuihbnfpiuahnvpavnhpnvn";
 
 // Production service provider
@@ -69,6 +70,7 @@ const dev_idp_options = {
 
 module.exports = {
   usePhrase,
+  iv,
   seshPhrase,
   prod_sp_options,
   test_sp_options,
@@ -77,4 +79,3 @@ module.exports = {
   test_idp_options,
   dev_idp_options,
 };
-
