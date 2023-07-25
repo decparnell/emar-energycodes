@@ -11,6 +11,8 @@ import { BiSearchAlt2 } from "react-icons/bi";
 import { LogUserInfo } from "../components/logging";
 import DashboardLink from "../components/dashboardLink";
 import ChangeRequestStages from "../components/changeRequestStages";
+import SecondNavBar from "../components/layout/secondHeader";
+
 
 function HomePage({ sections, items, newsData, processStageData }) {
   const apiVarList = [
@@ -99,16 +101,19 @@ function HomePage({ sections, items, newsData, processStageData }) {
               />
             </div>
             <div className={`${styles.right}`}>
+              <div className={`${styles.secondNavbar}`}>
+                <SecondNavBar pageType="HomePage" />
+              </div>
               <div className={`${styles.quickLinkContainer}`}>
                 <QuickLink
                   title="Search"
                   link="/codes-schedules/search"
                   image={search}
-                  width="20%"
-                  height="65%"
+                  width="15%"
+                  height="49%"
                 />
-                <QuickLink title="" link="/" width="20%" height="65%" />
-                <QuickLink title="" link="/" width="20%" height="65%" />
+                <QuickLink title="" link="/" width="15%" height="49%" />
+                <QuickLink title="" link="/" width="15%" height="49%" />
               </div>
               <div className={`${styles.upcomingChangesContent} box`}>
                 <ChangeRequestStages processStageData={processStageData} />

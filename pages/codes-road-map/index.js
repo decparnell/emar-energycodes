@@ -4,6 +4,7 @@ import QuickLink from "../../components/helperFunctions/quickLink";
 import React, { useEffect } from "react";
 import { BiDownload } from "react-icons/bi";
 import { LogUserInfo } from "../../components/logging";
+import SecondNavbar from "../../components/layout/secondHeader";
 function CodesRoadMap({ latestCodesRoadMapLinkJSON }) {
   const apiResList = [
     { obj: latestCodesRoadMapLinkJSON, name: "latestCodesRoadMapLinkJSON" },
@@ -36,9 +37,11 @@ function CodesRoadMap({ latestCodesRoadMapLinkJSON }) {
           key="codes-road-map"
         />
       </Head>
+      <div className={`${styles.secondNavbar}`}>
+        <SecondNavbar pageType="Data Spec Page" />
+      </div>
       <div className={styles.container}>
         <h1 className={styles.title}>The Code Road Map</h1>
-
         <section className={`${styles.mainContentContainer} `}>
           <div className={`${styles.left} box`}>
             <h4 className={styles.title}>What is it?</h4>

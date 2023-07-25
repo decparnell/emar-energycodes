@@ -8,6 +8,7 @@ import SchedulesTables from "../../../components/tables/schedulesTables";
 import CreateSchedulesContent from "../../../components/scheduleId/createSchedulesContent";
 import Head from "next/head";
 import { LogUserInfo } from "../../../components/logging";
+import SecondNavbar from "../../../components/layout/secondHeader";
 
 function Schedules({
   versions,
@@ -151,6 +152,9 @@ function Schedules({
         </title>
         <meta property="og:title" content="My page title" key="title" />
       </Head>
+      <div className={`${styles.secondNavbar}`}>
+        <SecondNavbar pageType="Data Spec Page" />
+      </div>
       <div className={`${styles.sideNavContainer}`}>
         <SideNav
           navbarType="PanelBasedNavBar"
