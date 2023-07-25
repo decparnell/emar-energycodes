@@ -105,9 +105,20 @@ function DataSpec({ sections, items }) {
           <div className={`${styles.prereleaseContent} box`}>
             <h6 className="boxTitle">Pre-Release Information</h6>
             <div className={styles.iconBox}>
-              <BiData className={styles.preicon} />
-              <BiTable className={styles.preicon} />
-              <TiHtml5 className={styles.preicon} />
+              <div className={styles.image}>
+                <BiData className={styles.preicon} />
+                <p className={styles.pretext}>SQL Database</p>
+              </div>
+              <div className={styles.image}>
+                <BiTable className={styles.preicon} />
+                <p className={styles.pretext}>Access Database</p>
+              </div>
+              <div className={styles.image}>
+                <TiHtml5 className={styles.preicon} />
+                <p className={styles.pretext}>HTML File</p>
+              </div>
+
+
             </div>
           </div>
         </div>

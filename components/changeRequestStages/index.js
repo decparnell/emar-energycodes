@@ -101,7 +101,7 @@ function ChangeRequestStages(props) {
             target="_blank"
             rel="noreferrer"
           >
-            {name["Change Proposal Name"]}
+            {name["Change Proposal Reference"] + " - " + name["Change Proposal Name"]}
           </CustomBoxLink>
         ))}
       </div>

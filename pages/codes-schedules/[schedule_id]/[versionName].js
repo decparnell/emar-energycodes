@@ -8,11 +8,11 @@ import SchedulesTables from "../../../components/tables/schedulesTables";
 import CreateSchedulesContent from "../../../components/scheduleId/createSchedulesContent";
 import Head from "next/head";
 import { LogUserInfo } from "../../../components/logging";
+
 function Schedules({
   versions,
   parts,
   sections,
-  components,
   document,
   definitions,
   optionalityInfo,
@@ -21,7 +21,6 @@ function Schedules({
     { obj: versions, name: "versions" },
     { obj: parts, name: "parts" },
     { obj: sections, name: "sections" },
-    { obj: components, name: "components" },
     { obj: document, name: "document" },
   ];
 
@@ -41,7 +40,6 @@ function Schedules({
 
   const panelDashboard = parts.map((part) => {
     const dashboard = filterByFieldId(sections, "partId_FK", part.partId);
-
     return {
       partId: part.partId,
       panelTitle: part.partName,
@@ -49,10 +47,62 @@ function Schedules({
     };
   });
 
-  // create data for mandatory table, X axis being parts, Y axis optionality owners.
-  // structured as object with:
-  // keys being optionality.ownersName
-  // values being an array of optionality.optionalityNames (Mandatory, N/A)
+  const [componentsData, setComponentsData] = useState([]);
+  const [startVal, setStartVal] = useState(0);
+  //const [totalLength, setTotalLength] = useState(0);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const [hasMoreData, setHasMoreData] = useState(true);
+
+  const [currentSections, setCurrentSections] = useState(() => {
+    return panelDashboard[0];
+  });
+
+  useEffect(() => { }, [currentSections]);
+  useEffect(() => {
+    LogUserInfo(`${docInfo.documentName} V${versionName}`);
+  }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
+  /* ****FUNCTIONS**** */
+  //client-side fetch data, loading more components of each section
+  const fetchData = async () => {
+    const incrementalStartVal = 21;
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(
+        `https://prod-15.uksouth.logic.azure.com/workflows/05ebc2734c5340bb83e78396ae4ca88f/triggers/request/paths/invoke/documentId/${scheduleId}/version/${versionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=-7jIZukmQmoddagifC2Z1FxKEWg7VLMfp2mcg-sAKPE`
+      );
+      const dataResJson = await response.json();
+      const newDataComponents = dataResJson;
+      if (startVal === 0) {
+        setComponentsData(newDataComponents);
+      } else if (typeof newDataComponents === "undefined") {
+        setHasMoreData(false);
+      } else {
+        setComponentsData((prevData) => [...prevData, ...newDataComponents]);
+      }
+
+      setStartVal((prevVal) => prevVal + incrementalStartVal);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  /* create data for mandatory table, X axis being parts, Y axis optionality owners.
+     structured as object with:
+     keys being optionality.ownersName
+     values being an array of optionality.
+     optionalityNames (Mandatory, N/A)
+   */
   function transformTable(optionalities, parts) {
     let res = {};
     for (const el of optionalities) {
@@ -77,73 +127,78 @@ function Schedules({
     return jsonData.filter((obj) => obj[field_name] === id);
   }
 
-  //Left Navigation Bar
-  const [currentSections, setCurrentSections] = useState(() => {
-    return panelDashboard[0];
-  });
+  const groupSectionsAndComponents = sections
+    .map((section) => {
+      const components = filterByFieldId(
+        componentsData,
+        "sectionId_FK",
+        section.sectionId
+      );
+      if (components.length > 0) {
+        return {
+          ...section,
+          components,
+        };
+      }
+    })
+    .filter((group) => group !== undefined);
 
-  useEffect(() => {}, [currentSections]);
-  useEffect(() => {
-    LogUserInfo(`${docInfo.documentName} V${versionName}`);
-  }, []);
   return (
-    <>
+    <div className={styles.infinitescrollContainer}>
       <Head>
         <title>
           EMAR - {docInfo ? docInfo.documentName : "code schedules"}
         </title>
         <meta property="og:title" content="My page title" key="title" />
       </Head>
-      <div className={"container-flex"}>
-        <div className={"side-nav-container-fixed"}>
-          <SideNav
-            navbarType="PanelBasedNavBar"
-            items={panelDashboard}
-            dashboardId="sectionId"
-            name="sectionName"
-            panelTitle="panelTitle"
-            dashboardName="dashboard"
-            stateVar={currentSections}
-            stateSet={setCurrentSections}
+      <div className={`${styles.sideNavContainer}`}>
+        <SideNav
+          navbarType="PanelBasedNavBar"
+          items={panelDashboard}
+          dashboardId="sectionId"
+          name="sectionName"
+          panelTitle="panelTitle"
+          dashboardName="dashboard"
+          stateVar={currentSections}
+          stateSet={setCurrentSections}
+        />
+      </div>
+      <div className={styles.infinitescrollMainContainer}>
+        <h3 className={styles.headers}>
+          {scheduleNumber
+            ? `${scheduleName} - Schedule ${scheduleNumber}`
+            : scheduleName}
+        </h3>
+        <div className={styles.tablesContainer}>
+          <SchedulesTables
+            tableId="Version Table"
+            versions={versions}
+            scheduleId={scheduleId}
+            versionName={versionName}
           />
         </div>
-        <div className={`${styles.mainContentContainer}`}>
-          <h3 className={styles.headers}>
-            {scheduleNumber
-              ? `${scheduleName} - Schedule ${scheduleNumber}`
-              : scheduleName}
-          </h3>
-          <div className={styles.tablesContainer}>
+
+        <div className={styles.tablesContainer}>
+          {/* if there is at least one optionality show a mandatory table */}
+          {optionalityInfo[0].optionalityId && (
             <SchedulesTables
-              tableId="Version Table"
-              versions={versions}
-              scheduleId={scheduleId}
-              versionName={versionName}
-            />
-          </div>
-
-          <div className={styles.tablesContainer}>
-            {/* if there is at least one optionality show a mandatory table */}
-            {optionalityInfo[0].optionalityId && (
-              <SchedulesTables
-                tableId="Mandatory Table"
-                parts={parts}
-                mandatoryTable={mandatoryTable}
-              />
-            )}
-          </div>
-
-          <div className={`${styles.contentContainer}`}>
-            <CreateSchedulesContent
+              tableId="Mandatory Table"
               parts={parts}
-              sections={sections}
-              components={components}
-              definitions={definitions}
+              mandatoryTable={mandatoryTable}
             />
-          </div>
+          )}
         </div>
+
+        <CreateSchedulesContent
+          parts={parts}
+          definitions={definitions}
+          data={groupSectionsAndComponents}
+          fetchData={fetchData}
+          hasMoreData={hasMoreData}
+          totalLength={startVal}
+        />
       </div>
-    </>
+    </div>
   );
 }
 
@@ -151,15 +206,17 @@ export default Schedules;
 
 export async function getServerSideProps(context) {
   //return the info about the latest version
-  const dataReq = await fetch(
-    `https://prod-17.uksouth.logic.azure.com/workflows/77a0b5ad93b64061b09df91f2c31533c/triggers/manual/paths/invoke/documentId/${context.params.schedule_id}/version/${context.params.versionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=BDD6aTd29eiNrUUfBH6cjUCM0puErQ5vJyjWzUKmKEI`
+
+  // getLatestScheduleInformation-LogicApp-v2
+  const initialDataReq = await fetch(
+    `https://prod-06.uksouth.logic.azure.com/workflows/77e02eb742f8439e8036ac554294f30c/triggers/request/paths/invoke/documentId/${context.params.schedule_id}/version/${context.params.versionName}/?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=wbnwIPxUSyYKnGUfsB4NFCDZO02dcJLEquai1Nw4Iao`
   );
 
-  const dataJson = await dataReq.json();
+  const dataJson = await initialDataReq.json();
+
   const versions = dataJson.versions;
   const parts = dataJson.parts;
   const sections = dataJson.sections;
-  const components = dataJson.components;
   const document = dataJson.document;
 
   const definitionsReq = await fetch(
@@ -182,7 +239,6 @@ export async function getServerSideProps(context) {
       versions,
       parts,
       sections,
-      components,
       document,
       definitions,
       optionalityInfo,
