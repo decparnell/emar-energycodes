@@ -28,8 +28,6 @@ function ChangeRequestStages(props) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  console.log("currentProcessStgItems",currentProcessStgItems);
-
   const handleClickLeft = () => {
     // Update previous stage
     if (currentIndex > 0) {

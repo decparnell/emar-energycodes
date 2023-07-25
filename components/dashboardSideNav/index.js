@@ -62,7 +62,6 @@ function SideNav(props) {
   };
 
   const PanelBasedNavBar = (props) => {
-    console.log("props.items", props.items);
     return (
       <div className={`${styles.panelSideNav} box`}>
         {props.items.map((item, i) => (
