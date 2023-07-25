@@ -9,6 +9,6 @@ export default function handler(req, res) {
       res.json(recVersions);
     })
     .catch((error) => {
-      console.error("Error fetching NLP response:", error);
+      console.error("Error fetching RecVersions:", error);
     });
 }

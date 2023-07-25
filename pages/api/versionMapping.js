@@ -11,6 +11,6 @@ export default function handler(req, res) {
       res.json(versionMapping);
     })
     .catch((error) => {
-      console.error("Error fetching NLP response:", error);
+      console.error("Error fetching version Mapping:", error);
     });
 }
