@@ -1,11 +1,16 @@
 import styles from "../../styles/home.module.css";
 import { CustomBoxLink } from "../customComponents/customBoxLink";
+import AppContext from "../context/AppContext";
+import { useContext } from "react";
 
 function DashboardLink(props) {
+  const value = useContext(AppContext);
+  let { currentVersionMapping } = value.state;
+
   //currentItems per each schedule sections
   const currentItems = props.currentItems;
   //latest versions for eact currentItems
-  const versions = props.versions;
+  const versions = currentVersionMapping;
   return currentItems.map((item, id) => {
     let dashboardHref = "/";
     if (
@@ -29,7 +34,7 @@ function DashboardLink(props) {
       <div className={styles.dashboardItemsPanel}>
         <CustomBoxLink
           href={item.dashboardSectionItemsLink}
-          key={id}
+          id={`dashboardLink_${id}`}
           target="_blank"
           rel="noreferrer"
           download={item.dashboardSectionItemsName}
@@ -41,7 +46,7 @@ function DashboardLink(props) {
       <div className={styles.dashboardItemsPanel}>
         <CustomBoxLink
           href={item.dashboardSectionItemsLink}
-          key={id}
+          id={`dashboardLink_${id}`}
           target="_blank"
           rel="noreferrer"
         >
@@ -50,7 +55,7 @@ function DashboardLink(props) {
       </div>
     ) : (
       <div className={styles.dashboardItemsPanel}>
-        <CustomBoxLink href={dashboardHref} key={id}>
+        <CustomBoxLink href={dashboardHref} id={`dashboardLink_${id}`}>
           {item.dashboardSectionItemsName}
         </CustomBoxLink>
       </div>
