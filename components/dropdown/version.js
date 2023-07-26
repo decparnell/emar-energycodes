@@ -2,11 +2,11 @@ import { useRouter } from "next/router";
 import styles from "../../styles/dropdown.module.css";
 import stylesHead from "../../styles/header.module.css";
 import { AiFillCaretUp, AiFillCaretDown } from "react-icons/ai";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import AppContext from "../context/AppContext";
 function VersionDropDown() {
   const value = useContext(AppContext);
-  let { allDataSpecVersions, latestDataSpecVersion } = value.state;
+  let { allDataSpecVersions, latestDataSpecVersion, currentVersionMapping } = value.state;
   const { setLoading } = useContext(AppContext);
   const router = useRouter();
   const { version } = router.query;
@@ -14,6 +14,15 @@ function VersionDropDown() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownValue = latestDataSpecVersion;
   const setDropdownValue = value.setLatestDataSpecVersion;
+  const schedule_id = router.query.schedule_id;
+  
+  if(router.pathname.includes("/codes-schedules/")){
+    const currentDocVersionName = currentVersionMapping.filter((item) => item.documentId == schedule_id)[0].docVersionName;
+    
+    useEffect(() => {
+      router.push(`/codes-schedules/${router.query.schedule_id}/${currentDocVersionName}`);
+    }, [router.pathname, router.query.schedule_id, currentDocVersionName]);
+  }
 
   const handleDropdownSelect = (option) => {
     setDropdownOpen((current) => !current);

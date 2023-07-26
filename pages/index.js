@@ -1,7 +1,6 @@
 import styles from "../styles/home.module.css";
 import Head from "next/head";
-import AppContext from "../components/context/AppContext";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { checkIfVariablesAreAvailable } from "../components/helperFunctions/checkIfVariablesAreAvailable";
 import { checkIfItemsAvailableInArray } from "../components/helperFunctions/checkIfItemsAvailableInArray";
 import { logMessage } from "../components/helperFunctions/logMessage";
@@ -11,6 +10,8 @@ import { BiSearchAlt2 } from "react-icons/bi";
 import { LogUserInfo } from "../components/logging";
 import DashboardLink from "../components/dashboardLink";
 import ChangeRequestStages from "../components/changeRequestStages";
+import SecondNavBar from "../components/layout/secondHeader";
+
 
 function HomePage({ sections, items, newsData, processStageData }) {
   const apiVarList = [
@@ -19,9 +20,7 @@ function HomePage({ sections, items, newsData, processStageData }) {
     { obj: sections, name: "sections" },
     { obj: processStageData, name: "processStageData" },
   ];
-
-  const value = useContext(AppContext);
-  let { latestDataSpecVersion, currentVersionMapping } = value.state;
+  
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
   const [currentSections, setCurrentSections] = useState(() => {
@@ -93,22 +92,22 @@ function HomePage({ sections, items, newsData, processStageData }) {
               <h6 className="boxTitle">
                 {currentSections.dashboardSectionName}
               </h6>
-              <DashboardLink
-                currentItems={currentItems}
-                versions={currentVersionMapping}
-              />
+              <DashboardLink currentItems={currentItems} />
             </div>
             <div className={`${styles.right}`}>
+              <div className={`${styles.secondNavbar}`}>
+                <SecondNavBar pageType="HomePage" />
+              </div>
               <div className={`${styles.quickLinkContainer}`}>
                 <QuickLink
                   title="Search"
                   link="/codes-schedules/search"
                   image={search}
-                  width="20%"
-                  height="65%"
+                  width="15%"
+                  height="49%"
                 />
-                <QuickLink title="" link="/" width="20%" height="65%" />
-                <QuickLink title="" link="/" width="20%" height="65%" />
+                <QuickLink title="" link="/" width="15%" height="49%" />
+                <QuickLink title="" link="/" width="15%" height="49%" />
               </div>
               <div className={`${styles.upcomingChangesContent} box`}>
                 <ChangeRequestStages processStageData={processStageData} />

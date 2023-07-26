@@ -11,6 +11,7 @@ import { BiSearchAlt2, BiData, BiTable } from "react-icons/bi";
 import { TiHtml5 } from "react-icons/ti";
 import DashboardLink from "../../components/dashboardLink";
 import { LogUserInfo } from "../../components/logging";
+import SecondNavbar from "../../components/layout/secondHeader";
 
 function DataSpec({ sections, items }) {
   useEffect(() => {
@@ -88,16 +89,19 @@ function DataSpec({ sections, items }) {
               <DashboardLink currentItems={currentItems} />
             </div>
             <div className={`${styles.right}`}>
+              <div className={`${styles.secondNavbar}`}>
+                <SecondNavbar pageType="Data Spec Page" />
+              </div>
               <div className={`${styles.quickLinkContainer}`}>
                 <QuickLink
                   title="Search"
                   link="/dataspec/search"
                   image={search}
-                  width="20%"
-                  height="65%"
+                  width="15%"
+                  height="49%"
                 />
-                <QuickLink title="" link="/" width="20%" height="65%" />
-                <QuickLink title="" link="/" width="20%" height="65%" />
+                <QuickLink title="" link="/" width="15%" height="49%" />
+                <QuickLink title="" link="/" width="15%" height="49%" />
               </div>
               <div className={`${styles.upcomingChangesContent} box`}></div>
             </div>

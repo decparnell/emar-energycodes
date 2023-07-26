@@ -19,7 +19,6 @@ function Navbar() {
         </div>
       </div>
       <TabNavbar />
-      <SecondNavbar />
     </div>
   );
 }

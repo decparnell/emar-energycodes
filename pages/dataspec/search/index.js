@@ -1,6 +1,7 @@
 import styles from "../../../styles/dataSpecSearch.module.css";
+import AppContext from "../../../components/context/AppContext";
 import Head from "next/head";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import ResultsTable from "../../../components/infiniteScrollTable";
 import SideNav from "../../../components/dashboardSideNav";
@@ -20,6 +21,9 @@ import {
 import { LogUserInfo } from "../../../components/logging";
 
 function DataSpecSearchPage({ dataSpecSearchList, mmsv }) {
+
+  const value = useContext(AppContext);
+  let {latestDataSpecVersion} = value.state;
 
   const [data, setData] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -54,7 +58,7 @@ function DataSpecSearchPage({ dataSpecSearchList, mmsv }) {
   // const sourceOptions = getDistinctValuesSource(dataSpecSearchList);
   // const targetOptions = getDistinctValuesTarget(dataSpecSearchList);
 
-  const latestRecVersion = '3.5.0';
+  const latestRecVersion = latestDataSpecVersion;
 
   ///////////////FUNCTIONS/////////////////////////
   //fetch data for the results table (before an actual search has been done)

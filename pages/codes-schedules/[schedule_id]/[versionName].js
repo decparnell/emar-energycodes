@@ -8,6 +8,7 @@ import SchedulesTables from "../../../components/tables/schedulesTables";
 import CreateSchedulesContent from "../../../components/scheduleId/createSchedulesContent";
 import Head from "next/head";
 import { LogUserInfo } from "../../../components/logging";
+import SecondNavbar from "../../../components/layout/secondHeader";
 
 function Schedules({
   versions,
@@ -31,7 +32,7 @@ function Schedules({
 
   const router = useRouter();
   const scheduleId = router.query.schedule_id;
-  const versionName = router.query.versionName;
+  const docVersionName = router.query.versionName;
 
   const scheduleNumber = docInfo.scheduleNumber;
   const scheduleName = docInfo.documentName;
@@ -62,7 +63,7 @@ function Schedules({
 
   useEffect(() => { }, [currentSections]);
   useEffect(() => {
-    LogUserInfo(`${docInfo.documentName} V${versionName}`);
+    LogUserInfo(`${docInfo.documentName} V${docVersionName}`);
   }, []);
   useEffect(() => {
     fetchData();
@@ -77,7 +78,7 @@ function Schedules({
     setError(null);
     try {
       const response = await fetch(
-        `https://prod-15.uksouth.logic.azure.com/workflows/05ebc2734c5340bb83e78396ae4ca88f/triggers/request/paths/invoke/documentId/${scheduleId}/version/${versionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=-7jIZukmQmoddagifC2Z1FxKEWg7VLMfp2mcg-sAKPE`
+        `https://prod-15.uksouth.logic.azure.com/workflows/05ebc2734c5340bb83e78396ae4ca88f/triggers/request/paths/invoke/documentId/${scheduleId}/version/${docVersionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=-7jIZukmQmoddagifC2Z1FxKEWg7VLMfp2mcg-sAKPE`
       );
       const dataResJson = await response.json();
       const newDataComponents = dataResJson;
@@ -151,6 +152,9 @@ function Schedules({
         </title>
         <meta property="og:title" content="My page title" key="title" />
       </Head>
+      <div className={`${styles.secondNavbar}`}>
+        <SecondNavbar pageType="Data Spec Page" />
+      </div>
       <div className={`${styles.sideNavContainer}`}>
         <SideNav
           navbarType="PanelBasedNavBar"
@@ -174,7 +178,7 @@ function Schedules({
             tableId="Version Table"
             versions={versions}
             scheduleId={scheduleId}
-            versionName={versionName}
+            versionName={docVersionName}
           />
         </div>
 
