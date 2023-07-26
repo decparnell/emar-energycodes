@@ -1,5 +1,6 @@
 import styles from "../../styles/questionHistory.module.css";
 import QuestionHistoryItem from "./questionHistoryItem";
+
 const QuestionHistory = (props) => {
   return (
     <div title="Click to ask again" className={`${styles.questionHistory} box`}>

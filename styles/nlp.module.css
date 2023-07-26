@@ -67,11 +67,18 @@
   background-color: white;
   border: none;
   box-shadow: none;
-  cursor: pointer;
 }
 
 .sendIcon {
   height: 100%;
   width: 100%;
   color: black;
+  cursor: pointer;
+}
+
+.sendIconDisabled {
+  height: 100%;
+  width: 100%;
+  color: lightgray;
+  cursor: default;
 }
