@@ -21,7 +21,7 @@ export const tabs = [
   { title: "Data Specification", link: "/dataspec" },
   { title: "Codes Road Map", link: "/codes-road-map" },
   { title: "Release Management", link: "/release-management" },
-  {title: "NLP", link: "/nlp" },
+  //{title: "NLP", link: "/nlp" },
 ];
 
 export const dashboards = [
