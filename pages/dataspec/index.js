@@ -100,8 +100,18 @@ function DataSpec({ sections, items }) {
                   width="15%"
                   height="49%"
                 />
-                <QuickLink title="" link="/" width="15%" height="49%" />
-                <QuickLink title="" link="/" width="15%" height="49%" />
+                <QuickLink
+                  title="Data Specification Distribution List"
+                  link="/"
+                  width="30%"
+                  height="49%"
+                  textStyle={{
+                    fontSize: "16px",
+                    textAlign: "center",
+                    verticalAlign: "center",
+                  }}
+                />
+                {/* <QuickLink title="" link="/" width="15%" height="49%" /> */}
               </div>
               <div className={`${styles.upcomingChangesContent} box`}></div>
             </div>
@@ -121,8 +131,6 @@ function DataSpec({ sections, items }) {
                 <TiHtml5 className={styles.preicon} />
                 <p className={styles.pretext}>HTML File</p>
               </div>
-
-
             </div>
           </div>
         </div>

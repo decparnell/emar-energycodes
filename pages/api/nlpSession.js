@@ -13,7 +13,7 @@ export default function handler(req, res) {
     query_timestamp: queryTimestamp,
     query_id: queryId,
     ui_version: uiVersion,
-    embeddings: "all_embeddings_20_Jul",
+    embeddings: "all_embeddings_27_July",
   };
   const bodyData = JSON.stringify(data);
   const options = {
