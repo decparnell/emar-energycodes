@@ -9,7 +9,7 @@ import CreateSchedulesContent from "../../../components/scheduleId/createSchedul
 import Head from "next/head";
 import { LogUserInfo } from "../../../components/logging";
 import SecondNavbar from "../../../components/layout/secondHeader";
-
+import AppContext from "../../../components/context/AppContext";
 function Schedules({
   versions,
   parts,
@@ -24,6 +24,8 @@ function Schedules({
     { obj: sections, name: "sections" },
     { obj: document, name: "document" },
   ];
+  const value = useContext(AppContext);
+  let { latestDataSpecVersion, currentVersionMapping } = value.state;
 
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
   const docInfo = checkIfItemsAvailableInArray(internalErrorLog, "document")
@@ -48,6 +50,19 @@ function Schedules({
     };
   });
 
+  useEffect(() => {
+    console.log(latestDataSpecVersion);
+    const currentDocVersionName = currentVersionMapping.filter(
+      (item) => item.documentId == scheduleId
+    )[0].docVersionName;
+
+    if (docVersionName !== currentDocVersionName) {
+      router.push(
+        `/codes-schedules/${router.query.schedule_id}/${currentDocVersionName}`
+      );
+    }
+  }, [latestDataSpecVersion]);
+
   const [componentsData, setComponentsData] = useState([]);
   const [startVal, setStartVal] = useState(0);
   //const [totalLength, setTotalLength] = useState(0);
@@ -61,14 +76,13 @@ function Schedules({
     return panelDashboard[0];
   });
 
-  useEffect(() => { }, [currentSections]);
+  useEffect(() => {}, [currentSections]);
   useEffect(() => {
     LogUserInfo(`${docInfo.documentName} V${docVersionName}`);
   }, []);
   useEffect(() => {
     fetchData();
   }, []);
-
 
   /* ****FUNCTIONS**** */
   //client-side fetch data, loading more components of each section

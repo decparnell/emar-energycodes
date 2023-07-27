@@ -6,7 +6,7 @@ import React, { useState, useContext, useEffect } from "react";
 import AppContext from "../context/AppContext";
 function VersionDropDown() {
   const value = useContext(AppContext);
-  let { allDataSpecVersions, latestDataSpecVersion, currentVersionMapping } = value.state;
+  let { allDataSpecVersions, latestDataSpecVersion } = value.state;
   const { setLoading } = useContext(AppContext);
   const router = useRouter();
   const { version } = router.query;
@@ -14,15 +14,6 @@ function VersionDropDown() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownValue = latestDataSpecVersion;
   const setDropdownValue = value.setLatestDataSpecVersion;
-  const schedule_id = router.query.schedule_id;
-  
-  if(router.pathname.includes("/codes-schedules/")){
-    const currentDocVersionName = currentVersionMapping.filter((item) => item.documentId == schedule_id)[0].docVersionName;
-    
-    useEffect(() => {
-      router.push(`/codes-schedules/${router.query.schedule_id}/${currentDocVersionName}`);
-    }, [router.pathname, router.query.schedule_id, currentDocVersionName]);
-  }
 
   const handleDropdownSelect = (option) => {
     setDropdownOpen((current) => !current);
@@ -37,6 +28,10 @@ function VersionDropDown() {
       return option;
     }
   };
+
+  const orderedVersion = allDataSpecVersions.sort(function (a, b) {
+    return new Date(b.releaseDate) - new Date(a.releaseDate);
+  });
 
   return (
     <div
@@ -54,22 +49,19 @@ function VersionDropDown() {
             <AiFillCaretUp />
           </div>
           <div className={styles.versionOptions}>
-            {allDataSpecVersions
-              .sort()
-              .reverse()
-              .map((option, index) => (
-                <div
-                  className={
-                    option.name == dropdownValue
-                      ? `${styles.option} ${styles.chosen} `
-                      : `${styles.option} `
-                  }
-                  key={index}
-                  onClick={() => handleDropdownSelect(option.name)}
-                >
-                  {prepareDropdownOption(option.name)} - {option.status}
-                </div>
-              ))}
+            {orderedVersion.map((option, index) => (
+              <div
+                className={
+                  option.name == dropdownValue
+                    ? `${styles.option} ${styles.chosen} `
+                    : `${styles.option} `
+                }
+                key={index}
+                onClick={() => handleDropdownSelect(option.name)}
+              >
+                {prepareDropdownOption(option.name)} - {option.status}
+              </div>
+            ))}
           </div>
         </>
       )}
