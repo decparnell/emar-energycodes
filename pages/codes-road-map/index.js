@@ -106,7 +106,7 @@ function CodesRoadMap({ latestCodesRoadMapLinkJSON }) {
           </div>
         </section>
         <div className={`${styles.bottom}`}>
-          <div className={`${styles.quickLinkContainer2}`}>
+          {/* <div className={`${styles.quickLinkContainer2}`}>
             <QuickLink title="" link="/" width="20%" height="65%" />
             <QuickLink title="" link="/" width="20%" height="65%" />
             <QuickLink title="" link="/" width="20%" height="65%" />
@@ -115,7 +115,7 @@ function CodesRoadMap({ latestCodesRoadMapLinkJSON }) {
             <QuickLink title="" link="/" width="25%" height="65%" />
             <QuickLink title="" link="/" width="25%" height="65%" />
           </div>
-          <div className={`${styles.upcomingChangesContent} box`}></div>
+          <div className={`${styles.upcomingChangesContent} box`}></div> */}
         </div>
       </div>
     </>

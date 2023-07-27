@@ -28,7 +28,7 @@ function ReleaseManagement({ recVersionAndChangesJSON }) {
         <meta property="og:title" content="Release Management" key="title" />
       </Head>
       <div className={`${styles.container}`}>
-        <div className={`${styles.mainContentContainer}`}>
+        {/* <div className={`${styles.mainContentContainer}`}>
           <div className={styles.top}>
             <div className={`${styles.quickLinkContainer}`}>
               <QuickLink title="Test1" link="/" height="100%" width="8vw" />
@@ -42,7 +42,7 @@ function ReleaseManagement({ recVersionAndChangesJSON }) {
             <QuickLink title="Test5" link="/" height="100%" width="25vw" />
             <QuickLink title="Test6" link="/" height="100%" width="25vw" />
           </div>
-        </div>
+        </div> */}
         <div className={`${styles.mainContentContainer}`}>
           <div className={`${styles.tableContainer}`}>
             {
