@@ -51,7 +51,6 @@ function Schedules({
   });
 
   useEffect(() => {
-    console.log(latestDataSpecVersion);
     const currentDocVersionName = currentVersionMapping.filter(
       (item) => item.documentId == scheduleId
     )[0].docVersionName;
@@ -65,6 +64,11 @@ function Schedules({
 
   const [componentsData, setComponentsData] = useState([]);
   const [startVal, setStartVal] = useState(0);
+
+  ////DEC - ISSUE WITH SCROLL _ FETCH DATA GETS DOUBLE TRIGGERED ON PAGE RELOAD
+  /* if (typeof window != "undefined" && startVal === 0) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } */
   //const [totalLength, setTotalLength] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -76,17 +80,15 @@ function Schedules({
     return panelDashboard[0];
   });
 
-  useEffect(() => {}, [currentSections]);
   useEffect(() => {
     LogUserInfo(`${docInfo.documentName} V${docVersionName}`);
-  }, []);
-  useEffect(() => {
     fetchData();
   }, []);
 
   /* ****FUNCTIONS**** */
   //client-side fetch data, loading more components of each section
   const fetchData = async () => {
+    console.log("fetch data");
     const incrementalStartVal = 21;
     setIsLoading(true);
     setError(null);
@@ -103,13 +105,14 @@ function Schedules({
       } else {
         setComponentsData((prevData) => [...prevData, ...newDataComponents]);
       }
-
       setStartVal((prevVal) => prevVal + incrementalStartVal);
+      setIsLoading(false);
     } catch (error) {
       setError(error);
     } finally {
-      setIsLoading(false);
+      console.log(componentsData);
     }
+    console.log(startVal);
   };
 
   /* create data for mandatory table, X axis being parts, Y axis optionality owners.
@@ -140,6 +143,19 @@ function Schedules({
   //Filter JSON object by specific field and id
   function filterByFieldId(jsonData, field_name, id) {
     return jsonData.filter((obj) => obj[field_name] === id);
+  }
+
+  ///////DEC -  USE THIS TO JUMP TO DATA _ MAY NEED TO EXTEND API TO INC THIS
+  function jumpToSection(sectionId) {
+    /* while (
+      componentsData[componentsData.length - 1].clauseReference.indexOf(
+        `${sectionId}.`
+      ) === -1
+    ) {
+      fetchData();
+    } */
+    console.log("here");
+    console.log(componentsData);
   }
 
   const groupSectionsAndComponents = sections
@@ -179,6 +195,7 @@ function Schedules({
           dashboardName="dashboard"
           stateVar={currentSections}
           stateSet={setCurrentSections}
+          fetchData={fetchData}
         />
       </div>
       <div className={styles.infinitescrollMainContainer}>

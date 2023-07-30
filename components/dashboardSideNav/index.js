@@ -33,13 +33,29 @@ function SideNav(props) {
     }
   };
 
+  //////DEC _ FIX THIS TO CALL NEW FUNCTION>>> V SLOW TO SCROLL THROUGH SCHEDULES
+  const fecthMoreData = async (sectionId) => {
+    console.log("begin fetch");
+    await props.fetchData();
+    await new Promise((r) => setTimeout(r, 1000));
+    const section = document.getElementById(`sec${sectionId}`);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    } else {
+      //fecthMoreData();
+    }
+  };
+
   const panelBasedNBHandleClick = (item, e) => {
     e.preventDefault();
     props.stateSet(item);
+
     const sectionId = item[props.dashboardId];
     const section = document.getElementById(`sec${sectionId}`);
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
+    } else {
+      fecthMoreData(sectionId);
     }
   };
 
@@ -68,7 +84,6 @@ function SideNav(props) {
           <div className={styles.panelBorder} key={`${i}_panelBorder`}>
             <h6 className={styles.panelHeader}>{item[props.panelTitle]}</h6>
             {item[props.dashboardName].map((dashboardItem, id) => (
-              
               <div
                 className={`${styles.panelSideNavItem} ${
                   props.stateVar[props.name] === dashboardItem[props.name]
@@ -78,10 +93,11 @@ function SideNav(props) {
                 onClick={(e) => panelBasedNBHandleClick(dashboardItem, e)}
                 key={`${id}_item`}
               >
-                
-                {dashboardItem.sectionOrder !=="" ?
-                  dashboardItem.sectionOrder + " - " + dashboardItem[props.name] :
-                  dashboardItem[props.name] }
+                {dashboardItem.sectionOrder !== ""
+                  ? dashboardItem.sectionOrder +
+                    " - " +
+                    dashboardItem[props.name]
+                  : dashboardItem[props.name]}
               </div>
             ))}
           </div>
