@@ -1,14 +1,10 @@
 import styles from "../../styles/codesRoadMap.module.css";
 import Head from "next/head";
-import QuickLink from "../../components/helperFunctions/quickLink";
 import React, { useEffect } from "react";
 import { BiDownload } from "react-icons/bi";
 import { LogUserInfo } from "../../components/logging";
 import SecondNavbar from "../../components/layout/secondHeader";
 function CodesRoadMap({ latestCodesRoadMapLinkJSON }) {
-  const apiResList = [
-    { obj: latestCodesRoadMapLinkJSON, name: "latestCodesRoadMapLinkJSON" },
-  ];
   const wikiPage =
     "https://recportal.co.uk/rec-wiki-landing/-/knowledge_base_search/677762514/maximized?_com_liferay_knowledge_base_web_portlet_SearchPortlet_redirect=https%3A%2F%2Frecportal.co.uk%3A443%2Frec-wiki-landing%3Fp_p_id%3Dcom_liferay_knowledge_base_web_portlet_SearchPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview%26_com_liferay_knowledge_base_web_portlet_SearchPortlet_mvcPath%3D%252Fsearch%252Fsearch.jsp%26_com_liferay_knowledge_base_web_portlet_SearchPortlet_keywords%3Droadmap%26_com_liferay_knowledge_base_web_portlet_SearchPortlet_formDate%3D1680000364694";
 
@@ -105,7 +101,7 @@ function CodesRoadMap({ latestCodesRoadMapLinkJSON }) {
             </div>
           </div>
         </section>
-        <div className={`${styles.bottom}`}>
+        {/*  <div className={`${styles.bottom}`}>
           {/* <div className={`${styles.quickLinkContainer2}`}>
             <QuickLink title="" link="/" width="20%" height="65%" />
             <QuickLink title="" link="/" width="20%" height="65%" />
@@ -115,8 +111,8 @@ function CodesRoadMap({ latestCodesRoadMapLinkJSON }) {
             <QuickLink title="" link="/" width="25%" height="65%" />
             <QuickLink title="" link="/" width="25%" height="65%" />
           </div>
-          <div className={`${styles.upcomingChangesContent} box`}></div> */}
-        </div>
+          <div className={`${styles.upcomingChangesContent} box`}></div> 
+        </div> */}
       </div>
     </>
   );

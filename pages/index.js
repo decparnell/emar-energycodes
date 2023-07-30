@@ -1,6 +1,6 @@
 import styles from "../styles/home.module.css";
 import Head from "next/head";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { checkIfVariablesAreAvailable } from "../components/helperFunctions/checkIfVariablesAreAvailable";
 import { checkIfItemsAvailableInArray } from "../components/helperFunctions/checkIfItemsAvailableInArray";
 import { logMessage } from "../components/helperFunctions/logMessage";
@@ -11,16 +11,18 @@ import { LogUserInfo } from "../components/logging";
 import DashboardLink from "../components/dashboardLink";
 import ChangeRequestStages from "../components/changeRequestStages";
 import SecondNavBar from "../components/layout/secondHeader";
+import { changeRegister } from "../components/settings";
+import DashboardSearch from "../components/dashboardSearch";
+import AppContext from "../components/context/AppContext";
+function HomePage({ sections, items, newsData }) {
+  const value = useContext(AppContext);
 
-
-function HomePage({ sections, items, newsData, processStageData }) {
   const apiVarList = [
     { obj: newsData, name: "newsData" },
     { obj: items, name: "items" },
     { obj: sections, name: "sections" },
-    { obj: processStageData, name: "processStageData" },
   ];
-  
+
   const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
 
   const [currentSections, setCurrentSections] = useState(() => {
@@ -51,6 +53,8 @@ function HomePage({ sections, items, newsData, processStageData }) {
 
   useEffect(() => {
     LogUserInfo("HomePage");
+    value.setSearchType({ name: "Codes Schedules" });
+    value.setSearchValue("");
   }, []);
 
   const [insertError, setInsertError] = useState("");
@@ -99,7 +103,11 @@ function HomePage({ sections, items, newsData, processStageData }) {
                 <SecondNavBar pageType="HomePage" />
               </div>
               <div className={`${styles.quickLinkContainer}`}>
-                <QuickLink
+                <DashboardSearch
+                  searchType="Codes Schedules"
+                  searchLink="/codes-schedules/search"
+                />
+                {/* <QuickLink
                   title="Search"
                   link="/codes-schedules/search"
                   image={search}
@@ -107,10 +115,10 @@ function HomePage({ sections, items, newsData, processStageData }) {
                   height="49%"
                 />
                 <QuickLink title="" link="/" width="15%" height="49%" />
-                <QuickLink title="" link="/" width="15%" height="49%" />
+                <QuickLink title="" link="/" width="15%" height="49%" /> */}
               </div>
               <div className={`${styles.upcomingChangesContent} box`}>
-                <ChangeRequestStages processStageData={processStageData} />
+                <ChangeRequestStages processStageData={changeRegister} />
               </div>
             </div>
           </div>
@@ -148,11 +156,6 @@ export async function getServerSideProps({ req, res }) {
   });
   const items = dataJson.items;
 
-  const getProcessStgData = await fetch(
-    "https://get-changerequest-from-recportal.azurewebsites.net/api/getchangerequestfromrecportal"
-  );
-  const processStageData = await getProcessStgData.json();
-
   /*   const newsDataReq = await fetch(
     "https://prod-22.uksouth.logic.azure.com:443/workflows/e36d26ad83b04a86bc67b618e20c9dc5/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Zymwu40i_cJZuIQhxAW9VZeDw22xzO97ie4sApLfizU"
   );
@@ -163,7 +166,6 @@ export async function getServerSideProps({ req, res }) {
     props: {
       sections,
       items,
-      processStageData,
       //newsData,
     },
   };

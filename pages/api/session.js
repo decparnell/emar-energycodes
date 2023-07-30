@@ -2,7 +2,7 @@ import { encryptWithAES } from "../../components/helperFunctions/AES";
 
 export default function handler(req, res) {
   const { actionName } = req.body;
-  const userName = encryptWithAES(req.session.user.name_id);
+  const userName = encryptWithAES("req.session.user.name_id");
   const data = {
     user: userName,
     action: actionName,
@@ -26,6 +26,6 @@ export default function handler(req, res) {
       res.json(data);
     })
     .catch((error) => {
-      console.error("Error fetching session data:", error);
+      console.error("Error fetching Session Data:", error);
     });
 }

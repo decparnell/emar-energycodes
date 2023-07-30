@@ -2,35 +2,29 @@ import styles from "../../styles/home.module.css";
 import Head from "next/head";
 import { useState, useEffect, useContext } from "react";
 import AppContext from "../../components/context/AppContext";
-import { checkIfVariablesAreAvailable } from "../../components/helperFunctions/checkIfVariablesAreAvailable";
-import { checkIfItemsAvailableInArray } from "../../components/helperFunctions/checkIfItemsAvailableInArray";
 import { logMessage } from "../../components/helperFunctions/logMessage";
 import QuickLink from "../../components/helperFunctions/quickLink";
 import SideNav from "../../components/dashboardSideNav";
-import { BiSearchAlt2, BiData, BiTable } from "react-icons/bi";
+import { BiData, BiTable } from "react-icons/bi";
 import { TiHtml5 } from "react-icons/ti";
 import DashboardLink from "../../components/dashboardLink";
 import { LogUserInfo } from "../../components/logging";
 import SecondNavbar from "../../components/layout/secondHeader";
-
+import ChangeRequestStages from "../../components/changeRequestStages";
+import { changeRegister } from "../../components/settings";
+import DashboardSearch from "../../components/dashboardSearch";
 function DataSpec({ sections, items }) {
   useEffect(() => {
     LogUserInfo("Data Spec Page");
+    value.setChosenTab("Data Specification");
+    value.setSearchType({ name: "Market Messages" });
+    value.setSearchValue("");
   }, []);
 
-  const apiVarList = [
-    { obj: items, name: "items" },
-    { obj: sections, name: "sections" },
-  ];
   const value = useContext(AppContext);
-  let { chosenButton, chosenTab } = value.state;
-  const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
+  let { chosenTab } = value.state;
 
-  const [currentSections, setCurrentSections] = useState(() => {
-    if (checkIfItemsAvailableInArray(internalErrorLog, "sections")) {
-      return sections[0];
-    }
-  });
+  const [currentSections, setCurrentSections] = useState(sections[0]);
 
   const [currentItems, setCurrentItems] = useState(() => {
     return items.filter(
@@ -54,14 +48,6 @@ function DataSpec({ sections, items }) {
 
   const [insertError, setInsertError] = useState("");
 
-  const search = (
-    <BiSearchAlt2
-      style={{
-        height: "100%",
-        width: "100%",
-      }}
-    />
-  );
   return (
     <>
       {insertError && (
@@ -93,31 +79,20 @@ function DataSpec({ sections, items }) {
                 <SecondNavbar pageType="Data Spec Page" />
               </div>
               <div className={`${styles.quickLinkContainer}`}>
-                <QuickLink
-                  title="Search"
-                  link="/dataspec/search"
-                  image={search}
-                  width="15%"
-                  height="49%"
+                <DashboardSearch
+                  searchType="Data Specification"
+                  searchLink="/dataspec/search"
                 />
-                <QuickLink
-                  title="Data Specification Distribution List"
-                  link="/"
-                  width="30%"
-                  height="49%"
-                  textStyle={{
-                    fontSize: "16px",
-                    textAlign: "center",
-                    verticalAlign: "center",
-                  }}
-                />
-                {/* <QuickLink title="" link="/" width="15%" height="49%" /> */}
               </div>
-              <div className={`${styles.upcomingChangesContent} box`}></div>
+              <div className={`${styles.upcomingChangesContent} box`}>
+                <ChangeRequestStages processStageData={changeRegister} />
+              </div>
             </div>
           </div>
           <div className={`${styles.prereleaseContent} box`}>
-            <h6 className="boxTitle">Pre-Release Information</h6>
+            <h6 className={`boxTitle ${styles.boxTitle}`}>
+              Pre-Release Information
+            </h6>
             <div className={styles.iconBox}>
               <div className={styles.image}>
                 <BiData className={styles.preicon} />
@@ -163,6 +138,11 @@ export async function getServerSideProps({ req, res }) {
     dashboardSectionOrder: lastDashboardSectionOrder,
   });
   const items = dataJson.items;
+
+  /*   const getProcessStgData = await fetch(
+    "https://get-changerequest-from-recportal.azurewebsites.net/api/getchangerequestfromrecportal"
+  );
+  const processStageData = await getProcessStgData.json(); */
   // Pass data to the page via props
   return {
     props: {

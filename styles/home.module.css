@@ -1,5 +1,5 @@
 .mainContentContainer {
-  height: 83vh;
+  height: 85vh;
   width: 80vw;
   margin-right: 1vw;
 }
@@ -14,8 +14,12 @@
 .right {
   width: 50%;
   height: 95%;
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
+}
+
+.left{
+  overflow-y: auto;
 }
 
 .quickLinkContainer {
@@ -47,32 +51,8 @@
 .prereleaseContent {
   height: 25%;
   width: 98%;
-  margin-bottom: 7.5%;
 }
 
-/* .dashboardItem{
-  cursor: pointer;
-  font-size:16px;
-  margin:1% 2% 0 5%;
-  color:rgb(82, 82, 181);
-}
- */
-
-/* 
-  //version 2
-  .dashboardItem {
-  box-shadow: inset 0 0 0 0 #a8d395;
-  color: black;
-  margin: 0 -.25rem;
-  padding: 0 .25rem;
-  transition: color .1s ease-in-out;
-  text-decoration: none;
-}
-
-.dashboardItem:hover .arrowIcon {
-  box-shadow: inset 100vw -1.5rem 0 0 #4e8934;
-  color: white;
-} */
 
 .dashboardItem {
   transition: color .1s ease-in-out;
@@ -92,47 +72,39 @@
   display: inline-block;
 }
 
-/* .dashboardItem:after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 3px;
-  bottom: 0;
-  left: 0;
-  background-color: red;
-  transform: scaleX(0);
-  transform-origin: bottom right;
-  transition: transform 0.3s;
-}
-
-.dashboardItem:hover::after {
-  transform-origin: bottom left;
-  transform: scaleX(1);
-} */
 
 .iconBox {
   justify-content: space-evenly;
   display: flex;
+  flex-direction: row;
 }
 
+.boxTitle{
+  margin-bottom:0;
+}
+.image{
+  width:30%;
+  height: 50%;
+  margin:0;
+  padding:0;
+  align-items: center;
+}
 .preicon {
   width: 20%;
-  height: 20%;
-  margin-top: -2%;
-  margin-bottom: -8%;
+  height: 10%;
+  margin-top: 0;
+  margin-bottom: 0;
   margin-left: 40%;
   font-weight: lighter;
   align-items: center;
+  color:lightgrey;
 }
 
 .pretext{
+  margin-top:0;
+  margin:0 0 0 0 ;
   font-weight: bold;
   text-align: center;
+  color:lightgrey;
 }
 
-.image{
-  width:30%;
-  height: 90%;
-  display: table;
-  align-items: center;
-}

@@ -1,7 +1,7 @@
 import styles from "../../../styles/dataSpecSearch.module.css";
 import AppContext from "../../../components/context/AppContext";
 import Head from "next/head";
-import { useState, useEffect,useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import ResultsTable from "../../../components/infiniteScrollTable";
 import SideNav from "../../../components/dashboardSideNav";
@@ -20,22 +20,24 @@ import {
 } from "../../../components/dropdown/functions/formatDropdownItems";
 import { LogUserInfo } from "../../../components/logging";
 
-function DataSpecSearchPage({ dataSpecSearchList, mmsv }) {
-
+function DataSpecSearchPage({ dataSpecSearchList }) {
   const value = useContext(AppContext);
-  let {latestDataSpecVersion} = value.state;
-
+  let { latestDataSpecVersion, searchValue, searchType } = value.state;
+  const setSearchValue = value.setSearchValue;
+  const setSearchType = value.setSearchType;
   const [data, setData] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
   const [startVal, setStartVal] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [hasMore, setHasMore] = useState(true);
-  const [searchType, setSearchType] = useState({ name: "Market Messages" });
   const [sourceTargetList, setsourceTargetList] = useState(dataSpecSearchList);
-  const [sourceOptions, setsourceOptions] = useState(getDistinctValuesSource(sourceTargetList));
-  const [targetOptions, settargetOptions] = useState(getDistinctValuesTarget(sourceTargetList));
+  const [sourceOptions, setsourceOptions] = useState(
+    getDistinctValuesSource(sourceTargetList)
+  );
+  const [targetOptions, settargetOptions] = useState(
+    getDistinctValuesTarget(sourceTargetList)
+  );
   const [source, setSource] = useState("");
   const [target, setTarget] = useState("");
   const [isSearchValuePresent, setIsSearchValuePresent] = useState(true);
@@ -47,13 +49,12 @@ function DataSpecSearchPage({ dataSpecSearchList, mmsv }) {
       ? scenarioVariantHeaders
       : dataItemHeaders;
 
-
-  const pathName = 
-  searchType.name === "Market Messages" 
-    ? "marketmessage" 
-    : searchType.name === "Scenario Variants"
-    ? "scenario-variant"
-    : "dataitem";
+  const pathName =
+    searchType.name === "Market Messages"
+      ? "marketmessage"
+      : searchType.name === "Scenario Variants"
+      ? "scenario-variant"
+      : "dataitem";
 
   // const sourceOptions = getDistinctValuesSource(dataSpecSearchList);
   // const targetOptions = getDistinctValuesTarget(dataSpecSearchList);
@@ -93,7 +94,6 @@ function DataSpecSearchPage({ dataSpecSearchList, mmsv }) {
       } else {
         setErrorMessage(`No results found for "${searchValue}"`);
       }
-
     } catch (error) {
       setError(error);
       setErrorMessage(`No results found for "${searchValue}"`);
@@ -132,7 +132,9 @@ function DataSpecSearchPage({ dataSpecSearchList, mmsv }) {
     if (sourceVal === "") {
       resetDropdownFilter();
     } else {
-      const filteredTargets = sourceTargetList.filter((result) => result.SourceName == sourceVal)
+      const filteredTargets = sourceTargetList.filter(
+        (result) => result.SourceName == sourceVal
+      );
       settargetOptions(getDistinctValuesTarget(filteredTargets));
     }
   };
@@ -144,7 +146,9 @@ function DataSpecSearchPage({ dataSpecSearchList, mmsv }) {
     if (sourceVal === "") {
       resetDropdownFilter();
     } else {
-      const filteredSource = sourceTargetList.filter((result) => result.TargetName == sourceVal)
+      const filteredSource = sourceTargetList.filter(
+        (result) => result.TargetName == sourceVal
+      );
       setsourceOptions(getDistinctValuesSource(filteredSource));
     }
   };
@@ -164,12 +168,12 @@ function DataSpecSearchPage({ dataSpecSearchList, mmsv }) {
       e.preventDefault();
       refreshData();
       fetchData();
-    } else if (searchValue == "" && source == "" && target == ""){
+    } else if (searchValue == "" && source == "" && target == "") {
       setIsSearchValuePresent(true);
       e.preventDefault();
       //forcing to refresh the data
       refreshData();
-      if(startVal === 0){
+      if (startVal === 0) {
         fetchData();
       }
     } else {
@@ -225,7 +229,7 @@ function DataSpecSearchPage({ dataSpecSearchList, mmsv }) {
               Search
             </Button>
           </form>
-          {searchType.name !== "Data Items" ?
+          {searchType.name !== "Data Items" ? (
             <div className={styles.filterContainer}>
               <GlobalDropDown
                 label="Filter the Source:"
@@ -245,15 +249,24 @@ function DataSpecSearchPage({ dataSpecSearchList, mmsv }) {
                 items={targetOptions}
                 handleChange={handleTargetChange}
               />
-            </div> : <div className={styles.spaceContainer}></div>}
+            </div>
+          ) : (
+            <div className={styles.spaceContainer}></div>
+          )}
         </div>
-        {!isSearchValuePresent ? <div className={styles.errorContainer}><span className={styles.errorMessage}>{searchType.name} Search field</span><span> cannot be blank</span></div> : null}
+        {!isSearchValuePresent ? (
+          <div className={styles.errorContainer}>
+            <span className={styles.errorMessage}>
+              {searchType.name} Search field
+            </span>
+            <span> cannot be blank</span>
+          </div>
+        ) : null}
         <div className={`${styles.searchResults}`}>
           <ResultsTable
             data={data}
             setStartVal={setStartVal}
             headers={headers}
-
             baseLink={`/dataspec/${latestRecVersion}/${pathName}`}
             searchType={searchType.name}
             searchValue={searchValue}
@@ -273,24 +286,17 @@ export default DataSpecSearchPage;
 export async function getServerSideProps(context) {
   //Logic App: getDataSpecSearchList-LogicApp
   //TO-DO: change 3.5.0 to versionNumber when dropdown for the version selection will be implemented
-  const latestRecVersion = '3.5.0';
+  const latestRecVersion = "3.5.0";
   const dataSpecReq = await fetch(
     `https://prod-00.uksouth.logic.azure.com/workflows/d0c53a8711d9426d8f0a400b24e9a305/triggers/request/paths/invoke/versionNumber/${latestRecVersion}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=skIfVKyKRwy-wAiTWKFjg3Q6vXwYK8ct2mQ8aSbB6Fk`
   );
   const dataSpecSearchListJSON = await dataSpecReq.json();
 
-  const dataSpecSearchList = dataSpecSearchListJSON.mmsv
+  const dataSpecSearchList = dataSpecSearchListJSON.mmsv;
 
-  const dataSpecData = await fetch(
-    `https://prod2-25.uksouth.logic.azure.com:443/workflows/bc7a8128d44d4d1ea8cb95e2bac0b1b2/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=nKbYkRaRysRGNTguW8HeX5HhgtlfHDFwNCBwqRr8OdQ`
-  );
-  const dataSpecDataJson = await dataSpecData.json();
-  const mmsv = dataSpecDataJson.mmsv;
   return {
     props: {
       dataSpecSearchList,
-      mmsv,
-    }
-
+    },
   };
 }

@@ -42,6 +42,9 @@ function MyApp({
   const [newsItems, setNewsItems] = useState();
   const [currentVersionMapping, setCurrentVersionMapping] =
     useState(versionMapping);
+  //search pages variables
+  const [searchValue, setSearchValue] = useState("");
+  const [searchType, setSearchType] = useState({ name: "Codes Schedules" });
   const [errorLog, setErrorLog] = useState([]);
 
   useEffect(() => {
@@ -76,6 +79,8 @@ function MyApp({
             errorLog: errorLog,
             chosenTab: chosenTab,
             currentVersionMapping: currentVersionMapping,
+            searchValue: searchValue,
+            searchType: searchType,
           },
           setLoading: setLoading,
           setLatestDataSpecVersion: setLatestDataSpecVersion,
@@ -84,6 +89,8 @@ function MyApp({
           setErrorLog: setErrorLog,
           setChosenTab: setChosenTab,
           setCurrentVersionMapping: setCurrentVersionMapping,
+          setSearchValue: setSearchValue,
+          setSearchType: setSearchType,
         }}
       >
         <Loading />

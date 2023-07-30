@@ -88,6 +88,7 @@ function MarketMessagePage({ searchResults }) {
     LogUserInfo(
       `${marketMessageInfo.EnergyMarketMessageIdentifier} - ${marketMessageInfo.Label}`
     );
+    value.setChosenTab("Data Specification");
   }, []);
 
   return (

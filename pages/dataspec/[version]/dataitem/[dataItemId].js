@@ -84,13 +84,12 @@ function DataItemDetailsPage({ searchResults }) {
     }
   });
 
-  useEffect(() => {}, [currentSections]);
-
   useEffect(() => {
     LogUserInfo(
       `${dataItemInfo.DataItemIdentifier} ${dataItemInfo.DataItemName}`
     );
-  });
+    value.setChosenTab("Data Specification");
+  }, []);
   return (
     <>
       <Head>
