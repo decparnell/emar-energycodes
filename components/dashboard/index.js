@@ -26,7 +26,7 @@ function Dashboard(props) {
           firstItem.dashboardSectionItemsOrder -
           secondItem.dashboardSectionItemsOrder
       );
-    //loops over every item in sectionItems 
+    //loops over every item in sectionItems
     sectionItems.forEach((item, index) => {
       //checks for certain condition and if it was true sets the version name
       if (
@@ -72,7 +72,7 @@ function Dashboard(props) {
                 <Link
                   key={item.dashboardSectionsItemsId}
                   href={{
-                    pathname: `${item.dashboardSectionItemsLink}`
+                    pathname: `${item.dashboardSectionItemsLink}`,
                   }}
                   className={styles.itemContainer}
                   passHref={true}

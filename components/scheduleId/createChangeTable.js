@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styles from "../../styles/codes.module.css";
 
+/** Deprecated */
 function CreateChangeTable(changeHistory, schedule_id, selectedVersion) {
   return changeHistory.map((change) => {
     const { versionName, implementationDate, reason } = change;

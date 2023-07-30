@@ -1,152 +1,99 @@
-import { useRouter } from "next/router";
-import CreateFlowStructure from "../../../../components/dataspec/createFlowStructure";
-import styles from "../../../../styles/dataspec.module.css";
-import { AiOutlineArrowRight } from "react-icons/ai";
+import styles from "../../../../styles/schedules-dataspec.module.css";
 import Head from "next/head";
-import SecondNavbar from "../../../../components/layout/secondHeader";
-import Link from "next/link";
 import AppContext from "../../../../components/context/AppContext";
-import { useContext } from "react";
-import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable";
-import { logError } from "../../../../components/helperFunctions/logError";
+import SideNav from "../../../../components/dashboardSideNav";
+import { useState, useContext, useEffect } from "react";
 import { checkIfItemsAvailableInArray } from "../../../../components/helperFunctions/checkIfItemsAvailableInArray";
+import { checkIfVariablesAreAvailable } from "../../../../components/helperFunctions/checkIfVariablesAreAvailable";
+import ScenarioVariantTables from "../../../../components/tables/scenarioVariantTables";
+import SecondNavbar from "../../../../components/layout/secondHeader";
+import { LogUserInfo } from "../../../../components/logging";
 
-function ScenarioPage({ scenarioVariantInfo, structure, mmInfo }) {
-  const apiVarList = [
-    { obj: scenarioVariantInfo, name: "scenarioVariantInfo" },
-    { obj: structure, name: "structure" },
-    { obj: mmInfo, name: "mmInfo" },
-  ];
-  const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
-
-  const svInfo = scenarioVariantInfo ? scenarioVariantInfo[0] : null;
-  const marketMsgInfo = mmInfo ? mmInfo[0] : null;
-  const router = useRouter();
-  const scenarioVariant = router.query.scenarioVariant;
+function ScenarioPage({ scenarioVariantInfo, structure, marketMsgInfo }) {
   const value = useContext(AppContext);
   let { latestDataSpecVersion } = value.state;
 
+  let dashboard = [
+    {
+      dashboardId: "BasicInformation",
+      dashboardSectionName: "Basic Information",
+      dashboardSectionOrder: 1,
+    },
+    {
+      dashboardId: "Structure",
+      dashboardSectionName: "Structure",
+      dashboardSectionOrder: 2,
+    },
+  ];
+
+  const apiVarList = [
+    { obj: scenarioVariantInfo, name: "scenarioVariantInfo" },
+    { obj: marketMsgInfo, name: "mmInfo" },
+    { obj: structure, name: "structure" },
+  ];
+
+  const internalErrorLog = checkIfVariablesAreAvailable(apiVarList);
+
+  const svInfo = scenarioVariantInfo ? scenarioVariantInfo[0] : null;
+  const mmInfo = marketMsgInfo ? marketMsgInfo[0] : null;
+
+  let svInfoBody = {
+    ...svInfo,
+    DTCDcode: mmInfo.DTCDcode,
+    MessageVersionNumber: mmInfo.MessageVersionNumber,
+  };
+
+  //Left Navigation Bar
+  const [currentSections, setCurrentSections] = useState(() => {
+    if (checkIfItemsAvailableInArray(internalErrorLog, "sections")) {
+      return dashboard[0];
+    }
+  });
+
+  useEffect(() => {}, [currentSections]);
+
+  useEffect(() => {
+    LogUserInfo(
+      `${svInfo.EnergyMarketMessageScenarioVariantIdentifier} - ${svInfo.EnergyMarketMessageScenarioVariantName}`
+    );
+    value.setChosenTab("Data Specification");
+  }, []);
+
   return (
     <>
-      <SecondNavbar />
-      {checkIfItemsAvailableInArray(internalErrorLog, "scenarioVariantInfo") ? (
-        <div className={styles.contentContainer}>
-          <Head>
-            <title>
-              EMAR - {svInfo.EnergyMarketMessageScenarioVariantName}
-            </title>
-            <meta property="og:title" content="My page title" key="title" />
-          </Head>
-          {checkIfItemsAvailableInArray(internalErrorLog, "mmInfo") ? (
-            <div>
-              <h1 className={styles.contentTitle}>
-                {scenarioVariant} -{" "}
-                {svInfo.EnergyMarketMessageScenarioVariantName} (
-                {marketMsgInfo.EnergyMarketMessageIdentifier} -{" "}
-                {[
-                  marketMsgInfo.DTCDcode,
-                  marketMsgInfo.LegacyRGMAMessageIdentifier,
-                  marketMsgInfo.LegacySPAAMessageIdentifier,
-                  marketMsgInfo.UNCMessageIdentifier,
-                  marketMsgInfo.CSSMessageIdentifier,
-                ]}
-                )
-              </h1>
-              <table className={styles.fullWidthTable}>
-                <tr>
-                  <td className={styles.tableHearSide}>Name</td>
-                  <td>{svInfo.EnergyMarketMessageScenarioVariantName}</td>
-                </tr>
-                <tr>
-                  <td className={styles.tableHearSide}>Description</td>
-                  <td>
-                    {svInfo.EnergyMarketMessageScenarioVariantDescription}
-                  </td>
-                </tr>
-                <tr>
-                  <td className={styles.tableHearSide}>Owner</td>
-                  <td>{svInfo.OwnerName}</td>
-                </tr>
-                <Link
-                  href={{
-                    pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[marketMessageId]`,
-                    query: {
-                      marketMessageId:
-                        marketMsgInfo.EnergyMarketMessageIdentifier,
-                    },
-                  }}
-                  passHref={true}
-                >
-                  <tr className="pointer">
-                    <td className={styles.tableHearSide}>Market Message Id</td>
-                    <td>{marketMsgInfo.EnergyMarketMessageIdentifier}</td>
-                  </tr>
-                </Link>
-                <Link
-                  href={{
-                    pathname: `/dataspec/${latestDataSpecVersion}/marketmessage/[marketMessageId]`,
-                    query: {
-                      marketMessageId:
-                        marketMsgInfo.EnergyMarketMessageIdentifier,
-                    },
-                  }}
-                  passHref={true}
-                >
-                  <tr className="pointer">
-                    <td className={styles.tableHearSide}>Local Reference</td>
-                    <td>
-                      {[
-                        marketMsgInfo.DTCDcode,
-                        marketMsgInfo.LegacyRGMAMessageIdentifier,
-                        marketMsgInfo.LegacySPAAMessageIdentifier,
-                        marketMsgInfo.UNCMessageIdentifier,
-                        marketMsgInfo.CSSMessageIdentifier,
-                      ]}
-                    </td>
-                  </tr>
-                </Link>
-                {svInfo.ApiMethod ? (
-                  <tr>
-                    <td className={styles.tableHearSide}>API Method</td>
-                    <td>{svInfo.ApiMethod}</td>
-                  </tr>
-                ) : null}
-
-                {svInfo.ApiRoute ? (
-                  <tr>
-                    <td className={styles.tableHearSide}>
-                      <span className={styles.wordWrap}>API Route</span>
-                    </td>
-                    <td>{svInfo.ApiRoute}</td>
-                  </tr>
-                ) : null}
-              </table>
-            </div>
-          ) : (
-            <div className={styles.errorBox}>
-              {logError("Market Message Info")}
-            </div>
-          )}
-          <div className={styles.sourcetargetContainer}>
-            <div className={styles.source}>
-              <p>{svInfo.SourceName}</p>
-            </div>
-            <AiOutlineArrowRight className={styles.sourceArrowTarget} />
-            <div className={styles.target}>
-              <p>{svInfo.TargetName}</p>
-            </div>
-          </div>
-          {checkIfItemsAvailableInArray(internalErrorLog, "structure") ? (
-            CreateFlowStructure(structure)
-          ) : (
-            <div className={styles.errorBox}>{logError("Structure")}</div>
-          )}
+      <Head>
+        <title>EMAR - {svInfo.EnergyMarketMessageScenarioVariantName}</title>
+        <meta property="og:title" content="My page title" key="title" />
+      </Head>
+      <div className={"container-flex"}>
+        <div className={"side-nav-container-fixed"}>
+          <SideNav
+            navbarType="ContentBasedNavBar"
+            items={dashboard}
+            dashboardId="dashboardId"
+            name="dashboardSectionName"
+            stateVar={currentSections}
+            stateSet={setCurrentSections}
+          />
         </div>
-      ) : (
-        <div className={styles.errorBox}>
-          {logError("Scenario Variant Info")}
+        <div className={`${styles.mainContentContainer}`}>
+          <SecondNavbar />
+          <section id={dashboard[0].dashboardId}>
+            <ScenarioVariantTables
+              keyTitle="Basic Information"
+              latestDataSpecVersion={latestDataSpecVersion}
+              dataBody={svInfoBody}
+            />
+          </section>
+          <section id={dashboard[1].dashboardId}>
+            <ScenarioVariantTables
+              keyTitle="Structure"
+              latestDataSpecVersion={latestDataSpecVersion}
+              dataBody={structure}
+            />
+          </section>
         </div>
-      )}
+      </div>
     </>
   );
 }
@@ -156,14 +103,16 @@ export default ScenarioPage;
 // This gets called on every request
 export async function getServerSideProps(context) {
   // Fetch data from external API
+  //getScenarioVariantFlowStructure-LogicApp-v2
   const dataReq = await fetch(
-    `https://prod-12.uksouth.logic.azure.com/workflows/a8f5052aac70469c8e4de8990ef5289f/triggers/manual/paths/invoke/scenarioVariant/${context.params.scenarioVariant}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Y8zRRQl2HM4BzMaVYcwnXoBCKqWgY3CHveRGzkstYIg`
+    `https://prod-05.uksouth.logic.azure.com/workflows/e1ef29bc721e4135a5e3627156ab461b/triggers/manual/paths/invoke/scenarioVariant/${context.params.scenarioVariant}/versionNumber/${context.params.version}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=oNkEfItUN3uR584yHQuV8_52nIOYoDdYDXpTv896Hk4`
   );
+
   const dataJson = await dataReq.json();
   const scenarioVariantInfo = dataJson.scenarioVariantInfo;
   const structure = dataJson.structure;
-  const mmInfo = dataJson.mminfo;
+  const marketMsgInfo = dataJson.mminfo;
 
   // Pass data to the page via props
-  return { props: { scenarioVariantInfo, structure, mmInfo } };
+  return { props: { scenarioVariantInfo, structure, marketMsgInfo } };
 }

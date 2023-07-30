@@ -1,26 +1,110 @@
-.container {
-  width: 100%;
+.mainContentContainer {
+  height: 85vh;
+  width: 80vw;
+  margin-right: 1vw;
 }
-.dashboardSelector {
-  width: 50%;
-  margin-left: 25%;
-  justify-content: space-between;
+
+.top {
+  width: 100%;
+  height: 75%;
   display: flex;
 }
 
-.dashButtonTitle {
-  margin: 2%;
-}
-.selectedDashboard {
-  background-color: #4d8934;
-  color: white;
+.left,
+.right {
+  width: 50%;
+  height: 95%;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
-.errorBox {
-  padding: 20px;
-  background-color: #e7ab00;
-  color: white;
-  margin: 25px;
+.left{
+  overflow-y: auto;
+}
+
+.quickLinkContainer {
+  height: 40%;
+  width: 100%;
+  margin-left: 2%;
+  margin-bottom: -5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.secondNavbar{
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  margin-right: 22%;
+  margin-top: -2%;
+  margin-bottom: -2%;
+}
+
+.upcomingChangesContent {
+  height: 60%;
+  width: 98%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.prereleaseContent {
+  height: 25%;
+  width: 98%;
+}
+
+
+.dashboardItem {
+  transition: color .1s ease-in-out;
+  text-decoration: none;
+}
+
+.arrowIcon {
+  color: #4e8934;
+} 
+
+.dashboardItemsPanel{
+  padding-left: 5%;
+  padding-bottom: 2px;
+}
+
+.arrowContainer {
+  display: inline-block;
+}
+
+
+.iconBox {
+  justify-content: space-evenly;
+  display: flex;
+  flex-direction: row;
+}
+
+.boxTitle{
+  margin-bottom:0;
+}
+.image{
+  width:30%;
+  height: 50%;
+  margin:0;
+  padding:0;
+  align-items: center;
+}
+.preicon {
+  width: 20%;
+  height: 10%;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 40%;
+  font-weight: lighter;
+  align-items: center;
+  color:lightgrey;
+}
+
+.pretext{
+  margin-top:0;
+  margin:0 0 0 0 ;
+  font-weight: bold;
   text-align: center;
+  color:lightgrey;
 }
 

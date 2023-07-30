@@ -140,11 +140,9 @@ function addLinkedComponentsToOutput(
   } else {
     const linkedText = LinkTextFromDefinitions(text, definitions);
     clauseJsx.push(
-      <CustomTag
-        className={customClassName}
+      <CustomTag className={customClassName}
         key={`${clauseComponentId}`}
-        id={`${clauseComponentId}`}
-      >
+        id={`${clauseComponentId}`}>
         {linkedText}
       </CustomTag>
     );

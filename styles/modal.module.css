@@ -1,0 +1,66 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.modal {
+  position: fixed;
+  top: 15%;
+  left: 5%;
+  width: 90%;
+  background-color: white;
+  padding: 0 0rem 0.7rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 30;
+  animation: slide-down 300ms ease-out forwards;
+}
+
+.closeContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close {
+  width: 7%;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  background-color: white;
+  padding: 0;
+}
+
+.closeIcon {
+  height: 90%;
+  width: 90%;
+  color: #77A465;
+  cursor: pointer;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .modal {
+    width: 40rem;
+    left: calc(50% - 20rem);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

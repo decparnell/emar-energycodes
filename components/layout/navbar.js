@@ -1,26 +1,33 @@
-import Image from "next/image";
-// import logo from "./recco_logo.PNG";
-import reccoLogo from "./RECCOLogoWhiteAsset13.png";
 import Link from "next/link";
-import { Fragment } from "react";
-import styles from "../../styles/header.module.css";
-import AsideDropDownMenu from "../AsideDropDownMenu";
+import styles from "../../styles/header2.module.css";
+import TabNavbar from "./tabHeader";
+import FeedbackForm from "../feedbackForm";
+import SecondNavbar from "./secondHeader";
 
-function navbar() {
+function Navbar() {
   return (
-    <Fragment>
-      <div className={styles.header}>
-        <Link href="/">
-          <div className={styles.logo}>
-            <Image alt="Recco logo" src={reccoLogo} />
-          </div>
-        </Link>
-        <div>
-          <AsideDropDownMenu />
+    <div className={styles.joinedHeader}>
+      <div className={`${styles.header} green`}>
+        <div className={styles.linkContainer}>
+          <Link
+            className={styles.headLink}
+            href="https://emar.energycodes.co.uk/rm/web#action=com.ibm.rdm.web.pages.showFoundationProjectDashboard&componentURI=https%3A%2F%2Femar.energycodes.co.uk%2Frm%2Frm-projects%2F_Xqe2IFBPEeuGWeSXvTEFcQ%2Fcomponents%2F_XwleIFBPEeuGWeSXvTEFcQ"
+            target="_blank"
+          >
+            IBM Jazz
+          </Link>
+          <FeedbackForm />
+          <Link
+            className={styles.headLink}
+            href="mailto:enquiries@recmanager.co.uk"
+          >
+            REC Service Desk
+          </Link>
         </div>
       </div>
-    </Fragment>
+      <TabNavbar />
+    </div>
   );
 }
 
-export default navbar;
+export default Navbar;

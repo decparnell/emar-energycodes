@@ -48,12 +48,12 @@ const FeedbackForm = ({ setInsertError }) => {
   return (
     <>
       {isClosed ? (
-        <div
-          className={styles.minimiseBtn}
+        <span
+          className={styles.feedbackLabel}
           onClick={onCloseMinimimisedButtonClick}
         >
-          Feedback
-        </div>
+          Provide Feedback
+        </span>
       ) : (
         <div className={styles.contactForm}>
           <div className={styles.BtnContainer}>

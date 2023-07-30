@@ -1,0 +1,77 @@
+.changeRqstNavigator {
+    justify-content: space-evenly;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-top: 2%;
+}
+
+.changeRqstTitle{
+   text-align: center;
+   margin-top: 2%;
+   margin-bottom: 2%;
+}
+
+.changeRqstNavTitle{
+    font-size: medium;
+    font-weight: bold;
+
+}
+
+.changeRqstList {
+    margin-right: 2%;
+    margin-top: 3%;
+}
+
+.changeRqstList a {
+    display: block;
+    padding-left: 5%;
+    padding-bottom: 3px;
+    text-decoration: none;
+}
+
+.leftBtn {
+    font-size: 30px;
+    margin-top: 2%;
+    cursor: pointer;
+    position: absolute;
+    margin-left: -90%;
+}
+
+.rightBtn {
+    font-size: 30px;
+    margin-top: 2%;
+    cursor: pointer;
+    position: absolute;
+    margin-left: 90%;
+}
+
+.dashboardItem {
+    box-shadow: inset 0 0 0 0 #a8d395;
+    color: black;
+    margin: 0 -.25rem;
+    padding: 0 .25rem;
+    transition: color .1s ease-in-out;
+    text-decoration: none;
+}
+
+.dashboardItem:hover .arrowIcon {
+    box-shadow: inset 100vw -1.5rem 0 0 #4e8934;
+    color: white;
+}
+
+.arrowContainer {
+    display: inline-block;
+}
+
+.help {
+    float: right;
+    margin-top: -2%;
+    width: 100%;
+}
+
+.helpIcon {
+    width: 5%;
+    margin-top: 0%;
+    float: right;
+}

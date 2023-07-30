@@ -1,59 +1,88 @@
 import styles from "../../styles/codesRoadMap.module.css";
-import React from "react";
-
+import Head from "next/head";
+import React, { useEffect } from "react";
+import { BiDownload } from "react-icons/bi";
+import { LogUserInfo } from "../../components/logging";
+import SecondNavbar from "../../components/layout/secondHeader";
 function CodesRoadMap({ latestCodesRoadMapLinkJSON }) {
-  const apiResList = [
-    { obj: latestCodesRoadMapLinkJSON, name: "latestCodesRoadMapLinkJSON" },
-  ];
   const wikiPage =
     "https://recportal.co.uk/rec-wiki-landing/-/knowledge_base_search/677762514/maximized?_com_liferay_knowledge_base_web_portlet_SearchPortlet_redirect=https%3A%2F%2Frecportal.co.uk%3A443%2Frec-wiki-landing%3Fp_p_id%3Dcom_liferay_knowledge_base_web_portlet_SearchPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview%26_com_liferay_knowledge_base_web_portlet_SearchPortlet_mvcPath%3D%252Fsearch%252Fsearch.jsp%26_com_liferay_knowledge_base_web_portlet_SearchPortlet_keywords%3Droadmap%26_com_liferay_knowledge_base_web_portlet_SearchPortlet_formDate%3D1680000364694";
+
+  const downloadIcon = (
+    <BiDownload
+      style={{
+        height: "10%",
+        width: "8%",
+        color: "green",
+        marginLeft: "-7%",
+      }}
+    />
+  );
+
+  useEffect(() => {
+    LogUserInfo("Codes Road Map");
+  }, []);
+
   return (
     <>
+      <Head>
+        <title>Codes Road Map</title>
+        <meta
+          property="og:title"
+          content="Codes Road Map"
+          key="codes-road-map"
+        />
+      </Head>
+      <div className={`${styles.secondNavbar}`}>
+        <SecondNavbar pageType="Data Spec Page" />
+      </div>
       <div className={styles.container}>
-        <table className={styles.tableCRM}>
-          <tbody>
-            <tr>
-              <td>
-                <b>The REC Code Roadmap</b>
-                <br></br>
-                <p>
-                  The REC Code Roadmap provides a view of the key areas of
-                  strategic change that RECCo and the REC Code Manager will
-                  focus on over the next three years. These are areas of the REC
-                  where significant benefit could be gained for all REC
-                  stakeholders including consumers, within the long-term energy
-                  retail landscape.
-                </p>
-                <p>
-                  The ‘epics’ are the work items that will deliver the change.
-                  The roadmap presents the epics that are active now and those
-                  that are due to be initiated in the coming months, so you can
-                  see what may be of interest to you and how you can get
-                  involved in shaping the solutions.
-                </p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                {latestCodesRoadMapLinkJSON.map((item) => (
-                  <a href={item.link} key={item.codesRoadMapLinksId} download>
-                    Spreadsheet to download containing the roadmap
-                  </a>
-                ))}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <b>Where to find out more</b>
-                <p> ** </p>
-                <p>
+        <h1 className={styles.title}>The Code Road Map</h1>
+        <section className={`${styles.mainContentContainer} `}>
+          <div className={`${styles.left} box`}>
+            <h4 className={styles.title}>What is it?</h4>
+            <p className={styles.paragraph}>
+              The REC Code Roadmap provides a view of the key areas of strategic
+              change that RECCo and the REC Code Manager will focus on over the
+              next three years. These are areas of the REC where significant
+              benefit could be gained for all REC stakeholders including
+              consumers, within the long-term energy retail landscape.
+            </p>
+            <p className={styles.paragraph}>
+              The ‘epics’ are the work items that will deliver the change. The
+              roadmap presents the epics that are active now and those that are
+              due to be initiated in the coming months, so you can see what may
+              be of interest to you and how you can get involved in shaping the
+              solutions.
+            </p>
+          </div>
+
+          <div className={`${styles.right} `}>
+            <div className={`${styles.leftContainer} box`}>
+              {latestCodesRoadMapLinkJSON.map((item) => (
+                <a
+                  href={item.link}
+                  key={item.codesRoadMapLinksId}
+                  download
+                  className={styles.downloadLink}
+                >
+                  <div>Spreadsheet to download containing the roadmap</div>
+                  {downloadIcon}
+                </a>
+              ))}
+            </div>
+
+            <div className={styles.bottomContainer}>
+              <div className={`${styles.leftContainer} box`}>
+                <h4 className={styles.title}>Find Out More</h4>
+                <p className={styles.paragraph}>
                   If you want to know more about the roadmap purpose and
                   process,{" "}
                   <a href={wikiPage} target="_blank" rel="noreferrer">
                     visit the Wiki page here.
                   </a>
                 </p>
-                <p>
+                <p className={styles.paragraph}>
                   The roadmap launched in March 2023 and it will evolve over
                   time – we welcome your views on how we can develop it further
                   for you.  If you have comments or feedback on any aspect of
@@ -68,10 +97,22 @@ function CodesRoadMap({ latestCodesRoadMapLinkJSON }) {
                   </a>
                   .
                 </p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </div>
+            </div>
+          </div>
+        </section>
+        {/*  <div className={`${styles.bottom}`}>
+          {/* <div className={`${styles.quickLinkContainer2}`}>
+            <QuickLink title="" link="/" width="20%" height="65%" />
+            <QuickLink title="" link="/" width="20%" height="65%" />
+            <QuickLink title="" link="/" width="20%" height="65%" />
+            <QuickLink title="" link="/" width="20%" height="65%" />
+            <QuickLink title="" link="/" width="25%" height="65%" />
+            <QuickLink title="" link="/" width="25%" height="65%" />
+            <QuickLink title="" link="/" width="25%" height="65%" />
+          </div>
+          <div className={`${styles.upcomingChangesContent} box`}></div> 
+        </div> */}
       </div>
     </>
   );

@@ -1,0 +1,84 @@
+.container {
+  width: 100%;
+  margin-bottom: 2%;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainContentContainer {
+  height: 40%;
+  width: 100%;
+  margin: auto;
+  margin-bottom: 1%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.conversationContainer {
+  width: 100%;
+}
+
+.chatBox {
+  height: fit-content;
+  max-height: 22rem;
+  min-height: 7.5rem;
+  width: 95%;
+  padding-bottom: 2%;
+  background-color: white;
+  position: relative;
+  margin-left: 2.5%;
+}
+
+.questionBox {
+  width: 91%;
+  margin-left: 4%;
+  margin-top: 1%;
+}
+
+.sendMessage {
+  margin-top: 7%;
+  padding-right: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: grey;
+}
+
+.input {
+  width: 95%;
+  padding: 2% 1%;
+  border: none;
+  font-size: 15px;
+  font-family: "Open Sans", cursive;
+}
+
+.title {
+  text-align: center;
+}
+
+.paragraph {
+  margin: 5%;
+  text-align: center;
+}
+
+.button {
+  width: 3.5%;
+  padding: 0%;
+  background-color: white;
+  border: none;
+  box-shadow: none;
+}
+
+.sendIcon {
+  height: 100%;
+  width: 100%;
+  color: black;
+  cursor: pointer;
+}
+
+.sendIconDisabled {
+  height: 100%;
+  width: 100%;
+  color: lightgray;
+  cursor: default;
+}

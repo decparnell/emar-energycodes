@@ -1,0 +1,27 @@
+.scroll {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.table {
+    width: 96%;
+    margin: 0 2% 0 2%;
+}
+
+
+.searchResultsTableRow {
+    width: 90%;
+    margin-left: 5%;
+    border: none;
+    border-collapse: collapse;
+}
+
+.searchResultsTableRow td {
+    border: 1px solid #000;
+}
+
+
+.color {
+    background-color: #e7ab00;
+}

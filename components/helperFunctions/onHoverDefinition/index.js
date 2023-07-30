@@ -10,7 +10,7 @@ function HoverOverFunctionDefinition(
   versionName
 ) {
   return (
-    <Fragment key={linkingWord}>
+    <Fragment>
       {linkType == "definition" ? (
         <a
           className={styles.tooltiptext}

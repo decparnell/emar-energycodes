@@ -2,13 +2,15 @@ import { useRouter } from "next/router";
 import styles from "../../styles/dropdown.module.css";
 import stylesHead from "../../styles/header.module.css";
 import { AiFillCaretUp, AiFillCaretDown } from "react-icons/ai";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import AppContext from "../context/AppContext";
 function VersionDropDown() {
   const value = useContext(AppContext);
-  let { latestDataSpecVersion, allDataSpecVersions } = value.state;
+  let { allDataSpecVersions, latestDataSpecVersion } = value.state;
+  const { setLoading } = useContext(AppContext);
   const router = useRouter();
   const { version } = router.query;
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownValue = latestDataSpecVersion;
   const setDropdownValue = value.setLatestDataSpecVersion;
@@ -17,17 +19,6 @@ function VersionDropDown() {
     setDropdownOpen((current) => !current);
     setDropdownValue(option);
     setDropdownOpen((current) => !current);
-    if (option != version) {
-      const query = router.query;
-      query.version = option;
-      router.push(
-        {
-          pathname: router.pathname,
-          query: query,
-        },
-        { shallow: false }
-      );
-    }
   };
 
   const prepareDropdownOption = (option) => {
@@ -38,29 +29,37 @@ function VersionDropDown() {
     }
   };
 
+  const orderedVersion = allDataSpecVersions.sort(function (a, b) {
+    return new Date(b.releaseDate) - new Date(a.releaseDate);
+  });
+
   return (
     <div
-      className={`${stylesHead.dataSpecDropDown} ${styles.dropdown} pointer`}
+      className={`pointer ${stylesHead.dataSpecDropDown} ${styles.dropdown}`}
       onClick={() => setDropdownOpen((current) => !current)}
     >
-      {dropdownValue}
+      REC Version: {dropdownValue}
       {dropdownOpen == false ? (
-        <AiFillCaretDown />
+        <div className={styles.caretIcon}>
+          <AiFillCaretDown />
+        </div>
       ) : (
         <>
-          <AiFillCaretUp />
+          <div className={styles.caretIcon}>
+            <AiFillCaretUp />
+          </div>
           <div className={styles.versionOptions}>
-            {allDataSpecVersions.map((option, index) => (
+            {orderedVersion.map((option, index) => (
               <div
                 className={
-                  option.versionNumber == dropdownValue
-                    ? `${styles.option} ${styles.chosen} pointer`
-                    : `${styles.option} pointer`
+                  option.name == dropdownValue
+                    ? `${styles.option} ${styles.chosen} `
+                    : `${styles.option} `
                 }
                 key={index}
-                onClick={() => handleDropdownSelect(option.versionNumber)}
+                onClick={() => handleDropdownSelect(option.name)}
               >
-                {prepareDropdownOption(option.versionNumber)} - {option.status}
+                {prepareDropdownOption(option.name)} - {option.status}
               </div>
             ))}
           </div>
