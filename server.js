@@ -28,7 +28,7 @@ app.prepare().then(() => {
   var sp_options, idp_options;
 
   //for testing on the pre-prod env
-  const serverEnv = "development";
+  const serverEnv = "production";
 
   if (server.get("env") === "production" && serverEnv === "production") {
     server.set("trust proxy", 1); // trust first proxy
