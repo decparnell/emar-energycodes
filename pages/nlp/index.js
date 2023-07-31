@@ -111,14 +111,14 @@ function NLP() {
       </Head>
       <div className={styles.container}>
         <h1 className={styles.title}>NLP</h1>
-        <section className={`${styles.mainContentContainer} `}>
+        <section className={`${styles.mainContentContainer}`}>
           {chatLog.length > 0 && (
             <QuestionHistory
               questionHistory={userQuestionHistory}
               setQuery={setQuery}
             />
           )}
-          <div className={`${styles.conversationContainer} `}>
+          <div className={`${styles.conversationContainer}`}>
             <div className={`${styles.chatBox} box`}>
               <ChatBox isTyping={botIsTyping} chatLog={chatLog} />
             </div>
