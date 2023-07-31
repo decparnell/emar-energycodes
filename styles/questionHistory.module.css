@@ -17,6 +17,7 @@
   width: 100%;
   padding-left: 6%;
   max-height: 31.5rem;
+  max-width: 18rem;
 }
 
 .questionContainer {
@@ -38,10 +39,12 @@
 }
 
 .questionHistoryItem {
+  max-width: 10rem;
   text-align: center;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   padding-left: 3%;
   padding-top: 1%;
+  text-align: left;
 }
