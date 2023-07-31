@@ -12,7 +12,7 @@ import AppContext from "../../../components/context/AppContext";
 
 function SchedulesSearchPage({ codesSchedulesDataJson }) {
   const value = useContext(AppContext);
-  let { searchValue, searchType } = value.state;
+  let { searchValue, searchType, latestDataSpecVersion } = value.state;
   const setSearchValue = value.setSearchValue;
   const [data, setData] = useState([]);
   const [schedulesValue, setSchedulesValue] = useState("Filter Schedules:");
@@ -188,7 +188,6 @@ function SchedulesSearchPage({ codesSchedulesDataJson }) {
               data={data}
               setStartVal={setStartVal}
               headers={codeSchdulesHeaders}
-              baseLink="/dataspec/3.3.0/marketmessage"
               searchType={searchTypeName}
               searchValue={searchValue}
               fetchData={fetchData}
