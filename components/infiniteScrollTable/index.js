@@ -1,7 +1,9 @@
 import Link from "next/link";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useContext } from "react";
 import styles from "../../styles/infiniteScrollTable.module.css";
 import { CodesSchedulesSearchResults } from "../codesSchedules/codesSchedulesSearchResults";
+import AppContext from "../context/AppContext";
 
 const ResultsTable = (props) => {
   /////// PROPS
@@ -26,6 +28,9 @@ const ResultsTable = (props) => {
   const searchType = props.searchType;
   const searchValue = props.searchValue;
   const errorMessage = props.errorMessage;
+
+  const value = useContext(AppContext);
+  let { currentVersionMapping } = value.state;
 
 
   /////////FUNCTIONS///////////////
@@ -89,13 +94,18 @@ const ResultsTable = (props) => {
     let jsxArray = [];
     headers.map((row) => {
       if (searchType === "Codes Schedules" && row.dataColumn === "componentText") {
-        jsxArray.push(<td key={row.title}>{formatSearchByType(item,searchValue)}</td>);
+        jsxArray.push(<td key={row.title}>{formatSearchByType(item, searchValue)}</td>);
         //jsxArray.push(<td key={row.title}>{item[row.dataColumn]}</td>);
       } else {
         jsxArray.push(<td key={row.title}>{item[row.dataColumn]}</td>);
       }
     });
     return jsxArray;
+  }
+
+  function generateBaseLink(item) {
+    const currentDocVersionName = currentVersionMapping.filter((subitem) => subitem.documentId == item.documentId_FK)[0].docVersionName;
+    return `/codes-schedules/${item.documentId_FK}/${currentDocVersionName}`;
   }
 
 
@@ -118,20 +128,32 @@ const ResultsTable = (props) => {
         </thead>
 
         <tbody>
-          {data.map((item, index) => {
-            if (typeof baseLink !== "undefined") {
+          {searchType === "Codes Schedules" ?
+            data.map((item, index) => {
               return (
                 <Link
                   key={index}
-                  href={`${baseLink}/${item[headers[0].dataColumn]}`}
+                  href={generateBaseLink(item)}
                 >
                   <tr>{returnTableDataForHeaders(item)}</tr>
                 </Link>
               );
-            } else {
-              return <tr key={index}>{returnTableDataForHeaders(item)}</tr>;
-            }
-          })}
+            }) :
+            data.map((item, index) => {
+              if (typeof baseLink !== "undefined") {
+                return (
+                  <Link
+                    key={index}
+                    href={`${baseLink}/${item[headers[0].dataColumn]}`}
+                  >
+                    <tr>{returnTableDataForHeaders(item)}</tr>
+                  </Link>
+                );
+              } else {
+                return <tr key={index}>{returnTableDataForHeaders(item)}</tr>;
+              }
+            })
+          }
         </tbody>
       </table>
     </InfiniteScroll>
