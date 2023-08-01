@@ -91,26 +91,21 @@ function BotResponse(props) {
 
   //Checking to see if the data renders correctly
   //Needs a check to use either contextDocuments / verifiedSources
-  //Needs a check to see if clause has a value in it 
+
   const source = props.response.contextDocuments.map((source) => {
+    console.log(source[0]);
     return (
-    <li>
+      <li>
         <p className={`${styles.p}`}>
-          {source[0]}
-          - Version: {source.Version}{" "}
-          - Part:{" "}{source.Part}{" "}
-          - Section:{" "}{source.Section}{" "}
-          - Clause:{" "}{source.Clause}
+          {source[0]} - Version: {source.Version} - Part: {source.Part}
+          {source.Section ? <> - Section: {source.Section}</> : null}
+          {source.Clause ? <> - Clause: {source.Clause}</> : null}
         </p>
       </li>
     );
-  })
+  });
 
-  const sourcesList = (
-    <ul style={{ listStyle: "disc" }}>
-      {source}
-    </ul>
-  );
+  const sourcesList = <ul style={{ listStyle: "disc" }}>{source}</ul>;
 
   return (
     <Fragment>
@@ -175,8 +170,8 @@ function BotResponse(props) {
           </div>
           <p className={`${styles.p}`}>{props.messageValue}</p>
           <div className={`${styles.sourcesContainer}`}>
-          Sources:
-          {sourcesList}
+            Sources:
+            {sourcesList}
           </div>
         </div>
       </div>
