@@ -53,6 +53,8 @@ function NLP() {
       .then((data) => {
         const botAnswer = data.response.answer;
         const botSentiment = data.status;
+        const response = data.response;
+
         setChatLog((prevChat) => {
           return [
             ...prevChat,
@@ -60,6 +62,7 @@ function NLP() {
               messageValue={botAnswer}
               key={`${queryId}_BOT`}
               botSentiment={botSentiment}
+              response={response}
             />,
           ];
         });
@@ -87,7 +90,6 @@ function NLP() {
 
     fetchData(queryId);
 
-    // setIsCurrentQuestion(true);
   };
   useEffect(() => {
     chatLog.length > 0
