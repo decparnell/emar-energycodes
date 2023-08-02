@@ -49,3 +49,19 @@
 .secondNavbar{
     margin-top: -1%;
 }
+
+.donwloadContentContainer{
+    margin-left: 30%;
+    margin-top: -1.5%;
+}
+
+.downloadIcon{
+    width: 4%;
+    height: 1%;
+    color: white;
+    cursor: pointer;
+}
+
+.downloadIconGrenn:hover{
+    color: #4e8934;
+}

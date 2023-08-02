@@ -10,6 +10,8 @@ import Head from "next/head";
 import { LogUserInfo } from "../../../components/logging";
 import SecondNavbar from "../../../components/layout/secondHeader";
 import AppContext from "../../../components/context/AppContext";
+import { FaFileDownload } from "react-icons/fa";
+
 function Schedules({
   versions,
   parts,
@@ -41,6 +43,9 @@ function Schedules({
 
   const mandatoryTable = transformTable(optionalityInfo, parts);
 
+  const [urlDownload, setUrlDownload] = useState(null);
+  const [currentDocVersion, setCurrentDocVersion] = useState(docVersionName);
+
   const panelDashboard = parts.map((part) => {
     const dashboard = filterByFieldId(sections, "partId_FK", part.partId);
     return {
@@ -59,7 +64,14 @@ function Schedules({
       router.push(
         `/codes-schedules/${router.query.schedule_id}/${currentDocVersionName}`
       );
+      setUrlDownload(null);
+      setCurrentDocVersion(currentDocVersion);
+      handleDownloadDoc();
     }
+    
+    setUrlDownload(null);
+    setCurrentDocVersion(currentDocVersion);
+    handleDownloadDoc();
   }, [latestDataSpecVersion]);
 
   const [componentsData, setComponentsData] = useState([]);
@@ -82,13 +94,13 @@ function Schedules({
 
   useEffect(() => {
     LogUserInfo(`${docInfo.documentName} V${docVersionName}`);
+    handleDownloadDoc();
     fetchData();
   }, []);
 
   /* ****FUNCTIONS**** */
   //client-side fetch data, loading more components of each section
   const fetchData = async () => {
-    console.log("fetch data");
     const incrementalStartVal = 21;
     setIsLoading(true);
     setError(null);
@@ -112,7 +124,19 @@ function Schedules({
     } finally {
       console.log(componentsData);
     }
-    console.log(startVal);
+  };
+
+  const handleDownloadDoc = async () => {
+    console.log("currentDocVersion",currentDocVersion);
+    try {
+      const response = await fetch(
+        `https://prod-03.uksouth.logic.azure.com/workflows/076c8da5b74d452abc028069f5a1ac4e/triggers/manual/paths/invoke/searchValue/${scheduleName}/versionNumber/${currentDocVersion}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wywtlxVddPbnw_SwqTbYDKCPB_9rfU085Qb5IvDk0A4`
+      );
+      const urllinkJson = await response.json();
+      setUrlDownload(urllinkJson.url);
+    } catch (error) {
+      setError(error);
+    }
   };
 
   /* create data for mandatory table, X axis being parts, Y axis optionality owners.
@@ -197,6 +221,16 @@ function Schedules({
           stateSet={setCurrentSections}
           fetchData={fetchData}
         />
+      </div>
+      <div className={styles.donwloadContentContainer} >
+        {urlDownload ? (
+         urlDownload != "unavailable" ? 
+          <a href={urlDownload} download>
+            <FaFileDownload className={`${styles.downloadIcon} ${styles.downloadIconGrenn}`} />
+          </a> : null
+        ) : (
+          <span>Loading...</span>
+        )}
       </div>
       <div className={styles.infinitescrollMainContainer}>
         <h3 className={styles.headers}>
