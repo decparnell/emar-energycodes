@@ -10,7 +10,7 @@ import Head from "next/head";
 import { LogUserInfo } from "../../../components/logging";
 import SecondNavbar from "../../../components/layout/secondHeader";
 import AppContext from "../../../components/context/AppContext";
-import { FaFileDownload } from "react-icons/fa";
+import DocumentDownload from "../../../components/documentDownload";
 
 function Schedules({
   versions,
@@ -64,7 +64,6 @@ function Schedules({
         `/codes-schedules/${router.query.schedule_id}/${currentDocVersionName}`
       );
     }
-  
   }, [latestDataSpecVersion]);
 
   const [componentsData, setComponentsData] = useState([]);
@@ -218,16 +217,7 @@ function Schedules({
           fetchData={fetchData}
         />
       </div>
-      <div className={styles.donwloadContentContainer} >
-        {urlDownload ? (
-         urlDownload != "unavailable" ? 
-          <a href={urlDownload} download>
-            <FaFileDownload className={`${styles.downloadIcon} ${styles.downloadIconGrenn}`} />
-          </a> : null
-        ) : (
-          <span>Loading...</span>
-        )}
-      </div>
+      <DocumentDownload type="schedule" url={urlDownload} />
       <div className={styles.infinitescrollMainContainer}>
         <h3 className={styles.headers}>
           {scheduleNumber
