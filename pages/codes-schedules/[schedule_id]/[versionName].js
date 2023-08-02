@@ -44,7 +44,6 @@ function Schedules({
   const mandatoryTable = transformTable(optionalityInfo, parts);
 
   const [urlDownload, setUrlDownload] = useState(null);
-  const [currentDocVersion, setCurrentDocVersion] = useState(docVersionName);
 
   const panelDashboard = parts.map((part) => {
     const dashboard = filterByFieldId(sections, "partId_FK", part.partId);
@@ -64,14 +63,8 @@ function Schedules({
       router.push(
         `/codes-schedules/${router.query.schedule_id}/${currentDocVersionName}`
       );
-      setUrlDownload(null);
-      setCurrentDocVersion(currentDocVersion);
-      handleDownloadDoc();
     }
-    
-    setUrlDownload(null);
-    setCurrentDocVersion(currentDocVersion);
-    handleDownloadDoc();
+  
   }, [latestDataSpecVersion]);
 
   const [componentsData, setComponentsData] = useState([]);
@@ -97,6 +90,10 @@ function Schedules({
     handleDownloadDoc();
     fetchData();
   }, []);
+
+  useEffect(() => {
+    handleDownloadDoc();
+  }, [docVersionName]);
 
   /* ****FUNCTIONS**** */
   //client-side fetch data, loading more components of each section
@@ -127,10 +124,9 @@ function Schedules({
   };
 
   const handleDownloadDoc = async () => {
-    console.log("currentDocVersion",currentDocVersion);
     try {
       const response = await fetch(
-        `https://prod-03.uksouth.logic.azure.com/workflows/076c8da5b74d452abc028069f5a1ac4e/triggers/manual/paths/invoke/searchValue/${scheduleName}/versionNumber/${currentDocVersion}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wywtlxVddPbnw_SwqTbYDKCPB_9rfU085Qb5IvDk0A4`
+        `https://prod-03.uksouth.logic.azure.com/workflows/076c8da5b74d452abc028069f5a1ac4e/triggers/manual/paths/invoke/searchValue/${scheduleName}/versionNumber/${docVersionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wywtlxVddPbnw_SwqTbYDKCPB_9rfU085Qb5IvDk0A4`
       );
       const urllinkJson = await response.json();
       setUrlDownload(urllinkJson.url);
