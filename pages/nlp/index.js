@@ -39,7 +39,7 @@ function NLP() {
             return [
               ...prevChat,
               <BotResponse
-                messageValue={"An error occurred, please try again later"}
+                messageValue="An error occurred, please try again later"
                 key={`${queryId}_BOT_ERROR`}
               />,
             ];
@@ -51,7 +51,6 @@ function NLP() {
         return response.json();
       })
       .then((data) => {
-        const botAnswer = data.response.answer;
         const botSentiment = data.status;
         const response = data.response;
 
@@ -59,7 +58,6 @@ function NLP() {
           return [
             ...prevChat,
             <BotResponse
-              messageValue={botAnswer}
               key={`${queryId}_BOT`}
               botSentiment={botSentiment}
               response={response}
@@ -89,7 +87,6 @@ function NLP() {
     setBotIsTyping(true);
 
     fetchData(queryId);
-
   };
   useEffect(() => {
     chatLog.length > 0

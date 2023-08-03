@@ -5,6 +5,9 @@ import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
 
 function BotResponse(props) {
+  const responseObj = props.response;
+  const message = props.messageValue ? props.messageValue : responseObj.answer;
+  const messageSentiment = props.botSentiment;
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;
   //maybe make some of these into an array... its busy
   const [copiedText, setCopiedText] = useState("");
@@ -92,20 +95,44 @@ function BotResponse(props) {
   //Checking to see if the data renders correctly
   //Needs a check to use either contextDocuments / verifiedSources
 
-  const source = props.response.contextDocuments.map((source) => {
-    console.log(source[0]);
-    return (
-      <li>
-        <p className={`${styles.p}`}>
-          {source[0]} - Version: {source.Version} - Part: {source.Part}
-          {source.Section ? <> - Section: {source.Section}</> : null}
-          {source.Clause ? <> - Clause: {source.Clause}</> : null}
-        </p>
-      </li>
-    );
-  });
+  const sourceObj =
+    messageSentiment === "complete_answer"
+      ? responseObj.verifiedSources
+      : messageSentiment === "partial_answer"
+      ? responseObj.contextDocuments
+      : null;
 
-  const sourcesList = <ul style={{ listStyle: "disc" }}>{source}</ul>;
+  const sources = sourceObj
+    ? sourceObj.map((source) => {
+        const key0 = Object.keys(source)[0];
+        return (
+          <li>
+            {key0.toLowerCase() !== "definition" ? (
+              <p className={`${styles.p}`}>
+                <b>
+                  {source[key0]} V{source.Version}
+                </b>{" "}
+                -{" "}
+                {source.Part.toLowerCase() !== "main"
+                  ? `${source.Part}  -`
+                  : null}
+                {source.Section ? <> {source.Section}</> : null}
+                {source.Clause ? <> - {source.Clause}</> : null}
+              </p>
+            ) : (
+              <p className={`${styles.p}`}>
+                <b>
+                  {source[key0]} V{source.Version}
+                </b>{" "}
+                - {source.Part}
+              </p>
+            )}
+          </li>
+        );
+      })
+    : null;
+
+  const sourcesList = <ul style={{ listStyle: "disc" }}>{sources}</ul>;
 
   return (
     <Fragment>
@@ -114,9 +141,9 @@ function BotResponse(props) {
         <div
           className={`${styles.botMessage}`}
           style={
-            props.botSentiment === "complete_answer"
+            messageSentiment === "complete_answer"
               ? { borderColor: "forestgreen" }
-              : props.botSentiment === "partial_answer"
+              : messageSentiment === "partial_answer"
               ? { borderColor: "#FFEB3A" }
               : { borderColor: "orangered" }
           }
@@ -168,10 +195,9 @@ function BotResponse(props) {
               />
             </button>
           </div>
-          <p className={`${styles.p}`}>{props.messageValue}</p>
+          <p className={`${styles.p}`}>{message}</p>
           <div className={`${styles.sourcesContainer}`}>
-            Sources:
-            {sourcesList}
+            {sourcesList ? sourcesList : null}
           </div>
         </div>
       </div>

@@ -9,7 +9,7 @@ export default function handler(req, res) {
       temperature: 0.1,
       max_tokens: 1000,
     },
-    user_id: encryptWithAES(req.session.user.name_id),
+    user_id: encryptWithAES(/* req.session.user.name_id */),
     query_timestamp: queryTimestamp,
     query_id: queryId,
     ui_version: uiVersion,
