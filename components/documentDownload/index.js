@@ -19,13 +19,13 @@ function DocumentDownload(props) {
     <div className={styles.donwloadContentContainer}>
       {urlDownload ? (
         urlDownload != "unavailable" ? (
-          <a href={urlDownload} download>
-            <OnHoverToolTip title={title}>
+          <OnHoverToolTip title={title}>
+            <a href={urlDownload} download>
               <FaFileDownload
                 className={`${styles.downloadIcon} ${styles.downloadIconGrenn}`}
               />
-            </OnHoverToolTip>
-          </a>
+            </a>
+          </OnHoverToolTip>
         ) : null
       ) : (
         <span>Loading...</span>
