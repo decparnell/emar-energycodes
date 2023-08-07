@@ -103,11 +103,26 @@ const ResultsTable = (props) => {
     return jsxArray;
   }
 
-  function generateBaseLink(item) {
-    const currentDocVersionName = currentVersionMapping.filter((subitem) => subitem.documentId == item.documentId_FK)[0].docVersionName;
-    return `/codes-schedules/${item.documentId_FK}/${currentDocVersionName}`;
-  }
+  const GenerateSchedulesRow = (props) => {
+    const filteredMapping = currentVersionMapping.filter((subitem) => subitem.documentId == props.item.documentId_FK);
 
+    if (filteredMapping.length != 0) {
+      const currentDocVersionName = filteredMapping[0].docVersionName;
+      const baseLink = `/codes-schedules/${props.item.documentId_FK}/${currentDocVersionName}`;
+      return (
+        <Link
+          key={props.index}
+          href={baseLink}
+        >
+          <tr>{returnTableDataForHeaders(props.item)}</tr>
+        </Link>
+      );
+    } else {
+      return (
+        <tr key={props.index}>{returnTableDataForHeaders(props.item)}</tr>
+      );
+    }
+  }
 
   return (
     <InfiniteScroll
@@ -130,14 +145,7 @@ const ResultsTable = (props) => {
         <tbody>
           {searchType === "Codes Schedules" ?
             data.map((item, index) => {
-              return (
-                <Link
-                  key={index}
-                  href={generateBaseLink(item)}
-                >
-                  <tr>{returnTableDataForHeaders(item)}</tr>
-                </Link>
-              );
+                return (<GenerateSchedulesRow item={item} index={index}/>);
             }) :
             data.map((item, index) => {
               if (typeof baseLink !== "undefined") {
