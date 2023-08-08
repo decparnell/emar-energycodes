@@ -3,7 +3,6 @@ import copy from "copy-to-clipboard";
 import { BiSupport, BiCopyAlt, BiDislike, BiLike } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
-
 function BotResponse(props) {
   const responseObj = props.response;
   const message = props.messageValue ? props.messageValue : responseObj.answer;
@@ -22,7 +21,7 @@ function BotResponse(props) {
 
   const copyToClipboardHandler = () => {
     setCopyIconClicked(true);
-    setCopiedText(props.messageValue);
+    setCopiedText(message);
     copy(copiedText);
   };
 
@@ -105,29 +104,35 @@ function BotResponse(props) {
   const sources = sourceObj
     ? sourceObj.map((source) => {
         const key0 = Object.keys(source)[0];
+        const hrefValue =
+          key0.toLowerCase() !== "definition"
+            ? `/codes-schedules/${source.documentId_FK}/${source.Version}`
+            : `/codes-schedules/definitions/${source.documentId_FK}`;
         return (
-          <li>
-            {key0.toLowerCase() !== "definition" ? (
-              <p className={`${styles.p}`}>
-                <b>
-                  {source[key0]} V{source.Version}
-                </b>{" "}
-                -{" "}
-                {source.Part.toLowerCase() !== "main"
-                  ? `${source.Part}  -`
-                  : null}
-                {source.Section ? <> {source.Section}</> : null}
-                {source.Clause ? <> - {source.Clause}</> : null}
-              </p>
-            ) : (
-              <p className={`${styles.p}`}>
-                <b>
-                  {source[key0]} V{source.Version}
-                </b>{" "}
-                - {source.Part}
-              </p>
-            )}
-          </li>
+          <a href={hrefValue} rel="noopener noreferrer" target="_blank">
+            <li>
+              {key0.toLowerCase() !== "definition" ? (
+                <p className={`${styles.p} pointer`}>
+                  <b>
+                    {source[key0]} V{source.Version}
+                  </b>{" "}
+                  -{" "}
+                  {source.Part.toLowerCase() !== "main"
+                    ? `${source.Part}  -`
+                    : null}
+                  {source.Section ? <> {source.Section}</> : null}
+                  {source.Clause ? <> - {source.Clause}</> : null}
+                </p>
+              ) : (
+                <p className={`${styles.p}`}>
+                  <b>
+                    {source[key0]} V{source.Version}
+                  </b>{" "}
+                  - {source.Part}
+                </p>
+              )}
+            </li>
+          </a>
         );
       })
     : null;
