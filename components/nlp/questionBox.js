@@ -37,6 +37,10 @@ function QuestionBox(props) {
 
   const pressEnterHandler = (event) => {
     if (event.keyCode == 13 && event.shiftKey == false) {
+      if (props.isTyping === true)
+      {
+        return;
+      }
       event.preventDefault();
       props.onAskQuestion();
       disableButton();

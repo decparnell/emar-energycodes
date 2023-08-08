@@ -39,7 +39,7 @@ function NLP() {
             return [
               ...prevChat,
               <BotResponse
-                messageValue={"An error occurred, please try again later"}
+                messageValue="An error occurred, please try again later"
                 key={`${queryId}_BOT_ERROR`}
               />,
             ];
@@ -51,15 +51,16 @@ function NLP() {
         return response.json();
       })
       .then((data) => {
-        const botAnswer = data.response.answer;
         const botSentiment = data.status;
+        const response = data.response;
+
         setChatLog((prevChat) => {
           return [
             ...prevChat,
             <BotResponse
-              messageValue={botAnswer}
               key={`${queryId}_BOT`}
               botSentiment={botSentiment}
+              response={response}
             />,
           ];
         });
@@ -86,8 +87,6 @@ function NLP() {
     setBotIsTyping(true);
 
     fetchData(queryId);
-
-    // setIsCurrentQuestion(true);
   };
   useEffect(() => {
     chatLog.length > 0
@@ -111,14 +110,14 @@ function NLP() {
       </Head>
       <div className={styles.container}>
         <h1 className={styles.title}>NLP</h1>
-        <section className={`${styles.mainContentContainer} `}>
+        <section className={`${styles.mainContentContainer}`}>
           {chatLog.length > 0 && (
             <QuestionHistory
               questionHistory={userQuestionHistory}
               setQuery={setQuery}
             />
           )}
-          <div className={`${styles.conversationContainer} `}>
+          <div className={`${styles.conversationContainer}`}>
             <div className={`${styles.chatBox} box`}>
               <ChatBox isTyping={botIsTyping} chatLog={chatLog} />
             </div>
