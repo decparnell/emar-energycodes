@@ -117,11 +117,16 @@ const ResultsTable = (props) => {
       const baseLink = `/codes-schedules/${props.item.documentId_FK}/${currentDocVersionName}`;
       return (
         <Link key={props.index} href={baseLink}>
-          <tr>{returnTableDataForHeaders(props.item)}</tr>
+          <tr key={props.index}>{returnTableDataForHeaders(props.item)}</tr>
         </Link>
       );
     } else {
-      return <tr key={props.index}>{returnTableDataForHeaders(props.item)}</tr>;
+      const definitionLink = `/codes-schedules/definitions/${props.item.documentId_FK}`;
+      return (
+        <Link key={props.index} href={definitionLink}>
+          <tr key={props.index}>{returnTableDataForHeaders(props.item)}</tr>
+        </Link>
+      );
     }
   };
 
@@ -152,24 +157,24 @@ const ResultsTable = (props) => {
         <tbody>
           {searchType === "Codes Schedules"
             ? data.map((item, index) => {
-                return (
-                  <GenerateSchedulesRow item={item} index={index} key={index} />
-                );
-              })
+              return (
+                <GenerateSchedulesRow item={item} index={index} key={index} />
+              );
+            })
             : data.map((item, index) => {
-                if (typeof baseLink !== "undefined") {
-                  return (
-                    <Link
-                      key={index}
-                      href={`${baseLink}/${item[headers[0].dataColumn]}`}
-                    >
-                      <tr>{returnTableDataForHeaders(item)}</tr>
-                    </Link>
-                  );
-                } else {
-                  return <tr key={index}>{returnTableDataForHeaders(item)}</tr>;
-                }
-              })}
+              if (typeof baseLink !== "undefined") {
+                return (
+                  <Link
+                    key={index}
+                    href={`${baseLink}/${item[headers[0].dataColumn]}`}
+                  >
+                    <tr>{returnTableDataForHeaders(item)}</tr>
+                  </Link>
+                );
+              } else {
+                return <tr key={index}>{returnTableDataForHeaders(item)}</tr>;
+              }
+            })}
         </tbody>
       </table>
     </InfiniteScroll>
