@@ -4,7 +4,7 @@ import ScrollableFeed from "react-scrollable-feed";
 
 const QuestionHistory = (props) => {
   return (
-    <div title="Click to ask again" className={`${styles.questionHistory} box`}>
+    <div title="Click to ask again" className={`box ${styles.questionHistory}`}>
       <div className={`${styles.questionHistoryContainer}`}>
         <ScrollableFeed>
           {props.questionHistory.map((item) => {

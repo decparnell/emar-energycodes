@@ -109,7 +109,6 @@ function NLP() {
         <meta property="og:title" content="NLP" key="nlp" />
       </Head>
       <div className={styles.container}>
-        <h1 className={styles.title}>NLP</h1>
         <section className={`${styles.mainContentContainer}`}>
           {chatLog.length > 0 && (
             <QuestionHistory
@@ -118,7 +117,7 @@ function NLP() {
             />
           )}
           <div className={`${styles.conversationContainer}`}>
-            <div className={`${styles.chatBox} box`}>
+            <div className={` box ${styles.chatBox}`}>
               <ChatBox isTyping={botIsTyping} chatLog={chatLog} />
             </div>
             <QuestionBox

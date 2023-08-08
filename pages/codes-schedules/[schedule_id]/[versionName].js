@@ -55,16 +55,18 @@ function Schedules({
   });
 
   useEffect(() => {
-    const currentDocVersionName = currentVersionMapping.filter(
-      (item) => item.documentId == scheduleId
-    )[0].docVersionName;
+    if (currentVersionMapping != null) {
+      const currentDocVersionName = currentVersionMapping.filter(
+        (item) => item.documentId == scheduleId
+      )[0].docVersionName;
 
-    if (docVersionName !== currentDocVersionName) {
-      router.push(
-        `/codes-schedules/${router.query.schedule_id}/${currentDocVersionName}`
-      );
+      if (docVersionName !== currentDocVersionName) {
+        router.push(
+          `/codes-schedules/${router.query.schedule_id}/${currentDocVersionName}`
+        );
+      }
     }
-  }, [latestDataSpecVersion]);
+  }, [currentVersionMapping]);
 
   const [componentsData, setComponentsData] = useState([]);
   const [startVal, setStartVal] = useState(0);
