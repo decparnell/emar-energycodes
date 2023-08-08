@@ -103,6 +103,7 @@ function Schedules({
     setIsLoading(true);
     setError(null);
     try {
+      //getScheduleComponents-LogicApp
       const response = await fetch(
         `https://prod-15.uksouth.logic.azure.com/workflows/05ebc2734c5340bb83e78396ae4ca88f/triggers/request/paths/invoke/documentId/${scheduleId}/version/${docVersionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=-7jIZukmQmoddagifC2Z1FxKEWg7VLMfp2mcg-sAKPE`
       );
@@ -110,7 +111,7 @@ function Schedules({
       const newDataComponents = dataResJson;
       if (startVal === 0) {
         setComponentsData(newDataComponents);
-      } else if (typeof newDataComponents === "undefined") {
+      }else if (typeof newDataComponents === "undefined") {
         setHasMoreData(false);
       } else {
         setComponentsData((prevData) => [...prevData, ...newDataComponents]);
@@ -181,17 +182,17 @@ function Schedules({
 
   const groupSectionsAndComponents = sections
     .map((section) => {
-      const components = filterByFieldId(
-        componentsData,
-        "sectionId_FK",
-        section.sectionId
-      );
-      if (components.length > 0) {
-        return {
-          ...section,
-          components,
-        };
-      }
+        const components = filterByFieldId(
+          componentsData,
+          "sectionId_FK",
+          section.sectionId
+        );
+        if (components.length > 0) {
+          return {
+            ...section,
+            components,
+          };
+        }
     })
     .filter((group) => group !== undefined);
 

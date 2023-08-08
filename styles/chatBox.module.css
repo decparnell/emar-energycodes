@@ -3,7 +3,6 @@
   margin: 1%;
   display: flex;
   align-items: center;
-  
 }
 
 .botMessage {
@@ -246,4 +245,8 @@
   font-size: 15px;
   color: white;
   font-family: "Open Sans", cursive;
+}
+
+.sourcesContainer {
+  padding-top: 2%;
 }
