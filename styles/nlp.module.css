@@ -4,6 +4,7 @@
   flex-direction: column;
   overflow-x: hidden;
   overflow-y: hidden;
+  font-size: 1rem;
 }
 
 .mainContentContainer {
