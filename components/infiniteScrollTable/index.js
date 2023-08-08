@@ -32,7 +32,6 @@ const ResultsTable = (props) => {
   const value = useContext(AppContext);
   let { currentVersionMapping } = value.state;
 
-
   /////////FUNCTIONS///////////////
   // escape regex patterns in a string to produce a string-matching regex from it.
   // regex is used for highlighting search phrase in results
@@ -93,8 +92,13 @@ const ResultsTable = (props) => {
   function returnTableDataForHeaders(item) {
     let jsxArray = [];
     headers.map((row) => {
-      if (searchType === "Codes Schedules" && row.dataColumn === "componentText") {
-        jsxArray.push(<td key={row.title}>{formatSearchByType(item, searchValue)}</td>);
+      if (
+        searchType === "Codes Schedules" &&
+        row.dataColumn === "componentText"
+      ) {
+        jsxArray.push(
+          <td key={row.title}>{formatSearchByType(item, searchValue)}</td>
+        );
         //jsxArray.push(<td key={row.title}>{item[row.dataColumn]}</td>);
       } else {
         jsxArray.push(<td key={row.title}>{item[row.dataColumn]}</td>);
@@ -104,32 +108,35 @@ const ResultsTable = (props) => {
   }
 
   const GenerateSchedulesRow = (props) => {
-    const filteredMapping = currentVersionMapping.filter((subitem) => subitem.documentId == props.item.documentId_FK);
+    const filteredMapping = currentVersionMapping.filter(
+      (subitem) => subitem.documentId == props.item.documentId_FK
+    );
 
     if (filteredMapping.length != 0) {
       const currentDocVersionName = filteredMapping[0].docVersionName;
       const baseLink = `/codes-schedules/${props.item.documentId_FK}/${currentDocVersionName}`;
       return (
-        <Link
-          key={props.index}
-          href={baseLink}
-        >
+        <Link key={props.index} href={baseLink}>
           <tr>{returnTableDataForHeaders(props.item)}</tr>
         </Link>
       );
     } else {
-      return (
-        <tr key={props.index}>{returnTableDataForHeaders(props.item)}</tr>
-      );
+      return <tr key={props.index}>{returnTableDataForHeaders(props.item)}</tr>;
     }
-  }
+  };
 
   return (
     <InfiniteScroll
       dataLength={data.length}
       next={fetchData}
       hasMore={hasMore}
-      loader={data.length === 0 && !isLoading ? <p>No data available.</p> : <p>Loading...</p>}
+      loader={
+        data.length === 0 && !isLoading ? (
+          <p>No data available.</p>
+        ) : (
+          <p>Loading...</p>
+        )
+      }
       endMessage={<p>No more data to load.</p>}
       className={styles.scroll}
     >
@@ -143,25 +150,26 @@ const ResultsTable = (props) => {
         </thead>
 
         <tbody>
-          {searchType === "Codes Schedules" ?
-            data.map((item, index) => {
-                return (<GenerateSchedulesRow item={item} index={index}/>);
-            }) :
-            data.map((item, index) => {
-              if (typeof baseLink !== "undefined") {
+          {searchType === "Codes Schedules"
+            ? data.map((item, index) => {
                 return (
-                  <Link
-                    key={index}
-                    href={`${baseLink}/${item[headers[0].dataColumn]}`}
-                  >
-                    <tr>{returnTableDataForHeaders(item)}</tr>
-                  </Link>
+                  <GenerateSchedulesRow item={item} index={index} key={index} />
                 );
-              } else {
-                return <tr key={index}>{returnTableDataForHeaders(item)}</tr>;
-              }
-            })
-          }
+              })
+            : data.map((item, index) => {
+                if (typeof baseLink !== "undefined") {
+                  return (
+                    <Link
+                      key={index}
+                      href={`${baseLink}/${item[headers[0].dataColumn]}`}
+                    >
+                      <tr>{returnTableDataForHeaders(item)}</tr>
+                    </Link>
+                  );
+                } else {
+                  return <tr key={index}>{returnTableDataForHeaders(item)}</tr>;
+                }
+              })}
         </tbody>
       </table>
     </InfiniteScroll>
