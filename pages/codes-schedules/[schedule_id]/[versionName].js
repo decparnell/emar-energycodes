@@ -10,6 +10,8 @@ import Head from "next/head";
 import { LogUserInfo } from "../../../components/logging";
 import SecondNavbar from "../../../components/layout/secondHeader";
 import AppContext from "../../../components/context/AppContext";
+import DocumentDownload from "../../../components/documentDownload";
+
 function Schedules({
   versions,
   parts,
@@ -41,6 +43,8 @@ function Schedules({
 
   const mandatoryTable = transformTable(optionalityInfo, parts);
 
+  const [urlDownload, setUrlDownload] = useState(null);
+
   const panelDashboard = parts.map((part) => {
     const dashboard = filterByFieldId(sections, "partId_FK", part.partId);
     return {
@@ -51,16 +55,18 @@ function Schedules({
   });
 
   useEffect(() => {
-    const currentDocVersionName = currentVersionMapping.filter(
-      (item) => item.documentId == scheduleId
-    )[0].docVersionName;
+    if (currentVersionMapping != null) {
+      const currentDocVersionName = currentVersionMapping.filter(
+        (item) => item.documentId == scheduleId
+      )[0].docVersionName;
 
-    if (docVersionName !== currentDocVersionName) {
-      router.push(
-        `/codes-schedules/${router.query.schedule_id}/${currentDocVersionName}`
-      );
+      if (docVersionName !== currentDocVersionName) {
+        router.push(
+          `/codes-schedules/${router.query.schedule_id}/${currentDocVersionName}`
+        );
+      }
     }
-  }, [latestDataSpecVersion]);
+  }, [currentVersionMapping]);
 
   const [componentsData, setComponentsData] = useState([]);
   const [startVal, setStartVal] = useState(0);
@@ -82,17 +88,22 @@ function Schedules({
 
   useEffect(() => {
     LogUserInfo(`${docInfo.documentName} V${docVersionName}`);
+    handleDownloadDoc();
     fetchData();
   }, []);
+
+  useEffect(() => {
+    handleDownloadDoc();
+  }, [docVersionName]);
 
   /* ****FUNCTIONS**** */
   //client-side fetch data, loading more components of each section
   const fetchData = async () => {
-    console.log("fetch data");
     const incrementalStartVal = 21;
     setIsLoading(true);
     setError(null);
     try {
+      //getScheduleComponents-LogicApp
       const response = await fetch(
         `https://prod-15.uksouth.logic.azure.com/workflows/05ebc2734c5340bb83e78396ae4ca88f/triggers/request/paths/invoke/documentId/${scheduleId}/version/${docVersionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=-7jIZukmQmoddagifC2Z1FxKEWg7VLMfp2mcg-sAKPE`
       );
@@ -100,7 +111,7 @@ function Schedules({
       const newDataComponents = dataResJson;
       if (startVal === 0) {
         setComponentsData(newDataComponents);
-      } else if (typeof newDataComponents === "undefined") {
+      }else if (typeof newDataComponents === "undefined") {
         setHasMoreData(false);
       } else {
         setComponentsData((prevData) => [...prevData, ...newDataComponents]);
@@ -112,7 +123,18 @@ function Schedules({
     } finally {
       console.log(componentsData);
     }
-    console.log(startVal);
+  };
+
+  const handleDownloadDoc = async () => {
+    try {
+      const response = await fetch(
+        `https://prod-03.uksouth.logic.azure.com/workflows/076c8da5b74d452abc028069f5a1ac4e/triggers/manual/paths/invoke/searchValue/${scheduleName}/versionNumber/${docVersionName}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wywtlxVddPbnw_SwqTbYDKCPB_9rfU085Qb5IvDk0A4`
+      );
+      const urllinkJson = await response.json();
+      setUrlDownload(urllinkJson.url);
+    } catch (error) {
+      setError(error);
+    }
   };
 
   /* create data for mandatory table, X axis being parts, Y axis optionality owners.
@@ -160,17 +182,17 @@ function Schedules({
 
   const groupSectionsAndComponents = sections
     .map((section) => {
-      const components = filterByFieldId(
-        componentsData,
-        "sectionId_FK",
-        section.sectionId
-      );
-      if (components.length > 0) {
-        return {
-          ...section,
-          components,
-        };
-      }
+        const components = filterByFieldId(
+          componentsData,
+          "sectionId_FK",
+          section.sectionId
+        );
+        if (components.length > 0) {
+          return {
+            ...section,
+            components,
+          };
+        }
     })
     .filter((group) => group !== undefined);
 
@@ -198,6 +220,7 @@ function Schedules({
           fetchData={fetchData}
         />
       </div>
+      <DocumentDownload type="schedule" url={urlDownload} />
       <div className={styles.infinitescrollMainContainer}>
         <h3 className={styles.headers}>
           {scheduleNumber

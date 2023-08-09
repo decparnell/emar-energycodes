@@ -14,7 +14,7 @@ MyApp.getInitialProps = async () => {
   const allVersions = recVersionData.RecVersions;
   const liveVersion =
     allVersions.filter((version) => version.status === "Live")[0]?.name || "";
-  
+
   const versionMappingResponse = await fetch(
     `https://prod-15.uksouth.logic.azure.com/workflows/82a99e91c7b8468bb1eda20842ec26c1/triggers/manual/paths/invoke/recVersion/${liveVersion}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=UdfTkCt6-fScMlY692_H3A_3RwfuGkHN0GmEzIrwots`
 
@@ -37,8 +37,7 @@ function MyApp({
 }) {
   const [loading, setLoading] = useState(false);
   const [allDataSpecVersions, setAllDataSpecVersions] = useState(allVersions);
-  const [latestDataSpecVersion, setLatestDataSpecVersion] =
-    useState(liveVersion);
+  const [latestDataSpecVersion, setLatestDataSpecVersion] = useState(liveVersion);
   const [chosenTab, setChosenTab] = useState("Schedules");
   const [newsItems, setNewsItems] = useState();
   const [currentVersionMapping, setCurrentVersionMapping] =
@@ -49,7 +48,12 @@ function MyApp({
   const [errorLog, setErrorLog] = useState([]);
 
   useEffect(() => {
-    fetchVersionMapping(latestDataSpecVersion, setCurrentVersionMapping);
+    fetchVersionMapping(latestDataSpecVersion).then((data) => {
+      setCurrentVersionMapping(data);
+    })
+      .catch((error) => {
+        console.error("Error Fetching Version Mapping:", error);
+      });
   }, [latestDataSpecVersion]);
 
   return (

@@ -2,8 +2,7 @@ import { useContext } from "react";
 import AppContext from "../../context/AppContext";
 
 export async function fetchVersionMapping(
-  latestDataSpecVersion,
-  setCurrentVersionMapping
+  latestDataSpecVersion
 ) {
   const bodyData = JSON.stringify({ recVersion: latestDataSpecVersion });
   const options = {
@@ -16,7 +15,7 @@ export async function fetchVersionMapping(
   try {
     const response = await fetch("/api/versionMapping", options);
     const data = await response.json();
-    setCurrentVersionMapping(data);
+    return data;
   } catch (error) {
     console.error("Error Fetching Version Mapping:", error);
   }
@@ -36,7 +35,13 @@ export async function FetchRecVersions() {
   } catch (error) {
     console.error("Error fetching recVersions:", error);
   } finally {
-    fetchVersionMapping(latestDataSpecVersion, value.setCurrentVersionMapping);
+
+    fetchVersionMapping(latestDataSpecVersion).then((data) => {
+      value.setCurrentVersionMapping(data);
+    }).catch((error) => {
+      console.error("Error Fetching Version Mapping:", error);
+    });
+
     value.setLoading(false);
   }
 }

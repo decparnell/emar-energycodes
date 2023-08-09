@@ -37,6 +37,9 @@ function QuestionBox(props) {
 
   const pressEnterHandler = (event) => {
     if (event.keyCode == 13 && event.shiftKey == false) {
+      if (props.isTyping === true) {
+        return;
+      }
       event.preventDefault();
       props.onAskQuestion();
       disableButton();
@@ -45,13 +48,13 @@ function QuestionBox(props) {
 
   return (
     <form className={`${styles.questionBox}`} onSubmit={askQuestionHandler}>
-      <div className={`${styles.sendMessage} box`}>
+      <div className={`box ${styles.sendMessage}`}>
         <textarea
           className={`${styles.input}`}
           id="username"
           placeholder="Send a message"
           name="Question box"
-          rows="2"
+          rows="1.5"
           cols="11"
           wrap="soft"
           onChange={questionChangeHandler}

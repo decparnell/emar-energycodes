@@ -40,12 +40,18 @@ function ChatBox(props) {
     <ScrollableFeed>
       {showComponent && botPrompt}
       {props.chatLog}
-      <div className={`${styles.typingContainer}`}>
+      {/* <div className={`${styles.typingContainer}`}>
         {!showComponent && typingDots}
       </div>
       <div className={`${styles.typingContainerSmall}`}>
         {props.isTyping && typingDots}
-      </div>
+      </div> */}
+      {!showComponent && (
+        <div className={`${styles.typingContainer}`}>{typingDots}</div>
+      )}
+      {props.isTyping && (
+        <div className={`${styles.typingContainerSmall}`}>{typingDots}</div>
+      )}
     </ScrollableFeed>
   );
 }

@@ -3,8 +3,10 @@ import copy from "copy-to-clipboard";
 import { BiSupport, BiCopyAlt, BiDislike, BiLike } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
-
 function BotResponse(props) {
+  const responseObj = props.response;
+  const message = props.messageValue ? props.messageValue : responseObj.answer;
+  const messageSentiment = props.botSentiment;
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;
   //maybe make some of these into an array... its busy
   const [copiedText, setCopiedText] = useState("");
@@ -19,7 +21,7 @@ function BotResponse(props) {
 
   const copyToClipboardHandler = () => {
     setCopyIconClicked(true);
-    setCopiedText(props.messageValue);
+    setCopiedText(message);
     copy(copiedText);
   };
 
@@ -89,6 +91,59 @@ function BotResponse(props) {
     </Modal>
   );
 
+  //Checking to see if the data renders correctly
+  //Needs a check to use either contextDocuments / verifiedSources
+
+  const sourceObj =
+    messageSentiment === "complete_answer"
+      ? responseObj.verifiedSources
+      : messageSentiment === "partial_answer"
+      ? responseObj.contextDocuments
+      : null;
+
+  const sources = sourceObj
+    ? sourceObj.map((source, index) => {
+        const key0 = Object.keys(source)[0];
+        const hrefValue =
+          key0.toLowerCase() !== "definition"
+            ? `/codes-schedules/${source.documentId_FK}/${source.Version}`
+            : `/codes-schedules/definitions/${source.documentId_FK}`;
+        return (
+          <a
+            href={hrefValue}
+            rel="noopener noreferrer"
+            target="_blank"
+            key={index}
+          >
+            <li>
+              {key0.toLowerCase() !== "definition" ? (
+                <p className={`${styles.p} pointer`}>
+                  <b>
+                    {source[key0]} V{source.Version}
+                  </b>{" "}
+                  -{" "}
+                  {source.Part.toLowerCase() !== "main"
+                    ? `${source.Part}  -`
+                    : null}
+                  {source.Section ? <> {source.Section}</> : null}
+                  {source.Clause ? <> - {source.Clause}</> : null}
+                </p>
+              ) : (
+                <p className={`${styles.p}`}>
+                  <b>
+                    {source[key0]} V{source.Version}
+                  </b>{" "}
+                  - {source.Part}
+                </p>
+              )}
+            </li>
+          </a>
+        );
+      })
+    : null;
+
+  const sourcesList = <ul style={{ listStyle: "disc" }}>{sources}</ul>;
+
   return (
     <Fragment>
       <div className={`${styles.botResponse}`}>
@@ -96,9 +151,9 @@ function BotResponse(props) {
         <div
           className={`${styles.botMessage}`}
           style={
-            props.botSentiment === "complete_answer"
+            messageSentiment === "complete_answer"
               ? { borderColor: "forestgreen" }
-              : props.botSentiment === "partial_answer"
+              : messageSentiment === "partial_answer"
               ? { borderColor: "#FFEB3A" }
               : { borderColor: "orangered" }
           }
@@ -150,7 +205,10 @@ function BotResponse(props) {
               />
             </button>
           </div>
-          <p className={`${styles.p}`}>{props.messageValue}</p>
+          <p className={`${styles.p}`}>{message}</p>
+          <div className={`${styles.sourcesContainer}`}>
+            {sourcesList ? sourcesList : null}
+          </div>
         </div>
       </div>
       {feedbackModal}

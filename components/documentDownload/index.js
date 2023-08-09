@@ -1,12 +1,12 @@
 import styles from "../../styles/documentDownload.module.css";
-import { AiOutlineDownload } from "react-icons/ai";
+import { FaFileDownload } from "react-icons/fa";
 import OnHoverToolTip from "../helperFunctions/toolTip";
 function DocumentDownload(props) {
   const type = props.type;
-  const url = props.url;
+  const urlDownload = props.url;
   let title = "";
   type == "schedule"
-    ? (title = "Download Schedules")
+    ? (title = "Download Schedule")
     : type == "mm"
     ? (title = "Download Market Message")
     : type == "sv"
@@ -16,11 +16,21 @@ function DocumentDownload(props) {
     : "Download";
 
   return (
-    <a href={url} download>
-      <OnHoverToolTip title={title}>
-        <AiOutlineDownload className={styles.downloadLink} />
-      </OnHoverToolTip>
-    </a>
+    <div className={styles.donwloadContentContainer}>
+      {urlDownload ? (
+        urlDownload != "unavailable" ? (
+          <OnHoverToolTip title={title}>
+            <a href={urlDownload} download>
+              <FaFileDownload
+                className={`${styles.downloadIcon} ${styles.downloadIconGrenn}`}
+              />
+            </a>
+          </OnHoverToolTip>
+        ) : null
+      ) : (
+        <span>Loading...</span>
+      )}
+    </div>
   );
 }
 
