@@ -106,7 +106,7 @@ function BotResponse(props) {
         const key0 = Object.keys(source)[0];
         const hrefValue =
           key0.toLowerCase() !== "definition"
-            ? `/codes-schedules/${source.documentId_FK}/${source.Version}`
+            ? `/codes-schedules/${source.documentId_FK}/${source.Version}?componentId=${source.componentId}`
             : `/codes-schedules/definitions/${source.documentId_FK}`;
         return (
           <a
