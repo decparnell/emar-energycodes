@@ -28,9 +28,9 @@ app.prepare().then(() => {
   var sp_options, idp_options;
 
   //for testing on the pre-prod env
-  const serverEnv = "production";
+  const serverEnv = "development";
 
-  if (server.get("env") === "production" && serverEnv === "production") {
+  if (server.get("env") === "production" && serverEnv === "development") {
     server.set("trust proxy", 1); // trust first proxy
     sesh.cookie.secure = true; // serve secure cookies
     sp_options = moduleSettings.prod_sp_options;

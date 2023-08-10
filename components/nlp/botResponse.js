@@ -142,7 +142,9 @@ function BotResponse(props) {
       })
     : null;
 
-  const sourcesList = <ul style={{ listStyle: "disc" }}>{sources}</ul>;
+  const sourcesList = (
+    <ul style={{ listStyle: "disc", margin: 0 }}>{sources}</ul>
+  );
 
   return (
     <Fragment>

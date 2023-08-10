@@ -6,12 +6,10 @@ function UserQuestion(props) {
   const userIcon = <BiUser className={`${styles.userIcon}`} />;
 
   return (
-    <Fragment>
-      <div className={`${styles.userQuestion}`}>
-        {userIcon}
-        <p className={`${styles.chatMessage}`}>{props.messageValue}</p>
-      </div>
-    </Fragment>
+    <div className={`${styles.userQuestion}`}>
+      {userIcon}
+      <p className={`${styles.chatMessage}`}>{props.messageValue}</p>
+    </div>
   );
 }
 

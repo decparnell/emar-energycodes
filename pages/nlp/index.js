@@ -88,6 +88,7 @@ function NLP() {
 
     fetchData(queryId);
   };
+
   useEffect(() => {
     chatLog.length > 0
       ? setQuestionHistory([

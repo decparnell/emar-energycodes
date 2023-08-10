@@ -6,12 +6,14 @@ function QuestionBox(props) {
   const sendIcon = (
     <BiSend
       className={
-        props.isTyping || props.query === ""
+        props.isTyping && props.query === ""
           ? `${styles.sendIconDisabled}`
           : `${styles.sendIcon}`
       }
     />
   );
+
+  /* const sendIcon = <BiSend className={`${styles.sendIcon}`} />; */
 
   const [disableSubmitButton, setDisableSubmitButton] = useState(false);
 
@@ -22,7 +24,7 @@ function QuestionBox(props) {
   };
 
   const askQuestionHandler = (event) => {
-    if (props.query === "") {
+    if (props.isTyping && props.query === "") {
       setDisableSubmitButton(true);
     } else {
       event.preventDefault();
@@ -36,13 +38,16 @@ function QuestionBox(props) {
   };
 
   const pressEnterHandler = (event) => {
-    if (event.keyCode == 13 && event.shiftKey == false) {
-      if (props.isTyping === true) {
-        return;
-      }
+    if (
+      event.keyCode == 13 &&
+      event.shiftKey == false &&
+      props.isTyping === false
+    ) {
       event.preventDefault();
       props.onAskQuestion();
       disableButton();
+    } else {
+      return;
     }
   };
 

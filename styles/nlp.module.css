@@ -33,6 +33,9 @@
   width: 90%;
   margin-left: 4%;
   margin-top: 1%;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .sendMessage {
@@ -42,14 +45,18 @@
   align-items: center;
   justify-content: space-between;
   color: grey;
+  /* border:1px solid red; */
+
+
 }
 
 .input {
   width: 95%;
-  padding: 2% 1%;
+  padding: 0.5em 1em;
   border: none;
   font-size: 15px;
   font-family: "Open Sans", cursive;
+  /* border:1px solid red; */
 }
 
 .title {
@@ -62,23 +69,27 @@
 }
 
 .button {
-  width: 3.5%;
+  width: 3em;
+  height: 3em;
+  margin:0;
   padding: 0%;
-  background-color: white;
+  background-color: transparent;
   border: none;
   box-shadow: none;
 }
 
 .sendIcon {
-  height: 100%;
-  width: 100%;
+  width:100%;
+  height:100%;
   color: black;
   cursor: pointer;
+  margin:0;
+  padding:0
 }
 
 .sendIconDisabled {
-  height: 100%;
-  width: 100%;
   color: lightgray;
   cursor: default;
+  margin:0;
+  padding:0
 }
