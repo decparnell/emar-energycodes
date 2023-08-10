@@ -51,7 +51,7 @@ function NLP() {
         return response.json();
       })
       .then((data) => {
-        const botSentiment = data.status;
+        const botSentiment = data.status.answer_completness;
         const response = data.response;
 
         setChatLog((prevChat) => {
