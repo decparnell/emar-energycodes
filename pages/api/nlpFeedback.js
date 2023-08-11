@@ -1,11 +1,12 @@
 export default function handler(req, res) {
   // Get data submitted in request's body.
 
-  const { queryDate, queryId, rating, feedback } = req.body;
+  const { queryId, rating, feedback } = req.body;
 
-  const currentdate = new Date();
+  const currentdate = new Date().toISOString();
+  const currentdateIso = currentdate.substring(0, currentdate.indexOf("T"));
   const data = {
-    query_date: queryDate,
+    query_date: currentdateIso,
     query_id: queryId,
     user_rating: rating,
     user_feedback: feedback,

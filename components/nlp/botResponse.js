@@ -3,8 +3,13 @@ import copy from "copy-to-clipboard";
 import { BiSupport, BiCopyAlt, BiDislike, BiLike } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
+import { callFeedback } from "./callFeedback";
+import { ContactsMessage } from "./nlpContactsMessage";
+
 function BotResponse(props) {
-  const responseObj = props.response;
+  const responseObj = props.response.response;
+  const status = props.response.status;
+  console.log(status);
   const message = props.messageValue ? props.messageValue : responseObj.answer;
   const messageSentiment = props.botSentiment;
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;
@@ -16,8 +21,6 @@ function BotResponse(props) {
   const [copyIconClicked, setCopyIconClicked] = useState(false);
   const [dislikeIconClicked, setDislikeIconClicked] = useState(false);
   const [likeIconClicked, setLikeIconClicked] = useState(false);
-  const [disableLikeButton, setDisableLikeButton] = useState(false);
-  const [disableDislikeButton, setDisableDislikeButton] = useState(false);
 
   const copyToClipboardHandler = () => {
     setCopyIconClicked(true);
@@ -29,16 +32,12 @@ function BotResponse(props) {
     setOpenFeedbackModal(false);
     setOpenModal(true);
     setDislikeIconClicked(true);
-    setDisableLikeButton(true);
   };
 
   const likeFeedbackHandler = () => {
-    setOpenFeedbackModal(false);
-    setOpenModal(true);
+    callFeedback(responseObj.query_id, "good", "");
     setLikeIconClicked(true);
-    setDisableDislikeButton(true);
   };
-
   const closeModal = () => {
     setOpenModal(false);
   };
@@ -53,7 +52,8 @@ function BotResponse(props) {
     if (enteredFeedback.trim().length === 0) {
       return;
     }
-    //props.onSubmitFeedback(enteredFeedback);
+    callFeedback(responseObj.query_id, "bad", enteredFeedback);
+
     setEnteredFeedback("");
     closeModal();
     setOpenFeedbackModal(true);
@@ -177,7 +177,7 @@ function BotResponse(props) {
             <button
               title="Dislike Response"
               className={`${styles.button}`}
-              disabled={disableLikeButton}
+              disabled={dislikeIconClicked}
               onClick={dislikeFeedbackHandler}
             >
               <BiDislike
@@ -193,7 +193,7 @@ function BotResponse(props) {
             <button
               title="Like Response"
               className={`${styles.button}`}
-              disabled={disableDislikeButton}
+              disabled={likeIconClicked}
               onClick={likeFeedbackHandler}
             >
               <BiLike
@@ -213,6 +213,8 @@ function BotResponse(props) {
           </div>
         </div>
       </div>
+      {/*  adding in for contact details */}
+      {status.custom_topics ? <ContactsMessage botIcon={botIcon} /> : null}
       {feedbackModal}
       {openFeedbackModal && showSuccessModal}
     </Fragment>
