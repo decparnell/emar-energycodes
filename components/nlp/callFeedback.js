@@ -8,6 +8,7 @@ export const callFeedback = (queryId, rating, feedback) => {
     },
     body: bodyData,
   };
+
   fetch("/api/nlpFeedback", options)
     .then((response) => response.json())
     .then((data) => {

@@ -61,6 +61,7 @@ function NLP() {
               key={`${queryId}_BOT`}
               botSentiment={botSentiment}
               response={response}
+              queryId={queryId}
             />,
           ];
         });

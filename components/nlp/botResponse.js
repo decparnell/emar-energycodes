@@ -8,8 +8,8 @@ import { ContactsMessage } from "./nlpContactsMessage";
 
 function BotResponse(props) {
   const responseObj = props.response.response;
+
   const status = props.response.status;
-  console.log(status);
   const message = props.messageValue ? props.messageValue : responseObj.answer;
   const messageSentiment = props.botSentiment;
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;
@@ -32,11 +32,13 @@ function BotResponse(props) {
     setOpenFeedbackModal(false);
     setOpenModal(true);
     setDislikeIconClicked(true);
+    setLikeIconClicked(false);
   };
 
   const likeFeedbackHandler = () => {
-    callFeedback(responseObj.query_id, "good", "");
+    callFeedback(props.queryId, "positive", "");
     setLikeIconClicked(true);
+    setDislikeIconClicked(false);
   };
   const closeModal = () => {
     setOpenModal(false);
@@ -52,7 +54,7 @@ function BotResponse(props) {
     if (enteredFeedback.trim().length === 0) {
       return;
     }
-    callFeedback(responseObj.query_id, "bad", enteredFeedback);
+    callFeedback(props.queryId, "negative", enteredFeedback);
 
     setEnteredFeedback("");
     closeModal();
@@ -146,6 +148,17 @@ function BotResponse(props) {
     <ul style={{ listStyle: "disc", margin: 0 }}>{sources}</ul>
   );
 
+  const clickedStyle = `${styles.copyIcon} ${
+    copyIconClicked ? styles.copyIconClicked : null
+  }`;
+
+  const dislikedStyle = ` ${styles.dislikeIcon} ${
+    dislikeIconClicked ? styles.dislikeIconClicked : null
+  } ${likeIconClicked ? styles.disabled : null}`;
+
+  const likedStyle = ` ${styles.likeIcon} ${
+    likeIconClicked ? styles.likeIconClicked : null
+  } ${dislikeIconClicked ? styles.disabled : null}`;
   return (
     <Fragment>
       <div className={`${styles.botResponse}`}>
@@ -166,13 +179,7 @@ function BotResponse(props) {
               className={`${styles.button}`}
               onClick={copyToClipboardHandler}
             >
-              <BiCopyAlt
-                className={
-                  copyIconClicked
-                    ? `${styles.copyIconClicked}`
-                    : `${styles.copyIcon}`
-                }
-              />
+              <BiCopyAlt className={clickedStyle} />
             </button>
             <button
               title="Dislike Response"
@@ -180,15 +187,7 @@ function BotResponse(props) {
               disabled={dislikeIconClicked}
               onClick={dislikeFeedbackHandler}
             >
-              <BiDislike
-                className={
-                  dislikeIconClicked
-                    ? `${styles.dislikeIconClicked}`
-                    : likeIconClicked
-                    ? `${styles.dislikeIconDisabled}`
-                    : `${styles.dislikeIcon}`
-                }
-              />
+              <BiDislike className={dislikedStyle} />
             </button>
             <button
               title="Like Response"
@@ -196,15 +195,7 @@ function BotResponse(props) {
               disabled={likeIconClicked}
               onClick={likeFeedbackHandler}
             >
-              <BiLike
-                className={
-                  likeIconClicked
-                    ? `${styles.likeIconClicked}`
-                    : dislikeIconClicked
-                    ? `${styles.likeIconDisabled}`
-                    : `${styles.likeIcon}`
-                }
-              />
+              <BiLike className={likedStyle} />
             </button>
           </div>
           <p className={`${styles.p}`}>{message}</p>
@@ -214,9 +205,10 @@ function BotResponse(props) {
         </div>
       </div>
       {/*  adding in for contact details */}
-      {status.custom_topics ? <ContactsMessage botIcon={botIcon} /> : null}
+      {status.custom_topics.includes("contact_details") ? (
+        <ContactsMessage botIcon={botIcon} />
+      ) : null}
       {feedbackModal}
-      {openFeedbackModal && showSuccessModal}
     </Fragment>
   );
 }

@@ -168,15 +168,17 @@
 }
 
 .copyIcon:hover,.copyIconClicked {
-  color: #77a465
+  color: #77a465;
 }
 .dislikeIconClicked,.dislikeIcon:hover {
   color: orangered;
 }
-
-.dislikeIconDisabled,.likeIconDisabled {
+.dislikeIconClicked,.likeIconClicked{
+  cursor:default;
+}
+.disabled {
   color: lightgray;
-  cursor: default;
+  
 }
 
 .likeIconClicked,.likeIcon:hover {
