@@ -104,33 +104,31 @@ function NLP() {
   }, [chatLog]);
 
   return (
-    <>
-      <Head>
-        <title>NLP</title>
-        <meta property="og:title" content="NLP" key="nlp" />
-      </Head>
-      <div className={styles.container}>
-        <section className={`${styles.mainContentContainer}`}>
-          {chatLog.length > 0 && (
-            <QuestionHistory
-              questionHistory={userQuestionHistory}
-              setQuery={setQuery}
-            />
-          )}
-          <div className={`${styles.conversationContainer}`}>
-            <div className={` box ${styles.chatBox}`}>
-              <ChatBox isTyping={botIsTyping} chatLog={chatLog} />
-            </div>
-            <QuestionBox
-              onAskQuestion={questionHandler}
-              setQuery={setQuery}
-              query={query}
-              isTyping={botIsTyping}
-            />
+    <div className={styles.container}>
+      <section className={`${styles.mainContentContainer}`}>
+        <Head>
+          <title>NLP</title>
+          <meta property="og:title" content="NLP" key="nlp" />
+        </Head>
+        {chatLog.length > 0 && (
+          <QuestionHistory
+            questionHistory={userQuestionHistory}
+            setQuery={setQuery}
+          />
+        )}
+        <div className={`${styles.conversationContainer}`}>
+          <div className={` box ${styles.chatBox}`}>
+            <ChatBox isTyping={botIsTyping} chatLog={chatLog} />
           </div>
-        </section>
-      </div>
-    </>
+          <QuestionBox
+            onAskQuestion={questionHandler}
+            setQuery={setQuery}
+            query={query}
+            isTyping={botIsTyping}
+          />
+        </div>
+      </section>
+    </div>
   );
 }
 

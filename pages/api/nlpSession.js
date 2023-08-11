@@ -24,7 +24,8 @@ export default function handler(req, res) {
     body: bodyData,
   };
   return fetch(
-    "https://recco-openai-qa.azurewebsites.net/api/answer_query?code=WVTZzRNJ3Hi2fH_tKF3hHiXJsirhpa8qQATso6LFTqIOAzFuFICWGQ==",
+    "https://recco-openai-qa-prod.azurewebsites.net/api/answer_query?code=ioDCQKvxuvlEraJnocB1GQIIpK9dJI99kqsxDB8q4oUNAzFu3ussZw==",
+    //"https://recco-openai-qa.azurewebsites.net/api/answer_query?code=WVTZzRNJ3Hi2fH_tKF3hHiXJsirhpa8qQATso6LFTqIOAzFuFICWGQ==",
     options
   )
     .then((response) => response.json())

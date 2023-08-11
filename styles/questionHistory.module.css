@@ -16,30 +16,30 @@
 .questionHistoryContainer {
   width: 100%;
   padding-left: 6%;
-  max-height: 31.5rem;
+  max-height: 50rem;
   max-width: 18rem;
+
 }
 
 .questionContainer {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   width: 90%;
-  margin: 3% 0;
-  padding: 4%;
-  justify-content: flex-start;
+  margin: 0.5rem 0;
+  justify-content: space-evenly;
   border-bottom: solid;
   border-color: lightgrey;
-  border-bottom-width: 2px;
+  border-bottom-width: 1px;  
+  /* border: 1px solid red; */
 }
 
 .messageIcon {
-  height: 15%;
-  width: 15%;
+  width: 2em;
   color: #77a465;
 }
 
 .questionHistoryItem {
-  max-width: 10rem;
+  max-width: 20em;
   text-align: center;
   font-size: 16px;
   font-weight: bold;

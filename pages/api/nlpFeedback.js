@@ -3,6 +3,7 @@ export default function handler(req, res) {
 
   const { queryDate, queryId, rating, feedback } = req.body;
 
+  const currentdate = new Date();
   const data = {
     query_date: queryDate,
     query_id: queryId,
