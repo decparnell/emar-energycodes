@@ -17,21 +17,33 @@
 
 .conversationContainer {
   width: 100%;
-  height:85vh;
-  margin:0;
+  height:75vh;
+  margin-top: 2%;
   padding: 0;
+}
+
+.disclaimerContainer {
+  width: 90%;
+  height:6vh;
+  padding: 2%;
+  display: flex;
+  font-size: 12px;
+  margin-left: 5%;
+  text-align: center;
 }
 
 .chatBox {
   width: 95%;
   background-color: white;
   position: relative;
-  height:65vh;
+  height: 50vh;
+  margin-left: 3.5%;
+  margin-bottom: 3%;
 }
 
 .questionBox {
   width: 90%;
-  margin-left: 4%;
+  margin-left: 5%;
   margin-top: 1%;
 }
 

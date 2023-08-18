@@ -1,15 +1,14 @@
 .botResponse {
   width: 98%;
   margin: 0 1%;
-  padding:0;
+  padding-top: 1.5%;
   display: flex;
   align-items: center;
   z-index: 1;
-  position:relative;
+  position: relative;
 }
 
 .botMessage {
-  margin: 0 1em;
   padding: 0.5em;
   border-width: 5px 1.5px 1.5px;
   border-radius: 5px;
@@ -17,25 +16,22 @@
   border-color: grey;
   min-width: 50%;
   max-width: 75%;
-  
 }
 
 .p {
   margin: 0.1em 0;
   font-size: 1rem;
-  
 }
 
 .userQuestion {
   width: 98%;
   margin: 0 1%;
-  padding:0;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex-flow: row-reverse;
   border-color: black;
-  
 }
 
 .chatMessage {
@@ -128,6 +124,105 @@
   }
 }
 
+.link {
+  cursor: pointer;
+  text-decoration-line: underline;
+  color: #77a465;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  background-color: white;
+}
+
+.tipsMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  text-align: center;
+  margin-bottom: 5%;
+}
+
+.doCircle {
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  border-radius: 50%;
+  font-size: 30px;
+  color: #fff;
+  text-align: center;
+  background: #6e7f2d;
+}
+
+.dontCircle {
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  border-radius: 50%;
+  font-size: 30px;
+  color: #fff;
+  text-align: center;
+  background: #345b54;
+}
+
+.tips {
+  display: flex;
+  width: 90%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 2%;
+}
+
+.thumbsUp {
+  list-style-type: "👍    ";
+}
+
+.thumbsDown {
+  list-style-type: "👎    ";
+}
+
+.doBox {
+  margin: 1%;
+  padding: 2%;
+  height: 20.5rem;
+  width: 20rem;
+  border-style: solid;
+  border-width: 3px;
+  border-color: #a6bc43;
+  background-color: #d9e3b6;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.dontBox {
+  margin: 1%;
+  padding: 2%;
+  height: 20.5rem;
+  width: 20rem;
+  border-style: solid;
+  border-width: 3px;
+  border-color: #71aca3;
+  background-color: #c6dad8;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.li {
+  margin-bottom: 5%;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 70%;
+}
+
 .options {
   display: flex;
   justify-content: flex-end;
@@ -145,13 +240,14 @@
   height: 3em;
   width: 3em;
   color: #77a465;
+  margin-right: 1%;
 }
 
 .userIcon {
   height: 3em;
   width: 3em;
   color: #77a465;
-
+  margin-left: 1%;
 }
 
 .typingBotIcon {
@@ -160,28 +256,33 @@
   color: #77a465;
 }
 
-.copyIcon,.dislikeIcon,.likeIcon {
+.copyIcon,
+.dislikeIcon,
+.likeIcon {
   height: 2em;
   width: 2em;
   color: black;
-  margin-right: 10%
+  margin-right: 10%;
 }
 
-.copyIcon:hover,.copyIconClicked {
+.copyIcon:hover,
+.copyIconClicked {
   color: #77a465;
 }
-.dislikeIconClicked,.dislikeIcon:hover {
+.dislikeIconClicked,
+.dislikeIcon:hover {
   color: orangered;
 }
-.dislikeIconClicked,.likeIconClicked{
-  cursor:default;
+.dislikeIconClicked,
+.likeIconClicked {
+  cursor: default;
 }
 .disabled {
   color: lightgray;
-  
 }
 
-.likeIconClicked,.likeIcon:hover {
+.likeIconClicked,
+.likeIcon:hover {
   color: #77a465;
 }
 
@@ -215,5 +316,5 @@
 
 .sourcesContainer {
   padding-top: 0.5em;
-  margin:0
+  margin: 0;
 }
