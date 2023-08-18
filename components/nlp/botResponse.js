@@ -29,7 +29,7 @@ function BotResponse(props) {
     <p>
       I’ve reviewed the REC, but unfortunately I can’t find the answer to your
       question. Would you please rephrase your question. You can find question
-      tips from the link in my first message. Alternatively, you can
+      tips here. Alternatively, you can
       contact my colleagues at the REC through the{" "}
       <a href={"https://recportal.co.uk/web/guest/service-desk-landing"}>
         Service Desk
