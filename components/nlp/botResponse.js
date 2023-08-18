@@ -31,7 +31,7 @@ function BotResponse(props) {
       question. Would you please rephrase your question. You can find question
       tips here. Alternatively, you can
       contact my colleagues at the REC through the{" "}
-      <a className={`${styles.link}`} target="_blank" href={"https://recportal.co.uk/web/guest/service-desk-landing"}>
+      <a className={`${styles.link}`} target="_blank" rel="noreferrer" href={"https://recportal.co.uk/web/guest/service-desk-landing"}>
         Service Desk
       </a>{" "}
       , or by sending an email to{" "}
