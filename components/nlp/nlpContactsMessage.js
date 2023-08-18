@@ -9,12 +9,12 @@ export const ContactsMessage = (props) => {
   const message = (
     <p>
       You can find a list of REC Contact Details{" "}
-      <a className={`${styles.link}`} target="_blank" href={"https://recportal.co.uk/web/guest/service-desk-landing"}>
+      <a className={`${styles.link}`} target="_blank" rel="noreferrer" href={"https://recportal.co.uk/web/guest/service-desk-landing"}>
         here
       </a>
       . If this doesn’t provide you with the contact details you need, you can
       contact my colleagues at the REC through the{" "}
-      <a className={`${styles.link}`} target="_blank" href={"https://recportal.co.uk/web/guest/service-desk-landing"}>
+      <a className={`${styles.link}`} target="_blank" rel="noreferrer" href={"https://recportal.co.uk/web/guest/service-desk-landing"}>
         Service Desk
       </a>
       , or by sending an email to{" "}
