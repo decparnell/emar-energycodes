@@ -10,7 +10,6 @@ function BotResponse(props) {
   const responseObj = props.response.response;
 
   const status = props.response.status;
-  const message = props.messageValue ? props.messageValue : responseObj.answer;
   const messageSentiment = props.botSentiment;
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;
   //maybe make some of these into an array... its busy
@@ -21,6 +20,34 @@ function BotResponse(props) {
   const [copyIconClicked, setCopyIconClicked] = useState(false);
   const [dislikeIconClicked, setDislikeIconClicked] = useState(false);
   const [likeIconClicked, setLikeIconClicked] = useState(false);
+
+  const sendSupportEmailHandler = () => {
+    window.open("mailto:support@recmanager.co.uk?subject=Support query for ERIN");
+  };
+
+  const inappropriateResponseMessage = (
+    <p>
+      I’ve reviewed the REC, but unfortunately I can’t find the answer to your
+      question. Would you please rephrase your question. You can find question
+      tips from the link in my first message. Alternatively, you can
+      contact my colleagues at the REC through the{" "}
+      <a href={"https://recportal.co.uk/web/guest/service-desk-landing"}>
+        Service Desk
+      </a>{" "}
+      , or by sending an email to{" "}
+      <a className={`${styles.link}`} onClick={sendSupportEmailHandler}>
+        support@recmanager.co.uk
+      </a>
+      . They'll be more than happy to help you!"
+    </p>
+  );
+
+  const message =
+    messageSentiment === "failed_to_answer"
+      ? inappropriateResponseMessage
+      : props.messageValue
+      ? props.messageValue
+      : responseObj.answer;
 
   const copyToClipboardHandler = () => {
     setCopyIconClicked(true);
