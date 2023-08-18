@@ -31,14 +31,14 @@ function BotResponse(props) {
       question. Would you please rephrase your question. You can find question
       tips here. Alternatively, you can
       contact my colleagues at the REC through the{" "}
-      <a href={"https://recportal.co.uk/web/guest/service-desk-landing"}>
+      <a className={`${styles.link}`} target="_blank" href={"https://recportal.co.uk/web/guest/service-desk-landing"}>
         Service Desk
       </a>{" "}
       , or by sending an email to{" "}
       <a className={`${styles.link}`} onClick={sendSupportEmailHandler}>
         support@recmanager.co.uk
       </a>
-      . They'll be more than happy to help you!"
+      . They'll be more than happy to help you!
     </p>
   );
 

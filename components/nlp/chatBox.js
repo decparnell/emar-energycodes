@@ -4,6 +4,10 @@ import { BiSupport } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
 import { useEffect } from "react";
+import Image from "next/image";
+import image1 from "../../public/exampleQuestions1.png";
+import image2 from "../../public/exampleQuestions2.png";
+
 
 function ChatBox(props) {
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;
@@ -12,8 +16,10 @@ function ChatBox(props) {
 
   const [showComponent, setShowComponent] = useState(false);
   const [openTipsModal, setOpenTipsModal] = useState(false);
-  const [openExampleQuestions1Modal, setExampleQuestions1Modal] = useState(false);
-  const [openExampleQuestions2Modal, setExampleQuestions2Modal] = useState(false);
+  const [openExampleQuestions1Modal, setExampleQuestions1Modal] =
+    useState(false);
+  const [openExampleQuestions2Modal, setExampleQuestions2Modal] =
+    useState(false);
 
   useEffect(() => {
     setInterval(() => {
@@ -49,7 +55,7 @@ function ChatBox(props) {
         Hi! I am ERIN, the new REC knowledge-based tool that can help you
         explore and query the REC. I’ll also give you links to REC documents to
         give you further detail. If you want any tips on how to ask the best
-        questions, click {" "}
+        questions, click{"  "}
         <a className={`${styles.link}`} onClick={tipsModalHandler}>
           here.
         </a>
@@ -75,7 +81,8 @@ function ChatBox(props) {
           <a className={`${styles.link}`} onClick={exampleQuestions1Handler}>
             here
           </a>
-        .</p>
+          .
+        </p>
       </div>
       <div className={`${styles.tips}`}>
         <div className={`${styles.doBox}`}>
@@ -116,7 +123,7 @@ function ChatBox(props) {
 
   const tipsExamples1Modal = (
     <Modal open={openExampleQuestions1Modal} onClose={closeModal}>
-      <div className={`${styles.tipsMessage}`}>
+      <div className={`${styles.exampleImagesMessage}`}>
         <p>
           If you know the right terminology, try asking me questions using both
           the acronym and the exact REC term. I can then make sure I provide you
@@ -124,18 +131,31 @@ function ChatBox(props) {
         </p>
       </div>
       <div className={`${styles.exampleQuestions}`}>
-        <img src="../../public/exampleQuestions1.png" alt="example questions 1" />
+        <Image
+          className={`${styles.exampleQuestions}`}
+          src={image1}
+          height={200}
+          width={800}
+          alt="example questions 1"
+        />
       </div>
       <div className={`${styles.buttonContainer}`}>
-        <button className={`${styles.submit}`} onClick={tipsModalHandler}>Back</button>
-        <button className={`${styles.submit}`} onClick={exampleQuestions2Handler}>Next Example</button>
+        <button className={`${styles.submit}`} onClick={tipsModalHandler}>
+          Back
+        </button>
+        <button
+          className={`${styles.submit}`}
+          onClick={exampleQuestions2Handler}
+        >
+          Next Example
+        </button>
       </div>
     </Modal>
   );
 
   const tipsExamples2Modal = (
     <Modal open={openExampleQuestions2Modal} onClose={closeModal}>
-      <div className={`${styles.tipsMessage}`}>
+      <div className={`${styles.exampleImagesMessage}`}>
         <p>
           If the answer I’ve given is not quite what you are looking for, try
           and rephrase your questions to be more specific, so I can make sure my
@@ -144,9 +164,16 @@ function ChatBox(props) {
         </p>
       </div>
       <div className={`${styles.exampleQuestions}`}>
-        <img src="../../public/exampleQuestions2.png" alt="example questions 2" />
+        <Image
+          src={image2}
+          height={300}
+          width={800}
+          alt="example questions 2"
+        />
       </div>
-      <button className={`${styles.submit}`} onClick={exampleQuestions1Handler}>Back</button>
+      <button className={`${styles.submit}`} onClick={exampleQuestions1Handler}>
+        Back
+      </button>
     </Modal>
   );
 
