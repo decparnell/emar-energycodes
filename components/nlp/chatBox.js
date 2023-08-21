@@ -4,8 +4,8 @@ import { BiSupport } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
 import Image from "next/image";
-import image1 from "../../public/exampleQuestions1.png";
-import image2 from "../../public/exampleQuestions2.png";
+import image1 from "../../public/ExampleQuestions1.jpeg";
+import image2 from "../../public/ExampleQuestions2.jpeg";
 
 
 function ChatBox(props) {
@@ -86,7 +86,7 @@ function ChatBox(props) {
       <div className={`${styles.tips}`}>
         <div className={`${styles.doBox}`}>
           <div className={`${styles.doCircle}`}>Do</div>
-          <ul className={`${styles.thumbsUp}`}>
+          <ul>
             <li className={`${styles.li}`}>
               Use full sentences to ask your question
             </li>
@@ -102,7 +102,7 @@ function ChatBox(props) {
         </div>
         <div className={`${styles.dontBox}`}>
           <div className={`${styles.dontCircle}`}>Don't</div>
-          <ul className={`${styles.thumbsDown}`}>
+          <ul>
             <li className={`${styles.li}`}>
               Ask questions which aren't related to the REC
             </li>
@@ -133,8 +133,8 @@ function ChatBox(props) {
         <Image
           className={`${styles.exampleQuestions}`}
           src={image1}
-          height={200}
-          width={800}
+          height={350}
+          width={700}
           alt="example questions 1"
         />
       </div>
@@ -165,7 +165,7 @@ function ChatBox(props) {
       <div className={`${styles.exampleQuestions}`}>
         <Image
           src={image2}
-          height={300}
+          height={450}
           width={800}
           alt="example questions 2"
         />

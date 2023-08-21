@@ -149,7 +149,6 @@
   align-items: center;
   width: 90%;
   text-align: center;
-  margin-bottom: 2%;
 }
 
 .exampleQuestions {
@@ -164,7 +163,7 @@
   font-size: 30px;
   color: #fff;
   text-align: center;
-  background: #6e7f2d;
+  background: #4d8934;
 }
 
 .dontCircle {
@@ -175,7 +174,7 @@
   font-size: 30px;
   color: #fff;
   text-align: center;
-  background: #345b54;
+  background: #7b282e;
 }
 
 .tips {
@@ -187,14 +186,6 @@
   margin-bottom: 2%;
 }
 
-.thumbsUp {
-  list-style-type: "👍    ";
-}
-
-.thumbsDown {
-  list-style-type: "👎    ";
-}
-
 .doBox {
   margin: 1%;
   padding: 2%;
@@ -202,7 +193,7 @@
   width: 20rem;
   border-style: solid;
   border-width: 3px;
-  border-color: #a6bc43;
+  border-color: #4d8934;
   background-color: #d9e3b6;
   display: flex;
   flex-direction: column;
@@ -217,8 +208,8 @@
   width: 20rem;
   border-style: solid;
   border-width: 3px;
-  border-color: #71aca3;
-  background-color: #c6dad8;
+  border-color: #7b282e;
+  background-color: #ebaeb2;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
