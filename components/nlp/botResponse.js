@@ -6,8 +6,8 @@ import Modal from "../modal/index.js";
 import { callFeedback } from "./callFeedback";
 import { ContactsMessage } from "./nlpContactsMessage";
 import Image from "next/image";
-import image1 from "../../public/exampleQuestions1.png";
-import image2 from "../../public/exampleQuestions2.png";
+import image1 from "../../public/ExampleQuestions1.jpeg";
+import image2 from "../../public/ExampleQuestions2.jpeg";
 
 function BotResponse(props) {
   const responseObj = props.response.response;
@@ -119,7 +119,7 @@ function BotResponse(props) {
         <Image
           className={`${styles.exampleQuestions}`}
           src={image1}
-          height={200}
+          height={450}
           width={800}
           alt="example questions 1"
         />
@@ -151,7 +151,7 @@ function BotResponse(props) {
       <div className={`${styles.exampleQuestions}`}>
         <Image
           src={image2}
-          height={300}
+          height={600}
           width={800}
           alt="example questions 2"
         />
@@ -163,7 +163,7 @@ function BotResponse(props) {
   );
 
   const inappropriateResponseMessage = (
-    <p>
+    <>
       I’ve reviewed the REC, but unfortunately I can’t find the answer to your
       question. Would you please rephrase your question? You can find question
       tips{" "}
@@ -178,21 +178,53 @@ function BotResponse(props) {
         href={"https://recportal.co.uk/web/guest/service-desk-landing"}
       >
         Service Desk
-      </a>{" "}
+      </a>
       , or by sending an email to{" "}
       <a className={`${styles.link}`} onClick={sendSupportEmailHandler}>
         support@recmanager.co.uk
       </a>
       . They'll be more than happy to help you!
-    </p>
+    </>
   );
 
-  const message =
-    messageSentiment === "failed_to_answer"
-      ? inappropriateResponseMessage
-      : props.messageValue
-      ? props.messageValue
-      : responseObj.answer;
+  //Contacts message work needs refactoring in Sprint 2
+  const contactsMessage = (
+    <>
+      You can find the list of REC contact details and the link to the Service Desk{" "}
+      <a className={`${styles.link}`} target="_blank" rel="noreferrer" href={"https://recportal.co.uk/web/guest/service-desk-landing"}>
+        here
+      </a>, or by sending an email to{" "}
+      <a className={`${styles.link}`} onClick={sendSupportEmailHandler}>
+        support@recmanager.co.uk
+      </a>
+      . They'll be more than happy to help you.
+    </>
+  );
+
+  const containsContactDetails = status.custom_topics.includes("contact_details");
+  const messageFailed = messageSentiment === "failed_to_answer";
+  const nullAnswer = responseObj.answer === "Please find the details below:";
+  const partialContactsMessage = (status.custom_topics.includes("contact_details") && messageSentiment === "partial_answer");
+
+  const message = () => {
+    if (messageFailed) {
+      //if (containsContactDetails) {
+      if (props.response.query.includes("contact")) {
+        return <p className={`${styles.p}`}>{contactsMessage}</p>;
+      }
+      return <p className={`${styles.p}`}>{inappropriateResponseMessage}</p>;
+    }
+    else if (nullAnswer) {
+      return <p className={`${styles.p}`}>{contactsMessage}</p>;
+    }
+    return <p className={`${styles.p}`}>{responseObj.answer}</p>;
+  };
+
+  // const messages = messageFailed
+  //   ? inappropriateResponseMessage
+  //   : props.messageValue
+  //   ? props.messageValue
+  //   : responseObj.answer;
 
   const copyToClipboardHandler = () => {
     setCopyIconClicked(true);
@@ -212,7 +244,7 @@ function BotResponse(props) {
     setLikeIconClicked(true);
     setDislikeIconClicked(false);
   };
-  
+
   const closeModal = () => {
     setOpenModal(false);
   };
@@ -372,14 +404,14 @@ function BotResponse(props) {
               <BiLike className={likedStyle} />
             </button>
           </div>
-          <p className={`${styles.p}`}>{message}</p>
+          {message()}
           <div className={`${styles.sourcesContainer}`}>
             {sourcesList ? sourcesList : null}
           </div>
         </div>
       </div>
       {/*  adding in for contact details */}
-      {status.custom_topics.includes("contact_details") ? (
+      {partialContactsMessage ? (
         <ContactsMessage botIcon={botIcon} />
       ) : null}
       {feedbackModal}

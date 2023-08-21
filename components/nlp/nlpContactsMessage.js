@@ -7,7 +7,7 @@ export const ContactsMessage = (props) => {
   };
 
   const message = (
-    <p>
+    <>
       You can find the list of REC contact details and the link to the Service Desk{" "}
       <a className={`${styles.link}`} target="_blank" rel="noreferrer" href={"https://recportal.co.uk/web/guest/service-desk-landing"}>
         here
@@ -16,7 +16,7 @@ export const ContactsMessage = (props) => {
         support@recmanager.co.uk
       </a>
       . They'll be more than happy to help you.
-    </p>
+    </>
   );
   
   return (
