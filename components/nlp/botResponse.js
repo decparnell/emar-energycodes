@@ -5,6 +5,9 @@ import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
 import { callFeedback } from "./callFeedback";
 import { ContactsMessage } from "./nlpContactsMessage";
+import Image from "next/image";
+import image1 from "../../public/exampleQuestions1.png";
+import image2 from "../../public/exampleQuestions2.png";
 
 function BotResponse(props) {
   const responseObj = props.response.response;
@@ -21,17 +24,159 @@ function BotResponse(props) {
   const [dislikeIconClicked, setDislikeIconClicked] = useState(false);
   const [likeIconClicked, setLikeIconClicked] = useState(false);
 
-  const sendSupportEmailHandler = () => {
-    window.open("mailto:support@recmanager.co.uk?subject=Support query for ERIN");
+  const [openTipsModal, setOpenTipsModal] = useState(false);
+  const [openExampleQuestions1Modal, setExampleQuestions1Modal] =
+    useState(false);
+  const [openExampleQuestions2Modal, setExampleQuestions2Modal] =
+    useState(false);
+
+  const closeTipsModal = () => {
+    setOpenTipsModal(false);
+    setExampleQuestions1Modal(false);
+    setExampleQuestions2Modal(false);
   };
+
+  const tipsModalHandler = () => {
+    closeTipsModal();
+    setOpenTipsModal(true);
+  };
+
+  const exampleQuestions1Handler = () => {
+    closeTipsModal();
+    setExampleQuestions1Modal(true);
+  };
+
+  const exampleQuestions2Handler = () => {
+    closeTipsModal();
+    setExampleQuestions2Modal(true);
+  };
+
+  const sendSupportEmailHandler = () => {
+    window.open(
+      "mailto:support@recmanager.co.uk?subject=Support query for ERIN"
+    );
+  };
+
+  const tipsModal = (
+    <Modal open={openTipsModal} onClose={closeTipsModal}>
+      <div className={`${styles.tipsMessage}`}>
+        <p>
+          Hi! I’ve put together some helpful hints when asking me questions. If
+          you would also like to see some examples, click{" "}
+          <a className={`${styles.link}`} onClick={exampleQuestions1Handler}>
+            here
+          </a>
+          .
+        </p>
+      </div>
+      <div className={`${styles.tips}`}>
+        <div className={`${styles.doBox}`}>
+          <div className={`${styles.doCircle}`}>Do</div>
+          <ul className={`${styles.thumbsUp}`}>
+            <li className={`${styles.li}`}>
+              Use full sentences to ask your question
+            </li>
+            <li className={`${styles.li}`}>
+              Use language that is seen as REC terminology
+            </li>
+            <li className={`${styles.li}`}>
+              Access the source documentation which is provided alongside the
+              answer
+            </li>
+            <li>Provide feedback to allow for continuous improvement</li>
+          </ul>
+        </div>
+        <div className={`${styles.dontBox}`}>
+          <div className={`${styles.dontCircle}`}>Don't</div>
+          <ul className={`${styles.thumbsDown}`}>
+            <li className={`${styles.li}`}>
+              Ask questions which aren't related to the REC
+            </li>
+            <li className={`${styles.li}`}>
+              Navigate away before copying the answers to the questions you have
+              asked to the model
+            </li>
+            <li className={`${styles.li}`}>Forget to provide feedback</li>
+            <li>
+              Include any personal or company-specific details in your question
+            </li>
+          </ul>
+        </div>
+      </div>
+    </Modal>
+  );
+
+  const tipsExamples1Modal = (
+    <Modal open={openExampleQuestions1Modal} onClose={closeTipsModal}>
+      <div className={`${styles.exampleImagesMessage}`}>
+        <p>
+          If you know the right terminology, try asking me questions using both
+          the acronym and the exact REC term. I can then make sure I provide you
+          with the most useful information as possible, like the example below.
+        </p>
+      </div>
+      <div className={`${styles.exampleQuestions}`}>
+        <Image
+          className={`${styles.exampleQuestions}`}
+          src={image1}
+          height={200}
+          width={800}
+          alt="example questions 1"
+        />
+      </div>
+      <div className={`${styles.buttonContainer}`}>
+        <button className={`${styles.submit}`} onClick={tipsModalHandler}>
+          Back
+        </button>
+        <button
+          className={`${styles.submit}`}
+          onClick={exampleQuestions2Handler}
+        >
+          Next Example
+        </button>
+      </div>
+    </Modal>
+  );
+
+  const tipsExamples2Modal = (
+    <Modal open={openExampleQuestions2Modal} onClose={closeTipsModal}>
+      <div className={`${styles.exampleImagesMessage}`}>
+        <p>
+          If the answer I’ve given is not quite what you are looking for, try
+          and rephrase your questions to be more specific, so I can make sure my
+          answer provides you with only the information and sources you need,
+          like the examples below.
+        </p>
+      </div>
+      <div className={`${styles.exampleQuestions}`}>
+        <Image
+          src={image2}
+          height={300}
+          width={800}
+          alt="example questions 2"
+        />
+      </div>
+      <button className={`${styles.submit}`} onClick={exampleQuestions1Handler}>
+        Back
+      </button>
+    </Modal>
+  );
 
   const inappropriateResponseMessage = (
     <p>
       I’ve reviewed the REC, but unfortunately I can’t find the answer to your
-      question. Would you please rephrase your question. You can find question
-      tips here. Alternatively, you can
-      contact my colleagues at the REC through the{" "}
-      <a className={`${styles.link}`} target="_blank" rel="noreferrer" href={"https://recportal.co.uk/web/guest/service-desk-landing"}>
+      question. Would you please rephrase your question? You can find question
+      tips{" "}
+      <a className={`${styles.link}`} onClick={tipsModalHandler}>
+        here
+      </a>
+      . Alternatively, you can contact my colleagues at the REC through the{" "}
+      <a
+        className={`${styles.link}`}
+        target="_blank"
+        rel="noreferrer"
+        href={"https://recportal.co.uk/web/guest/service-desk-landing"}
+      >
         Service Desk
       </a>{" "}
       , or by sending an email to{" "}
@@ -67,6 +212,7 @@ function BotResponse(props) {
     setLikeIconClicked(true);
     setDislikeIconClicked(false);
   };
+  
   const closeModal = () => {
     setOpenModal(false);
   };
@@ -186,6 +332,7 @@ function BotResponse(props) {
   const likedStyle = ` ${styles.likeIcon} ${
     likeIconClicked ? styles.likeIconClicked : null
   } ${dislikeIconClicked ? styles.disabled : null}`;
+
   return (
     <Fragment>
       <div className={`${styles.botResponse}`}>
@@ -236,6 +383,9 @@ function BotResponse(props) {
         <ContactsMessage botIcon={botIcon} />
       ) : null}
       {feedbackModal}
+      {tipsModal}
+      {tipsExamples1Modal}
+      {tipsExamples2Modal}
     </Fragment>
   );
 }

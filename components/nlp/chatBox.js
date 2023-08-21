@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ScrollableFeed from "react-scrollable-feed";
 import { BiSupport } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
-import { useEffect } from "react";
 import Image from "next/image";
 import image1 from "../../public/exampleQuestions1.png";
 import image2 from "../../public/exampleQuestions2.png";
