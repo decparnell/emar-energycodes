@@ -190,10 +190,17 @@ function BotResponse(props) {
   //Contacts message work needs refactoring in Sprint 2
   const contactsMessage = (
     <>
-      You can find the list of REC contact details and the link to the Service Desk{" "}
-      <a className={`${styles.link}`} target="_blank" rel="noreferrer" href={"https://recportal.co.uk/web/guest/service-desk-landing"}>
+      You can find the list of REC contact details and the link to the Service
+      Desk{" "}
+      <a
+        className={`${styles.link}`}
+        target="_blank"
+        rel="noreferrer"
+        href={"https://recportal.co.uk/web/guest/service-desk-landing"}
+      >
         here
-      </a>, or by sending an email to{" "}
+      </a>
+      , or by sending an email to{" "}
       <a className={`${styles.link}`} onClick={sendSupportEmailHandler}>
         support@recmanager.co.uk
       </a>
@@ -201,10 +208,17 @@ function BotResponse(props) {
     </>
   );
 
-  const containsContactDetails = status.custom_topics.includes("contact_details");
+  const containsContactDetails =
+    status.custom_topics.includes("contact_details");
   const messageFailed = messageSentiment === "failed_to_answer";
   const nullAnswer = responseObj.answer === "Please find the details below:";
-  const partialContactsMessage = (status.custom_topics.includes("contact_details") && messageSentiment === "partial_answer");
+  const partialContactsMessage =
+    status.custom_topics.includes("contact_details") &&
+    messageSentiment === "partial_answer";
+  const completeMessage =
+    status.custom_topics.includes("contact_details") &&
+    messageSentiment === "complete_answer";
+  const partialCompleteMessage = completeMessage || partialContactsMessage;
 
   const message = () => {
     if (messageFailed) {
@@ -213,7 +227,7 @@ function BotResponse(props) {
         return <p className={`${styles.p}`}>{contactsMessage}</p>;
       }
       return <p className={`${styles.p}`}>{inappropriateResponseMessage}</p>;
-    }
+    } 
     else if (nullAnswer) {
       return <p className={`${styles.p}`}>{contactsMessage}</p>;
     }
@@ -266,6 +280,12 @@ function BotResponse(props) {
     setOpenFeedbackModal(true);
   };
 
+  const skipFeedbackHandler = () => {
+    callFeedback(props.queryId, "negative", "");
+    closeModal();
+    setOpenFeedbackModal(true);
+  };
+
   const feedbackChangeHandler = (event) => {
     setEnteredFeedback(event.target.value);
   };
@@ -285,9 +305,14 @@ function BotResponse(props) {
             onChange={feedbackChangeHandler}
           ></textarea>
         </div>
-        <button type="submit" className={`${styles.submit}`}>
-          Submit
-        </button>
+        <div className={`${styles.buttonContainer}`}>
+          <button className={`${styles.submit}`} onClick={skipFeedbackHandler}>
+            Skip
+          </button>
+          <button type="submit" className={`${styles.submit}`}>
+            Submit
+          </button>
+        </div>
       </form>
     </Modal>
   );
@@ -411,9 +436,7 @@ function BotResponse(props) {
         </div>
       </div>
       {/*  adding in for contact details */}
-      {partialContactsMessage ? (
-        <ContactsMessage botIcon={botIcon} />
-      ) : null}
+      {partialCompleteMessage ? <ContactsMessage botIcon={botIcon} /> : null}
       {feedbackModal}
       {tipsModal}
       {tipsExamples1Modal}
