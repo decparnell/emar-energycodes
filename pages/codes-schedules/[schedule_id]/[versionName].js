@@ -11,6 +11,7 @@ import { LogUserInfo } from "../../../components/logging";
 import SecondNavbar from "../../../components/layout/secondHeader";
 import AppContext from "../../../components/context/AppContext";
 import DocumentDownload from "../../../components/documentDownload";
+import DefinitionTables from "../../../components/tables/definitionsTables";
 
 function Schedules({
   versions,
@@ -272,6 +273,12 @@ function Schedules({
             />
           )}
         </div>
+
+        {/* <div className={styles.tablesContainer}>
+          <DefinitionTables
+            definitions={definitions}
+          />
+        </div> */}
 
         <CreateSchedulesContent
           parts={parts}
