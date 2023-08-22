@@ -7,22 +7,16 @@ export const ContactsMessage = (props) => {
   };
 
   const message = (
-    <p>
-      You can find a list of REC Contact Details{" "}
+    <>
+      You can find the list of REC contact details and the link to the Service Desk{" "}
       <a className={`${styles.link}`} target="_blank" rel="noreferrer" href={"https://recportal.co.uk/web/guest/service-desk-landing"}>
         here
-      </a>
-      . If this doesn’t provide you with the contact details you need, you can
-      contact my colleagues at the REC through the{" "}
-      <a className={`${styles.link}`} target="_blank" rel="noreferrer" href={"https://recportal.co.uk/web/guest/service-desk-landing"}>
-        Service Desk
-      </a>
-      , or by sending an email to{" "}
+      </a>, or by sending an email to{" "}
       <a className={`${styles.link}`} onClick={sendSupportEmailHandler}>
         support@recmanager.co.uk
       </a>
-      . They'll be more than happy to help you!"
-    </p>
+      . They'll be more than happy to help you.
+    </>
   );
   
   return (

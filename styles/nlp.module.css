@@ -22,6 +22,12 @@
   padding: 0;
 }
 
+@media (max-width: 650px) {
+  .conversationContainer {
+    margin-top: 12%;
+  }
+}
+
 .disclaimerContainer {
   width: 90%;
   height:6vh;
