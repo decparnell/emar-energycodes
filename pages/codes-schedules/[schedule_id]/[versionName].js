@@ -79,6 +79,7 @@ function Schedules({
   const [error, setError] = useState(null);
 
   const [hasMoreData, setHasMoreData] = useState(true);
+  const [shouldFetchMoreData, setShouldFetchMoreData] = useState(false);
 
   const [currentSections, setCurrentSections] = useState(() => {
     return panelDashboard[0];
@@ -94,45 +95,64 @@ function Schedules({
     handleDownloadDoc();
   }, [docVersionName]);
 
+  useEffect(() => {
+    if(shouldFetchMoreData){
+      fetchData();
+    }
+  }, [shouldFetchMoreData, currentSections]);
+
   /* ****FUNCTIONS**** */
   //client-side fetch data, loading more components of each section
   const fetchData = async () => {
     let incrementalStartVal = 21;
+
+    // getScheduleComponents-LogicApp
     let url = `https://prod-15.uksouth.logic.azure.com/workflows/05ebc2734c5340bb83e78396ae4ca88f/triggers/request/paths/invoke/documentId/${scheduleId}/version/${docVersionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=-7jIZukmQmoddagifC2Z1FxKEWg7VLMfp2mcg-sAKPE`;
 
+    // getScheduleComponentsById
     if (componentId) {
       url = `https://prod-11.uksouth.logic.azure.com/workflows/394639809678409da53285be11d9f93c/triggers/request/paths/invoke/documentId/${scheduleId}/componentId/${componentId}/version/${docVersionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=Wo6RW-aJSD8VrKB7KEte6ZIvoqPKCQeBpB2RhcotSMM`;
+    }
+
+    // getScheduleComponentsBySectionId
+    if (shouldFetchMoreData) {
+      const section = document.getElementById(`sec${currentSections.sectionId}`);
+      if (!section) {
+        url = `https://prod-12.uksouth.logic.azure.com/workflows/af401b46bd564f10a9005955f43ca7aa/triggers/request/paths/invoke/documentId/${scheduleId}/sectionId/${currentSections.sectionId}/version/${docVersionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=j2wbZbXO2SXnNLr_XkiN_Cf788ccZSuW1agtUsxUELs`;
+      }
     }
 
     setError(null);
     if (isLoading != true) {
       try {
         setIsLoading(true);
-        //getScheduleComponents-LogicApp
         const response = await fetch(url);
         const dataResJson = await response.json();
         const newDataComponents = dataResJson;
+
         if (startVal === 0) {
           setComponentsData(newDataComponents);
-        } else if (typeof newDataComponents === "undefined") {
+        } else if (newDataComponents.length == 0 || typeof newDataComponents === "undefined") {
+          setStartVal(componentsData.length)
           setHasMoreData(false);
         } else {
           setComponentsData((prevData) => [...prevData, ...newDataComponents]);
         }
-        if (componentId && typeof newDataComponents != "undefined") {
+
+        if ((componentId) && typeof newDataComponents != "undefined") {
           incrementalStartVal = newDataComponents.length - startVal + 1;
-          console.log("componentId", componentId);
-          console.log("increment", incrementalStartVal);
-          console.log("newDataComponents", newDataComponents.length);
-          console.log("startVal", startVal);
         }
 
         setStartVal((prevVal) => prevVal + incrementalStartVal);
+        if (shouldFetchMoreData) {
+          value.setTriggerScrollDown(true);
+        }
+
         setIsLoading(false);
       } catch (error) {
         setError(error);
       } finally {
-        console.log(componentsData);
+        setShouldFetchMoreData(false);
         setComponentId(undefined);
       }
     }
@@ -142,7 +162,6 @@ function Schedules({
     if (typeof window != "undefined" && componentId && isLoading === false) {
       const element = document.getElementById(componentId);
 
-      console.log("triggered");
       element?.scrollIntoView({
         behavior: "smooth",
         block: "end",
@@ -244,6 +263,7 @@ function Schedules({
           dashboardName="dashboard"
           stateVar={currentSections}
           stateSet={setCurrentSections}
+          setShouldFetchMoreData={setShouldFetchMoreData}
           fetchData={fetchData}
         />
       </div>
