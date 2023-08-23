@@ -11,6 +11,13 @@
   align-items: center;
   justify-content: space-evenly;
   background-color: white;
+  margin-top: 2%;
+}
+
+@media (max-width: 800px) {
+  .questionHistory {
+    display: none;
+  }
 }
 
 .questionHistoryContainer {
