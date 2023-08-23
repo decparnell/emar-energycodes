@@ -12,21 +12,31 @@ const DefinitionTables = (props) => {
 
   const letters = 'abcdefghijklmnopqrstuvwxyz';
   const lettersArray = letters.split('');
+  const rows = [];
+  const columnsPerRow = 3; //Number of columns per Row
+  for (let i = 0; i < lettersArray.length; i += columnsPerRow) {
+    rows.push(lettersArray.slice(i, i + columnsPerRow));
+  }
 
   const [selectedAlphabeticLetter, setselectedAlphabeticLetter] = useState("");
   const definitions = props.definitions;
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
-  //const data = props.data;
+  const [isLoading, setIsLoading] = useState(false);
+
+  const defaultSectionId = {sectionId: 2237, sectionName: "Definitions"}
 
   const fetchDefinitionsByLetter = async (letter) => {
+    //getDefinitionsByLetter
     let url = `https://prod-31.uksouth.logic.azure.com/workflows/87f5aaaab030422a86899a6ca24c1351/triggers/request/paths/invoke/documentId/2/version/4.1/sectionId/2237/letter/${letter}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=eWSPnGwLkUOb6ZM2MLxynlkR1vR09rab9cfCJNeAefA`;
     setError(null);
 
     try {
+      setIsLoading(true);
       const response = await fetch(url);
       const dataResJson = await response.json();
       setData(dataResJson);
+      setIsLoading(false);
     } catch (error) {
       setError(error);
     }
@@ -41,7 +51,7 @@ const DefinitionTables = (props) => {
       let componentsInSection = section.components.filter(function (el2) {
         return el2.sectionId_FK === section.sectionId;
       });
-      
+
       const clauses = componentsInSection.filter(function (el2) {
         return listItemsToIgnore.indexOf(el2.componentType) == -1;
       });
@@ -74,8 +84,6 @@ const DefinitionTables = (props) => {
         }
       }
 
-      console.log("length", componentsJsx.length);
-
       content.push(
         <div
           id={`sec${section.sectionId}`}
@@ -95,36 +103,51 @@ const DefinitionTables = (props) => {
 
   }
 
-  const rows = [];
-  const columnsPerRow = 3; // You can adjust this value as needed
-
-  for (let i = 0; i < lettersArray.length; i += columnsPerRow) {
-    rows.push(lettersArray.slice(i, i + columnsPerRow));
+  const DefinitionsNotFound = () => {
+    return (
+      <div className={styles.infoLabelDefinitions}>
+        <p>Definitions are not found for the letter: <b>{selectedAlphabeticLetter}</b></p>
+      </div>
+    );
   }
 
-  const handleLetterClick = (letter) => {
+  const handleLetterClick = async (letter) => {
     setselectedAlphabeticLetter(letter);
-    fetchDefinitionsByLetter(letter)
+    await fetchDefinitionsByLetter(letter);
+    const section = document.getElementById(`sec${defaultSectionId.sectionId}`);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
     <>
-        <table>
-          <tbody>
-            {rows.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {row.map((letter, columnIndex) => (
-                  <td key={columnIndex} onClick={() => handleLetterClick(letter)}>
-                    {"[" + letter + "]"}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <p className={styles.infoLabelDefinitions}>Definitions are organized alphabetically. Please select a letter.</p>
+      <table 
+        className={styles.alphabetIndexTable}
+        id={selectedAlphabeticLetter === "" ? `sec${defaultSectionId.sectionId}` : 'AlphabeticTableSearchId'}
+        key={selectedAlphabeticLetter === "" ? defaultSectionId.sectionName : 'AlphabeticTableSearchKey'}
+      >
+        <tbody>
+          {rows.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {row.map((letter, columnIndex) => (
+                <td key={columnIndex} onClick={() => handleLetterClick(letter)}
+                  className={`${styles.cellHovered} ${selectedAlphabeticLetter === letter ? styles.cellSelected : ''}`}
+                >
+                  {"[" + letter + "]"}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
       {
         //data.length > 2 because includes caption and header
-        selectedAlphabeticLetter !== "" && data.length > 2 ? <CreateAlphabeticTableContent /> : <h1>no data</h1>
+        isLoading ?
+          <p className={styles.infoLabelDefinitions}>Loading...</p>
+          : (selectedAlphabeticLetter !== "" && data.length > 2
+            ? <CreateAlphabeticTableContent /> : (selectedAlphabeticLetter !== "" ? <DefinitionsNotFound /> : null))
       }
     </>
   )

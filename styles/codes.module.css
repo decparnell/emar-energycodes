@@ -12,6 +12,7 @@
   color: black;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
 }
+
 .scheduleContentContainer {
   width: 100%;
 }
@@ -25,6 +26,7 @@
   color: black;
   box-shadow: 0 0 3px rgba(0.25, 0.25, 0.25, 0.25);
 }
+
 .contentTitle {
   text-align: center;
 }
@@ -86,11 +88,13 @@
   text-align: center;
   vertical-align: top;
 }
+
 .textHolder {
   width: 85%;
   float: left;
   vertical-align: top;
 }
+
 .linkButton {
   width: 10%;
   height: 100%;
@@ -134,6 +138,7 @@
 .clauseTable td {
   color: black;
 }
+
 .indented_1 {
   margin: 0;
   /* padding-left: 2vw; */
@@ -255,6 +260,7 @@
   padding-bottom: 2%;
   font-size: 20px;
 }
+
 .errorBox {
   padding: 20px;
   background-color: #e7ab00;
@@ -287,11 +293,11 @@
   text-align: justify;
 }
 
-.scroll{
-  padding:0;
-  margin:0;
+.scroll {
+  padding: 0;
+  margin: 0;
   margin-left: -3%;
-  width:100%;
+  width: 100%;
   overflow-x: hidden;
   text-align: center;
 }
@@ -308,4 +314,26 @@
   color: black;
   box-shadow: 0px 5px 24px rgba(0, 0, 0, 0.25);
   text-align: left;
+}
+
+.alphabetIndexTable{
+  width: 49vw;
+  margin-left: 25vw;
+}
+
+.cellHovered:hover {
+  background-color: #7eb760;
+  cursor: pointer;
+  color: white;
+}
+
+.cellSelected {
+  background-color: #4e8934;
+  cursor: pointer;
+  color: white;
+}
+
+.infoLabelDefinitions{
+  text-align: center;
+  margin-left: 9vw;
 }

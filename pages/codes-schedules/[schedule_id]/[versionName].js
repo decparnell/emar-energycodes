@@ -96,7 +96,7 @@ function Schedules({
   }, [docVersionName]);
 
   useEffect(() => {
-    if(shouldFetchMoreData){
+    if (shouldFetchMoreData) {
       fetchData();
     }
   }, [shouldFetchMoreData, currentSections]);
@@ -106,8 +106,10 @@ function Schedules({
   const fetchData = async () => {
     let incrementalStartVal = 21;
 
-    // getScheduleComponents-LogicApp
-    let url = `https://prod-15.uksouth.logic.azure.com/workflows/05ebc2734c5340bb83e78396ae4ca88f/triggers/request/paths/invoke/documentId/${scheduleId}/version/${docVersionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=-7jIZukmQmoddagifC2Z1FxKEWg7VLMfp2mcg-sAKPE`;
+    // getScheduleComponents-v2
+    let url = `https://prod-20.uksouth.logic.azure.com/workflows/292329c8d3eb4160a0d3c65fc9ea299d/triggers/request/paths/invoke/documentId/${scheduleId}/version/${docVersionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=n4gKcezdLeZQlKnP6Fnxbm5l5ipRdcNsa7-KKGI3d_M`
+    //`https://prod-15.uksouth.logic.azure.com/workflows/05ebc2734c5340bb83e78396ae4ca88f/triggers/request/paths/invoke/documentId/${scheduleId}/version/${docVersionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=-7jIZukmQmoddagifC2Z1FxKEWg7VLMfp2mcg-sAKPE`;
+
 
     // getScheduleComponentsById
     if (componentId) {
@@ -115,7 +117,8 @@ function Schedules({
     }
 
     // getScheduleComponentsBySectionId
-    if (shouldFetchMoreData) {
+    // Document 2 contains Interpretations and Definitions 
+    if (shouldFetchMoreData && scheduleId != 2) {
       const section = document.getElementById(`sec${currentSections.sectionId}`);
       if (!section) {
         url = `https://prod-12.uksouth.logic.azure.com/workflows/af401b46bd564f10a9005955f43ca7aa/triggers/request/paths/invoke/documentId/${scheduleId}/sectionId/${currentSections.sectionId}/version/${docVersionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=j2wbZbXO2SXnNLr_XkiN_Cf788ccZSuW1agtUsxUELs`;
@@ -132,8 +135,8 @@ function Schedules({
 
         if (startVal === 0) {
           setComponentsData(newDataComponents);
-        } else if (newDataComponents.length == 0 || typeof newDataComponents === "undefined") {
-          setStartVal(componentsData.length)
+        } else if (newDataComponents.length == 0 || scheduleId == 2 || typeof newDataComponents === "undefined") {
+          setStartVal(componentsData.length);
           setHasMoreData(false);
         } else {
           setComponentsData((prevData) => [...prevData, ...newDataComponents]);
@@ -294,13 +297,8 @@ function Schedules({
           )}
         </div>
 
-        {/* <div className={styles.tablesContainer}>
-          <DefinitionTables
-            definitions={definitions}
-          />
-        </div> */}
-
         <CreateSchedulesContent
+          scheduleId={scheduleId}
           parts={parts}
           definitions={definitions}
           data={groupSectionsAndComponents}
@@ -308,6 +306,15 @@ function Schedules({
           hasMoreData={hasMoreData}
           totalLength={startVal}
         />
+        {
+          scheduleId == 2 ?
+          <div className={styles.tablesContainer}>
+            <DefinitionTables
+              definitions={definitions}
+            />
+          </div>
+          : null
+        }
       </div>
     </div>
   );
