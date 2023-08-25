@@ -113,7 +113,7 @@ function SideNav(props) {
             <h6 className={styles.panelHeader}>{item[props.panelTitle]}</h6>
             {item[props.dashboardName].map((dashboardItem, id) => (
               <div
-                className={`${styles.panelSideNavItem} ${props.stateVar[props.name] === dashboardItem[props.name]
+                className={`${styles.panelSideNavItem} ${props.stateVar[props.dashboardId] === dashboardItem[props.dashboardId]
                   ? "green"
                   : ""
                   }`}
