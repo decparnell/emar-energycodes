@@ -227,8 +227,7 @@ function BotResponse(props) {
         return <p className={`${styles.p}`}>{contactsMessage}</p>;
       }
       return <p className={`${styles.p}`}>{inappropriateResponseMessage}</p>;
-    } 
-    else if (nullAnswer) {
+    } else if (nullAnswer) {
       return <p className={`${styles.p}`}>{contactsMessage}</p>;
     }
     return <p className={`${styles.p}`}>{responseObj.answer}</p>;
