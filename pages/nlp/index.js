@@ -127,20 +127,19 @@ function NLP() {
             query={query}
             isTyping={botIsTyping}
           />
-          <div className={`${styles.disclaimerContainer}`}>
-              DISCLAIMER: ERIN is a Natural Language Processing tool that is
-              available to support users navigate and query the REC. As with all
-              NLP tools, there are limitations to their capability, as such users
-              must ensure that they use ERIN alongside the REC and not as a
-              substitute. For the avoidance of doubt, REC Parties must continue
-              to use the REC legal text as the basis for their obligations; ERIN
-              will help you identify the relevant parts of the REC for specific
-              topics. Your questions and feedback along with the answers are
-              logged to help ERIN get better at answering questions in the
-              future.
-          </div>
         </div>
       </section>
+      <div className={`${styles.disclaimerContainer}`}>
+        DISCLAIMER: ERIN is a Natural Language Processing tool that is available
+        to support users navigate and query the REC. As with all NLP tools,
+        there are limitations to their capability, as such users must ensure
+        that they use ERIN alongside the REC and not as a substitute. For the
+        avoidance of doubt, REC Parties must continue to use the REC legal text
+        as the basis for their obligations; ERIN will help you identify the
+        relevant parts of the REC for specific topics. Your questions and
+        feedback along with the answers are logged to help ERIN get better at
+        answering questions in the future.
+      </div>
     </div>
   );
 }

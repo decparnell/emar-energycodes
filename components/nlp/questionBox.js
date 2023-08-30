@@ -1,7 +1,7 @@
 import styles from "../../styles/nlp.module.css";
 import React, { useState } from "react";
 import { BiSend } from "react-icons/bi";
-
+import { TextField } from "@mui/material";
 function QuestionBox(props) {
   const sendIcon = (
     <BiSend
@@ -53,19 +53,20 @@ function QuestionBox(props) {
 
   return (
     <form className={`${styles.questionBox}`} onSubmit={askQuestionHandler}>
-      <div className={`box ${styles.sendMessage}`}>
-        <textarea
-          className={`${styles.input}`}
+      <div className={`${styles.sendMessage}`}>
+        <input
+          className={`box ${styles.input}`}
           id="username"
           placeholder="Send a message"
           name="Question box"
-          rows="1.5"
-          cols="11"
           wrap="soft"
           onChange={questionChangeHandler}
           value={props.query}
           onKeyDown={pressEnterHandler}
-        ></textarea>
+          variant="outlined"
+          margin="none"
+          fullWidth
+        />
         <button
           title="Submit"
           type="submit"

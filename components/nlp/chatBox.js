@@ -7,7 +7,6 @@ import Image from "next/image";
 import image1 from "../../public/ExampleQuestions1.jpeg";
 import image2 from "../../public/ExampleQuestions2.jpeg";
 
-
 function ChatBox(props) {
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;
 
@@ -177,7 +176,7 @@ function ChatBox(props) {
   );
 
   return (
-    <ScrollableFeed>
+    <ScrollableFeed className={styles.scrollFeed}>
       {showComponent && botPrompt}
       {props.chatLog}
       {tipsModal}
