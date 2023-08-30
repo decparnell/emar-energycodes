@@ -1,6 +1,13 @@
 import React, { Fragment, useState } from "react";
 import copy from "copy-to-clipboard";
-import { BiSupport, BiCopyAlt, BiDislike, BiLike } from "react-icons/bi";
+import {
+  BiSupport,
+  BiCopyAlt,
+  BiDislike,
+  BiLike,
+  BiPlus,
+  BiMinus,
+} from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
 import { callFeedback } from "./callFeedback";
@@ -23,6 +30,7 @@ function BotResponse(props) {
   const [copyIconClicked, setCopyIconClicked] = useState(false);
   const [dislikeIconClicked, setDislikeIconClicked] = useState(false);
   const [likeIconClicked, setLikeIconClicked] = useState(false);
+  const [showSources, setShowSources] = useState(false);
 
   const [openTipsModal, setOpenTipsModal] = useState(false);
   const [openExampleQuestions1Modal, setExampleQuestions1Modal] =
@@ -377,6 +385,34 @@ function BotResponse(props) {
     <ul style={{ listStyle: "disc", margin: 0 }}>{sources}</ul>
   );
 
+  const showSourcesListHandler = () => {
+    setShowSources(true);
+  };
+
+  const hideSourcesListHandler = () => {
+    setShowSources(false);
+  };
+
+  const sourcesOptions = (
+    <div className={`${styles.sourcesOptionsContainer}`}>
+      Sources:
+      <button
+        title="Show Sources"
+        className={`${styles.button}`}
+        onClick={showSourcesListHandler}
+      >
+        <BiPlus className={`${styles.plusMinus}`} />
+      </button>
+      <button
+        title="Hide Sources"
+        className={`${styles.button}`}
+        onClick={hideSourcesListHandler}
+      >
+        <BiMinus className={`${styles.plusMinus}`} />
+      </button>
+    </div>
+  );
+
   const clickedStyle = `${styles.copyIcon} ${
     copyIconClicked ? styles.copyIconClicked : null
   }`;
@@ -430,7 +466,8 @@ function BotResponse(props) {
           </div>
           {message()}
           <div className={`${styles.sourcesContainer}`}>
-            {sourcesList ? sourcesList : null}
+            {sourcesOptions}
+            {showSources === true ? sourcesList : null}
           </div>
         </div>
       </div>

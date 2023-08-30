@@ -322,3 +322,15 @@
   padding-top: 0.5em;
   margin: 0;
 }
+
+.sourcesOptionsContainer {
+  display: flex;
+  margin-bottom: 1%;
+}
+
+.plusMinus {
+  height: 1.5em;
+  width: 1.5em;
+  color: #77a465;
+  cursor: pointer;
+}
