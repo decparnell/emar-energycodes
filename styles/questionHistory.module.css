@@ -1,9 +1,9 @@
 .questionHistory {
   height: fit-content;
-  max-height: 31.5rem;
-  min-height: 12.5rem;
+  max-height: 90%;
   width: auto;
   min-width: 15%;
+  max-width: 20%;
   margin: 0 1% 0 1%;
   padding: 0.5% 0;
   display: flex;
@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: space-evenly;
   background-color: white;
-  margin-top: 2%;
+  overflow-y: auto;
 }
 
 @media (max-width: 800px) {

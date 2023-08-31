@@ -182,17 +182,11 @@ function ChatBox(props) {
       {tipsModal}
       {tipsExamples1Modal}
       {tipsExamples2Modal}
-      {/* <div className={`${styles.typingContainer}`}>
-        {!showComponent && typingDots}
-      </div>
-      <div className={`${styles.typingContainerSmall}`}>
-        {props.isTyping && typingDots}
-      </div> */}
       {!showComponent && (
-        <div className={`${styles.typingContainer}`}>{typingDots}</div>
+        <div className={styles.typingContainer}>{typingDots}</div>
       )}
       {props.isTyping && (
-        <div className={`${styles.typingContainerSmall}`}>{typingDots}</div>
+        <div className={styles.typingContainerSmall}>{typingDots}</div>
       )}
     </ScrollableFeed>
   );
