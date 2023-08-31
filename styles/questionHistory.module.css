@@ -1,9 +1,9 @@
 .questionHistory {
   height: fit-content;
-  max-height: 31.5rem;
-  min-height: 12.5rem;
+  max-height: 90%;
   width: auto;
   min-width: 15%;
+  max-width: 20%;
   margin: 0 1% 0 1%;
   padding: 0.5% 0;
   display: flex;
@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: space-evenly;
   background-color: white;
-  margin-top: 2%;
+  overflow-y: auto;
 }
 
 @media (max-width: 700px) {
@@ -22,31 +22,28 @@
 
 .questionHistoryContainer {
   width: 100%;
-  padding-left: 6%;
   max-height: 50rem;
-  max-width: 18rem;
-
 }
 
 .questionContainer {
   display: flex;
   align-items: center;
-  width: 90%;
+  width: 100%;
   margin: 0.5rem 0;
-  justify-content: space-evenly;
   border-bottom: solid;
   border-color: lightgrey;
   border-bottom-width: 1px;  
-  /* border: 1px solid red; */
 }
 
 .messageIcon {
-  width: 2em;
+  width: 10%;
+  height:2em;
   color: #77a465;
+  float:left;
 }
 
 .questionHistoryItem {
-  max-width: 20em;
+  max-width: 90%;
   text-align: center;
   font-size: 16px;
   font-weight: bold;
@@ -54,4 +51,5 @@
   padding-left: 3%;
   padding-top: 1%;
   text-align: left;
+  float:left;
 }

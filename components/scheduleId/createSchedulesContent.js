@@ -6,12 +6,14 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 const CreateSchedulesContent = (props) => {
   /* props: 
+        scheduleId: ID of the document/schedule
         data: contains all the data (sections + components)
         definitions: set of definitions of a specific REC word
         fetchData: parent method for fetch new data
         totalLength: sum of all the components
 
     */
+  const scheduleId = props.scheduleId;
   const data = props.data;
   const definitions = props.definitions;
 
@@ -82,8 +84,8 @@ const CreateSchedulesContent = (props) => {
       dataLength={totalLength}
       next={fetchData}
       hasMore={hasMore}
-      loader={<p>Loading...</p>}
-      endMessage={<p>No more data to load.</p>}
+      loader={scheduleId == 2 ? null : <p>Loading...</p>}
+      endMessage={scheduleId == 2 ? null : <p>No more data to load.</p>}
       className={styles.scroll}
     >
       <CreateContent />

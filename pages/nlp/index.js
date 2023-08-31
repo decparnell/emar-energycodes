@@ -107,11 +107,11 @@ function NLP() {
 
   return (
     <div className={styles.container}>
-      <section className={`${styles.mainContentContainer}`}>
-        <Head>
-          <title>NLP</title>
-          <meta property="og:title" content="NLP" key="nlp" />
-        </Head>
+      <Head>
+        <title>NLP</title>
+        <meta property="og:title" content="NLP" key="nlp" />
+      </Head>
+      <div className={styles.mainContentContainer}>
         {chatLog.length > 0 && (
           <QuestionHistory
             questionHistory={userQuestionHistory}
@@ -119,7 +119,7 @@ function NLP() {
           />
         )}
         <div className={`${styles.conversationContainer}`}>
-          <div className={` box ${styles.chatBox}`}>
+          <div className={`box ${styles.chatBox}`}>
             <ChatBox isTyping={botIsTyping} chatLog={chatLog} />
           </div>
           <QuestionBox
@@ -128,20 +128,22 @@ function NLP() {
             query={query}
             isTyping={botIsTyping}
           />
-          <div className={`${styles.disclaimerContainer}`}>
-              DISCLAIMER: ERIN is a Natural Language Processing tool that is
-              available to support users navigate and query the REC. As with all
-              NLP tools, there are limitations to their capability, as such users
-              must ensure that they use ERIN alongside the REC and not as a
-              substitute. For the avoidance of doubt, REC Parties must continue
-              to use the REC legal text as the basis for their obligations; ERIN
-              will help you identify the relevant parts of the REC for specific
-              topics. Your questions and feedback along with the answers are
-              logged to help ERIN get better at answering questions in the
-              future.
-          </div>
         </div>
-      </section>
+      </div>
+      <div className={`${styles.disclaimerContainer}`}>
+        DISCLAIMER: ERIN is a Natural Language Processing (NLP) tool available
+        to support users in navigating and querying the REC. As with all NLP
+        tools, there are limitations to their capability, as such users must
+        ensure ERIN is used alongside the REC and not as a substitute. For the
+        avoidance of doubt, REC Parties must continue to use the REC legal text
+        as the basis for their obligations. Your questions, feedback and ERIN’s
+        responses are logged by the Code Manager, so we can help ERIN get better
+        at answering questions in the future. All the data hosted within ERIN is
+        publicly available and the model will not ingest any information
+        provided within questions for use in future responses. Nevertheless,
+        users are not permitted to submit any personal information within
+        questions.
+      </div>
     </div>
   );
 }
