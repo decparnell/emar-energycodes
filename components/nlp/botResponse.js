@@ -228,16 +228,22 @@ function BotResponse(props) {
     messageSentiment === "complete_answer";
   const partialCompleteMessage = completeMessage || partialContactsMessage;
 
+  const messageValue = null;
+
   const message = () => {
     if (messageFailed) {
       //if (containsContactDetails) {
       if (props.response.query.includes("contact")) {
+        messageValue = contactsMessage;
         return <p className={`${styles.p}`}>{contactsMessage}</p>;
       }
+      messageValue = inappropriateResponseMessage;
       return <p className={`${styles.p}`}>{inappropriateResponseMessage}</p>;
     } else if (nullAnswer) {
+      messageValue = contactsMessage;
       return <p className={`${styles.p}`}>{contactsMessage}</p>;
     }
+    messageValue = responseObj.answer;
     return <p className={`${styles.p}`}>{responseObj.answer}</p>;
   };
 
@@ -249,7 +255,7 @@ function BotResponse(props) {
 
   const copyToClipboardHandler = () => {
     setCopyIconClicked(true);
-    setCopiedText(message);
+    setCopiedText(messageValue);
     copy(copiedText);
   };
 
@@ -465,6 +471,7 @@ function BotResponse(props) {
             </button>
           </div>
           {message()}
+          {props.answer}
           <div className={`${styles.sourcesContainer}`}>
             {sourcesOptions}
             {showSources === true ? sourcesList : null}
