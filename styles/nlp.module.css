@@ -56,6 +56,12 @@
   padding:0;
 }
 
+@media (max-width: 800px) {
+  .chatBox {
+    min-height: 60vh;
+  }
+}
+
 .questionBox {
   width: 90%;
   margin-left: 5%;

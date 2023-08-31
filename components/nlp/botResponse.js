@@ -1,6 +1,13 @@
 import React, { Fragment, useState } from "react";
 import copy from "copy-to-clipboard";
-import { BiSupport, BiCopyAlt, BiDislike, BiLike } from "react-icons/bi";
+import {
+  BiSupport,
+  BiCopyAlt,
+  BiDislike,
+  BiLike,
+  BiPlus,
+  BiMinus,
+} from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
 import { callFeedback } from "./callFeedback";
@@ -23,6 +30,7 @@ function BotResponse(props) {
   const [copyIconClicked, setCopyIconClicked] = useState(false);
   const [dislikeIconClicked, setDislikeIconClicked] = useState(false);
   const [likeIconClicked, setLikeIconClicked] = useState(false);
+  const [showSources, setShowSources] = useState(false);
 
   const [openTipsModal, setOpenTipsModal] = useState(false);
   const [openExampleQuestions1Modal, setExampleQuestions1Modal] =
@@ -220,17 +228,22 @@ function BotResponse(props) {
     messageSentiment === "complete_answer";
   const partialCompleteMessage = completeMessage || partialContactsMessage;
 
+  const messageValue = null;
+
   const message = () => {
     if (messageFailed) {
       //if (containsContactDetails) {
       if (props.response.query.includes("contact")) {
+        messageValue = contactsMessage;
         return <p className={`${styles.p}`}>{contactsMessage}</p>;
       }
+      messageValue = inappropriateResponseMessage;
       return <p className={`${styles.p}`}>{inappropriateResponseMessage}</p>;
-    } 
-    else if (nullAnswer) {
+    } else if (nullAnswer) {
+      messageValue = contactsMessage;
       return <p className={`${styles.p}`}>{contactsMessage}</p>;
     }
+    messageValue = responseObj.answer;
     return <p className={`${styles.p}`}>{responseObj.answer}</p>;
   };
 
@@ -242,7 +255,7 @@ function BotResponse(props) {
 
   const copyToClipboardHandler = () => {
     setCopyIconClicked(true);
-    setCopiedText(message);
+    setCopiedText(messageValue);
     copy(copiedText);
   };
 
@@ -378,6 +391,34 @@ function BotResponse(props) {
     <ul style={{ listStyle: "disc", margin: 0 }}>{sources}</ul>
   );
 
+  const showSourcesListHandler = () => {
+    setShowSources(true);
+  };
+
+  const hideSourcesListHandler = () => {
+    setShowSources(false);
+  };
+
+  const sourcesOptions = (
+    <div className={`${styles.sourcesOptionsContainer}`}>
+      Sources:
+      <button
+        title="Show Sources"
+        className={`${styles.button}`}
+        onClick={showSourcesListHandler}
+      >
+        <BiPlus className={`${styles.plusMinus}`} />
+      </button>
+      <button
+        title="Hide Sources"
+        className={`${styles.button}`}
+        onClick={hideSourcesListHandler}
+      >
+        <BiMinus className={`${styles.plusMinus}`} />
+      </button>
+    </div>
+  );
+
   const clickedStyle = `${styles.copyIcon} ${
     copyIconClicked ? styles.copyIconClicked : null
   }`;
@@ -430,8 +471,10 @@ function BotResponse(props) {
             </button>
           </div>
           {message()}
+          {props.answer}
           <div className={`${styles.sourcesContainer}`}>
-            {sourcesList ? sourcesList : null}
+            {sourcesOptions}
+            {showSources === true ? sourcesList : null}
           </div>
         </div>
       </div>
