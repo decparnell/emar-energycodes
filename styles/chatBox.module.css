@@ -153,6 +153,7 @@
 
 .exampleQuestions {
   margin: 1% 2%;
+  width: -webkit-fill-available;
 }
 
 .doCircle {

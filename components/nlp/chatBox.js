@@ -3,14 +3,12 @@ import ScrollableFeed from "react-scrollable-feed";
 import { BiSupport } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
-import Image from "next/image";
-import image1 from "../../public/ExampleQuestions1.jpeg";
-import image2 from "../../public/ExampleQuestions2.jpeg";
-
+import UserQuestion from "./userQuestion";
+import BotResponse from "./botResponse";
+import { mockData1, mockData2, mockData3, mockData4 } from "./mockData";
 
 function ChatBox(props) {
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;
-
   const typingBotIcon = <BiSupport className={`${styles.typingBotIcon}`} />;
 
   const [showComponent, setShowComponent] = useState(false);
@@ -121,59 +119,58 @@ function ChatBox(props) {
   );
 
   const tipsExamples1Modal = (
-    <Modal open={openExampleQuestions1Modal} onClose={closeModal}>
-      <div className={`${styles.exampleImagesMessage}`}>
-        <p>
-          If you know the right terminology, try asking me questions using both
-          the acronym and the exact REC term. I can then make sure I provide you
-          with the most useful information as possible, like the example below.
-        </p>
-      </div>
-      <div className={`${styles.exampleQuestions}`}>
-        <Image
-          className={`${styles.exampleQuestions}`}
-          src={image1}
-          height={350}
-          width={700}
-          alt="example questions 1"
-        />
-      </div>
-      <div className={`${styles.buttonContainer}`}>
-        <button className={`${styles.submit}`} onClick={tipsModalHandler}>
-          Back
-        </button>
-        <button
-          className={`${styles.submit}`}
-          onClick={exampleQuestions2Handler}
-        >
-          Next Example
-        </button>
-      </div>
-    </Modal>
+      <Modal open={openExampleQuestions1Modal} onClose={closeModal}>
+        <div className={`${styles.exampleImagesMessage}`}>
+          <p>
+            If you know the right terminology, try asking me questions using
+            both the acronym and the exact REC term. I can then make sure I
+            provide you with the most useful information as possible, like the
+            example below.
+          </p>
+        </div>
+        <div className={`${styles.exampleQuestions}`}>
+          <UserQuestion messageValue="What is REL?" />
+          <BotResponse response={mockData1} />
+          <UserQuestion messageValue="What is Retail Energy Location?" />
+          <BotResponse response={mockData2} />
+        </div>
+        <div className={`${styles.buttonContainer}`}>
+          <button className={`${styles.submit}`} onClick={tipsModalHandler}>
+            Back
+          </button>
+          <button
+            className={`${styles.submit}`}
+            onClick={exampleQuestions2Handler}
+          >
+            Next Example
+          </button>
+        </div>
+      </Modal>
   );
 
   const tipsExamples2Modal = (
-    <Modal open={openExampleQuestions2Modal} onClose={closeModal}>
-      <div className={`${styles.exampleImagesMessage}`}>
-        <p>
-          If the answer I’ve given is not quite what you are looking for, try
-          and rephrase your questions to be more specific, so I can make sure my
-          answer provides you with only the information and sources you need,
-          like the examples below.
-        </p>
-      </div>
-      <div className={`${styles.exampleQuestions}`}>
-        <Image
-          src={image2}
-          height={450}
-          width={800}
-          alt="example questions 2"
-        />
-      </div>
-      <button className={`${styles.submit}`} onClick={exampleQuestions1Handler}>
-        Back
-      </button>
-    </Modal>
+      <Modal open={openExampleQuestions2Modal} onClose={closeModal}>
+        <div className={`${styles.exampleImagesMessage}`}>
+          <p>
+            If the answer I’ve given is not quite what you are looking for, try
+            and rephrase your questions to be more specific, so I can make sure
+            my answer provides you with only the information and sources you
+            need, like the examples below.
+          </p>
+        </div>
+        <div className={`${styles.exampleQuestions}`}>
+          <UserQuestion messageValue="If I don't like a decision, can I appeal?" />
+          <BotResponse response={mockData3} />
+          <UserQuestion messageValue="If I don't like a decision for a self-governance-change, can this be appealed?" />
+          <BotResponse response={mockData4} />
+        </div>
+        <button
+          className={`${styles.submit}`}
+          onClick={exampleQuestions1Handler}
+        >
+          Back
+        </button>
+      </Modal>
   );
 
   return (
