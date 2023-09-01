@@ -18,7 +18,7 @@ import image2 from "../../public/ExampleQuestions2.jpeg";
 
 function BotResponse(props) {
   const responseObj = props.response.response;
-
+  console.log(props.response);
   const status = props.response.status;
   const messageSentiment = props.botSentiment;
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;
