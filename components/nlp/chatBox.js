@@ -165,6 +165,7 @@ function ChatBox(props) {
       </div>
       <div className={`${styles.exampleQuestions}`}>
         <UserQuestion messageValue="If I don't like a decision, can I appeal?" />
+
         <BotResponse
           response={mockData3}
           botSentiment={mockData3.status.answer_completness}
