@@ -1,23 +1,19 @@
 import styles from "../../styles/nlp.module.css";
-import React, { useState } from "react";
+import React from "react";
 import { BiSend } from "react-icons/bi";
-import { TextField } from "@mui/material";
+/* import { TextField } from "@mui/material"; */
 function QuestionBox(props) {
   const sendIcon = (
     <BiSend
-      className={
-        props.isTyping && props.query === ""
-          ? `${styles.sendIconDisabled}`
-          : `${styles.sendIcon}`
-      }
+      className={props.isTyping ? styles.sendIconDisabled : styles.sendIcon}
     />
   );
 
   /* const sendIcon = <BiSend className={`${styles.sendIcon}`} />; */
 
   const askQuestionHandler = (event) => {
-    if (props.isTyping === true && props.query !== "") {
-      event.preventDefault();
+    event.preventDefault();
+    if (props.isTyping !== true && props.query !== "") {
       props.onAskQuestion();
     }
   };
@@ -34,9 +30,9 @@ function QuestionBox(props) {
     if (
       event.keyCode === 13 &&
       event.shiftKey === false &&
-      props.isTyping === false
+      props.isTyping === false &&
+      event.target.value.length > 0
     ) {
-      console.log("typing=", props.isTyping);
       event.preventDefault();
       props.onAskQuestion();
     }
@@ -56,7 +52,7 @@ function QuestionBox(props) {
           onKeyDown={pressEnterHandler}
           variant="outlined"
           margin="none"
-          fullWidth
+          fullwidth="true"
         />
         <div
           className={props.query.length < 250 ? styles.length : styles.tooLong}
