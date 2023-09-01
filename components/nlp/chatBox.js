@@ -129,9 +129,15 @@ function ChatBox(props) {
       </div>
       <div className={`${styles.exampleQuestions}`}>
         <UserQuestion messageValue="What is REL?" />
-        <BotResponse response={mockData1} />
+        <BotResponse
+          response={mockData1}
+          botSentiment={mockData1.status.answer_completness}
+        />
         <UserQuestion messageValue="What is Retail Energy Location?" />
-        <BotResponse response={mockData2} />
+        <BotResponse
+          response={mockData2}
+          botSentiment={mockData2.status.answer_completness}
+        />
       </div>
       <div className={`${styles.buttonContainer}`}>
         <button className={`${styles.submit}`} onClick={tipsModalHandler}>
@@ -159,9 +165,16 @@ function ChatBox(props) {
       </div>
       <div className={`${styles.exampleQuestions}`}>
         <UserQuestion messageValue="If I don't like a decision, can I appeal?" />
-        <BotResponse response={mockData3} />
+
+        <BotResponse
+          response={mockData3}
+          botSentiment={mockData3.status.answer_completness}
+        />
         <UserQuestion messageValue="If I don't like a decision for a self-governance-change, can this be appealed?" />
-        <BotResponse response={mockData4} />
+        <BotResponse
+          response={mockData4}
+          botSentiment={mockData4.status.answer_completness}
+        />
       </div>
       <button className={`${styles.submit}`} onClick={exampleQuestions1Handler}>
         Back
