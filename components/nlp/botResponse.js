@@ -12,9 +12,8 @@ import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
 import { callFeedback } from "./callFeedback";
 import { ContactsMessage } from "./nlpContactsMessage";
-import Image from "next/image";
-import image1 from "../../public/ExampleQuestions1.jpeg";
-import image2 from "../../public/ExampleQuestions2.jpeg";
+import UserQuestion from "./userQuestion";
+import { mockData1, mockData2, mockData3, mockData4 } from "./mockData";
 
 function BotResponse(props) {
   const responseObj = props.response.response;
@@ -22,6 +21,7 @@ function BotResponse(props) {
   const status = props.response.status;
   const messageSentiment = props.botSentiment;
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;
+
   //maybe make some of these into an array... its busy
   const [copiedText, setCopiedText] = useState("");
   const [openModal, setOpenModal] = useState(false);
@@ -124,13 +124,10 @@ function BotResponse(props) {
         </p>
       </div>
       <div className={`${styles.exampleQuestions}`}>
-        <Image
-          className={`${styles.exampleQuestions}`}
-          src={image1}
-          height={450}
-          width={800}
-          alt="example questions 1"
-        />
+        <UserQuestion messageValue="What is REL?" />
+        <BotResponse response={mockData1} />
+        <UserQuestion messageValue="What is Retail Energy Location?" />
+        <BotResponse response={mockData2} />
       </div>
       <div className={`${styles.buttonContainer}`}>
         <button className={`${styles.submit}`} onClick={tipsModalHandler}>
@@ -157,12 +154,10 @@ function BotResponse(props) {
         </p>
       </div>
       <div className={`${styles.exampleQuestions}`}>
-        <Image
-          src={image2}
-          height={600}
-          width={800}
-          alt="example questions 2"
-        />
+        <UserQuestion messageValue="If I don't like a decision, can I appeal?" />
+        <BotResponse response={mockData3} />
+        <UserQuestion messageValue="If I don't like a decision for a self-governance-change, can this be appealed?" />
+        <BotResponse response={mockData4} />
       </div>
       <button className={`${styles.submit}`} onClick={exampleQuestions1Handler}>
         Back
