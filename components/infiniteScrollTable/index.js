@@ -139,7 +139,7 @@ const ResultsTable = (props) => {
         data.length === 0 && !isLoading ? (
           <p>No data available.</p>
         ) : (
-          <p>Loading...</p>
+          <div className={"loading-container"}>Loading</div>
         )
       }
       endMessage={<p>No more data to load.</p>}

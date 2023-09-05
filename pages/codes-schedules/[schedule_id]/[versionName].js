@@ -146,7 +146,9 @@ function Schedules({
         }
 
         setStartVal((prevVal) => prevVal + incrementalStartVal);
+        
         if (shouldFetchMoreData) {
+          setStartVal(newDataComponents[newDataComponents.length-1].RowNum + 1);
           value.setTriggerScrollDown(true);
         }
 
