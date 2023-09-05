@@ -1,4 +1,6 @@
 import styles from "../../styles/sideNav.module.css";
+import { useState, useContext, useEffect } from "react";
+import AppContext from "../context/AppContext";
 
 function SideNav(props) {
   //props?.navbarType - type of navigation bar
@@ -18,6 +20,10 @@ function SideNav(props) {
   //must addittionaly contain
   //dashboardId = variable containing the the identification string to access the dashboardId
 
+  const value = useContext(AppContext);
+  let { triggerScrollDown } = value.state;
+  const [currentDocSection, setCurrentDocSection] = useState();
+
   const handleClick = (name, e) => {
     e.preventDefault();
     props.stateSet(name);
@@ -33,29 +39,52 @@ function SideNav(props) {
     }
   };
 
+  //Scroll down
+  const scrollToCurrentSection = async () => {
+    if (currentDocSection != undefined) {
+      const section = document.getElementById(`sec${currentDocSection.sectionId}`);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+        //await new Promise((r) => setTimeout(r, 1000));
+        value.setTriggerScrollDown(false);
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (triggerScrollDown) {
+      scrollToCurrentSection();
+    }
+  }, [triggerScrollDown, currentDocSection]);
+
+
   //////DEC _ FIX THIS TO CALL NEW FUNCTION>>> V SLOW TO SCROLL THROUGH SCHEDULES
   const fecthMoreData = async (sectionId) => {
-    console.log("begin fetch");
-    await props.fetchData();
-    await new Promise((r) => setTimeout(r, 1000));
+
+    props.setShouldFetchMoreData(true);
+
+    //await new Promise((r) => setTimeout(r, 1000));
     const section = document.getElementById(`sec${sectionId}`);
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
     } else {
-      //fecthMoreData();
+      await props.fetchData();
     }
   };
 
-  const panelBasedNBHandleClick = (item, e) => {
+  const panelBasedNBHandleClick = async (item, e) => {
     e.preventDefault();
+
+    //trigger change of section and fetch more data
+    setCurrentDocSection(item);
     props.stateSet(item);
 
     const sectionId = item[props.dashboardId];
     const section = document.getElementById(`sec${sectionId}`);
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
-    } else {
-      fecthMoreData(sectionId);
+    }else{
+      props.setShouldFetchMoreData(true);
     }
   };
 
@@ -64,9 +93,8 @@ function SideNav(props) {
       <div className={`${styles.sideNav} box`}>
         {props.items.map((item, i) => (
           <div
-            className={`${styles.sideNavItem} ${
-              props.stateVar[props.name] === item[props.name] ? "green" : ""
-            }`}
+            className={`${styles.sideNavItem} ${props.stateVar[props.name] === item[props.name] ? "green" : "blue"
+              }`}
             onClick={(e) => handleClick(item, e)}
             key={i}
           >
@@ -85,18 +113,17 @@ function SideNav(props) {
             <h6 className={styles.panelHeader}>{item[props.panelTitle]}</h6>
             {item[props.dashboardName].map((dashboardItem, id) => (
               <div
-                className={`${styles.panelSideNavItem} ${
-                  props.stateVar[props.name] === dashboardItem[props.name]
-                    ? "green"
-                    : ""
-                }`}
+                className={`${styles.panelSideNavItem} ${props.stateVar[props.dashboardId] === dashboardItem[props.dashboardId]
+                  ? "green"
+                  : ""
+                  }`}
                 onClick={(e) => panelBasedNBHandleClick(dashboardItem, e)}
                 key={`${id}_item`}
               >
                 {dashboardItem.sectionOrder !== ""
                   ? dashboardItem.sectionOrder +
-                    " - " +
-                    dashboardItem[props.name]
+                  " - " +
+                  dashboardItem[props.name]
                   : dashboardItem[props.name]}
               </div>
             ))}
@@ -111,9 +138,8 @@ function SideNav(props) {
       <div className={`${styles.sideNav} box`}>
         {props.items.map((item, i) => (
           <div
-            className={`${styles.sideNavItem} ${
-              props.stateVar[props.name] === item[props.name] ? "green" : ""
-            }`}
+            className={`${styles.sideNavItem} ${props.stateVar[props.name] === item[props.name] ? "green" : ""
+              }`}
             onClick={(e) => contentBasedNBHandleClick(item, e)}
             key={i}
           >
@@ -145,7 +171,6 @@ function SideNav(props) {
             panelTitle={props.props.panelTitle}
             dashboardName={props.props.dashboardName}
             stateVar={props.props.stateVar}
-            stateSet={props.props.stateSet}
           />
         );
       default:

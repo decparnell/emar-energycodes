@@ -40,12 +40,13 @@ function MyApp({
   const [latestDataSpecVersion, setLatestDataSpecVersion] = useState(liveVersion);
   const [chosenTab, setChosenTab] = useState("Schedules");
   const [newsItems, setNewsItems] = useState();
-  const [currentVersionMapping, setCurrentVersionMapping] =
-    useState(versionMapping);
+  const [currentVersionMapping, setCurrentVersionMapping] = useState(versionMapping);
   //search pages variables
   const [searchValue, setSearchValue] = useState("");
   const [searchType, setSearchType] = useState({ name: "Codes Schedules" });
   const [errorLog, setErrorLog] = useState([]);
+  const [triggerScrollDown, setTriggerScrollDown] = useState(false);
+  
 
   useEffect(() => {
     fetchVersionMapping(latestDataSpecVersion).then((data) => {
@@ -86,6 +87,7 @@ function MyApp({
             currentVersionMapping: currentVersionMapping,
             searchValue: searchValue,
             searchType: searchType,
+            triggerScrollDown: triggerScrollDown,
           },
           setLoading: setLoading,
           setLatestDataSpecVersion: setLatestDataSpecVersion,
@@ -96,6 +98,7 @@ function MyApp({
           setCurrentVersionMapping: setCurrentVersionMapping,
           setSearchValue: setSearchValue,
           setSearchType: setSearchType,
+          setTriggerScrollDown: setTriggerScrollDown,
         }}
       >
         <Loading />

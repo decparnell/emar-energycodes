@@ -17,7 +17,7 @@ import { mockData1, mockData2, mockData3, mockData4 } from "./mockData";
 
 function BotResponse(props) {
   const responseObj = props.response.response;
-
+  console.log(props.response);
   const status = props.response.status;
   const messageSentiment = props.botSentiment;
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;

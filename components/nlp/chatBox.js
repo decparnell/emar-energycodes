@@ -119,78 +119,81 @@ function ChatBox(props) {
   );
 
   const tipsExamples1Modal = (
-      <Modal open={openExampleQuestions1Modal} onClose={closeModal}>
-        <div className={`${styles.exampleImagesMessage}`}>
-          <p>
-            If you know the right terminology, try asking me questions using
-            both the acronym and the exact REC term. I can then make sure I
-            provide you with the most useful information as possible, like the
-            example below.
-          </p>
-        </div>
-        <div className={`${styles.exampleQuestions}`}>
-          <UserQuestion messageValue="What is REL?" />
-          <BotResponse response={mockData1} />
-          <UserQuestion messageValue="What is Retail Energy Location?" />
-          <BotResponse response={mockData2} />
-        </div>
-        <div className={`${styles.buttonContainer}`}>
-          <button className={`${styles.submit}`} onClick={tipsModalHandler}>
-            Back
-          </button>
-          <button
-            className={`${styles.submit}`}
-            onClick={exampleQuestions2Handler}
-          >
-            Next Example
-          </button>
-        </div>
-      </Modal>
+    <Modal open={openExampleQuestions1Modal} onClose={closeModal}>
+      <div className={`${styles.exampleImagesMessage}`}>
+        <p>
+          If you know the right terminology, try asking me questions using both
+          the acronym and the exact REC term. I can then make sure I provide you
+          with the most useful information as possible, like the example below.
+        </p>
+      </div>
+      <div className={`${styles.exampleQuestions}`}>
+        <UserQuestion messageValue="What is REL?" />
+        <BotResponse
+          response={mockData1}
+          botSentiment={mockData1.status.answer_completness}
+        />
+        <UserQuestion messageValue="What is Retail Energy Location?" />
+        <BotResponse
+          response={mockData2}
+          botSentiment={mockData2.status.answer_completness}
+        />
+      </div>
+      <div className={`${styles.buttonContainer}`}>
+        <button className={`${styles.submit}`} onClick={tipsModalHandler}>
+          Back
+        </button>
+        <button
+          className={`${styles.submit}`}
+          onClick={exampleQuestions2Handler}
+        >
+          Next Example
+        </button>
+      </div>
+    </Modal>
   );
 
   const tipsExamples2Modal = (
-      <Modal open={openExampleQuestions2Modal} onClose={closeModal}>
-        <div className={`${styles.exampleImagesMessage}`}>
-          <p>
-            If the answer I’ve given is not quite what you are looking for, try
-            and rephrase your questions to be more specific, so I can make sure
-            my answer provides you with only the information and sources you
-            need, like the examples below.
-          </p>
-        </div>
-        <div className={`${styles.exampleQuestions}`}>
-          <UserQuestion messageValue="If I don't like a decision, can I appeal?" />
-          <BotResponse response={mockData3} />
-          <UserQuestion messageValue="If I don't like a decision for a self-governance-change, can this be appealed?" />
-          <BotResponse response={mockData4} />
-        </div>
-        <button
-          className={`${styles.submit}`}
-          onClick={exampleQuestions1Handler}
-        >
-          Back
-        </button>
-      </Modal>
+    <Modal open={openExampleQuestions2Modal} onClose={closeModal}>
+      <div className={`${styles.exampleImagesMessage}`}>
+        <p>
+          If the answer I’ve given is not quite what you are looking for, try
+          and rephrase your questions to be more specific, so I can make sure my
+          answer provides you with only the information and sources you need,
+          like the examples below.
+        </p>
+      </div>
+      <div className={`${styles.exampleQuestions}`}>
+        <UserQuestion messageValue="If I don't like a decision, can I appeal?" />
+
+        <BotResponse
+          response={mockData3}
+          botSentiment={mockData3.status.answer_completness}
+        />
+        <UserQuestion messageValue="If I don't like a decision for a self-governance-change, can this be appealed?" />
+        <BotResponse
+          response={mockData4}
+          botSentiment={mockData4.status.answer_completness}
+        />
+      </div>
+      <button className={`${styles.submit}`} onClick={exampleQuestions1Handler}>
+        Back
+      </button>
+    </Modal>
   );
 
   return (
-    <ScrollableFeed>
+    <ScrollableFeed className={styles.scrollFeed}>
       {showComponent && botPrompt}
       {props.chatLog}
       {tipsModal}
       {tipsExamples1Modal}
       {tipsExamples2Modal}
-      {/* <div className={`${styles.typingContainer}`}>
-        {!showComponent && typingDots}
-      </div>
-      <div className={`${styles.typingContainerSmall}`}>
-        {props.isTyping && typingDots}
-      </div> */}
       {!showComponent && (
-        <div className={`${styles.typingContainer}`}>{typingDots}</div>
+        <div className={styles.typingContainer}>{typingDots}</div>
       )}
       {props.isTyping && (
-        <div className={`${styles.typingContainerSmall}`}>{typingDots}</div>
+        <div className={styles.typingContainerSmall}>{typingDots}</div>
       )}
     </ScrollableFeed>
   );
