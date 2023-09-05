@@ -31,6 +31,7 @@ function BotResponse(props) {
   const [dislikeIconClicked, setDislikeIconClicked] = useState(false);
   const [likeIconClicked, setLikeIconClicked] = useState(false);
   const [showSources, setShowSources] = useState(false);
+  const [showResponse, setShowResponse] = useState(true);
 
   const [openTipsModal, setOpenTipsModal] = useState(false);
   const [openExampleQuestions1Modal, setExampleQuestions1Modal] =
@@ -394,6 +395,14 @@ function BotResponse(props) {
     setShowSources(false);
   };
 
+  const showResponseHandler = () => {
+    setShowResponse(true);
+  };
+
+  const hideResponseHandler = () => {
+    setShowResponse(false);
+  };
+
   const sourcesOptions = (
     <div className={`${styles.sourcesOptionsContainer}`}>
       Sources:
@@ -408,6 +417,25 @@ function BotResponse(props) {
         title="Hide Sources"
         className={`${styles.button}`}
         onClick={hideSourcesListHandler}
+      >
+        <BiMinus className={`${styles.plusMinus}`} />
+      </button>
+    </div>
+  );
+
+  const responseOptions = (
+    <div className={`${styles.sourcesOptionsContainer}`}>
+      <button
+        title="Show Response"
+        className={`${styles.button}`}
+        onClick={showResponseHandler}
+      >
+        <BiPlus className={`${styles.plusMinus}`} />
+      </button>
+      <button
+        title="Hide Response"
+        className={`${styles.button}`}
+        onClick={hideResponseHandler}
       >
         <BiMinus className={`${styles.plusMinus}`} />
       </button>
@@ -441,31 +469,37 @@ function BotResponse(props) {
           }
         >
           <div className={`${styles.options}`}>
-            <button
-              title="Copy to clipboard"
-              className={`${styles.button}`}
-              onClick={copyToClipboardHandler}
-            >
-              <BiCopyAlt className={clickedStyle} />
-            </button>
-            <button
-              title="Dislike Response"
-              className={`${styles.button}`}
-              disabled={dislikeIconClicked}
-              onClick={dislikeFeedbackHandler}
-            >
-              <BiDislike className={dislikedStyle} />
-            </button>
-            <button
-              title="Like Response"
-              className={`${styles.button}`}
-              disabled={likeIconClicked}
-              onClick={likeFeedbackHandler}
-            >
-              <BiLike className={likedStyle} />
-            </button>
+            <div className={`${styles.responseOptions}`}>
+              Show/Hide Response:
+              {responseOptions}
+              </div>
+            <div className={`${styles.messageOptions}`}>
+              <button
+                title="Copy to clipboard"
+                className={`${styles.messageButton}`}
+                onClick={copyToClipboardHandler}
+              >
+                <BiCopyAlt className={clickedStyle} />
+              </button>
+              <button
+                title="Dislike Response"
+                className={`${styles.messageButton}`}
+                disabled={dislikeIconClicked}
+                onClick={dislikeFeedbackHandler}
+              >
+                <BiDislike className={dislikedStyle} />
+              </button>
+              <button
+                title="Like Response"
+                className={`${styles.messageButton}`}
+                disabled={likeIconClicked}
+                onClick={likeFeedbackHandler}
+              >
+                <BiLike className={likedStyle} />
+              </button>
+            </div>
           </div>
-          {message()}
+          {showResponse === true ? message() : null}
           {props.answer}
           <div className={`${styles.sourcesContainer}`}>
             {sourcesOptions}
