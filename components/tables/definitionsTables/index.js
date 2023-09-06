@@ -145,7 +145,7 @@ const DefinitionTables = (props) => {
       {
         //data.length > 2 because includes caption and header
         isLoading ?
-          <p className={styles.infoLabelDefinitions}>Loading...</p>
+          <p className={`${styles.infoLabelDefinitions} loading-container`}>Loading</p>
           : (selectedAlphabeticLetter !== "" && data.length > 2
             ? <CreateAlphabeticTableContent /> : (selectedAlphabeticLetter !== "" ? <DefinitionsNotFound /> : null))
       }

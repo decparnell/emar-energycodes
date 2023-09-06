@@ -21,7 +21,7 @@ function SchedulesSearchPage({ codesSchedulesDataJson }) {
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [hasMore, setHasMore] = useState(true);
-  const [isSearchValuePresent, setIsSearchValuePresent] = useState(true);
+  const [isSearchValuePresent, setIsSearchValuePresent] = useState(false);
 
   const searchTypeName = searchType.name;
 
@@ -110,12 +110,12 @@ function SchedulesSearchPage({ codesSchedulesDataJson }) {
 
   const handleSubmit = (e) => {
     if (searchValue !== "") {
-      setIsSearchValuePresent(true);
+      setIsSearchValuePresent(false);
       e.preventDefault();
       refreshData();
       fetchData();
     } else {
-      setIsSearchValuePresent(false);
+      setIsSearchValuePresent(true);
       e.preventDefault();
     }
   };
@@ -177,7 +177,7 @@ function SchedulesSearchPage({ codesSchedulesDataJson }) {
             />
           </div>
         </div>
-        {!isSearchValuePresent ? (
+        {isSearchValuePresent ? (
           <p className={styles.errorMessage}>
             Please search for a term above in order to see results.
           </p>

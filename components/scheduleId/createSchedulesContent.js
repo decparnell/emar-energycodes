@@ -84,7 +84,7 @@ const CreateSchedulesContent = (props) => {
       dataLength={totalLength}
       next={fetchData}
       hasMore={hasMore}
-      loader={scheduleId == 2 ? null : <p>Loading...</p>}
+      loader={scheduleId == 2 ? null : <div className={"loading-container"}>Loading</div>}
       endMessage={scheduleId == 2 ? null : <p>No more data to load.</p>}
       className={styles.scroll}
     >

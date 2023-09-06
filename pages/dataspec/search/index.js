@@ -40,21 +40,21 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
   );
   const [source, setSource] = useState("");
   const [target, setTarget] = useState("");
-  const [isSearchValuePresent, setIsSearchValuePresent] = useState(true);
+  const [isSearchValuePresent, setIsSearchValuePresent] = useState(false);
 
   const headers =
     searchType.name === "Market Messages"
       ? marketMessageHeaders
       : searchType.name === "Scenario Variants"
-      ? scenarioVariantHeaders
-      : dataItemHeaders;
+        ? scenarioVariantHeaders
+        : dataItemHeaders;
 
   const pathName =
     searchType.name === "Market Messages"
       ? "marketmessage"
       : searchType.name === "Scenario Variants"
-      ? "scenario-variant"
-      : "dataitem";
+        ? "scenario-variant"
+        : "dataitem";
 
   // const sourceOptions = getDistinctValuesSource(dataSpecSearchList);
   // const targetOptions = getDistinctValuesTarget(dataSpecSearchList);
@@ -63,33 +63,34 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
 
   ///////////////FUNCTIONS/////////////////////////
   //fetch data for the results table (before an actual search has been done)
-  const fetchData = async () => {
+  const fetchData = async (deafultStartVal) => {
     setIsLoading(true);
     setError(null);
     const mappedSource = source === "" ? "-" : source;
     const mappedTarget = target === "" ? "-" : target;
     const mappedSearch = searchValue === "" ? "-" : searchValue;
+    const mappedStartVal = deafultStartVal !== undefined ? deafultStartVal : startVal;
+
     try {
       //Logic App: getAllDataSpecData-LogicApp-v3
       const response = await fetch(
-        `https://prod-21.uksouth.logic.azure.com/workflows/7c36ed459a774082956345055c9c70ef/triggers/manual/paths/invoke/searchType/${searchType.name}/startVal/${startVal}/source/${mappedSource}/target/${mappedTarget}/search/${mappedSearch}/versionNumber/${latestRecVersion}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=VieTZy8bvqkgfrZnz_nwMPD6zXcSxK6sMFMcbHkrqBA`
+        `https://prod-21.uksouth.logic.azure.com/workflows/7c36ed459a774082956345055c9c70ef/triggers/manual/paths/invoke/searchType/${searchType.name}/startVal/${mappedStartVal}/source/${mappedSource}/target/${mappedTarget}/search/${mappedSearch}/versionNumber/${latestRecVersion}?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=VieTZy8bvqkgfrZnz_nwMPD6zXcSxK6sMFMcbHkrqBA`
       );
 
       const dataSpecDataJson = await response.json();
       const newData = dataSpecDataJson.Table1;
 
       if (newData.length > 0) {
+        if (newData.length < 50) {
+          setHasMore(false);
+        }
         if (startVal === 0) {
           setData(newData);
-          if (newData.length < 50) {
-            setHasMore(false);
-          }
         } else if (typeof newData === "undefined") {
           setHasMore(false);
         } else {
           setData((prevData) => [...prevData, ...newData]);
         }
-
         setStartVal((prevVal) => prevVal + 51);
       } else {
         setErrorMessage(`No results found for "${searchValue}"`);
@@ -112,11 +113,19 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const refreshData = () => {
-    setStartVal(0);
-    setData([]);
-    setHasMore(true);
-    handleScrollToTop();
+  const refreshData = async () => {
+    return new Promise((resolve, reject) => {
+      try {
+        setData([]);
+        setStartVal(0);
+        setHasMore(true);
+        setIsSearchValuePresent(false);
+        handleScrollToTop();
+        resolve(); 
+      } catch (error) {
+        reject(error); // Reject the promise if an error occurs
+      }
+    });
   };
   //handle click of search type buttons
   const handleSideNavClick = (type) => {
@@ -161,24 +170,15 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
     }
   }
 
-  const handleSubmit = (e) => {
-    console.log(data.length);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await refreshData();
+
     if (searchValue !== "") {
-      setIsSearchValuePresent(true);
-      e.preventDefault();
-      refreshData();
-      fetchData();
-    } else if (searchValue == "" && source == "" && target == "") {
-      setIsSearchValuePresent(true);
-      e.preventDefault();
-      //forcing to refresh the data
-      refreshData();
-      if (startVal === 0) {
-        fetchData();
-      }
-    } else {
       setIsSearchValuePresent(false);
-      e.preventDefault();
+      fetchData(0);
+    } else {
+      setIsSearchValuePresent(true);
     }
   };
 
@@ -209,7 +209,7 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
               <HelpOutlineIcon className={styles.helpIcon} />
             </Tooltip>
           </div>
-          <form className={styles.searchBox} onSubmit={handleSubmit}>
+          <form className={styles.searchBox}>
             <TextField
               id="outlined-basic"
               label={`${searchType.name} Search`}
@@ -225,6 +225,7 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
               variant="contained"
               type="submit"
               value="submit"
+              onClick={handleSubmit}
             >
               Search
             </Button>
@@ -254,7 +255,7 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
             <div className={styles.spaceContainer}></div>
           )}
         </div>
-        {!isSearchValuePresent ? (
+        {isSearchValuePresent ? (
           <div className={styles.errorContainer}>
             <span className={styles.errorMessage}>
               {searchType.name} Search field
