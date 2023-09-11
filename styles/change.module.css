@@ -1,0 +1,185 @@
+.title {
+    text-align: center;
+}
+
+.changeDashboardTitle {
+    text-align: center;
+    margin-top: 0%;
+}
+
+.separtor {
+    margin-top: 5vh;
+}
+
+.mainContainerBox {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.containerBox {
+    width: 90%;
+    height: 30%;
+    margin-bottom: 2%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.changeCRMContainer {
+    border-radius: 5px;
+    min-height: 100vh;
+    margin-bottom: 5%;
+    display: flex;
+    flex-direction: column;
+    /* Stack rows vertically */
+}
+
+.labelForTextBox {
+    text-align: center;
+    background-color: #77a465;
+    color: white;
+    padding: 7px 10px;
+    border-radius: 30px;
+    margin-left: 15%;
+}
+
+.invalidInputTextBox {
+    width: 85%;
+    padding: 12px;
+    border: 2px solid red;
+    border-radius: 4px;
+    resize: vertical;
+    outline: none;
+}
+
+.invalidTextMessage {
+    flex: 75%;
+    font-size: 12px;
+    color: red;
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+
+.inputTextBox {
+    width: 85%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+textarea.inputTextBox {
+    height: 30vh;
+}
+
+.col25 {
+    flex: 25%;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.col75 {
+    flex: 70%;
+    padding: 5px;
+}
+
+.col15 {
+    flex: 15%;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.rowContainer {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0;
+}
+
+/* Clear floats after the columns */
+.rowContainer::after {
+    margin-top: 5px;
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.saveButtonContainer {
+    text-align: right;
+}
+
+
+.saveButton {
+    background-color: #4e8934;
+    border: none;
+    color: white;
+    padding: 12px 32px;
+    border-radius: 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 24px 85px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s;
+    /* Safari */
+    transition-duration: 0.4s;
+    width: 10vw;
+}
+
+.saveButton:hover {
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.10), 0 7px 12px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Add this class for the click animation */
+.saveButton.clicked {
+    transform: scale(0.95);
+    /* Scale down slightly on click */
+}
+
+.saveButtonDisabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.iconBox {
+    justify-content: space-evenly;
+    display: flex;
+    flex-direction: row;
+    margin-top: -3vh;
+}
+
+.image {
+    width: 30%;
+    height: 50%;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    cursor: pointer;
+}
+
+.preicon {
+    width: 20%;
+    height: 10%;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 40%;
+    font-weight: lighter;
+    align-items: center;
+    color: #77a465;
+}
+
+.image:hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform: scale(1.2); /* Increase the size on hover */
+
+}
+
+.pretext {
+    margin-top: 0;
+    margin: 0 0 0 0;
+    font-weight: bold;
+    text-align: center;
+    color: black;
+}

@@ -1,5 +1,6 @@
 import styles from "../../styles/sideNav.module.css";
 import { useState, useContext, useEffect } from "react";
+import { useRouter } from "next/router";
 import AppContext from "../context/AppContext";
 
 function SideNav(props) {
@@ -21,6 +22,7 @@ function SideNav(props) {
   //dashboardId = variable containing the the identification string to access the dashboardId
 
   const value = useContext(AppContext);
+  const router = useRouter();
   let { triggerScrollDown } = value.state;
   const [currentDocSection, setCurrentDocSection] = useState();
 
@@ -36,6 +38,14 @@ function SideNav(props) {
     const section = document.getElementById(sectionId);
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const linkBasedNBHandleClick = (item, e) => {
+    props.stateSet(item);
+
+    if(item.dashboardLink !== ""){
+      router.push("/change" + item.dashboardLink);
     }
   };
 
@@ -83,7 +93,7 @@ function SideNav(props) {
     const section = document.getElementById(`sec${sectionId}`);
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
-    }else{
+    } else {
       props.setShouldFetchMoreData(true);
     }
   };
@@ -150,6 +160,23 @@ function SideNav(props) {
     );
   };
 
+  const LinkBasedNavBar = (props) => {
+    return (
+      <div className={`${styles.sideNav} box`}>
+        {props.items.map((item, i) => (
+          <div
+            className={`${styles.sideNavItem} ${props.stateVar[props.name] === item[props.name] ? "green" : "blue"
+              }`}
+            onClick={(e) => linkBasedNBHandleClick(item, e)}
+            key={i}
+          >
+            {item[props.name]}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   const NavigationBar = (props) => {
     switch (props.k) {
       case "ContentBasedNavBar":
@@ -171,6 +198,15 @@ function SideNav(props) {
             panelTitle={props.props.panelTitle}
             dashboardName={props.props.dashboardName}
             stateVar={props.props.stateVar}
+          />
+        );
+      case "LinkBasedNavBar":
+        return (
+          <LinkBasedNavBar
+            items={props.props.items}
+            name={props.props.name}
+            stateVar={props.props.stateVar}
+            stateSet={props.props.stateSet}
           />
         );
       default:
