@@ -12,9 +12,8 @@ import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
 import { callFeedback } from "./callFeedback";
 import { ContactsMessage } from "./nlpContactsMessage";
-import Image from "next/image";
-import image1 from "../../public/ExampleQuestions1.jpeg";
-import image2 from "../../public/ExampleQuestions2.jpeg";
+import UserQuestion from "./userQuestion";
+import { mockData1, mockData2, mockData3, mockData4 } from "./mockData";
 
 function BotResponse(props) {
   const responseObj = props.response.response;
@@ -22,6 +21,7 @@ function BotResponse(props) {
   const status = props.response.status;
   const messageSentiment = props.botSentiment;
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;
+
   //maybe make some of these into an array... its busy
   const [copiedText, setCopiedText] = useState("");
   const [openModal, setOpenModal] = useState(false);
@@ -31,6 +31,7 @@ function BotResponse(props) {
   const [dislikeIconClicked, setDislikeIconClicked] = useState(false);
   const [likeIconClicked, setLikeIconClicked] = useState(false);
   const [showSources, setShowSources] = useState(false);
+  const [showResponse, setShowResponse] = useState(true);
 
   const [openTipsModal, setOpenTipsModal] = useState(false);
   const [openExampleQuestions1Modal, setExampleQuestions1Modal] =
@@ -124,13 +125,10 @@ function BotResponse(props) {
         </p>
       </div>
       <div className={`${styles.exampleQuestions}`}>
-        <Image
-          className={`${styles.exampleQuestions}`}
-          src={image1}
-          height={450}
-          width={800}
-          alt="example questions 1"
-        />
+        <UserQuestion messageValue="What is REL?" />
+        <BotResponse response={mockData1} />
+        <UserQuestion messageValue="What is Retail Energy Location?" />
+        <BotResponse response={mockData2} />
       </div>
       <div className={`${styles.buttonContainer}`}>
         <button className={`${styles.submit}`} onClick={tipsModalHandler}>
@@ -157,12 +155,10 @@ function BotResponse(props) {
         </p>
       </div>
       <div className={`${styles.exampleQuestions}`}>
-        <Image
-          src={image2}
-          height={600}
-          width={800}
-          alt="example questions 2"
-        />
+        <UserQuestion messageValue="If I don't like a decision, can I appeal?" />
+        <BotResponse response={mockData3} />
+        <UserQuestion messageValue="If I don't like a decision for a self-governance-change, can this be appealed?" />
+        <BotResponse response={mockData4} />
       </div>
       <button className={`${styles.submit}`} onClick={exampleQuestions1Handler}>
         Back
@@ -399,6 +395,14 @@ function BotResponse(props) {
     setShowSources(false);
   };
 
+  const showResponseHandler = () => {
+    setShowResponse(true);
+  };
+
+  const hideResponseHandler = () => {
+    setShowResponse(false);
+  };
+
   const sourcesOptions = (
     <div className={`${styles.sourcesOptionsContainer}`}>
       {messageSentiment === "complete_answer"
@@ -425,6 +429,25 @@ function BotResponse(props) {
           </button>
         </>
       ) : null}
+    </div>
+  );
+
+  const responseOptions = (
+    <div className={`${styles.sourcesOptionsContainer}`}>
+      <button
+        title="Show Response"
+        className={`${styles.button}`}
+        onClick={showResponseHandler}
+      >
+        <BiPlus className={`${styles.plusMinus}`} />
+      </button>
+      <button
+        title="Hide Response"
+        className={`${styles.button}`}
+        onClick={hideResponseHandler}
+      >
+        <BiMinus className={`${styles.plusMinus}`} />
+      </button>
     </div>
   );
 
@@ -455,31 +478,37 @@ function BotResponse(props) {
           }
         >
           <div className={`${styles.options}`}>
-            <button
-              title="Copy to clipboard"
-              className={`${styles.button}`}
-              onClick={copyToClipboardHandler}
-            >
-              <BiCopyAlt className={clickedStyle} />
-            </button>
-            <button
-              title="Dislike Response"
-              className={`${styles.button}`}
-              disabled={dislikeIconClicked}
-              onClick={dislikeFeedbackHandler}
-            >
-              <BiDislike className={dislikedStyle} />
-            </button>
-            <button
-              title="Like Response"
-              className={`${styles.button}`}
-              disabled={likeIconClicked}
-              onClick={likeFeedbackHandler}
-            >
-              <BiLike className={likedStyle} />
-            </button>
+            <div className={`${styles.responseOptions}`}>
+              Show/Hide Response:
+              {responseOptions}
+              </div>
+            <div className={`${styles.messageOptions}`}>
+              <button
+                title="Copy to clipboard"
+                className={`${styles.messageButton}`}
+                onClick={copyToClipboardHandler}
+              >
+                <BiCopyAlt className={clickedStyle} />
+              </button>
+              <button
+                title="Dislike Response"
+                className={`${styles.messageButton}`}
+                disabled={dislikeIconClicked}
+                onClick={dislikeFeedbackHandler}
+              >
+                <BiDislike className={dislikedStyle} />
+              </button>
+              <button
+                title="Like Response"
+                className={`${styles.messageButton}`}
+                disabled={likeIconClicked}
+                onClick={likeFeedbackHandler}
+              >
+                <BiLike className={likedStyle} />
+              </button>
+            </div>
           </div>
-          {message()}
+          {showResponse === true ? message() : null}
           {props.answer}
           <div className={`${styles.sourcesContainer}`}>
             {sourcesOptions}

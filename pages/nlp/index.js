@@ -8,12 +8,15 @@ import BotResponse from "../../components/nlp/botResponse";
 import QuestionHistory from "../../components/nlp/questionHistory";
 import { v4 as uuidv4 } from "uuid";
 import { uiVersion } from "../../components/settings";
+import Modal from "../../components/modal";
+import { loadedDocuments } from "../../components/settings";
 
 function NLP() {
   const [botIsTyping, setBotIsTyping] = useState(false);
   const [chatLog, setChatLog] = useState([]);
   const [userQuestionHistory, setQuestionHistory] = useState([]);
   const [query, setQuery] = useState("");
+  const [openDocumentsModal, setOpenDocumentsModal] = useState(false);
 
   const fetchData = async (queryId) => {
     const data = {
@@ -104,6 +107,37 @@ function NLP() {
       : null;
   }, [chatLog]);
 
+  const closeDocumentsModal = () => {
+    setOpenDocumentsModal(false);
+  };
+
+  const documentsModalHandler = () => {
+    setOpenDocumentsModal(true);
+  };
+
+  const documents = loadedDocuments.map((document, index) => {
+    return (
+      <li key={index}>
+        <p className={`${styles.p} `}>
+          <b>{document.documentType}</b> - {document.documentTitle}
+        </p>
+      </li>
+    );
+  });
+
+  const documentsList = (
+    <ul style={{ listStyle: "disc", margin: 0 }}>{documents}</ul>
+  );
+
+  const documentsModal = (
+    <Modal open={openDocumentsModal} onClose={closeDocumentsModal}>
+      <div className={`${styles.exampleImagesMessage}`}>
+        <p>Below is a list of the documents that are included in this model</p>
+      </div>
+      <div className={`${styles.documentsContainer}`}>{documentsList}</div>
+    </Modal>
+  );
+
   return (
     <div className={styles.container}>
       <Head>
@@ -129,7 +163,7 @@ function NLP() {
           />
         </div>
       </div>
-      <div className={`${styles.disclaimerContainer}`}>
+      <p className={`${styles.disclaimerContainer}`}>
         DISCLAIMER: ERIN is a Natural Language Processing (NLP) tool available
         to support users in navigating and querying the REC. As with all NLP
         tools, there are limitations to their capability, as such users must
@@ -141,8 +175,15 @@ function NLP() {
         publicly available and the model will not ingest any information
         provided within questions for use in future responses. Nevertheless,
         users are not permitted to submit any personal information within
-        questions.
-      </div>
+        questions. See the list of documents included in this model{" "}
+        <a
+          className={`${styles.documentsLink}`}
+          onClick={documentsModalHandler}
+        >
+          here.
+        </a>
+      </p>
+      {documentsModal}
     </div>
   );
 }

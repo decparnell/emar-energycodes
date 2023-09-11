@@ -35,13 +35,21 @@
 }
 
 .disclaimerContainer {
-  display:flex;
   width:90%;
   text-align: center;
   font-size: 12px;
   text-align: center;
   margin: 0.1% auto 0 auto;
   border:1px solid black;
+}
+
+.documentsDisclaimer {
+  font-size: 12px;
+}
+
+.documentsLink {
+  cursor: pointer;
+  text-decoration-line: underline;
 }
 
 .chatBox {
