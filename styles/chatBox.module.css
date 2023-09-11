@@ -234,11 +234,30 @@
 
 .options {
   display: flex;
+  justify-content: space-between;
+  margin-bottom: 1%;
+}
+
+.messageOptions{
+  display: flex;
   justify-content: flex-end;
 }
 
+.responseOptions {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 1%;
+}
+
+.messageButton {
+  padding-right: 10%;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  background-color: white;
+}
+
 .button {
-  padding-right: 1%;
   border: none;
   box-shadow: none;
   cursor: pointer;
@@ -330,6 +349,7 @@
 
 .sourcesOptionsContainer {
   display: flex;
+  justify-content: flex-start;
   margin-bottom: 1%;
 }
 
