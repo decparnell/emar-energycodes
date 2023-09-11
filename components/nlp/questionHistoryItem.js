@@ -10,17 +10,15 @@ function QuestionHistoryItem(props) {
   };
 
   return (
-    <Fragment>
-      <div className={`${styles.questionContainer}`}>
-        {messageIcon}
-        <div
-          onClick={questionHistoryHandler}
-          className={`${styles.questionHistoryItem}`}
-        >
-          {props.messageValue}
-        </div>
+    <div className={`${styles.questionContainer}`}>
+      {messageIcon}
+      <div
+        onClick={questionHistoryHandler}
+        className={`${styles.questionHistoryItem}`}
+      >
+        {props.messageValue}
       </div>
-    </Fragment>
+    </div>
   );
 }
 

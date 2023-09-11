@@ -12,9 +12,7 @@ a {
 }
 
 main {
-  height: 100%;
   overflow: auto;
-  top: 8vh;
   width: 100%;
   margin: 0 auto;
   background-color: #F1F1F1;
@@ -215,6 +213,34 @@ div {
   width: 20vw;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.loading-container {
+  margin-left: 45%;
+  display: flex;
+}
+
+.loading-container:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4,end) 900ms infinite;      
+  animation: ellipsis steps(4,end) 800ms infinite;
+  content: "\2026"; /* ascii code for the ellipsis character */
+  width: 0px;
+  margin-left: 3px;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 1.25em;    
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 1.25em;    
+  }
 }
 
 /* width */

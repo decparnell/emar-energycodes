@@ -14,6 +14,8 @@ import SecondNavBar from "../components/layout/secondHeader";
 import { changeRegister } from "../components/settings";
 import DashboardSearch from "../components/dashboardSearch";
 import AppContext from "../components/context/AppContext";
+import { customSortFunction } from "../components/helperFunctions/sortingFunction";
+
 function HomePage({ sections, items, newsData }) {
   const value = useContext(AppContext);
 
@@ -133,6 +135,7 @@ function HomePage({ sections, items, newsData }) {
 
 export default HomePage;
 
+
 // This gets called on every request
 export async function getServerSideProps({ req, res }) {
   res.setHeader(
@@ -154,7 +157,8 @@ export async function getServerSideProps({ req, res }) {
     dashboardSectionName: "All",
     dashboardSectionOrder: lastDashboardSectionOrder,
   });
-  const items = dataJson.items;
+  const itemsUnsorted = dataJson.items;
+  const items = itemsUnsorted.sort((a, b) => customSortFunction(a, b, "dashboardSectionItemsName"));
 
   /*   const newsDataReq = await fetch(
     "https://prod-22.uksouth.logic.azure.com:443/workflows/e36d26ad83b04a86bc67b618e20c9dc5/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Zymwu40i_cJZuIQhxAW9VZeDw22xzO97ie4sApLfizU"

@@ -51,8 +51,8 @@ function NLP() {
         return response.json();
       })
       .then((data) => {
-        const botSentiment = data.status;
-        const response = data.response;
+        const botSentiment = data.status.answer_completness;
+        const response = data;
 
         setChatLog((prevChat) => {
           return [
@@ -61,6 +61,7 @@ function NLP() {
               key={`${queryId}_BOT`}
               botSentiment={botSentiment}
               response={response}
+              queryId={queryId}
             />,
           ];
         });
@@ -88,6 +89,7 @@ function NLP() {
 
     fetchData(queryId);
   };
+
   useEffect(() => {
     chatLog.length > 0
       ? setQuestionHistory([
@@ -103,33 +105,45 @@ function NLP() {
   }, [chatLog]);
 
   return (
-    <>
+    <div className={styles.container}>
       <Head>
         <title>NLP</title>
         <meta property="og:title" content="NLP" key="nlp" />
       </Head>
-      <div className={styles.container}>
-        <section className={`${styles.mainContentContainer}`}>
-          {chatLog.length > 0 && (
-            <QuestionHistory
-              questionHistory={userQuestionHistory}
-              setQuery={setQuery}
-            />
-          )}
-          <div className={`${styles.conversationContainer}`}>
-            <div className={` box ${styles.chatBox}`}>
-              <ChatBox isTyping={botIsTyping} chatLog={chatLog} />
-            </div>
-            <QuestionBox
-              onAskQuestion={questionHandler}
-              setQuery={setQuery}
-              query={query}
-              isTyping={botIsTyping}
-            />
+      <div className={styles.mainContentContainer}>
+        {chatLog.length > 0 && (
+          <QuestionHistory
+            questionHistory={userQuestionHistory}
+            setQuery={setQuery}
+          />
+        )}
+        <div className={`${styles.conversationContainer}`}>
+          <div className={`box ${styles.chatBox}`}>
+            <ChatBox isTyping={botIsTyping} chatLog={chatLog} />
           </div>
-        </section>
+          <QuestionBox
+            onAskQuestion={questionHandler}
+            setQuery={setQuery}
+            query={query}
+            isTyping={botIsTyping}
+          />
+        </div>
       </div>
-    </>
+      <div className={`${styles.disclaimerContainer}`}>
+        DISCLAIMER: ERIN is a Natural Language Processing (NLP) tool available
+        to support users in navigating and querying the REC. As with all NLP
+        tools, there are limitations to their capability, as such users must
+        ensure ERIN is used alongside the REC and not as a substitute. For the
+        avoidance of doubt, REC Parties must continue to use the REC legal text
+        as the basis for their obligations. Your questions, feedback and ERIN’s
+        responses are logged by the Code Manager, so we can help ERIN get better
+        at answering questions in the future. All the data hosted within ERIN is
+        publicly available and the model will not ingest any information
+        provided within questions for use in future responses. Nevertheless,
+        users are not permitted to submit any personal information within
+        questions.
+      </div>
+    </div>
   );
 }
 

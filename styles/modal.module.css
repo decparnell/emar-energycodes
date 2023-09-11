@@ -10,7 +10,7 @@
 
 .modal {
   position: fixed;
-  top: 15%;
+  top: 10%;
   left: 5%;
   width: 90%;
   background-color: white;
@@ -18,6 +18,9 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 30;
   animation: slide-down 300ms ease-out forwards;
+  max-height: 80%;
+  overflow-y: scroll;
+  overflow: auto
 }
 
 .closeContainer {
@@ -49,8 +52,8 @@
 
 @media (min-width: 768px) {
   .modal {
-    width: 40rem;
-    left: calc(50% - 20rem);
+    width: 50rem;
+    left: calc(50% - 25rem);
   }
 }
 
