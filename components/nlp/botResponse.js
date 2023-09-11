@@ -401,21 +401,30 @@ function BotResponse(props) {
 
   const sourcesOptions = (
     <div className={`${styles.sourcesOptionsContainer}`}>
-      Sources:
-      <button
-        title="Show Sources"
-        className={`${styles.button}`}
-        onClick={showSourcesListHandler}
-      >
-        <BiPlus className={`${styles.plusMinus}`} />
-      </button>
-      <button
-        title="Hide Sources"
-        className={`${styles.button}`}
-        onClick={hideSourcesListHandler}
-      >
-        <BiMinus className={`${styles.plusMinus}`} />
-      </button>
+      {messageSentiment === "complete_answer"
+        ? "Sources:"
+        : messageSentiment === "partial_answer"
+        ? "For more information please look:"
+        : null}
+      {messageSentiment === "complete_answer" ||
+      messageSentiment === "partial_answer" ? (
+        <>
+          <button
+            title="Show Sources"
+            className={`${styles.button}`}
+            onClick={showSourcesListHandler}
+          >
+            <BiPlus className={`${styles.plusMinus}`} />
+          </button>
+          <button
+            title="Hide Sources"
+            className={`${styles.button}`}
+            onClick={hideSourcesListHandler}
+          >
+            <BiMinus className={`${styles.plusMinus}`} />
+          </button>
+        </>
+      ) : null}
     </div>
   );
 
