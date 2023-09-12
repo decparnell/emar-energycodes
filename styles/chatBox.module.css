@@ -234,19 +234,12 @@
 
 .options {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 1%;
+  justify-content: flex-end;
 }
 
 .messageOptions{
   display: flex;
-  justify-content: flex-end;
-}
-
-.responseOptions {
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 1%;
+  margin-right:2vw;
 }
 
 .messageButton {
@@ -254,7 +247,7 @@
   border: none;
   box-shadow: none;
   cursor: pointer;
-  background-color: white;
+  background-color: transparent;
 }
 
 .button {

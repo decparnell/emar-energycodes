@@ -17,6 +17,7 @@ function NLP() {
   const [userQuestionHistory, setQuestionHistory] = useState([]);
   const [query, setQuery] = useState("");
   const [openDocumentsModal, setOpenDocumentsModal] = useState(false);
+  const [closed, setClosed] = useState(false);
 
   const fetchData = async (queryId) => {
     const data = {
@@ -149,6 +150,7 @@ function NLP() {
           <QuestionHistory
             questionHistory={userQuestionHistory}
             setQuery={setQuery}
+            closed={[closed, setClosed]}
           />
         )}
         <div className={`${styles.conversationContainer}`}>

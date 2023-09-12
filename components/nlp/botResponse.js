@@ -478,10 +478,6 @@ function BotResponse(props) {
           }
         >
           <div className={`${styles.options}`}>
-            <div className={`${styles.responseOptions}`}>
-              Show/Hide Response:
-              {responseOptions}
-              </div>
             <div className={`${styles.messageOptions}`}>
               <button
                 title="Copy to clipboard"
