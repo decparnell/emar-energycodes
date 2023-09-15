@@ -408,7 +408,7 @@ function BotResponse(props) {
       {messageSentiment === "complete_answer"
         ? "Sources:"
         : messageSentiment === "partial_answer"
-        ? "For more information please look:"
+        ? "Sorry, I am not able to confirm a definitive source to support the given answer, so please use this answer with caution. Here's a list of other related sources that may help with your question, or you can have a look at these question tips to help me give you the best answer:"
         : null}
       {messageSentiment === "complete_answer" ||
       messageSentiment === "partial_answer" ? (
