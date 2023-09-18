@@ -143,22 +143,28 @@ button {
 
 h1 {
   font-size: 26px;
+  cursor: default;
 }
 h2 {
   font-size: 24px;
+  cursor: default;
 }
 h3 {
   font-size: 22px;
+  cursor: default;
 }
 h4 {
   font-size: 21px;
+  cursor: default;
 }
 h5 {
   font-size: 20px;
+  cursor: default;
 }
 h6 {
   margin:0;
   font-size: 18px;
+  cursor: default;
 }
 
 p,

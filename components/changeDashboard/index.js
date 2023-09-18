@@ -14,16 +14,22 @@ function ChangeDashboard(props) {
                 <h5 className={styles.changeDashboardTitle}>Access Settings</h5>
                 <div className={styles.iconBox}>
                     <div className={styles.image}>
-                        <FaUserPlus className={styles.preicon} />
-                        <p className={styles.pretext}>New User</p>
+                        <a href="change/create-new-users" className={styles.textLink}>
+                            <FaUserPlus className={styles.preicon} />
+                            <p className={styles.pretext}>New User</p>
+                        </a>
                     </div>
                     <div className={styles.image}>
-                        <FaUserEdit className={styles.preicon} />
-                        <p className={styles.pretext}>Edit User</p>
+                        <a href="change/edit-users" className={styles.textLink}>
+                            <FaUserEdit className={styles.preicon} />
+                            <p className={styles.pretext}>Edit User</p>
+                        </a>
                     </div>
                     <div className={styles.image}>
-                        <FaUserTimes className={styles.preicon} />
-                        <p className={styles.pretext}>Remove User</p>
+                        <a href="change/remove-users" className={styles.textLink}>
+                            <FaUserTimes className={styles.preicon} />
+                            <p className={styles.pretext}>Remove User</p>
+                        </a>
                     </div>
                 </div>
             </div>

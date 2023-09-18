@@ -6,6 +6,14 @@ const Backdrop = (props) => {
   return <div className={`${styles.backdrop}`} onClick={props.onClose} />;
 };
 
+const CustomModal = (props) => {
+  return (
+    <div className={`${styles.cuctomModal}`}>
+      <div className={`${styles.content}`}>{props.children}</div>
+    </div>
+  );
+};
+
 const ModalOverlay = (props) => {
   return (
     <div className={`${styles.modal}`}>
@@ -22,11 +30,19 @@ const ModalOverlay = (props) => {
 function Modal(props) {
   if (props.open === false) return null;
 
+  const modalType = props.modalType ? props.modalType : null
+
   return (
-    <Fragment>
-      <ModalOverlay onClose={props.onClose}>{props.children}</ModalOverlay>
-      <Backdrop onClose={props.onClose} />
-    </Fragment>
+    modalType == "CustomModal" ?
+      <Fragment>
+        <CustomModal onClose={props.onClose}>{props.children}</CustomModal>
+        <Backdrop onClose={props.onClose} />
+      </Fragment>
+      :
+      <Fragment>
+        <ModalOverlay onClose={props.onClose}>{props.children}</ModalOverlay>
+        <Backdrop onClose={props.onClose} />
+      </Fragment>
   );
 }
 

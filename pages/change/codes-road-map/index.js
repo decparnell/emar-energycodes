@@ -75,8 +75,8 @@ function CodeRoadMapChange({ latestCodesRoadMapLinkJSON }) {
     return (
         <>
             <h1 className={styles.title}>The Code Road Map</h1>
-            <div className={`${styles.changeCRMContainer} box`}>
-                <div className={styles.separtor}></div>
+            <div className={`${styles.changeContainer} box`}>
+                <div className={styles.separtor} />
                 <div className={`${styles.rowContainer}`}>
                     <div className={styles.col25}>
                         <label className={styles.labelForTextBox} for="roadmapLink">Spreadsheet roadmap link</label>
@@ -106,10 +106,9 @@ function CodeRoadMapChange({ latestCodesRoadMapLinkJSON }) {
                     </div>
                 </div>
                 <div className={styles.saveButtonContainer}>
-                    <button className={isValidUrl ? `${styles.saveButton} ${isClicked ? styles.clicked : ''}` : `${styles.saveButton} ${styles.saveButtonDisabled}`}
+                    <button className={isValidUrl ? `${styles.saveButton} ${isClicked ? styles.clicked : ''}` : `${styles.saveButton} ${styles.actionBtnDisabled}`}
                         onClick={handleSaveBtn}> Save </button>
                 </div>
-
             </div>
         </>
     );

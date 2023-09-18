@@ -26,13 +26,57 @@
     overflow-x: hidden;
 }
 
-.changeCRMContainer {
+.changeContainer {
     border-radius: 5px;
     min-height: 100vh;
     margin-bottom: 5%;
     display: flex;
     flex-direction: column;
+}
+
+.editChangeContainer{
+    border-radius: 5px;
+    min-height: 50vh;
+    margin-bottom: 2%;
+    display: flex;
+    flex-direction: column;
     /* Stack rows vertically */
+}
+
+.editUserTable{
+    cursor: pointer;
+    margin-left: 13vw;
+}
+
+.removeChangeContainer{
+    border-radius: 5px;
+    min-height: 65vh;
+    margin-bottom: 2%;
+    display: flex;
+    flex-direction: column;
+}
+
+.tableContainer{
+    flex: 80%;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.theadContainer{
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.actionButtonContainer{
+    max-height: 15vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.actionButtonSubContainer{
+    align-items: center;
 }
 
 .labelForTextBox {
@@ -110,8 +154,7 @@ textarea.inputTextBox {
 }
 
 
-.saveButton {
-    background-color: #4e8934;
+.customButton {
     border: none;
     color: white;
     padding: 12px 32px;
@@ -128,9 +171,43 @@ textarea.inputTextBox {
     width: 10vw;
 }
 
-.saveButton:hover {
+.customButton:hover {
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.10), 0 7px 12px 0 rgba(0, 0, 0, 0.19);
 }
+
+.customYesNoButton {
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 12px 50px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s;
+    /* Safari */
+    transition-duration: 0.4s;
+    width: 10vw;
+}
+
+.customYesNoButton:hover {
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.10), 0 7px 12px 0 rgba(0, 0, 0, 0.19);
+}
+
+.saveBtnStyle{
+    background-color: #4e8934;
+}
+
+.backBtnStyle{
+    background-color: #4e8934;
+}
+
+.removeBtnStyle{
+    background-color: red;
+}
+
 
 /* Add this class for the click animation */
 .saveButton.clicked {
@@ -138,8 +215,14 @@ textarea.inputTextBox {
     /* Scale down slightly on click */
 }
 
-.saveButtonDisabled {
+.actionBtnDisabled {
     opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.actionBtnDisabled {
+    background-color: red;
+    opacity: 0.3;
     cursor: not-allowed;
 }
 
@@ -182,4 +265,37 @@ textarea.inputTextBox {
     font-weight: bold;
     text-align: center;
     color: black;
+}
+
+.textLink{
+    text-decoration: none;
+}
+
+.selectedRow {
+    background-color: grey;
+    color: white;
+}
+
+.selectedRow:hover {
+    background-color: grey;
+    color: white;
+}
+
+.selectedDeleteRow {
+    background-color: red;
+    color: white;
+}
+
+.selectedDeleteRow:hover {
+    background-color: red;
+    color: white;
+}
+
+.confirmationModal{
+    height: 70vh;
+    width: 20vw;
+}
+
+.confirmationModalText{
+    text-align: center;
 }
