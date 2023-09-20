@@ -337,3 +337,8 @@
   text-align: center;
   margin-left: 9vw;
 }
+
+.loadingCustomStyle{
+  text-align: center;
+  padding-left: 6vw;
+}

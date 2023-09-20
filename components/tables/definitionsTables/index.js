@@ -120,12 +120,14 @@ const DefinitionTables = (props) => {
     }
   };
 
+  console.log("data.length",data.length );
+
   return (
     <>
       <p className={styles.infoLabelDefinitions}>Definitions are organized alphabetically. Please select a letter.</p>
       <table 
         className={styles.alphabetIndexTable}
-        id={selectedAlphabeticLetter === "" ? `sec${defaultSectionId.sectionId}` : 'AlphabeticTableSearchId'}
+        id={selectedAlphabeticLetter === "" || data.length <= 2 ? `sec${defaultSectionId.sectionId}` : 'AlphabeticTableSearchId'}
         key={selectedAlphabeticLetter === "" ? defaultSectionId.sectionName : 'AlphabeticTableSearchKey'}
       >
         <tbody>
@@ -145,7 +147,7 @@ const DefinitionTables = (props) => {
       {
         //data.length > 2 because includes caption and header
         isLoading ?
-          <p className={`${styles.infoLabelDefinitions} loading-container`}>Loading</p>
+          <p className={`${styles.loadingCustomStyle} loading-container`}>Loading</p>
           : (selectedAlphabeticLetter !== "" && data.length > 2
             ? <CreateAlphabeticTableContent /> : (selectedAlphabeticLetter !== "" ? <DefinitionsNotFound /> : null))
       }
