@@ -60,7 +60,8 @@ function Schedules({
         (item) => item.documentId == scheduleId
       )[0].docVersionName;
 
-      if (docVersionName !== currentDocVersionName) {
+      //Is needed when recVersion Dropdown change but interfere when form the serach table a link is selected
+      if (docVersionName !== currentDocVersionName && componentId == undefined) {
         router.push(`/codes-schedules/${scheduleId}/${currentDocVersionName}`);
       }
     }
