@@ -120,8 +120,6 @@ const DefinitionTables = (props) => {
     }
   };
 
-  console.log("data.length",data.length );
-
   return (
     <>
       <p className={styles.infoLabelDefinitions}>Definitions are organized alphabetically. Please select a letter.</p>

@@ -94,6 +94,8 @@ function Schedules({
 
   useEffect(() => {
     handleDownloadDoc();
+    resetVarToDefault();
+    scrollToDiplayContent(); // ! important do not remove this, reason given on the description of the function
   }, [docVersionName]);
 
   useEffect(() => {
@@ -147,9 +149,9 @@ function Schedules({
         }
 
         setStartVal((prevVal) => prevVal + incrementalStartVal);
-        
+
         if (shouldFetchMoreData) {
-          setStartVal(newDataComponents[newDataComponents.length-1].RowNum + 1);
+          setStartVal(newDataComponents[newDataComponents.length - 1].RowNum + 1);
           value.setTriggerScrollDown(true);
         }
 
@@ -216,6 +218,29 @@ function Schedules({
   function filterByFieldId(jsonData, field_name, id) {
     return jsonData.filter((obj) => obj[field_name] === id);
   }
+
+  
+  function resetVarToDefault() {
+    setHasMoreData(true);
+    setShouldFetchMoreData(false);
+    setStartVal(0);
+    setComponentsData([]);
+  }
+
+  /* Function to scroll smoothly to a specific Y coordinate
+     important! this the scrooldown of y coordinate is needed due to the infinite-scroll
+     if you remove this it might show the loading screen infinitily 
+     (the reason is uncertain, but mostly possible) of the external library (infinite-scroll)
+  */
+  function scrollToDiplayContent() {
+    setTimeout(() => {
+      window.scrollTo({
+        top: 150,         //Y coordinate
+        behavior: 'smooth'
+      });
+    }, 3000); // 3seconds
+  }
+
 
   /*   ///////DEC -  USE THIS TO JUMP TO DATA _ MAY NEED TO EXTEND API TO INC THIS
   function jumpToSection(sectionId) {
@@ -299,6 +324,8 @@ function Schedules({
           )}
         </div>
 
+        {/* {isLoading ? <p className={`${styles.loadingCustomStyle} loading-container`}>Loading</p> :
+        } */}
         <CreateSchedulesContent
           scheduleId={scheduleId}
           parts={parts}
@@ -310,13 +337,14 @@ function Schedules({
         />
         {
           scheduleId == 2 ?
-          <div className={styles.tablesContainer}>
-            <DefinitionTables
-              definitions={definitions}
-            />
-          </div>
-          : null
+            <div className={styles.tablesContainer}>
+              <DefinitionTables
+                definitions={definitions}
+              />
+            </div>
+            : null
         }
+
       </div>
     </div>
   );
