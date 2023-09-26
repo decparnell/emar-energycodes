@@ -1,17 +1,17 @@
-import { useRouter } from "next/router";
+import Head from "next/head";
 import styles from "../../../styles/schedules-dataspec.module.css";
+import AppContext from "../../../components/context/AppContext";
+import { useRouter } from "next/router";
 import { useState, useContext, useEffect } from "react";
 import SideNav from "../../../components/dashboardSideNav";
-import { checkIfVariablesAreAvailable } from "../../../components/helperFunctions/checkIfVariablesAreAvailable";
-import { checkIfItemsAvailableInArray } from "../../../components/helperFunctions/checkIfItemsAvailableInArray";
 import SchedulesTables from "../../../components/tables/schedulesTables";
 import CreateSchedulesContent from "../../../components/scheduleId/createSchedulesContent";
-import Head from "next/head";
-import { LogUserInfo } from "../../../components/logging";
 import SecondNavbar from "../../../components/layout/secondHeader";
-import AppContext from "../../../components/context/AppContext";
 import DocumentDownload from "../../../components/documentDownload";
 import DefinitionTables from "../../../components/tables/definitionsTables";
+import { LogUserInfo } from "../../../components/logging";
+import { checkIfVariablesAreAvailable } from "../../../components/helperFunctions/checkIfVariablesAreAvailable";
+import { checkIfItemsAvailableInArray } from "../../../components/helperFunctions/checkIfItemsAvailableInArray";
 
 function Schedules({
   versions,
@@ -21,6 +21,7 @@ function Schedules({
   definitions,
   optionalityInfo,
 }) {
+
   const apiVarList = [
     { obj: versions, name: "versions" },
     { obj: parts, name: "parts" },
@@ -35,6 +36,15 @@ function Schedules({
     ? documents[0]
     : null;
 
+  const panelDashboard = parts.map((part) => {
+    const dashboard = filterByFieldId(sections, "partId_FK", part.partId);
+    return {
+      partId: part.partId,
+      panelTitle: part.partName,
+      dashboard,
+    };
+  });
+
   const router = useRouter();
   const scheduleId = router.query.schedule_id;
   const docVersionName = router.query.versionName;
@@ -44,14 +54,22 @@ function Schedules({
   const mandatoryTable = transformTable(optionalityInfo, parts);
 
   const [urlDownload, setUrlDownload] = useState(null);
+  const [componentId, setComponentId] = useState(router.query.componentId);
+  const [componentsData, setComponentsData] = useState([]);
+  const [startVal, setStartVal] = useState(0);
 
-  const panelDashboard = parts.map((part) => {
-    const dashboard = filterByFieldId(sections, "partId_FK", part.partId);
-    return {
-      partId: part.partId,
-      panelTitle: part.partName,
-      dashboard,
-    };
+  ////DEC - ISSUE WITH SCROLL _ FETCH DATA GETS DOUBLE TRIGGERED ON PAGE RELOAD
+  /* if (typeof window != "undefined" && startVal === 0) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } */
+  //const [totalLength, setTotalLength] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [hasMoreData, setHasMoreData] = useState(true);
+  const [shouldFetchMoreData, setShouldFetchMoreData] = useState(false);
+
+  const [currentSections, setCurrentSections] = useState(() => {
+    return panelDashboard[0];
   });
 
   useEffect(() => {
@@ -66,25 +84,6 @@ function Schedules({
       }
     }
   }, [currentVersionMapping]);
-
-  const [componentId, setComponentId] = useState(router.query.componentId);
-  const [componentsData, setComponentsData] = useState([]);
-  const [startVal, setStartVal] = useState(0);
-
-  ////DEC - ISSUE WITH SCROLL _ FETCH DATA GETS DOUBLE TRIGGERED ON PAGE RELOAD
-  /* if (typeof window != "undefined" && startVal === 0) {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  } */
-  //const [totalLength, setTotalLength] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const [hasMoreData, setHasMoreData] = useState(true);
-  const [shouldFetchMoreData, setShouldFetchMoreData] = useState(false);
-
-  const [currentSections, setCurrentSections] = useState(() => {
-    return panelDashboard[0];
-  });
 
   useEffect(() => {
     LogUserInfo(`${docInfo.documentName} V${docVersionName}`);
@@ -105,6 +104,19 @@ function Schedules({
       fetchData();
     }
   }, [shouldFetchMoreData, currentSections]);
+
+  useEffect(() => {
+    if (typeof window != "undefined" && componentId && isLoading === false) {
+      const element = document.getElementById(componentId);
+
+      element?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
+    }
+  }, [isLoading]);
+
 
   /* ****FUNCTIONS**** */
   //client-side fetch data, loading more components of each section
@@ -169,18 +181,6 @@ function Schedules({
     }
   };
 
-  useEffect(() => {
-    if (typeof window != "undefined" && componentId && isLoading === false) {
-      const element = document.getElementById(componentId);
-
-      element?.scrollIntoView({
-        behavior: "smooth",
-        block: "end",
-        inline: "nearest",
-      });
-    }
-  }, [isLoading]);
-
   const handleDownloadDoc = async () => {
     try {
       const response = await fetch(
@@ -223,7 +223,8 @@ function Schedules({
     return jsonData.filter((obj) => obj[field_name] === id);
   }
 
-  
+
+  //Reset all the indicated variables
   function resetVarToDefault() {
     setHasMoreData(true);
     setShouldFetchMoreData(false);
@@ -245,21 +246,7 @@ function Schedules({
     }, 3000); // 3seconds
   }
 
-
-  /*   ///////DEC -  USE THIS TO JUMP TO DATA _ MAY NEED TO EXTEND API TO INC THIS
-  function jumpToSection(sectionId) {
-    /* while (
-      componentsData[componentsData.length - 1].clauseReference.indexOf(
-        `${sectionId}.`
-      ) === -1
-    ) {
-      fetchData();
-    } 
-
-    console.log("here");
-    console.log(componentsData);
-  } */
-
+  // actual data - groupped all components by sections
   const groupSectionsAndComponents = sections
     .map((section) => {
       const components = filterByFieldId(
