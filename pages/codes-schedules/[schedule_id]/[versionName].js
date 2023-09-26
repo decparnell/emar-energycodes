@@ -95,7 +95,9 @@ function Schedules({
   useEffect(() => {
     handleDownloadDoc();
     resetVarToDefault();
-    scrollToDiplayContent(); // ! important do not remove this, reason given on the description of the function
+    if (!componentId) {
+      scrollToDiplayContent(); // ! important do not remove this, reason given on the description of the function
+    }
   }, [docVersionName]);
 
   useEffect(() => {
@@ -152,7 +154,6 @@ function Schedules({
 
         if (shouldFetchMoreData) {
           setStartVal(newDataComponents[newDataComponents.length - 1].RowNum + 1);
-          value.setTriggerScrollDown(true);
         }
 
         setIsLoading(false);
@@ -160,6 +161,9 @@ function Schedules({
         setError(error);
       } finally {
         setShouldFetchMoreData(false);
+        if (shouldFetchMoreData && isLoading == false) {
+          value.setTriggerScrollDown(true);
+        }
         setComponentId(undefined);
       }
     }
@@ -324,17 +328,17 @@ function Schedules({
           )}
         </div>
 
-        {/* {isLoading ? <p className={`${styles.loadingCustomStyle} loading-container`}>Loading</p> :
-        } */}
-        <CreateSchedulesContent
-          scheduleId={scheduleId}
-          parts={parts}
-          definitions={definitions}
-          data={groupSectionsAndComponents}
-          fetchData={fetchData}
-          hasMoreData={hasMoreData}
-          totalLength={startVal}
-        />
+        {shouldFetchMoreData ? <p className={`${styles.loadingCustomStyle} loading-container`}>Loading</p> :
+          <CreateSchedulesContent
+            scheduleId={scheduleId}
+            parts={parts}
+            definitions={definitions}
+            data={groupSectionsAndComponents}
+            fetchData={fetchData}
+            hasMoreData={hasMoreData}
+            totalLength={startVal}
+          />
+        }
         {
           scheduleId == 2 ?
             <div className={styles.tablesContainer}>

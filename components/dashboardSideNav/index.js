@@ -22,7 +22,9 @@ function SideNav(props) {
 
   const value = useContext(AppContext);
   let { triggerScrollDown } = value.state;
-  const [currentDocSection, setCurrentDocSection] = useState();
+  const [currentDocSection, setCurrentDocSection] = useState(() => {
+    return props.items[0];
+  });
 
   const handleClick = (name, e) => {
     e.preventDefault();
@@ -43,9 +45,9 @@ function SideNav(props) {
   const scrollToCurrentSection = async () => {
     if (currentDocSection != undefined) {
       const section = document.getElementById(`sec${currentDocSection.sectionId}`);
+      //await new Promise((r) => setTimeout(r, 500));
       if (section) {
         section.scrollIntoView({ behavior: "smooth" });
-        //await new Promise((r) => setTimeout(r, 1000));
         value.setTriggerScrollDown(false);
       }
     }
@@ -77,13 +79,14 @@ function SideNav(props) {
 
     //trigger change of section and fetch more data
     setCurrentDocSection(item);
-    props.stateSet(item);
-
+    
+    
     const sectionId = item[props.dashboardId];
     const section = document.getElementById(`sec${sectionId}`);
     if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }else{
+      section.scrollIntoView();
+    } else {
+      props.stateSet(item);
       props.setShouldFetchMoreData(true);
     }
   };
@@ -113,7 +116,7 @@ function SideNav(props) {
             <h6 className={styles.panelHeader}>{item[props.panelTitle]}</h6>
             {item[props.dashboardName].map((dashboardItem, id) => (
               <div
-                className={`${styles.panelSideNavItem} ${props.stateVar[props.dashboardId] === dashboardItem[props.dashboardId]
+                className={`${styles.panelSideNavItem} ${currentDocSection[props.dashboardId] === dashboardItem[props.dashboardId]
                   ? "green"
                   : ""
                   }`}
