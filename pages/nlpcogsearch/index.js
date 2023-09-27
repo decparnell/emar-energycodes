@@ -90,7 +90,7 @@ function NLP() {
       ];
     });
     setBotIsTyping(true);
-
+    LogUserInfo("NLP_COGNITIVE---", String(queryId), ": ", String(query));
     fetchData(queryId);
   };
 
