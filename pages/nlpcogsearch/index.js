@@ -9,7 +9,7 @@ import QuestionHistory from "../../components/nlp/questionHistory";
 import { v4 as uuidv4 } from "uuid";
 import { uiVersion, loadedDocuments } from "../../components/settings";
 import Modal from "../../components/modal";
-import LogUserInfo from "../../components/logging";
+import { LogUserInfo } from "../../components/logging";
 
 function NLP() {
   const [botIsTyping, setBotIsTyping] = useState(false);
