@@ -7,9 +7,9 @@ import UserQuestion from "../../components/nlp/userQuestion";
 import BotResponse from "../../components/nlp/botResponse";
 import QuestionHistory from "../../components/nlp/questionHistory";
 import { v4 as uuidv4 } from "uuid";
-import { uiVersion } from "../../components/settings";
+import { uiVersion, loadedDocuments } from "../../components/settings";
 import Modal from "../../components/modal";
-import { loadedDocuments } from "../../components/settings";
+import LogUserInfo from "../../components/logging";
 
 function NLP() {
   const [botIsTyping, setBotIsTyping] = useState(false);
@@ -27,6 +27,7 @@ function NLP() {
       uiVersion: uiVersion,
     };
 
+    LogUserInfo("NLP_COGNITIVE---", String(queryId), ": ", String(query));
     const options = {
       method: "POST",
       headers: {
@@ -90,7 +91,6 @@ function NLP() {
       ];
     });
     setBotIsTyping(true);
-    LogUserInfo("NLP_COGNITIVE---", String(queryId), ": ", String(query));
     fetchData(queryId);
   };
 
