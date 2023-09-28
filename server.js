@@ -103,14 +103,20 @@ app.prepare().then(() => {
   server.all("/nlp", (req, res) => {
     console.log(req.session.user);
     console.log(moduleSettings.adminUsers);
-    if (req.session && req.session.user.name_id in moduleSettings.adminUsers) {
+    if (
+      req.session &&
+      moduleSettings.adminUsers.includes(req.session.user.name_id)
+    ) {
       return handle(req, res);
     }
     res.redirect("/");
   });
 
   server.all("/nlpcogsearch", (req, res) => {
-    if (req.session && req.session.user.name_id in moduleSettings.adminUsers) {
+    if (
+      req.session &&
+      moduleSettings.adminUsers.includes(req.session.user.name_id)
+    ) {
       return handle(req, res);
     }
     res.redirect("/");
