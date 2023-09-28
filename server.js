@@ -100,6 +100,20 @@ app.prepare().then(() => {
     });
   });
 
+  server.all("/nlp", (req, res) => {
+    if (req.session && req.session.user in adminUsers) {
+      return handle(req, res);
+    }
+    res.redirect("/");
+  });
+
+  server.all("/nlpcogsearch", (req, res) => {
+    if (req.session && req.session.user in adminUsers) {
+      return handle(req, res);
+    }
+    res.redirect("/");
+  });
+
   server.all("*", (req, res) => {
     if (req.session && typeof req.session.user !== "undefined") {
       return handle(req, res);
