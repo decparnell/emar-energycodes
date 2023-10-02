@@ -6,11 +6,12 @@ import { useRouter } from "next/router";
 function AddNewUser(props) {
 
     const router = useRouter();
+    const defaultSelectedValue = "Admin"
     const [userId, setUserId] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
-    const [userType, setUserType] = useState("");
+    const [userType, setUserType] = useState(defaultSelectedValue);
 
     const [isTextFieldValid, setIsTextFieldValid] = useState(true);
     const [isValid, setIsValid] = useState(true);
@@ -26,6 +27,10 @@ function AddNewUser(props) {
         } else {
             setIsTextFieldValid(checkIsValid);
         }
+    };
+
+    const handleBackButton = () => {
+        router.push("/change");
     };
 
     async function insertNewUser() {
@@ -109,15 +114,22 @@ function AddNewUser(props) {
                     </div>
                     <div className={styles.col75}>
                         <select name="userType" id="userType" onChange={(e) => setUserType(e.target.value)}>
-                            <option value="Admin">Admin</option>
+                            <option value={defaultSelectedValue} selected>{defaultSelectedValue}</option>
                             <option value="Change User">Change User</option>
                         </select>
                         {!isTextFieldValid && userType == "" ? <p className={styles.invalidTextMessage}>Select an option</p> : null}
                     </div>
                 </div>
 
-                <div className={styles.saveButtonContainer}>
-                    <button className={styles.saveButton} onClick={handleSaveBtn}> Create </button>
+                <div className={styles.separtor} />
+
+                <div className={styles.actionButtonContainer}>
+                    <div className={styles.actionButtonContainer}>
+                        <button className={`${styles.customButton} ${styles.backBtnStyle}`} onClick={handleBackButton}> Cancel </button>
+                    </div>
+                    <div className={styles.actionButtonContainer}>
+                        <button className={`${styles.customButton} ${styles.saveBtnStyle}`} onClick={handleSaveBtn}> Create </button>
+                    </div>
                 </div>
             </div>
         </>

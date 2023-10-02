@@ -11,10 +11,13 @@ function EditUser({ userData }) {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [userType, setUserType] = useState("");
+    
     const [selectedUser, setSelectedUser] = useState("");
 
-    const [errorMessage, setErrorMessage] = useState("");
 
+    const [errorMessage, setErrorMessage] = useState("");
+    const listUserType = ["Admin", "Change User"];
+ 
 
     useEffect(() => {
         setUserId(selectedUser.userId)
@@ -30,6 +33,10 @@ function EditUser({ userData }) {
         if (checkIsValid) {
             updateUserDetails();
         }
+    };
+
+    const handleBackButton = () => {
+        router.push("/change");
     };
 
     async function updateUserDetails() {
@@ -149,9 +156,13 @@ function EditUser({ userData }) {
                             <label className={styles.labelForTextBox} for="userType">User type</label>
                         </div>
                         <div className={styles.col75}>
-                            <select name="userType" id="userType" onChange={(e) => setUserType(e.target.value)}>
-                                <option value="Admin">Admin</option>
-                                <option value="Change User">Change User</option>
+                            <select name="userType" id="userType" onChange={(e) => setUserType(e.target.value)}  value={userType}>
+                                {
+                                    listUserType.map((userTp) => (
+                                        <option value={userTp}>{userTp}</option>
+                                    ))
+                                }
+
                             </select>
                             {/* {!isTextFieldValid && userType == "" ? <p className={styles.invalidTextMessage}>Select an option</p> : null} */}
                         </div>
@@ -159,10 +170,10 @@ function EditUser({ userData }) {
 
                     <div className={styles.actionButtonContainer}>
                         <div className={styles.actionButtonContainer}>
-                            <button className={`${styles.customButton} ${styles.backBtnStyle}`} onClick={handleSaveBtn}> Cancel </button>
+                            <button className={`${styles.customButton} ${styles.backBtnStyle}`} onClick={handleBackButton}> Cancel </button>
                         </div>
                         <div className={styles.actionButtonContainer}>
-                            <button className={`${styles.customButton} ${styles.saveBtnStyle} `} onClick={handleSaveBtn}> Edit </button>
+                            <button className={`${styles.customButton} ${styles.saveBtnStyle}`} onClick={handleSaveBtn}> Edit </button>
                         </div>
                     </div>
                 </div>

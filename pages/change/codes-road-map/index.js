@@ -54,11 +54,11 @@ function CodeRoadMapChange({ latestCodesRoadMapLinkJSON }) {
         const requestBodyJson = JSON.stringify(requestBody);
 
         const dataReq = await fetch(putReqAPI, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json', // Specify JSON content type
-          },
-          body: requestBodyJson, // Include the JSON request body
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json', // Specify JSON content type
+            },
+            body: requestBodyJson, // Include the JSON request body
         });
 
         const dataJson = await dataReq.json();
@@ -105,9 +105,14 @@ function CodeRoadMapChange({ latestCodesRoadMapLinkJSON }) {
                             type="text" id="description" key="description" placeholder="Insert roadmap description" />
                     </div>
                 </div>
-                <div className={styles.saveButtonContainer}>
-                    <button className={isValidUrl ? `${styles.saveButton} ${isClicked ? styles.clicked : ''}` : `${styles.saveButton} ${styles.actionBtnDisabled}`}
-                        onClick={handleSaveBtn}> Save </button>
+                <div className={styles.actionButtonContainer}>
+                    <div className={styles.actionButtonContainer}>
+                        <button className={`${styles.customButton} ${styles.backBtnStyle}`} onClick={handleBackButton}> Cancel </button>
+                    </div>
+                    <div className={styles.actionButtonContainer}>
+                        <button className={isValidUrl ? `${styles.customButton} ${styles.saveBtnStyle} ${isClicked ? styles.clicked : ''}` : `${styles.customButton} ${styles.actionBtnDisabled}`}
+                            onClick={handleSaveBtn}> Save </button>
+                    </div>
                 </div>
             </div>
         </>
