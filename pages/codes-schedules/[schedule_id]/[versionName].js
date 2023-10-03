@@ -12,6 +12,7 @@ import DefinitionTables from "../../../components/tables/definitionsTables";
 import { LogUserInfo } from "../../../components/logging";
 import { checkIfVariablesAreAvailable } from "../../../components/helperFunctions/checkIfVariablesAreAvailable";
 import { checkIfItemsAvailableInArray } from "../../../components/helperFunctions/checkIfItemsAvailableInArray";
+import { scheduleInterpretationDefinitions } from "../../../components/settings";
 
 function Schedules({
   versions,
@@ -151,7 +152,7 @@ function Schedules({
 
         if (startVal === 0) {
           setComponentsData(newDataComponents);
-        } else if (newDataComponents.length == 0 || scheduleId == 2 || typeof newDataComponents === "undefined") {
+        } else if (newDataComponents.length == 0 || scheduleId == scheduleInterpretationDefinitions || typeof newDataComponents === "undefined") {
           setStartVal(componentsData.length);
           setHasMoreData(false);
         } else {
@@ -278,6 +279,7 @@ function Schedules({
         <SideNav
           navbarType="PanelBasedNavBar"
           items={panelDashboard}
+          scheduleId={scheduleId}
           dashboardId="sectionId"
           name="sectionName"
           panelTitle="panelTitle"
@@ -327,7 +329,7 @@ function Schedules({
           />
         }
         {
-          scheduleId == 2 ?
+          scheduleId == scheduleInterpretationDefinitions ?
             <div className={styles.tablesContainer}>
               <DefinitionTables
                 definitions={definitions}

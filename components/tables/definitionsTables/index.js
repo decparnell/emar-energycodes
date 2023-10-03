@@ -1,5 +1,6 @@
 import styles from "../../../styles/codes.module.css";
-import { useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import AppContext from "../../context/AppContext";
 import { listItemsToIgnore } from "../../settings";
 import CreateCustomTag from "../../scheduleId/createCustomTag-scheduleId";
 import LinkTextFromDefinitions from "../../helperFunctions/linkTextFromDefinitions";
@@ -9,6 +10,9 @@ const DefinitionTables = (props) => {
   /* props: 
       definitions: set of definitions of a specific REC word
   */
+
+  const value = useContext(AppContext);
+  let { selectedLetterFromNavBar } = value.state;
 
   const letters = 'abcdefghijklmnopqrstuvwxyz';
   const lettersArray = letters.split('');
@@ -24,7 +28,15 @@ const DefinitionTables = (props) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const defaultSectionId = {sectionId: 2237, sectionName: "Definitions"}
+  const defaultSectionId = { sectionId: 2237, sectionName: "Definitions" }
+
+  useEffect(() => {
+    if(selectedLetterFromNavBar !== ""){
+      loadContentByLetter(selectedLetterFromNavBar);
+    }
+  }, [selectedLetterFromNavBar]);
+
+
 
   const fetchDefinitionsByLetter = async (letter) => {
     //getDefinitionsByLetter
@@ -112,6 +124,11 @@ const DefinitionTables = (props) => {
   }
 
   const handleLetterClick = async (letter) => {
+    value.setSelectedLetterFromNavBar(letter);
+    loadContentByLetter(letter);
+  };
+
+  const loadContentByLetter = async (letter) => {
     setselectedAlphabeticLetter(letter);
     await fetchDefinitionsByLetter(letter);
     const section = document.getElementById(`sec${defaultSectionId.sectionId}`);

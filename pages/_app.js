@@ -46,6 +46,7 @@ function MyApp({
   const [searchType, setSearchType] = useState({ name: "Codes Schedules" });
   const [errorLog, setErrorLog] = useState([]);
   const [triggerScrollDown, setTriggerScrollDown] = useState(false);
+  const [selectedLetterFromNavBar, setSelectedLetterFromNavBar] = useState();
   
 
   useEffect(() => {
@@ -88,6 +89,7 @@ function MyApp({
             searchValue: searchValue,
             searchType: searchType,
             triggerScrollDown: triggerScrollDown,
+            selectedLetterFromNavBar: selectedLetterFromNavBar,
           },
           setLoading: setLoading,
           setLatestDataSpecVersion: setLatestDataSpecVersion,
@@ -99,6 +101,7 @@ function MyApp({
           setSearchValue: setSearchValue,
           setSearchType: setSearchType,
           setTriggerScrollDown: setTriggerScrollDown,
+          setSelectedLetterFromNavBar: setSelectedLetterFromNavBar,
         }}
       >
         <Loading />
