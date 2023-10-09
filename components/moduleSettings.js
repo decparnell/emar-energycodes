@@ -77,6 +77,10 @@ const adminUsers = [
   "chen-yen.ooi@capgemini.com",
   "rosalind.timperley@capgemini.com",
   "ranbir.b.singh@capgemini.com",
+  "rachael.anderson@retailenergycode.co.uk",
+  "nathan.gould@retailenergycode.co.uk",
+  "pete.davies@retailenergycode.co.uk",
+  "paul.gath@retailenergycode.co.uk",
 ];
 
 module.exports = {
