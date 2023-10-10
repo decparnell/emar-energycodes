@@ -26,6 +26,10 @@ function CodeRoadMapChange({ latestCodesRoadMapLinkJSON }) {
         //updateCodesRoadMapData();
     };
 
+    const handleBackButton = () => {
+        router.push("/change");
+    };
+
     const handleSpreadsheetLink = (e) => {
         const inputUrl = e.target.value;
 

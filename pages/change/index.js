@@ -24,7 +24,7 @@ function Change({ }) {
         {
             dashboardId: "SchedulesDashboard",
             dashboardName: "Schedules Dashboard",
-            dashboardLink: "",
+            dashboardLink: "/schedules-dashboard",
             dashboardOrder: 3,
         },
         {

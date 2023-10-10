@@ -16,6 +16,7 @@ function AddNewUser(props) {
     const [isTextFieldValid, setIsTextFieldValid] = useState(true);
     const [isValid, setIsValid] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
 
 
@@ -35,7 +36,7 @@ function AddNewUser(props) {
 
     async function insertNewUser() {
         const postReqAPI = `https://prod-22.uksouth.logic.azure.com:443/workflows/0422dd71013b44b7b7cb6244e5fbe12c/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=SNwxzsNd8JMFCe7gyJLHSSQw9wjAztD1TzS7em293u4`;
-
+        setIsLoading(true);
         // Data to send in the PUT request
         const requestBody = {
             firstName: firstName,
@@ -56,6 +57,7 @@ function AddNewUser(props) {
         });
 
         const dataJson = await dataReq.json();
+        setIsLoading(false);
         if (dataJson.status != 200) {
             setErrorMessage("User not created! Please try again");
         } else {
@@ -128,7 +130,7 @@ function AddNewUser(props) {
                         <button className={`${styles.customButton} ${styles.backBtnStyle}`} onClick={handleBackButton}> Cancel </button>
                     </div>
                     <div className={styles.actionButtonContainer}>
-                        <button className={`${styles.customButton} ${styles.saveBtnStyle}`} onClick={handleSaveBtn}> Create </button>
+                        <button className={`${styles.customButton} ${styles.saveBtnStyle} ${isLoading ? styles.btnDisabled : ''}`} onClick={handleSaveBtn} disabled={isLoading}> {isLoading ? 'Creating...' : 'Create'} </button>
                     </div>
                 </div>
             </div>

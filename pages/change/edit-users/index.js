@@ -11,17 +11,17 @@ function EditUser({ userData }) {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [userType, setUserType] = useState("");
-    
+
     const [selectedUser, setSelectedUser] = useState("");
 
-
     const [errorMessage, setErrorMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const listUserType = ["Admin", "Change User"];
- 
+
 
     useEffect(() => {
-        setUserId(selectedUser.userId)
-        setFirstName(selectedUser.firstName)
+        setUserId(selectedUser.userId);
+        setFirstName(selectedUser.firstName);
         setLastName(selectedUser.lastName);
         setEmail(selectedUser.email);
         setUserType(selectedUser.userType);
@@ -42,6 +42,7 @@ function EditUser({ userData }) {
     async function updateUserDetails() {
         const postReqAPI = `https://prod-28.uksouth.logic.azure.com:443/workflows/ac84726c8dbd4689b16681344f10e4d5/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=sU4hfFmZ0usKF4rONN_cZe8o2r-eUQtHt6D8TPHFnwI`;
 
+        setIsLoading(true);
         const requestBody = {
             userId: userId,
             email: email,
@@ -62,6 +63,7 @@ function EditUser({ userData }) {
         });
 
         const dataJson = await dataReq.json();
+        setIsLoading(false);
         if (dataJson.status != 200) {
             setErrorMessage("User  not updated! Please try again");
         } else {
@@ -79,32 +81,34 @@ function EditUser({ userData }) {
     return (
         <>
             <h1 className={styles.title}>Edit User</h1>
-            <div className={`${styles.editChangeContainer} box`}>
-                <table id="UserTable" className={styles.editUserTable}>
-                    <thead>
-                        <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>User Type</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            userData.map((entry) => (
-                                <tr key={entry.userId}
-                                    onClick={() => handleRowClick(entry)}
-                                    className={selectedUser.userId == entry.userId ? styles.selectedRow : null}
-                                >
-                                    <td>{entry.firstName}</td>
-                                    <td>{entry.lastName}</td>
-                                    <td>{entry.email}</td>
-                                    <td>{entry.userType}</td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
+            <div className={`${styles.editChangeTableContainer} box`}>
+                <div className={styles.tableContainer}>
+                    <table id="UserTable" className={styles.editUserTable}>
+                        <thead className={styles.theadContainer}>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>User Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                userData.map((entry) => (
+                                    <tr key={entry.userId}
+                                        onClick={() => handleRowClick(entry)}
+                                        className={selectedUser.userId == entry.userId ? styles.selectedRow : null}
+                                    >
+                                        <td>{entry.firstName}</td>
+                                        <td>{entry.lastName}</td>
+                                        <td>{entry.email}</td>
+                                        <td>{entry.userType}</td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
             {selectedUser ?
                 <div className={`${styles.editChangeContainer} box`}>
@@ -156,7 +160,7 @@ function EditUser({ userData }) {
                             <label className={styles.labelForTextBox} for="userType">User type</label>
                         </div>
                         <div className={styles.col75}>
-                            <select name="userType" id="userType" onChange={(e) => setUserType(e.target.value)}  value={userType}>
+                            <select name="userType" id="userType" onChange={(e) => setUserType(e.target.value)} value={userType}>
                                 {
                                     listUserType.map((userTp) => (
                                         <option value={userTp}>{userTp}</option>
@@ -173,7 +177,7 @@ function EditUser({ userData }) {
                             <button className={`${styles.customButton} ${styles.backBtnStyle}`} onClick={handleBackButton}> Cancel </button>
                         </div>
                         <div className={styles.actionButtonContainer}>
-                            <button className={`${styles.customButton} ${styles.saveBtnStyle}`} onClick={handleSaveBtn}> Edit </button>
+                            <button className={`${styles.customButton} ${styles.saveBtnStyle} ${isLoading ? styles.btnDisabled : ''}`} onClick={handleSaveBtn} disabled={isLoading}>  {isLoading ? 'Editing...' : 'Edit'} </button>
                         </div>
                     </div>
                 </div>
