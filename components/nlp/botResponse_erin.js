@@ -342,43 +342,15 @@ function BotResponse(props) {
       ? responseObj.contextDocuments
       : null;
   console.log(sourceObj);
+
   const sources = sourceObj
     ? sourceObj.map((source, index) => {
-        const key0 = Object.keys(source)[0];
-        const hrefValue =
-          key0.toLowerCase() !== "definition"
-            ? `/codes-schedules/${source.documentId_FK}/${source.Version}?componentId=${source.componentId}`
-            : `/codes-schedules/definitions/${source.documentId_FK}`;
         return (
-          <a
-            href={hrefValue}
-            rel="noopener noreferrer"
-            target="_blank"
-            key={index}
-          >
-            <li>
-              {key0.toLowerCase() !== "definition" ? (
-                <p className={`${styles.p} pointer`}>
-                  <b>
-                    {source[key0]} V{source.Version}
-                  </b>{" "}
-                  -{" "}
-                  {source.Part.toLowerCase() !== "main"
-                    ? `${source.Part}  -`
-                    : null}
-                  {source.Section ? <> {source.Section}</> : null}
-                  {source.Clause ? <> - {source.Clause}</> : null}
-                </p>
-              ) : (
-                <p className={`${styles.p}`}>
-                  <b>
-                    {source[key0]} V{source.Version}
-                  </b>{" "}
-                  - {source.Part}
-                </p>
-              )}
-            </li>
-          </a>
+          <li key={index}>
+            <p className={`${styles.p} pointer`}>
+              <b>{source}</b>
+            </p>
+          </li>
         );
       })
     : null;

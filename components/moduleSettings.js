@@ -81,6 +81,7 @@ const adminUsers = [
   "nathan.gould@retailenergycode.co.uk",
   "pete.davies@retailenergycode.co.uk",
   "paul.gath@retailenergycode.co.uk",
+  "mark.pearce@capgemini.com",
 ];
 
 module.exports = {
