@@ -37,7 +37,7 @@ function NLP() {
     };
 
     ////////////////////////////////////dec comments:THIS BIT IS GOOD - just added keys
-    fetch("/api/nlpSession3", options)
+    fetch("/api/erin_develop", options)
       .then((response) => {
         if (!response.ok) {
           setChatLog((prevChat) => {
