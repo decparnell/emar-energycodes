@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import QuestionBox from "../../components/nlp/questionBox";
 import ChatBox from "../../components/nlp/chatBox";
 import UserQuestion from "../../components/nlp/userQuestion";
-import BotResponse from "../../components/nlp/botResponse_erin";
+import BotResponse from "../../components/nlp/botResponse_erin_develop";
 import QuestionHistory from "../../components/nlp/questionHistory";
 import { v4 as uuidv4 } from "uuid";
 import { uiVersion, loadedDocuments } from "../../components/settings";
@@ -142,7 +142,7 @@ function NLP() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>NLP</title>
+        <title>ERIN</title>
         <meta property="og:title" content="NLP" key="nlp" />
       </Head>
       <div className={styles.mainContentContainer}>
