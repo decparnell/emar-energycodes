@@ -28,7 +28,7 @@ app.prepare().then(() => {
   var sp_options, idp_options;
 
   //for testing on the pre-prod env
-  const serverEnv = "pre-production";
+  const serverEnv = "production";
 
   if (server.get("env") === "production" && serverEnv === "production") {
     server.set("trust proxy", 1); // trust first proxy
@@ -101,8 +101,26 @@ app.prepare().then(() => {
   });
 
   server.all("/nlp", (req, res) => {
-    console.log(req.session.user);
-    console.log(moduleSettings.adminUsers);
+    if (
+      req.session &&
+      moduleSettings.adminUsers.includes(req.session.user.name_id)
+    ) {
+      return handle(req, res);
+    }
+    res.redirect("/");
+  });
+
+    server.all("/erin", (req, res) => {
+    if (
+      req.session &&
+      moduleSettings.adminUsers.includes(req.session.user.name_id)
+    ) {
+      return handle(req, res);
+    }
+    res.redirect("/");
+  });
+
+    server.all("/erin_develop", (req, res) => {
     if (
       req.session &&
       moduleSettings.adminUsers.includes(req.session.user.name_id)
