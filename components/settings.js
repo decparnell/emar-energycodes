@@ -2,6 +2,8 @@ export const listItemsToIgnore = ["listNumberItem", "listBulletItem"];
 
 export const listHeaders = ["listNumber", "listBullet"];
 
+export const scheduleInterpretationDefinitions = 2;
+
 export const buttonHeaderOptions = [
   { id: 1, name: "Dashboard" },
   { id: 2, name: "Detailed Search" },

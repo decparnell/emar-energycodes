@@ -113,11 +113,11 @@ const ResultsTable = (props) => {
     );
 
     if (filteredMapping.length != 0) {
-      const currentDocVersionName = filteredMapping[0].docVersionName;
-      const baseLink = `/codes-schedules/${props.item.documentId_FK}/${currentDocVersionName}`;
+      const currentDocVersionName = props.item.versionName;//filteredMapping[0].docVersionName;
+      const baseLink = `/codes-schedules/${props.item.documentId_FK}/${currentDocVersionName}?componentId=${props.item.componentId}`;
       return (
         <Link key={props.index} href={baseLink}>
-          <tr key={props.index}>{returnTableDataForHeaders(props.item)}</tr>
+          <tr key={props.index} >{returnTableDataForHeaders(props.item)}</tr>
         </Link>
       );
     } else {

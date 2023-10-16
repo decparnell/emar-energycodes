@@ -31,7 +31,7 @@ function BotResponse(props) {
   const [dislikeIconClicked, setDislikeIconClicked] = useState(false);
   const [likeIconClicked, setLikeIconClicked] = useState(false);
   const [showSources, setShowSources] = useState(false);
-  const [showResponse, setShowResponse] = useState(true);
+  const normalMessage = status.custom_topics.length == 0;
 
   const [openTipsModal, setOpenTipsModal] = useState(false);
   const [openExampleQuestions1Modal, setExampleQuestions1Modal] =
@@ -191,63 +191,15 @@ function BotResponse(props) {
     </>
   );
 
-  //Contacts message work needs refactoring in Sprint 2
-  const contactsMessage = (
-    <>
-      You can find the list of REC contact details and the link to the Service
-      Desk{" "}
-      <a
-        className={`${styles.link}`}
-        target="_blank"
-        rel="noreferrer"
-        href={"https://recportal.co.uk/web/guest/service-desk-landing"}
-      >
-        here
-      </a>
-      , or by sending an email to{" "}
-      <a className={`${styles.link}`} onClick={sendSupportEmailHandler}>
-        support@recmanager.co.uk
-      </a>
-      . They'll be more than happy to help you.
-    </>
-  );
-
-  const containsContactDetails =
-    status.custom_topics.includes("contact_details");
-  const messageFailed = messageSentiment === "failed_to_answer";
-  const nullAnswer = responseObj.answer === "Please find the details below:";
-  const partialContactsMessage =
-    status.custom_topics.includes("contact_details") &&
-    messageSentiment === "partial_answer";
-  const completeMessage =
-    status.custom_topics.includes("contact_details") &&
-    messageSentiment === "complete_answer";
-  const partialCompleteMessage = completeMessage || partialContactsMessage;
-
-  const messageValue = null;
-
-  const message = () => {
-    if (messageFailed) {
-      //if (containsContactDetails) {
-      if (props.response.query.includes("contact")) {
-        messageValue = contactsMessage;
-        return <p className={`${styles.p}`}>{contactsMessage}</p>;
-      }
-      messageValue = inappropriateResponseMessage;
+  const Message = () => {
+    if (!normalMessage) {
+      return null;
+    } else if (messageSentiment === "failed_to_answer") {
       return <p className={`${styles.p}`}>{inappropriateResponseMessage}</p>;
-    } else if (nullAnswer) {
-      messageValue = contactsMessage;
-      return <p className={`${styles.p}`}>{contactsMessage}</p>;
+    } else {
+      return <p className={`${styles.p}`}>{responseObj.answer}</p>;
     }
-    messageValue = responseObj.answer;
-    return <p className={`${styles.p}`}>{responseObj.answer}</p>;
   };
-
-  // const messages = messageFailed
-  //   ? inappropriateResponseMessage
-  //   : props.messageValue
-  //   ? props.messageValue
-  //   : responseObj.answer;
 
   const copyToClipboardHandler = () => {
     setCopyIconClicked(true);
@@ -270,10 +222,6 @@ function BotResponse(props) {
 
   const closeModal = () => {
     setOpenModal(false);
-  };
-
-  const closeFeedbackModal = () => {
-    setOpenFeedbackModal(false);
   };
 
   const submitFeedbackHandler = (event) => {
@@ -326,12 +274,6 @@ function BotResponse(props) {
     </Modal>
   );
 
-  const showSuccessModal = (
-    <Modal open={openFeedbackModal} onClose={closeFeedbackModal}>
-      <p>Thank you for your feedback and helping to improve this service</p>
-    </Modal>
-  );
-
   //Checking to see if the data renders correctly
   //Needs a check to use either contextDocuments / verifiedSources
 
@@ -341,45 +283,23 @@ function BotResponse(props) {
       : messageSentiment === "partial_answer"
       ? responseObj.contextDocuments
       : null;
-  console.log(sourceObj);
+  //TODO: remove mapping when context urls are added
   const sources = sourceObj
     ? sourceObj.map((source, index) => {
-        const key0 = Object.keys(source)[0];
-        const hrefValue =
-          key0.toLowerCase() !== "definition"
-            ? `/codes-schedules/${source.documentId_FK}/${source.Version}?componentId=${source.componentId}`
-            : `/codes-schedules/definitions/${source.documentId_FK}`;
-        return (
-          <a
-            href={hrefValue}
-            rel="noopener noreferrer"
-            target="_blank"
-            key={index}
-          >
-            <li>
-              {key0.toLowerCase() !== "definition" ? (
-                <p className={`${styles.p} pointer`}>
-                  <b>
-                    {source[key0]} V{source.Version}
-                  </b>{" "}
-                  -{" "}
-                  {source.Part.toLowerCase() !== "main"
-                    ? `${source.Part}  -`
-                    : null}
-                  {source.Section ? <> {source.Section}</> : null}
-                  {source.Clause ? <> - {source.Clause}</> : null}
-                </p>
-              ) : (
-                <p className={`${styles.p}`}>
-                  <b>
-                    {source[key0]} V{source.Version}
-                  </b>{" "}
-                  - {source.Part}
-                </p>
-              )}
-            </li>
-          </a>
-        );
+        const sourceItem =
+          messageSentiment === "complete_answer" ? (
+            <a href={source.url}>
+              <p className={`${styles.p} pointer`}>
+                <b>{source.name}</b>
+              </p>
+            </a>
+          ) : messageSentiment === "partial_answer" ? (
+            <p className={`${styles.p} pointer`}>
+              <b>{source.name}</b>
+            </p>
+          ) : null;
+
+        return <li key={index}>{sourceItem}</li>;
       })
     : null;
 
@@ -393,14 +313,6 @@ function BotResponse(props) {
 
   const hideSourcesListHandler = () => {
     setShowSources(false);
-  };
-
-  const showResponseHandler = () => {
-    setShowResponse(true);
-  };
-
-  const hideResponseHandler = () => {
-    setShowResponse(false);
   };
 
   const sourcesOptions = (
@@ -432,25 +344,6 @@ function BotResponse(props) {
     </div>
   );
 
-  const responseOptions = (
-    <div className={`${styles.sourcesOptionsContainer}`}>
-      <button
-        title="Show Response"
-        className={`${styles.button}`}
-        onClick={showResponseHandler}
-      >
-        <BiPlus className={`${styles.plusMinus}`} />
-      </button>
-      <button
-        title="Hide Response"
-        className={`${styles.button}`}
-        onClick={hideResponseHandler}
-      >
-        <BiMinus className={`${styles.plusMinus}`} />
-      </button>
-    </div>
-  );
-
   const clickedStyle = `${styles.copyIcon} ${
     copyIconClicked ? styles.copyIconClicked : null
   }`;
@@ -465,55 +358,58 @@ function BotResponse(props) {
 
   return (
     <Fragment>
-      <div className={`${styles.botResponse}`}>
-        {botIcon}
-        <div
-          className={`${styles.botMessage}`}
-          style={
-            messageSentiment === "complete_answer"
-              ? { borderColor: "forestgreen" }
-              : messageSentiment === "partial_answer"
-              ? { borderColor: "#FFEB3A" }
-              : { borderColor: "orangered" }
-          }
-        >
-          <div className={`${styles.options}`}>
-            <div className={`${styles.messageOptions}`}>
-              <button
-                title="Copy to clipboard"
-                className={`${styles.messageButton}`}
-                onClick={copyToClipboardHandler}
-              >
-                <BiCopyAlt className={clickedStyle} />
-              </button>
-              <button
-                title="Dislike Response"
-                className={`${styles.messageButton}`}
-                disabled={dislikeIconClicked}
-                onClick={dislikeFeedbackHandler}
-              >
-                <BiDislike className={dislikedStyle} />
-              </button>
-              <button
-                title="Like Response"
-                className={`${styles.messageButton}`}
-                disabled={likeIconClicked}
-                onClick={likeFeedbackHandler}
-              >
-                <BiLike className={likedStyle} />
-              </button>
+      {normalMessage ? (
+        <div className={`${styles.botResponse}`}>
+          {botIcon}
+          <div
+            className={`${styles.botMessage}`}
+            style={
+              messageSentiment === "complete_answer"
+                ? { borderColor: "forestgreen" }
+                : messageSentiment === "partial_answer"
+                ? { borderColor: "#FFEB3A" }
+                : { borderColor: "orangered" }
+            }
+          >
+            <div className={`${styles.options}`}>
+              <div className={`${styles.messageOptions}`}>
+                <button
+                  title="Copy to clipboard"
+                  className={`${styles.messageButton}`}
+                  onClick={copyToClipboardHandler}
+                >
+                  <BiCopyAlt className={clickedStyle} />
+                </button>
+                <button
+                  title="Dislike Response"
+                  className={`${styles.messageButton}`}
+                  disabled={dislikeIconClicked}
+                  onClick={dislikeFeedbackHandler}
+                >
+                  <BiDislike className={dislikedStyle} />
+                </button>
+                <button
+                  title="Like Response"
+                  className={`${styles.messageButton}`}
+                  disabled={likeIconClicked}
+                  onClick={likeFeedbackHandler}
+                >
+                  <BiLike className={likedStyle} />
+                </button>
+              </div>
+            </div>
+            {<Message />}
+            <div className={`${styles.sourcesContainer}`}>
+              {sourcesOptions}
+              {showSources === true ? sourcesList : null}
             </div>
           </div>
-          {showResponse === true ? message() : null}
-          {props.answer}
-          <div className={`${styles.sourcesContainer}`}>
-            {sourcesOptions}
-            {showSources === true ? sourcesList : null}
-          </div>
         </div>
-      </div>
+      ) : null}
       {/*  adding in for contact details */}
-      {partialCompleteMessage ? <ContactsMessage botIcon={botIcon} /> : null}
+      {status.custom_topics.includes("contact_details") ? (
+        <ContactsMessage botIcon={botIcon} />
+      ) : null}
       {feedbackModal}
       {tipsModal}
       {tipsExamples1Modal}

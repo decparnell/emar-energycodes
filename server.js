@@ -100,6 +100,46 @@ app.prepare().then(() => {
     });
   });
 
+  server.all("/nlp", (req, res) => {
+    if (
+      req.session &&
+      moduleSettings.adminUsers.includes(req.session.user.name_id)
+    ) {
+      return handle(req, res);
+    }
+    res.redirect("/");
+  });
+
+    server.all("/erin", (req, res) => {
+    if (
+      req.session &&
+      moduleSettings.adminUsers.includes(req.session.user.name_id)
+    ) {
+      return handle(req, res);
+    }
+    res.redirect("/");
+  });
+
+    server.all("/erin_develop", (req, res) => {
+    if (
+      req.session &&
+      moduleSettings.adminUsers.includes(req.session.user.name_id)
+    ) {
+      return handle(req, res);
+    }
+    res.redirect("/");
+  });
+
+  server.all("/nlpcogsearch", (req, res) => {
+    if (
+      req.session &&
+      moduleSettings.adminUsers.includes(req.session.user.name_id)
+    ) {
+      return handle(req, res);
+    }
+    res.redirect("/");
+  });
+
   server.all("*", (req, res) => {
     if (req.session && typeof req.session.user !== "undefined") {
       return handle(req, res);

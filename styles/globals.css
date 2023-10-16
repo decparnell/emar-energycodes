@@ -52,6 +52,7 @@ table {
   padding-top: 1vh;
   padding-bottom: 1vh;
   text-align: center;
+  cursor: pointer;
 }
 
 th {

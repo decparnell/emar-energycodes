@@ -3,6 +3,7 @@ import { listItemsToIgnore } from "../../components/settings";
 import LinkTextFromDefinitions from "../helperFunctions/linkTextFromDefinitions";
 import CreateCustomTag from "./createCustomTag-scheduleId";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { scheduleInterpretationDefinitions } from "../../components/settings";
 
 const CreateSchedulesContent = (props) => {
   /* props: 
@@ -84,8 +85,8 @@ const CreateSchedulesContent = (props) => {
       dataLength={totalLength}
       next={fetchData}
       hasMore={hasMore}
-      loader={scheduleId == 2 ? null : <div className={"loading-container"}>Loading</div>}
-      endMessage={scheduleId == 2 ? null : <p>No more data to load.</p>}
+      loader={scheduleId == scheduleInterpretationDefinitions ? null : <div className={"loading-container"}>Loading</div>}
+      endMessage={scheduleId == scheduleInterpretationDefinitions ? null : <p>No more data to load.</p>}
       className={styles.scroll}
     >
       <CreateContent />

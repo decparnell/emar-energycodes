@@ -11,7 +11,7 @@ const SchedulesTables = (props) => {
 
   const VersionTable = (props) => {
     return (
-      <table id="versionTable">
+      <table id="versionTable" >
         <thead>
           <tr key="versionHeader">
             <th>Version</th>

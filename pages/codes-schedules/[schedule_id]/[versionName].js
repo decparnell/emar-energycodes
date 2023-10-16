@@ -1,17 +1,18 @@
-import { useRouter } from "next/router";
+import Head from "next/head";
 import styles from "../../../styles/schedules-dataspec.module.css";
+import AppContext from "../../../components/context/AppContext";
+import { useRouter } from "next/router";
 import { useState, useContext, useEffect } from "react";
 import SideNav from "../../../components/dashboardSideNav";
-import { checkIfVariablesAreAvailable } from "../../../components/helperFunctions/checkIfVariablesAreAvailable";
-import { checkIfItemsAvailableInArray } from "../../../components/helperFunctions/checkIfItemsAvailableInArray";
 import SchedulesTables from "../../../components/tables/schedulesTables";
 import CreateSchedulesContent from "../../../components/scheduleId/createSchedulesContent";
-import Head from "next/head";
-import { LogUserInfo } from "../../../components/logging";
 import SecondNavbar from "../../../components/layout/secondHeader";
-import AppContext from "../../../components/context/AppContext";
 import DocumentDownload from "../../../components/documentDownload";
 import DefinitionTables from "../../../components/tables/definitionsTables";
+import { LogUserInfo } from "../../../components/logging";
+import { checkIfVariablesAreAvailable } from "../../../components/helperFunctions/checkIfVariablesAreAvailable";
+import { checkIfItemsAvailableInArray } from "../../../components/helperFunctions/checkIfItemsAvailableInArray";
+import { scheduleInterpretationDefinitions } from "../../../components/settings";
 
 function Schedules({
   versions,
@@ -21,6 +22,7 @@ function Schedules({
   definitions,
   optionalityInfo,
 }) {
+
   const apiVarList = [
     { obj: versions, name: "versions" },
     { obj: parts, name: "parts" },
@@ -35,16 +37,6 @@ function Schedules({
     ? documents[0]
     : null;
 
-  const router = useRouter();
-  const scheduleId = router.query.schedule_id;
-  const docVersionName = router.query.versionName;
-  const scheduleNumber = docInfo.scheduleNumber;
-  const scheduleName = docInfo.documentName;
-
-  const mandatoryTable = transformTable(optionalityInfo, parts);
-
-  const [urlDownload, setUrlDownload] = useState(null);
-
   const panelDashboard = parts.map((part) => {
     const dashboard = filterByFieldId(sections, "partId_FK", part.partId);
     return {
@@ -54,18 +46,15 @@ function Schedules({
     };
   });
 
-  useEffect(() => {
-    if (currentVersionMapping != null) {
-      const currentDocVersionName = currentVersionMapping.filter(
-        (item) => item.documentId == scheduleId
-      )[0].docVersionName;
+  const router = useRouter();
+  const scheduleId = router.query.schedule_id;
+  const docVersionName = router.query.versionName;
+  const scheduleNumber = docInfo.scheduleNumber;
+  const scheduleName = docInfo.documentName;
 
-      if (docVersionName !== currentDocVersionName) {
-        router.push(`/codes-schedules/${scheduleId}/${currentDocVersionName}`);
-      }
-    }
-  }, [currentVersionMapping]);
+  const mandatoryTable = transformTable(optionalityInfo, parts);
 
+  const [urlDownload, setUrlDownload] = useState(null);
   const [componentId, setComponentId] = useState(router.query.componentId);
   const [componentsData, setComponentsData] = useState([]);
   const [startVal, setStartVal] = useState(0);
@@ -77,13 +66,25 @@ function Schedules({
   //const [totalLength, setTotalLength] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
   const [hasMoreData, setHasMoreData] = useState(true);
   const [shouldFetchMoreData, setShouldFetchMoreData] = useState(false);
 
   const [currentSections, setCurrentSections] = useState(() => {
     return panelDashboard[0];
   });
+
+  useEffect(() => {
+    if (currentVersionMapping != null) {
+      const currentDocVersionName = currentVersionMapping.filter(
+        (item) => item.documentId == scheduleId
+      )[0].docVersionName;
+
+      //Is needed when recVersion Dropdown change but interfere when form the serach table a link is selected
+      if (docVersionName !== currentDocVersionName && componentId == undefined) {
+        router.push(`/codes-schedules/${scheduleId}/${currentDocVersionName}`);
+      }
+    }
+  }, [currentVersionMapping]);
 
   useEffect(() => {
     LogUserInfo(`${docInfo.documentName} V${docVersionName}`);
@@ -93,6 +94,10 @@ function Schedules({
 
   useEffect(() => {
     handleDownloadDoc();
+    resetVarToDefault();
+    if (!componentId) {
+      scrollToDiplayContent(); // ! important do not remove this, reason given on the description of the function
+    }
   }, [docVersionName]);
 
   useEffect(() => {
@@ -100,6 +105,19 @@ function Schedules({
       fetchData();
     }
   }, [shouldFetchMoreData, currentSections]);
+
+  useEffect(() => {
+    if (typeof window != "undefined" && componentId && isLoading === false) {
+      const element = document.getElementById(componentId);
+
+      element?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
+    }
+  }, [isLoading]);
+
 
   /* ****FUNCTIONS**** */
   //client-side fetch data, loading more components of each section
@@ -134,7 +152,7 @@ function Schedules({
 
         if (startVal === 0) {
           setComponentsData(newDataComponents);
-        } else if (newDataComponents.length == 0 || scheduleId == 2 || typeof newDataComponents === "undefined") {
+        } else if (newDataComponents.length == 0 || scheduleId == scheduleInterpretationDefinitions || typeof newDataComponents === "undefined") {
           setStartVal(componentsData.length);
           setHasMoreData(false);
         } else {
@@ -146,10 +164,9 @@ function Schedules({
         }
 
         setStartVal((prevVal) => prevVal + incrementalStartVal);
-        
+
         if (shouldFetchMoreData) {
-          setStartVal(newDataComponents[newDataComponents.length-1].RowNum + 1);
-          value.setTriggerScrollDown(true);
+          setStartVal(newDataComponents[newDataComponents.length - 1].RowNum + 1);
         }
 
         setIsLoading(false);
@@ -157,22 +174,13 @@ function Schedules({
         setError(error);
       } finally {
         setShouldFetchMoreData(false);
+        if (shouldFetchMoreData && isLoading == false) {
+          value.setTriggerScrollDown(true);
+        }
         setComponentId(undefined);
       }
     }
   };
-
-  useEffect(() => {
-    if (typeof window != "undefined" && componentId && isLoading === false) {
-      const element = document.getElementById(componentId);
-
-      element?.scrollIntoView({
-        behavior: "smooth",
-        block: "end",
-        inline: "nearest",
-      });
-    }
-  }, [isLoading]);
 
   const handleDownloadDoc = async () => {
     try {
@@ -216,20 +224,30 @@ function Schedules({
     return jsonData.filter((obj) => obj[field_name] === id);
   }
 
-  /*   ///////DEC -  USE THIS TO JUMP TO DATA _ MAY NEED TO EXTEND API TO INC THIS
-  function jumpToSection(sectionId) {
-    /* while (
-      componentsData[componentsData.length - 1].clauseReference.indexOf(
-        `${sectionId}.`
-      ) === -1
-    ) {
-      fetchData();
-    } 
 
-    console.log("here");
-    console.log(componentsData);
-  } */
+  //Reset all the indicated variables
+  function resetVarToDefault() {
+    setHasMoreData(true);
+    setShouldFetchMoreData(false);
+    setStartVal(0);
+    setComponentsData([]);
+  }
 
+  /* Function to scroll smoothly to a specific Y coordinate
+     important! this the scrooldown of y coordinate is needed due to the infinite-scroll
+     if you remove this it might show the loading screen infinitily 
+     (the reason is uncertain, but mostly possible) of the external library (infinite-scroll)
+  */
+  function scrollToDiplayContent() {
+    setTimeout(() => {
+      window.scrollTo({
+        top: 150,         //Y coordinate
+        behavior: 'smooth'
+      });
+    }, 3000); // 3seconds
+  }
+
+  // actual data - groupped all components by sections
   const groupSectionsAndComponents = sections
     .map((section) => {
       const components = filterByFieldId(
@@ -261,6 +279,7 @@ function Schedules({
         <SideNav
           navbarType="PanelBasedNavBar"
           items={panelDashboard}
+          scheduleId={scheduleId}
           dashboardId="sectionId"
           name="sectionName"
           panelTitle="panelTitle"
@@ -298,24 +317,27 @@ function Schedules({
           )}
         </div>
 
-        <CreateSchedulesContent
-          scheduleId={scheduleId}
-          parts={parts}
-          definitions={definitions}
-          data={groupSectionsAndComponents}
-          fetchData={fetchData}
-          hasMoreData={hasMoreData}
-          totalLength={startVal}
-        />
-        {
-          scheduleId == 2 ?
-          <div className={styles.tablesContainer}>
-            <DefinitionTables
-              definitions={definitions}
-            />
-          </div>
-          : null
+        {shouldFetchMoreData ? <p className={`${styles.loadingCustomStyle} loading-container`}>Loading</p> :
+          <CreateSchedulesContent
+            scheduleId={scheduleId}
+            parts={parts}
+            definitions={definitions}
+            data={groupSectionsAndComponents}
+            fetchData={fetchData}
+            hasMoreData={hasMoreData}
+            totalLength={startVal}
+          />
         }
+        {
+          scheduleId == scheduleInterpretationDefinitions ?
+            <div className={styles.tablesContainer}>
+              <DefinitionTables
+                definitions={definitions}
+              />
+            </div>
+            : null
+        }
+
       </div>
     </div>
   );

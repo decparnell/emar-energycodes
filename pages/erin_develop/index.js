@@ -4,12 +4,12 @@ import React, { useEffect, useState } from "react";
 import QuestionBox from "../../components/nlp/questionBox";
 import ChatBox from "../../components/nlp/chatBox";
 import UserQuestion from "../../components/nlp/userQuestion";
-import BotResponse from "../../components/nlp/botResponse";
+import BotResponse from "../../components/nlp/botResponse_erin_develop";
 import QuestionHistory from "../../components/nlp/questionHistory";
 import { v4 as uuidv4 } from "uuid";
-import { uiVersion } from "../../components/settings";
+import { uiVersion, loadedDocuments } from "../../components/settings";
 import Modal from "../../components/modal";
-import { loadedDocuments } from "../../components/settings";
+import { LogUserInfo } from "../../components/logging";
 
 function NLP() {
   const [botIsTyping, setBotIsTyping] = useState(false);
@@ -27,6 +27,7 @@ function NLP() {
       uiVersion: uiVersion,
     };
 
+    /* LogUserInfo("NLP_COGNITIVE---", String(queryId), ": ", String(query)); */
     const options = {
       method: "POST",
       headers: {
@@ -36,7 +37,7 @@ function NLP() {
     };
 
     ////////////////////////////////////dec comments:THIS BIT IS GOOD - just added keys
-    fetch("/api/nlpSession", options)
+    fetch("/api/erin_develop", options)
       .then((response) => {
         if (!response.ok) {
           setChatLog((prevChat) => {
@@ -83,6 +84,7 @@ function NLP() {
   const questionHandler = () => {
     //Storing queryid & user
     const queryId = uuidv4();
+    LogUserInfo("NLP_COGNITIVE---", String(queryId), ": ", String(query));
     setChatLog((prevChat) => {
       return [
         ...prevChat,
@@ -90,10 +92,8 @@ function NLP() {
       ];
     });
     setBotIsTyping(true);
-
     fetchData(queryId);
   };
-
   useEffect(() => {
     chatLog.length > 0
       ? setQuestionHistory([
@@ -142,7 +142,7 @@ function NLP() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>NLP</title>
+        <title>ERIN</title>
         <meta property="og:title" content="NLP" key="nlp" />
       </Head>
       <div className={styles.mainContentContainer}>
