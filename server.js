@@ -110,7 +110,7 @@ app.prepare().then(() => {
     res.redirect("/");
   });
 
-    server.all("/erin", (req, res) => {
+  server.all("/erin", (req, res) => {
     if (
       req.session &&
       moduleSettings.adminUsers.includes(req.session.user.name_id)
@@ -120,7 +120,7 @@ app.prepare().then(() => {
     res.redirect("/");
   });
 
-    server.all("/erin_develop", (req, res) => {
+  server.all("/erin_develop", (req, res) => {
     if (
       req.session &&
       moduleSettings.adminUsers.includes(req.session.user.name_id)

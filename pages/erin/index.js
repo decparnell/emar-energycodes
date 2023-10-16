@@ -37,7 +37,7 @@ function NLP() {
     };
 
     ////////////////////////////////////dec comments:THIS BIT IS GOOD - just added keys
-    fetch("/api/nlpSession3", options)
+    fetch("/api/erin", options)
       .then((response) => {
         if (!response.ok) {
           setChatLog((prevChat) => {
@@ -142,7 +142,7 @@ function NLP() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>NLP</title>
+        <title>ERIN</title>
         <meta property="og:title" content="NLP" key="nlp" />
       </Head>
       <div className={styles.mainContentContainer}>
