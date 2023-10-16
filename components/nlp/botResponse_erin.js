@@ -16,7 +16,6 @@ import UserQuestion from "./userQuestion";
 import { mockData1, mockData2, mockData3, mockData4 } from "./mockData";
 
 function BotResponse(props) {
-  console.log(props);
   const responseObj = props.response.response;
   const status = props.response.status;
   const messageSentiment = props.botSentiment;
@@ -283,16 +282,23 @@ function BotResponse(props) {
       : messageSentiment === "partial_answer"
       ? responseObj.contextDocuments
       : null;
-
+  //TODO: remove mapping when context urls are added
   const sources = sourceObj
     ? sourceObj.map((source, index) => {
-        return (
-          <li key={index}>
+        const sourceItem =
+          messageSentiment === "complete_answer" ? (
+            <a href={source.url}>
+              <p className={`${styles.p} pointer`}>
+                <b>{source.name}</b>
+              </p>
+            </a>
+          ) : messageSentiment === "partial_answer" ? (
             <p className={`${styles.p} pointer`}>
-              <b>{source}</b>
+              <b>{source.name}</b>
             </p>
-          </li>
-        );
+          ) : null;
+
+        return <li key={index}>{sourceItem}</li>;
       })
     : null;
 
