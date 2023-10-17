@@ -1,4 +1,4 @@
-export const callFeedback = (queryId, rating, feedback) => {
+export const callFeedback = (queryId, rating, feedback, url) => {
   const data = { queryId: queryId, rating: rating, feedback: feedback };
   const bodyData = JSON.stringify(data);
   const options = {
@@ -9,7 +9,7 @@ export const callFeedback = (queryId, rating, feedback) => {
     body: bodyData,
   };
 
-  fetch("/api/nlpFeedback", options)
+  fetch(url, options)
     .then((response) => response.json())
     .then((data) => {
       //console.log("Logging Data:", data);
