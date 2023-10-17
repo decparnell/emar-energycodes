@@ -286,17 +286,13 @@ function BotResponse(props) {
   const sources = sourceObj
     ? sourceObj.map((source, index) => {
         const sourceItem =
-          messageSentiment === "complete_answer" ? (
-            <a href={source.url}>
+          messageSentiment === "failed_to_answer" ? null : (
+            <a href={source.url} target="_blank" rel="noopener">
               <p className={`${styles.p} pointer`}>
                 <b>{source.name}</b>
               </p>
             </a>
-          ) : messageSentiment === "partial_answer" ? (
-            <p className={`${styles.p} pointer`}>
-              <b>{source.name}</b>
-            </p>
-          ) : null;
+          );
 
         return <li key={index}>{sourceItem}</li>;
       })
