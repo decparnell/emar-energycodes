@@ -215,7 +215,7 @@ function BotResponse(props) {
   };
 
   const likeFeedbackHandler = () => {
-    callFeedback(props.queryId, "positive", "");
+    callFeedback(props.queryId, "positive", "", "/api/nlpFeedback_develop");
     setLikeIconClicked(true);
     setDislikeIconClicked(false);
   };
@@ -230,7 +230,12 @@ function BotResponse(props) {
     if (enteredFeedback.trim().length === 0) {
       return;
     }
-    callFeedback(props.queryId, "negative", enteredFeedback);
+    callFeedback(
+      props.queryId,
+      "negative",
+      enteredFeedback,
+      "/api/nlpFeedback_develop"
+    );
 
     setEnteredFeedback("");
     closeModal();
@@ -238,7 +243,7 @@ function BotResponse(props) {
   };
 
   const skipFeedbackHandler = () => {
-    callFeedback(props.queryId, "negative", "");
+    callFeedback(props.queryId, "negative", "", "/api/nlpFeedback_develop");
     closeModal();
     setOpenFeedbackModal(true);
   };
