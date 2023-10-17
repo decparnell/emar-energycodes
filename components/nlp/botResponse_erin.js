@@ -287,7 +287,7 @@ function BotResponse(props) {
     ? sourceObj.map((source, index) => {
         const sourceItem =
           messageSentiment === "failed_to_answer" ? null : (
-            <a href={source.url} target="_blank" rel="noopener">
+            <a href={source.url} target="_blank" rel="noreferrer">
               <p className={`${styles.p} pointer`}>
                 <b>{source.name}</b>
               </p>
