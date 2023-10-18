@@ -72,7 +72,6 @@ app.prepare().then(() => {
           ? saml_response.user
           : "";
       req.session.save();
-
       if (err != null) {
         console.log("assert error ------ " + err);
         return res.send(err);
@@ -83,8 +82,6 @@ app.prepare().then(() => {
 
   // Starting point for logout
   server.get("/logout", function (req, res) {
-    //req.session.user ? req.session.user.name_id : " ";
-    //session = req.session;
     var name = "";
     var session_index = "";
     var options = {
@@ -142,6 +139,7 @@ app.prepare().then(() => {
 
   server.all("*", (req, res) => {
     if (req.session && typeof req.session.user !== "undefined") {
+      console.log(req.session.user);
       return handle(req, res);
     }
 
