@@ -1,6 +1,7 @@
 import styles from "../../styles/home.module.css";
 import Head from "next/head";
 import { useState, useEffect, useContext } from "react";
+import { useRouter } from "next/router";
 import AppContext from "../../components/context/AppContext";
 import { logMessage } from "../../components/helperFunctions/logMessage";
 import QuickLink from "../../components/helperFunctions/quickLink";
@@ -22,6 +23,7 @@ function DataSpec({ sections, items }) {
   }, []);
 
   const value = useContext(AppContext);
+  const router = useRouter();
   let { chosenTab } = value.state;
 
   const [currentSections, setCurrentSections] = useState(sections[0]);
@@ -36,7 +38,9 @@ function DataSpec({ sections, items }) {
   useEffect(() => {
     if (currentSections.dashboardSectionName === "All") {
       setCurrentItems(items);
-    } else {
+    } else if (currentSections.dashboardSectionName === "Data Specification Search") {
+      router.push("/dataspec/search");
+    }else {
       setCurrentItems(
         items.filter(
           (item) =>
@@ -129,13 +133,18 @@ export async function getServerSideProps({ req, res }) {
   );
   const dataJson = await dataReq.json();
   const sections = dataJson.sections;
-  const lastDashboardSectionOrder =
-    sections[sections.length - 1].dashboardSectionOrder + 1;
+  const lastDashboardSectionOrder = sections[sections.length - 1].dashboardSectionOrder + 1;
   sections.push({
     dashboardId_FK: null,
     dashboardSectionId: null,
     dashboardSectionName: "All",
     dashboardSectionOrder: lastDashboardSectionOrder,
+  });
+  sections.push({
+    dashboardId_FK: null,
+    dashboardSectionId: null,
+    dashboardSectionName: "Data Specification Search",
+    dashboardSectionOrder: lastDashboardSectionOrder + 1,
   });
   const items = dataJson.items;
 
