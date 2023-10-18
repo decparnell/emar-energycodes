@@ -20,7 +20,7 @@ export default function handler(req, res) {
     body: bodyData,
   };
   return fetch(
-    `https://recco-openai-qa-prod.azurewebsites.net/api/add_feedback?code=ioDCQKvxuvlEraJnocB1GQIIpK9dJI99kqsxDB8q4oUNAzFu3ussZw==`,
+    `https://recco-openai-qa-prod.azurewebsites.net/api/add_feedback?code=nx3BpiVqPWSYrHOjVg_OycwX7XdwUzhls33LFNjcb0FmAzFupuPDFA==`,
     options
   )
     .then((response) => response.json())

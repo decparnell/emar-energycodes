@@ -72,7 +72,6 @@ app.prepare().then(() => {
           ? saml_response.user
           : "";
       req.session.save();
-
       if (err != null) {
         console.log("assert error ------ " + err);
         return res.send(err);
@@ -83,10 +82,9 @@ app.prepare().then(() => {
 
   // Starting point for logout
   server.get("/logout", function (req, res) {
-    //req.session.user ? req.session.user.name_id : " ";
-    //session = req.session;
-    var name = "";
-    var session_index = "";
+    var user = req.session.user;
+    var name = user.name_id;
+    var session_index = user.session_index;
     var options = {
       name_id: name,
       session_index: session_index,

@@ -16,7 +16,6 @@ import UserQuestion from "./userQuestion";
 import { mockData1, mockData2, mockData3, mockData4 } from "./mockData";
 
 function BotResponse(props) {
-  console.log(props);
   const responseObj = props.response.response;
   const status = props.response.status;
   const messageSentiment = props.botSentiment;
