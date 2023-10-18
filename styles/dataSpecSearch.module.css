@@ -54,6 +54,13 @@
     margin: 0 0 0 5%
 }
 
+.searchBoxOnly {
+    display: flex;
+    width: 80%;
+    margin: 0 0 0 5%;
+    padding-bottom: 3%;
+}
+
 .searchButton {
     margin: 0 0 0 10%;
     padding: 1%;

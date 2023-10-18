@@ -53,6 +53,42 @@ export const marketMessageHeaders = [
   { title: "Message Name", dataColumn: "Label" },
 ];
 
+export const searchResultsHeaders = [{
+  "marketmessage" : [
+    { title: "Identifier", dataColumn: "EnergyMarketMessageIdentifier" },
+    { title: "Result", dataColumn: "Result" },
+    { title: "Source Name", dataColumn: "sourceName" },
+  ],
+  "dataitems": [
+    { title: "Identifier", dataColumn: "DataItemIdentifier" },
+    { title: "Result", dataColumn: "Result" },
+    { title: "Source Name", dataColumn: "sourceName" },
+  ],
+  "scenariovariant": [
+    { title: "Identifier", dataColumn: "EnergyMarketMessageScenarioVariantIdentifier" },
+    { title: "Result", dataColumn: "EnergyMarketMessageScenarioVariantName" },
+    { title: "Source Name", dataColumn: "sourceName" },
+  ],
+  "schedules": [
+    { title: "Identifier", dataColumn: "clauseReference" },
+    { title: "Result", dataColumn: "componentText" },
+    { title: "Source Name", dataColumn: "sourceName" },
+  ]
+}];
+
+export const searchResultsMainHeaders = [
+    { title: "Identifier", dataColumn: "EnergyMarketMessageIdentifier" },
+    { title: "Result", dataColumn: "Result" },
+    { title: "Source Name", dataColumn: "sourceName" },
+];
+
+export const dataColumnNames = {
+  dataitems: "Data Items" ,
+  marketmessage: "Market Message",
+  scenariovariant: "Scenario Variant",
+  schedules: "Schedules Code",
+};
+
 export const scenarioVariantHeaders = [
   {
     title: "Identifier",
