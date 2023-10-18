@@ -28,7 +28,7 @@ app.prepare().then(() => {
   var sp_options, idp_options;
 
   //for testing on the pre-prod env
-  const serverEnv = "production";
+  const serverEnv = "pre-production";
 
   if (server.get("env") === "production" && serverEnv === "production") {
     server.set("trust proxy", 1); // trust first proxy
@@ -82,8 +82,9 @@ app.prepare().then(() => {
 
   // Starting point for logout
   server.get("/logout", function (req, res) {
-    var name = "";
-    var session_index = "";
+    var user = req.session.user;
+    var name = user.name_id;
+    var session_index = user.session_index;
     var options = {
       name_id: name,
       session_index: session_index,
@@ -139,7 +140,7 @@ app.prepare().then(() => {
 
   server.all("*", (req, res) => {
     if (req.session && typeof req.session.user !== "undefined") {
-      console.log(req.session.user);
+      console.log(req.session);
       return handle(req, res);
     }
 
