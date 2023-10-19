@@ -287,21 +287,16 @@ function BotResponse(props) {
       : messageSentiment === "partial_answer"
       ? responseObj.contextDocuments
       : null;
-  //TODO: remove mapping when context urls are added
   const sources = sourceObj
     ? sourceObj.map((source, index) => {
         const sourceItem =
-          messageSentiment === "complete_answer" ? (
-            <a href={source.url}>
+          messageSentiment === "failed_to_answer" ? null : (
+            <a href={source.url} target="_blank" rel="noreferrer">
               <p className={`${styles.p} pointer`}>
                 <b>{source.name}</b>
               </p>
             </a>
-          ) : messageSentiment === "partial_answer" ? (
-            <p className={`${styles.p} pointer`}>
-              <b>{source.name}</b>
-            </p>
-          ) : null;
+          );
 
         return <li key={index}>{sourceItem}</li>;
       })
