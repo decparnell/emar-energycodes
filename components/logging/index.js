@@ -1,5 +1,5 @@
-export function LogUserInfo(action) {
-  const data = { actionName: action };
+export function LogUserInfo(action, queryId = "") {
+  const data = { actionName: action, queryId: queryId };
   const bodyData = JSON.stringify(data);
   const options = {
     method: "POST",

@@ -54,7 +54,7 @@ function ScenarioPage({ scenarioVariantInfo, structure, marketMsgInfo }) {
 
   useEffect(() => {
     LogUserInfo(
-      `${svInfo.EnergyMarketMessageScenarioVariantIdentifier} - ${svInfo.EnergyMarketMessageScenarioVariantName}`
+      `VIEW:  ${svInfo.EnergyMarketMessageScenarioVariantIdentifier} - ${svInfo.EnergyMarketMessageScenarioVariantName}`
     );
     value.setChosenTab("Data Specification");
   }, []);

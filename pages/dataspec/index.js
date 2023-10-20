@@ -15,7 +15,7 @@ import { changeRegister } from "../../components/settings";
 import DashboardSearch from "../../components/dashboardSearch";
 function DataSpec({ sections, items }) {
   useEffect(() => {
-    LogUserInfo("Data Spec Page");
+    LogUserInfo("VIEW: Data Spec Page");
     value.setChosenTab("Data Specification");
     value.setSearchType({ name: "Market Messages" });
     value.setSearchValue("");

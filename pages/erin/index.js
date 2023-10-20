@@ -26,8 +26,9 @@ function NLP() {
       queryId: queryId,
       uiVersion: uiVersion,
     };
-
-    /* LogUserInfo("NLP_COGNITIVE---", String(queryId), ": ", String(query)); */
+    useEffect(() => {
+      LogUserInfo("VIEW: ERIN");
+    }, []);
     const options = {
       method: "POST",
       headers: {
@@ -84,7 +85,6 @@ function NLP() {
   const questionHandler = () => {
     //Storing queryid & user
     const queryId = uuidv4();
-    LogUserInfo("NLP_COGNITIVE---", String(queryId), ": ", String(query));
     setChatLog((prevChat) => {
       return [
         ...prevChat,

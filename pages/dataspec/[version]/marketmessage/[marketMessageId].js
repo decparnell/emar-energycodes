@@ -86,7 +86,7 @@ function MarketMessagePage({ searchResults }) {
 
   useEffect(() => {
     LogUserInfo(
-      `${marketMessageInfo.EnergyMarketMessageIdentifier} - ${marketMessageInfo.Label}`
+      `VIEW:  ${marketMessageInfo.EnergyMarketMessageIdentifier} - ${marketMessageInfo.Label}`
     );
     value.setChosenTab("Data Specification");
   }, []);

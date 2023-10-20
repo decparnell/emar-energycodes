@@ -86,7 +86,7 @@ function DataItemDetailsPage({ searchResults }) {
 
   useEffect(() => {
     LogUserInfo(
-      `${dataItemInfo.DataItemIdentifier} ${dataItemInfo.DataItemName}`
+      `VIEW: ${dataItemInfo.DataItemIdentifier} ${dataItemInfo.DataItemName}`
     );
     value.setChosenTab("Data Specification");
   }, []);

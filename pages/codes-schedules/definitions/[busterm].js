@@ -5,7 +5,9 @@ function definitions({ versions, parts, sections, components, document }) {
   const docInfo = document[0];
   const partInfo = parts[0];
   const componentInfo = components[0];
-
+  useEffect(() => {
+    LogUserInfo(`VIEW: ${docInfo.documentName}`);
+  }, []);
   return (
     <div className={styles.scheduleContainer}>
       <Head>

@@ -22,7 +22,6 @@ function Schedules({
   definitions,
   optionalityInfo,
 }) {
-
   const apiVarList = [
     { obj: versions, name: "versions" },
     { obj: parts, name: "parts" },
@@ -80,14 +79,17 @@ function Schedules({
       )[0].docVersionName;
 
       //Is needed when recVersion Dropdown change but interfere when form the serach table a link is selected
-      if (docVersionName !== currentDocVersionName && componentId == undefined) {
+      if (
+        docVersionName !== currentDocVersionName &&
+        componentId == undefined
+      ) {
         router.push(`/codes-schedules/${scheduleId}/${currentDocVersionName}`);
       }
     }
   }, [currentVersionMapping]);
 
   useEffect(() => {
-    LogUserInfo(`${docInfo.documentName} V${docVersionName}`);
+    LogUserInfo(`VIEW: ${docInfo.documentName} V${docVersionName}`);
     handleDownloadDoc();
     fetchData();
   }, []);
@@ -118,7 +120,6 @@ function Schedules({
     }
   }, [isLoading]);
 
-
   /* ****FUNCTIONS**** */
   //client-side fetch data, loading more components of each section
   const fetchData = async () => {
@@ -127,16 +128,17 @@ function Schedules({
     // getScheduleComponents-v2
     let url = `https://prod-20.uksouth.logic.azure.com/workflows/292329c8d3eb4160a0d3c65fc9ea299d/triggers/request/paths/invoke/documentId/${scheduleId}/version/${docVersionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=n4gKcezdLeZQlKnP6Fnxbm5l5ipRdcNsa7-KKGI3d_M`;
 
-
     // getScheduleComponentsById
     if (componentId) {
       url = `https://prod-11.uksouth.logic.azure.com/workflows/394639809678409da53285be11d9f93c/triggers/request/paths/invoke/documentId/${scheduleId}/componentId/${componentId}/version/${docVersionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=Wo6RW-aJSD8VrKB7KEte6ZIvoqPKCQeBpB2RhcotSMM`;
     }
 
     // getScheduleComponentsBySectionId
-    // Document 2 contains Interpretations and Definitions 
+    // Document 2 contains Interpretations and Definitions
     if (shouldFetchMoreData && scheduleId != 2) {
-      const section = document.getElementById(`sec${currentSections.sectionId}`);
+      const section = document.getElementById(
+        `sec${currentSections.sectionId}`
+      );
       if (!section) {
         url = `https://prod-12.uksouth.logic.azure.com/workflows/af401b46bd564f10a9005955f43ca7aa/triggers/request/paths/invoke/documentId/${scheduleId}/sectionId/${currentSections.sectionId}/version/${docVersionName}/startVal/${startVal}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=j2wbZbXO2SXnNLr_XkiN_Cf788ccZSuW1agtUsxUELs`;
       }
@@ -152,21 +154,27 @@ function Schedules({
 
         if (startVal === 0) {
           setComponentsData(newDataComponents);
-        } else if (newDataComponents.length == 0 || scheduleId == scheduleInterpretationDefinitions || typeof newDataComponents === "undefined") {
+        } else if (
+          newDataComponents.length == 0 ||
+          scheduleId == scheduleInterpretationDefinitions ||
+          typeof newDataComponents === "undefined"
+        ) {
           setStartVal(componentsData.length);
           setHasMoreData(false);
         } else {
           setComponentsData((prevData) => [...prevData, ...newDataComponents]);
         }
 
-        if ((componentId) && typeof newDataComponents != "undefined") {
+        if (componentId && typeof newDataComponents != "undefined") {
           incrementalStartVal = newDataComponents.length - startVal + 1;
         }
 
         setStartVal((prevVal) => prevVal + incrementalStartVal);
 
         if (shouldFetchMoreData) {
-          setStartVal(newDataComponents[newDataComponents.length - 1].RowNum + 1);
+          setStartVal(
+            newDataComponents[newDataComponents.length - 1].RowNum + 1
+          );
         }
 
         setIsLoading(false);
@@ -224,7 +232,6 @@ function Schedules({
     return jsonData.filter((obj) => obj[field_name] === id);
   }
 
-
   //Reset all the indicated variables
   function resetVarToDefault() {
     setHasMoreData(true);
@@ -241,8 +248,8 @@ function Schedules({
   function scrollToDiplayContent() {
     setTimeout(() => {
       window.scrollTo({
-        top: 150,         //Y coordinate
-        behavior: 'smooth'
+        top: 150, //Y coordinate
+        behavior: "smooth",
       });
     }, 3000); // 3seconds
   }
@@ -317,7 +324,11 @@ function Schedules({
           )}
         </div>
 
-        {shouldFetchMoreData ? <p className={`${styles.loadingCustomStyle} loading-container`}>Loading</p> :
+        {shouldFetchMoreData ? (
+          <p className={`${styles.loadingCustomStyle} loading-container`}>
+            Loading
+          </p>
+        ) : (
           <CreateSchedulesContent
             scheduleId={scheduleId}
             parts={parts}
@@ -327,17 +338,12 @@ function Schedules({
             hasMoreData={hasMoreData}
             totalLength={startVal}
           />
-        }
-        {
-          scheduleId == scheduleInterpretationDefinitions ?
-            <div className={styles.tablesContainer}>
-              <DefinitionTables
-                definitions={definitions}
-              />
-            </div>
-            : null
-        }
-
+        )}
+        {scheduleId == scheduleInterpretationDefinitions ? (
+          <div className={styles.tablesContainer}>
+            <DefinitionTables definitions={definitions} />
+          </div>
+        ) : null}
       </div>
     </div>
   );

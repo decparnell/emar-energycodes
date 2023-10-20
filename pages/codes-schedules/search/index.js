@@ -26,7 +26,7 @@ function SchedulesSearchPage({ codesSchedulesDataJson }) {
   const searchTypeName = searchType.name;
 
   useEffect(() => {
-    LogUserInfo("Codes Schedules Search");
+    LogUserInfo("VIEW: Codes Schedules Search");
     if (searchValue !== "") {
       fetchData();
     }

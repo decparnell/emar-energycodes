@@ -5,7 +5,7 @@ import { LogUserInfo } from "../../components/logging";
 import { useEffect } from "react";
 function Landing() {
   useEffect(() => {
-    LogUserInfo("Landing Page");
+    LogUserInfo("VIEW: Landing Page");
   }, []);
   const LandingButton = (title, maintext, hrefLink) => {
     return (

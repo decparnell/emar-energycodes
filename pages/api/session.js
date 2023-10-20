@@ -1,13 +1,15 @@
 import { encryptWithAES } from "../../components/helperFunctions/AES";
 
 export default function handler(req, res) {
-  const { actionName } = req.body;
+  const { actionName, queryId } = req.body;
   const userName = encryptWithAES(req.session.user.name_id);
+  const query_id = queryId ? queryId : "";
   const data = {
-    user: userName,
+    userid: userName,
     action: actionName,
+    sessionId: "",
+    queryId: query_id,
   };
-
   const bodyData = JSON.stringify(data);
   const options = {
     method: "POST",
@@ -18,7 +20,7 @@ export default function handler(req, res) {
   };
 
   return fetch(
-    `https://prod-12.uksouth.logic.azure.com:443/workflows/a01770cba8f44c8a90274a6faa24955d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vm5xuq9xqyj6xN0P_NBrRPjDsElEJhOsWIWcmjfdzak`,
+    `https://digitalnavigatorloguseractivity.azurewebsites.net/api/logUserActivity?code=hbDDxd6_TtaihwECiKfzd7wQUYNmqXJogNTSb4nBn7XCAzFuk1QF_g==`,
     options
   )
     .then((response) => response.json())
