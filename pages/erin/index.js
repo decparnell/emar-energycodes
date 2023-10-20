@@ -18,7 +18,9 @@ function NLP() {
   const [query, setQuery] = useState("");
   const [openDocumentsModal, setOpenDocumentsModal] = useState(false);
   const [closed, setClosed] = useState(false);
-
+  useEffect(() => {
+    LogUserInfo("VIEW: ERIN");
+  }, []);
   const fetchData = async (queryId) => {
     const data = {
       query: query,
@@ -26,9 +28,7 @@ function NLP() {
       queryId: queryId,
       uiVersion: uiVersion,
     };
-    useEffect(() => {
-      LogUserInfo("VIEW: ERIN");
-    }, []);
+
     const options = {
       method: "POST",
       headers: {
