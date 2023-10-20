@@ -1,6 +1,9 @@
 import { useRouter } from "next/router";
 import styles from "../../../styles/codes.module.css";
 import Head from "next/head";
+import { useEffect } from "react";
+import { LogUserInfo } from "../../../components/logging";
+
 function definitions({ versions, parts, sections, components, document }) {
   const docInfo = document[0];
   const partInfo = parts[0];
