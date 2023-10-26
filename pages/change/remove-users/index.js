@@ -108,7 +108,9 @@ function RemoveUser({ userData }) {
                         <button className={`${styles.customButton} ${styles.backBtnStyle}`} onClick={handleBackButton}> Cancel </button>
                     </div>
                     <div className={styles.actionButtonContainer}>
-                        <button className={selectedUser ? `${styles.customButton} ${styles.removeBtnStyle} ` : `${styles.customButton} ${styles.actionBtnDisabled} `} onClick={openModal} disabled={selectedUser==""}> Remove </button>
+                        <button className={selectedUser ? `${styles.customButton} ${styles.removeBtnStyle} ` : `${styles.customButton} ${styles.actionBtnDisabled} `} 
+                                onClick={openModal} 
+                                disabled={selectedUser==""}> Remove </button>
                     </div>
                 </div>
                 {confirmationModal}

@@ -8,7 +8,10 @@ import { CustomBoxLink } from "../../../components/customComponents/customBoxLin
 import { useRouter } from "next/router";
 import { AiFillLayout, AiFillProfile } from "react-icons/ai";
 
-function SchedulesDashboard({ sections, items }) {
+
+function DataSpecDashboard({ sections, items }) {
+
+
     
     const router = useRouter();
     const [dashboardSectionId, setDashboardId] = useState("");
@@ -231,7 +234,7 @@ function SchedulesDashboard({ sections, items }) {
     );
 }
 
-export default SchedulesDashboard;
+export default DataSpecDashboard;
 
 // This gets called on every request
 export async function getServerSideProps({ req, res }) {
@@ -241,20 +244,15 @@ export async function getServerSideProps({ req, res }) {
     );
 
     // Fetch data from external API
-    // getDashboardInformationPerDashboard-LogicApp
     const dataReq = await fetch(
-        `https://prod-27.uksouth.logic.azure.com/workflows/770ce28ce1074e7a96d13a406ce99831/triggers/manual/paths/invoke/Schedules?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=DO-zRnu41uwoxxvLpyyg2YabBT9cs-He2yKN_U9wiCE`
+        `https://prod-27.uksouth.logic.azure.com/workflows/770ce28ce1074e7a96d13a406ce99831/triggers/manual/paths/invoke/Data Specification?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=DO-zRnu41uwoxxvLpyyg2YabBT9cs-He2yKN_U9wiCE`
     );
     const dataJson = await dataReq.json();
     const sections = dataJson.sections;
     const itemsUnsorted = dataJson.items;
     const items = itemsUnsorted.sort((a, b) => customSortFunction(a, b, "dashboardSectionItemsName"));
 
-    /*   const newsDataReq = await fetch(
-      "https://prod-22.uksouth.logic.azure.com:443/workflows/e36d26ad83b04a86bc67b618e20c9dc5/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Zymwu40i_cJZuIQhxAW9VZeDw22xzO97ie4sApLfizU"
-    );
-    const latestNewsJson = await newsDataReq.json();
-    const newsData = latestNewsJson.latestNews; */
+
     // Pass data to the page via props
     return {
         props: {

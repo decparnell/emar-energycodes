@@ -36,7 +36,7 @@ function Change({ }) {
         {
             dashboardId: "DataSpecificationDashboard",
             dashboardName: "Data Specification Dashboard",
-            dashboardLink: "",
+            dashboardLink: "/dataspec-dashboard",
             dashboardOrder: 5,
         },
         {
