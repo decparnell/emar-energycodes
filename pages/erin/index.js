@@ -18,7 +18,9 @@ function NLP() {
   const [query, setQuery] = useState("");
   const [openDocumentsModal, setOpenDocumentsModal] = useState(false);
   const [closed, setClosed] = useState(false);
-
+  useEffect(() => {
+    LogUserInfo("VIEW: ERIN");
+  }, []);
   const fetchData = async (queryId) => {
     const data = {
       query: query,
@@ -27,7 +29,6 @@ function NLP() {
       uiVersion: uiVersion,
     };
 
-    /* LogUserInfo("NLP_COGNITIVE---", String(queryId), ": ", String(query)); */
     const options = {
       method: "POST",
       headers: {
@@ -84,7 +85,6 @@ function NLP() {
   const questionHandler = () => {
     //Storing queryid & user
     const queryId = uuidv4();
-    LogUserInfo("NLP_COGNITIVE---", String(queryId), ": ", String(query));
     setChatLog((prevChat) => {
       return [
         ...prevChat,

@@ -18,7 +18,7 @@ function ReleaseManagement({ recVersionAndChangesJSON }) {
     recVersionAndChangesJSON.ChangeAffectedSchedules;
 
   useEffect(() => {
-    LogUserInfo("Release Management Page");
+    LogUserInfo("VIEW: Release Management Page");
   }, []);
 
   return (

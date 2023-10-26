@@ -46,15 +46,15 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
     searchType.name === "Market Messages"
       ? marketMessageHeaders
       : searchType.name === "Scenario Variants"
-        ? scenarioVariantHeaders
-        : dataItemHeaders;
+      ? scenarioVariantHeaders
+      : dataItemHeaders;
 
   const pathName =
     searchType.name === "Market Messages"
       ? "marketmessage"
       : searchType.name === "Scenario Variants"
-        ? "scenario-variant"
-        : "dataitem";
+      ? "scenario-variant"
+      : "dataitem";
 
   // const sourceOptions = getDistinctValuesSource(dataSpecSearchList);
   // const targetOptions = getDistinctValuesTarget(dataSpecSearchList);
@@ -69,7 +69,8 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
     const mappedSource = source === "" ? "-" : source;
     const mappedTarget = target === "" ? "-" : target;
     const mappedSearch = searchValue === "" ? "-" : searchValue;
-    const mappedStartVal = deafultStartVal !== undefined ? deafultStartVal : startVal;
+    const mappedStartVal =
+      deafultStartVal !== undefined ? deafultStartVal : startVal;
 
     try {
       //Logic App: getAllDataSpecData-LogicApp-v3
@@ -121,7 +122,7 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
         setHasMore(true);
         setIsSearchValuePresent(false);
         handleScrollToTop();
-        resolve(); 
+        resolve();
       } catch (error) {
         reject(error); // Reject the promise if an error occurs
       }
@@ -183,7 +184,7 @@ function DataSpecSearchPage({ dataSpecSearchList }) {
   };
 
   useEffect(() => {
-    LogUserInfo("Data Spec Search");
+    LogUserInfo("VIEW: Data Spec Search");
   }, []);
   return (
     <div className={styles.container}>

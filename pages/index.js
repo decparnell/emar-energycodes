@@ -54,7 +54,7 @@ function HomePage({ sections, items, newsData }) {
   }, [currentSections]);
 
   useEffect(() => {
-    LogUserInfo("HomePage");
+    LogUserInfo("VIEW: HOMEPAGE");
     value.setSearchType({ name: "Codes Schedules" });
     value.setSearchValue("");
   }, []);
@@ -135,7 +135,6 @@ function HomePage({ sections, items, newsData }) {
 
 export default HomePage;
 
-
 // This gets called on every request
 export async function getServerSideProps({ req, res }) {
   res.setHeader(
@@ -158,7 +157,9 @@ export async function getServerSideProps({ req, res }) {
     dashboardSectionOrder: lastDashboardSectionOrder,
   });
   const itemsUnsorted = dataJson.items;
-  const items = itemsUnsorted.sort((a, b) => customSortFunction(a, b, "dashboardSectionItemsName"));
+  const items = itemsUnsorted.sort((a, b) =>
+    customSortFunction(a, b, "dashboardSectionItemsName")
+  );
 
   /*   const newsDataReq = await fetch(
     "https://prod-22.uksouth.logic.azure.com:443/workflows/e36d26ad83b04a86bc67b618e20c9dc5/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Zymwu40i_cJZuIQhxAW9VZeDw22xzO97ie4sApLfizU"

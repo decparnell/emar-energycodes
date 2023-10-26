@@ -14,13 +14,13 @@ import { callFeedback } from "./callFeedback";
 import { ContactsMessage } from "./nlpContactsMessage";
 import UserQuestion from "./userQuestion";
 import { mockData1, mockData2, mockData3, mockData4 } from "./mockData";
-
+import download from "../customComponents/customFileDownload";
+import { LogUserInfo } from "../logging";
 function BotResponse(props) {
   const responseObj = props.response.response;
   const status = props.response.status;
   const messageSentiment = props.botSentiment;
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;
-
   //maybe make some of these into an array... its busy
   const [copiedText, setCopiedText] = useState("");
   const [openModal, setOpenModal] = useState(false);
@@ -42,11 +42,13 @@ function BotResponse(props) {
     setOpenTipsModal(false);
     setExampleQuestions1Modal(false);
     setExampleQuestions2Modal(false);
+    LogUserInfo("CLOSE: Tips Modal", props.queryId);
   };
 
   const tipsModalHandler = () => {
     closeTipsModal();
     setOpenTipsModal(true);
+    LogUserInfo("OPEN: Tips Modal", props.queryId);
   };
 
   const exampleQuestions1Handler = () => {
@@ -204,6 +206,7 @@ function BotResponse(props) {
     setCopyIconClicked(true);
     setCopiedText(messageValue);
     copy(copiedText);
+    LogUserInfo("COPY: ERIN to Clipboard", props.queryId);
   };
 
   const dislikeFeedbackHandler = () => {
@@ -277,31 +280,33 @@ function BotResponse(props) {
       </form>
     </Modal>
   );
-
-  //Checking to see if the data renders correctly
-  //Needs a check to use either contextDocuments / verifiedSources
-
   const sourceObj =
     messageSentiment === "complete_answer"
       ? responseObj.verifiedSources
       : messageSentiment === "partial_answer"
       ? responseObj.contextDocuments
       : null;
-  //TODO: remove mapping when context urls are added
   const sources = sourceObj
     ? sourceObj.map((source, index) => {
         const sourceItem =
-          messageSentiment === "complete_answer" ? (
-            <a href={source.url}>
+          messageSentiment === "failed_to_answer" ? null : (
+            //<a href={source.url} target="_blank" rel="noreferrer">
+            <a
+              onClick={() =>
+                download(
+                  "erin_develop",
+                  source.url,
+                  source.name,
+                  "",
+                  props.queryId
+                )
+              }
+            >
               <p className={`${styles.p} pointer`}>
                 <b>{source.name}</b>
               </p>
             </a>
-          ) : messageSentiment === "partial_answer" ? (
-            <p className={`${styles.p} pointer`}>
-              <b>{source.name}</b>
-            </p>
-          ) : null;
+          );
 
         return <li key={index}>{sourceItem}</li>;
       })
@@ -313,19 +318,30 @@ function BotResponse(props) {
 
   const showSourcesListHandler = () => {
     setShowSources(true);
+    LogUserInfo("OPEN: ERIN show sources", props.queryId);
   };
 
   const hideSourcesListHandler = () => {
     setShowSources(false);
+    LogUserInfo("CLOSE: ERIN hide sources", props.queryId);
   };
 
   const sourcesOptions = (
     <div className={`${styles.sourcesOptionsContainer}`}>
-      {messageSentiment === "complete_answer"
-        ? "Sources:"
-        : messageSentiment === "partial_answer"
-        ? "Sorry, I am not able to confirm a definitive source to support the given answer, so please use this answer with caution. Here's a list of other related sources that may help with your question, or you can have a look at these question tips to help me give you the best answer:"
-        : null}
+      {messageSentiment === "complete_answer" ? (
+        "Sources:"
+      ) : messageSentiment === "partial_answer" ? (
+        <p>
+          Sorry, I am not able to confirm a definitive source to support the
+          given answer, so please use this answer with caution. Here's a list of
+          other related sources that may help with your question, or you can
+          have a look at{" "}
+          <a className={`${styles.link}`} onClick={tipsModalHandler}>
+            these question
+          </a>{" "}
+          tips to help me give you the best answer:
+        </p>
+      ) : null}
       {messageSentiment === "complete_answer" ||
       messageSentiment === "partial_answer" ? (
         <>

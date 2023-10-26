@@ -20,7 +20,7 @@ function CodesRoadMap({ latestCodesRoadMapLinkJSON }) {
   );
 
   useEffect(() => {
-    LogUserInfo("Codes Road Map");
+    LogUserInfo("VIEW: Codes Road Map");
   }, []);
 
   return (
