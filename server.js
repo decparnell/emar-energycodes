@@ -99,13 +99,13 @@ app.prepare().then(() => {
   });
 
   server.all("/erin_develop", (req, res) => {
-    if (
-      req.session &&
-      moduleSettings.adminUsers.includes(req.session.user.name_id)
-    ) {
-      return handle(req, res);
+    if (req.session && typeof req.session.user !== "undefined") {
+      if (moduleSettings.adminUsers.includes(req.session.user.name_id)) {
+        return handle(req, res);
+      }
+      res.redirect("/");
     }
-    res.redirect("/");
+    res.redirect("/login");
   });
 
   server.all("*", (req, res) => {
