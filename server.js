@@ -102,10 +102,12 @@ app.prepare().then(() => {
     if (req.session && typeof req.session.user !== "undefined") {
       if (moduleSettings.adminUsers.includes(req.session.user.name_id)) {
         return handle(req, res);
+      } else {
+        res.redirect("/");
       }
-      res.redirect("/");
+    } else {
+      res.redirect("/login");
     }
-    res.redirect("/login");
   });
 
   server.all("*", (req, res) => {
