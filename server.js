@@ -106,6 +106,7 @@ app.prepare().then(() => {
         res.redirect("/");
       }
     } else {
+      loginRedirect = req.path;
       res.redirect("/login");
     }
   });
