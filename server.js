@@ -26,9 +26,9 @@ app.prepare().then(() => {
   };
 
   var sp_options, idp_options;
-
+  var loginRedirect = "/";
   //for testing on the pre-prod env
-  const serverEnv = "production";
+  const serverEnv = "pre-production";
 
   if (server.get("env") === "production" && serverEnv === "production") {
     server.set("trust proxy", 1); // trust first proxy
@@ -77,7 +77,7 @@ app.prepare().then(() => {
         return res.send(err);
       }
     });
-    res.redirect("/");
+    res.redirect(loginRedirect);
   });
 
   // Starting point for logout
@@ -112,7 +112,7 @@ app.prepare().then(() => {
     if (req.session && typeof req.session.user !== "undefined") {
       return handle(req, res);
     }
-
+    loginRedirect = req.path;
     res.redirect("/login");
     //return handle(req, res);
   });
