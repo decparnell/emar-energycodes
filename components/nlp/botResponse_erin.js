@@ -64,7 +64,7 @@ function BotResponse(props) {
 
   const sendSupportEmailHandler = () => {
     window.open(
-      "mailto:support@recmanager.co.uk?subject=Support query for ERIN"
+      "mailto:enquiries@recmanager.co.uk?subject=Support query for ERIN"
     );
   };
 
@@ -187,7 +187,7 @@ function BotResponse(props) {
       </a>
       , or by sending an email to{" "}
       <a className={`${styles.link}`} onClick={sendSupportEmailHandler}>
-        support@recmanager.co.uk
+        enquiries@recmanager.co.uk
       </a>
       . They'll be more than happy to help you!
     </>

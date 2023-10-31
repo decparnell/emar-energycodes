@@ -26,7 +26,7 @@ app.prepare().then(() => {
   };
 
   var sp_options, idp_options;
-
+  var loginRedirect = "/";
   //for testing on the pre-prod env
   const serverEnv = "production";
 
@@ -77,7 +77,7 @@ app.prepare().then(() => {
         return res.send(err);
       }
     });
-    res.redirect("/");
+    res.redirect(loginRedirect);
   });
 
   // Starting point for logout
@@ -99,20 +99,23 @@ app.prepare().then(() => {
   });
 
   server.all("/erin_develop", (req, res) => {
-    if (
-      req.session &&
-      moduleSettings.adminUsers.includes(req.session.user.name_id)
-    ) {
-      return handle(req, res);
+    if (req.session && typeof req.session.user !== "undefined") {
+      if (moduleSettings.adminUsers.includes(req.session.user.name_id)) {
+        return handle(req, res);
+      } else {
+        res.redirect("/");
+      }
+    } else {
+      loginRedirect = req.path;
+      res.redirect("/login");
     }
-    res.redirect("/");
   });
 
   server.all("*", (req, res) => {
     if (req.session && typeof req.session.user !== "undefined") {
       return handle(req, res);
     }
-
+    loginRedirect = req.path;
     res.redirect("/login");
     //return handle(req, res);
   });
