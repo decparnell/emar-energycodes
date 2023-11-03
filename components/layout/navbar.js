@@ -2,11 +2,13 @@ import Link from "next/link";
 import styles from "../../styles/header2.module.css";
 import TabNavbar from "./tabHeader";
 import FeedbackForm from "../feedbackForm";
+import NavBarSearch from "../navBarSearch";
 
 function Navbar() {
   return (
     <div className={styles.joinedHeader}>
       <div className={`${styles.header} green`}>
+          <NavBarSearch />
         <div className={styles.linkContainer}>
           <Link
             className={styles.headLink}

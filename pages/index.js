@@ -1,6 +1,7 @@
 import styles from "../styles/home.module.css";
 import Head from "next/head";
 import { useState, useEffect, useContext } from "react";
+import { useRouter } from "next/router";
 import { checkIfVariablesAreAvailable } from "../components/helperFunctions/checkIfVariablesAreAvailable";
 import { checkIfItemsAvailableInArray } from "../components/helperFunctions/checkIfItemsAvailableInArray";
 import { logMessage } from "../components/helperFunctions/logMessage";
@@ -18,6 +19,7 @@ import { customSortFunction } from "../components/helperFunctions/sortingFunctio
 
 function HomePage({ sections, items, newsData }) {
   const value = useContext(AppContext);
+  const router = useRouter();
 
   const apiVarList = [
     { obj: newsData, name: "newsData" },
@@ -43,7 +45,10 @@ function HomePage({ sections, items, newsData }) {
   useEffect(() => {
     if (currentSections.dashboardSectionName === "All") {
       setCurrentItems(items);
-    } else {
+    } else if (currentSections.dashboardSectionName === "Codes Schedules Search") {
+      router.push("/codes-schedules/search");
+    }
+    else {
       setCurrentItems(
         items.filter(
           (item) =>
@@ -148,13 +153,18 @@ export async function getServerSideProps({ req, res }) {
   );
   const dataJson = await dataReq.json();
   const sections = dataJson.sections;
-  const lastDashboardSectionOrder =
-    sections[sections.length - 1].dashboardSectionOrder + 1;
+  const lastDashboardSectionOrder = sections[sections.length - 1].dashboardSectionOrder + 1;
   sections.push({
     dashboardId_FK: null,
     dashboardSectionId: null,
     dashboardSectionName: "All",
     dashboardSectionOrder: lastDashboardSectionOrder,
+  });
+  sections.push({
+    dashboardId_FK: null,
+    dashboardSectionId: null,
+    dashboardSectionName: "Codes Schedules Search",
+    dashboardSectionOrder: lastDashboardSectionOrder + 1,
   });
   const itemsUnsorted = dataJson.items;
   const items = itemsUnsorted.sort((a, b) =>

@@ -4,6 +4,7 @@ import { useContext } from "react";
 import styles from "../../styles/infiniteScrollTable.module.css";
 import { CodesSchedulesSearchResults } from "../codesSchedules/codesSchedulesSearchResults";
 import AppContext from "../context/AppContext";
+import { searchResultsMainHeaders, dataColumnNames } from "../../components/settings"
 
 const ResultsTable = (props) => {
   /////// PROPS
@@ -30,7 +31,7 @@ const ResultsTable = (props) => {
   const errorMessage = props.errorMessage;
 
   const value = useContext(AppContext);
-  let { currentVersionMapping } = value.state;
+  let { currentVersionMapping, latestDataSpecVersion } = value.state;
 
   /////////FUNCTIONS///////////////
   // escape regex patterns in a string to produce a string-matching regex from it.
@@ -59,6 +60,7 @@ const ResultsTable = (props) => {
     ]);
   }
 
+  // used to format string into table - used mostly on Code Schedules search
   const formatSearchByType = (entry, searchPhrase) => {
     let output = "";
     //output = formatSearchPhrase(entry.componentText, searchPhrase);
@@ -107,6 +109,21 @@ const ResultsTable = (props) => {
     return jsxArray;
   }
 
+
+  function returnTableDataForHeadersForSearchResults(item) {
+    let jsxArray = [];
+
+    headers[item.sourceName].map((row) => {
+      if (item.sourceName == "schedules" && row.dataColumn == "componentText" && item.componentType != "text") {
+        jsxArray.push(<td key={row.title}>{row.dataColumn != "sourceName" ? formatSearchByType(item, searchValue) : dataColumnNames[item[row.dataColumn]]}</td>);
+      } else {
+        jsxArray.push(<td key={row.title}>{row.dataColumn != "sourceName" ? item[row.dataColumn] : dataColumnNames[item[row.dataColumn]]}</td>);
+      }
+    });
+
+    return jsxArray;
+  }
+
   const GenerateSchedulesRow = (props) => {
     const filteredMapping = currentVersionMapping.filter(
       (subitem) => subitem.documentId == props.item.documentId_FK
@@ -130,6 +147,21 @@ const ResultsTable = (props) => {
     }
   };
 
+  const generateLinks = (item) => {
+    switch (item.sourceName) {
+      case 'schedules':
+        return `/codes-schedules/${item.documentId_FK}/${item.versionName}?componentId=${item.componentId}`
+      case 'scenariovariant':
+        return `/dataspec/${latestDataSpecVersion}/scenario-variant/${item.EnergyMarketMessageScenarioVariantIdentifier}`
+      case 'marketmessage':
+        return `/dataspec/${latestDataSpecVersion}/marketmessage/${item.EnergyMarketMessageIdentifier}`
+      case 'dataitems':
+        return `/dataspec/${latestDataSpecVersion}/dataitem/${item.DataItemIdentifier}`
+      default:
+        return "#"
+    }
+  };
+
   return (
     <InfiniteScroll
       dataLength={data.length}
@@ -145,36 +177,49 @@ const ResultsTable = (props) => {
       endMessage={<p>No more data to load.</p>}
       className={styles.scroll}
     >
-      <table className={styles.table}>
+      <table className={searchType === "SearchResults" ? styles.searchTable : styles.table}>
         <thead>
           <tr>
-            {headers.map((head, index) => {
+            {searchType === "SearchResults" ? searchResultsMainHeaders.map((head, index) => {
               return <th key={index}>{head.title}</th>;
-            })}
+            })
+              : headers.map((head, index) => {
+                return <th key={index}>{head.title}</th>;
+              })}
           </tr>
         </thead>
 
         <tbody>
-          {searchType === "Codes Schedules"
-            ? data.map((item, index) => {
+          {
+            searchType === "SearchResults" ? data.map((item, index) => {
               return (
-                <GenerateSchedulesRow item={item} index={index} key={index} />
-              );
-            })
-            : data.map((item, index) => {
-              if (typeof baseLink !== "undefined") {
-                return (
-                  <Link
-                    key={index}
-                    href={`${baseLink}/${item[headers[0].dataColumn]}`}
-                  >
-                    <tr>{returnTableDataForHeaders(item)}</tr>
-                  </Link>
-                );
-              } else {
-                return <tr key={index}>{returnTableDataForHeaders(item)}</tr>;
-              }
-            })}
+                <Link
+                  key={index}
+                  href={generateLinks(item)}
+                >
+                  <tr key={index}>{returnTableDataForHeadersForSearchResults(item)}</tr>
+                </Link>);
+            }) :
+              searchType === "Codes Schedules"
+                ? data.map((item, index) => {
+                  return (
+                    <GenerateSchedulesRow item={item} index={index} key={index} />
+                  );
+                })
+                : data.map((item, index) => {
+                  if (typeof baseLink !== "undefined") {
+                    return (
+                      <Link
+                        key={index}
+                        href={`${baseLink}/${item[headers[0].dataColumn]}`}
+                      >
+                        <tr>{returnTableDataForHeaders(item)}</tr>
+                      </Link>
+                    );
+                  } else {
+                    return <tr key={index}>{returnTableDataForHeaders(item)}</tr>;
+                  }
+                })}
         </tbody>
       </table>
     </InfiniteScroll>
