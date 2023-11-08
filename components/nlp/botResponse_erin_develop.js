@@ -194,7 +194,7 @@ function BotResponse(props) {
   );
 
   const rateLimitError =
-    "WOW... Lots of people are asking me questions currently so it is taking me a little longer  to find the answer, please try again";
+    "WOW... Lots of people are asking me questions currently so it is taking me a little longer to find the answer, please try again";
 
   const genericErrorMessage = (
     <>
