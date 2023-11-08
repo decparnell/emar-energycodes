@@ -19,6 +19,7 @@ import { LogUserInfo } from "../logging";
 function BotResponse(props) {
   const responseObj = props.response.response;
   const status = props.response.status;
+  const openaiRequestStatus = props.response.OpenAI_request_status;
   const messageSentiment = props.botSentiment;
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;
   //maybe make some of these into an array... its busy
@@ -192,9 +193,26 @@ function BotResponse(props) {
     </>
   );
 
+  const rateLimitError =
+    "WOW... Lots of people are asking me questions currently so it is taking me a little longer  to find the answer, please try again";
+
+  const genericErrorMessage = (
+    <>
+      OH NO... I ran into an issue with your question, please try again and if
+      the issue persists please contact{" "}
+      <a className={`${styles.link}`} onClick={sendSupportEmailHandler}>
+        enquiries@recmanager.co.uk
+      </a>
+      . They'll be more than happy to help you!
+    </>
+  );
   const Message = () => {
     if (!normalMessage) {
       return null;
+    } else if (openaiRequestStatus === "RateLimitError") {
+      return <p className={`${styles.p}`}>{rateLimitError}</p>;
+    } else if (openaiRequestStatus != "OK") {
+      return <p className={`${styles.p}`}>{genericErrorMessage}</p>;
     } else if (messageSentiment === "failed_to_answer") {
       return <p className={`${styles.p}`}>{inappropriateResponseMessage}</p>;
     } else {
