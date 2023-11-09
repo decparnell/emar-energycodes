@@ -11,12 +11,11 @@ import { LogUserInfo } from "../components/logging";
 import DashboardLink from "../components/dashboardLink";
 import ChangeRequestStages from "../components/changeRequestStages";
 import SecondNavBar from "../components/layout/secondHeader";
-import { changeRegister } from "../components/settings";
 import DashboardSearch from "../components/dashboardSearch";
 import AppContext from "../components/context/AppContext";
 import { customSortFunction } from "../components/helperFunctions/sortingFunction";
 
-function HomePage({ sections, items, newsData }) {
+function HomePage({ sections, items, newsData, changeProposalRegisterData }) {
   const value = useContext(AppContext);
 
   const apiVarList = [
@@ -120,7 +119,7 @@ function HomePage({ sections, items, newsData }) {
                 <QuickLink title="" link="/" width="15%" height="49%" /> */}
               </div>
               <div className={`${styles.upcomingChangesContent} box`}>
-                <ChangeRequestStages processStageData={changeRegister} />
+                <ChangeRequestStages processStageData={changeProposalRegisterData} />
               </div>
             </div>
           </div>
@@ -161,6 +160,11 @@ export async function getServerSideProps({ req, res }) {
     customSortFunction(a, b, "dashboardSectionItemsName")
   );
 
+  const changeProposalRegister = await fetch(
+    'https://prod-16.uksouth.logic.azure.com:443/workflows/df5711e6471e48219a884552371246b9/triggers/request/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=V_Q9HpIZN7LAgshnRWissL6G4T48j9Ws4Pf-jPX6bvE'
+  );
+  const changeProposalRegisterData = await changeProposalRegister.json();
+
   /*   const newsDataReq = await fetch(
     "https://prod-22.uksouth.logic.azure.com:443/workflows/e36d26ad83b04a86bc67b618e20c9dc5/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Zymwu40i_cJZuIQhxAW9VZeDw22xzO97ie4sApLfizU"
   );
@@ -171,6 +175,7 @@ export async function getServerSideProps({ req, res }) {
     props: {
       sections,
       items,
+      changeProposalRegisterData,
       //newsData,
     },
   };
