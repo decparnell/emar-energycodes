@@ -1,10 +1,16 @@
 import styles from "../../styles/codesRoadMap.module.css";
 import Head from "next/head";
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { BiDownload } from "react-icons/bi";
 import { LogUserInfo } from "../../components/logging";
 import SecondNavbar from "../../components/layout/secondHeader";
+import AppContext from "../../components/context/AppContext";
+
 function CodesRoadMap({ latestCodesRoadMapLinkJSON }) {
+  const value = useContext(AppContext);
+  useEffect(() => {
+    value.setError("fake");
+  }, []);
   const wikiPage =
     "https://recportal.co.uk/rec-wiki-landing/-/knowledge_base_search/677762514/maximized?_com_liferay_knowledge_base_web_portlet_SearchPortlet_redirect=https%3A%2F%2Frecportal.co.uk%3A443%2Frec-wiki-landing%3Fp_p_id%3Dcom_liferay_knowledge_base_web_portlet_SearchPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview%26_com_liferay_knowledge_base_web_portlet_SearchPortlet_mvcPath%3D%252Fsearch%252Fsearch.jsp%26_com_liferay_knowledge_base_web_portlet_SearchPortlet_keywords%3Droadmap%26_com_liferay_knowledge_base_web_portlet_SearchPortlet_formDate%3D1680000364694";
 

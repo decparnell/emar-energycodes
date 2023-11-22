@@ -11,11 +11,15 @@ function Error(props) {
         />
         <h1 className={styles.animated}>Oops! Something went wrong.</h1>
         <p className={styles.animated}>
-          We seem to have misplaced the electricity and gas!
+          Seems like we have ran out of electricity in the office... Don't
+          worry, our hamster-powered servers are on the case.
         </p>
         <p className={`${styles.animated}`}>Error Code: {statusCode}</p>
         <p className={styles.animated}>
-          Don't worry, our hamster-powered servers are on the case.
+          Please refresh your browser, and if the issue persists{" "}
+          <a href="mailto:enquiries@recmanager.co.uk?subject=Error On Digital Navigator">
+            Contact us
+          </a>
         </p>
       </div>
     </div>

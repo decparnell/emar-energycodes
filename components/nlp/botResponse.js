@@ -224,7 +224,7 @@ function BotResponse(props) {
     messageSentiment === "complete_answer";
   const partialCompleteMessage = completeMessage || partialContactsMessage;
 
-  const messageValue = null;
+  let messageValue = null;
 
   const message = () => {
     if (messageFailed) {

@@ -7,6 +7,7 @@ import {
   BiLike,
   BiPlus,
   BiMinus,
+  BiArrowToBottom,
 } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
@@ -31,6 +32,7 @@ function BotResponse(props) {
   const [dislikeIconClicked, setDislikeIconClicked] = useState(false);
   const [likeIconClicked, setLikeIconClicked] = useState(false);
   const [showSources, setShowSources] = useState(false);
+  const [showSourcesText, setShowSourcesText] = useState(null);
   const normalMessage = status.custom_topics.length == 0;
 
   const [openTipsModal, setOpenTipsModal] = useState(false);
@@ -198,8 +200,12 @@ function BotResponse(props) {
 
   const genericErrorMessage = (
     <>
-      OH NO... I ran into an issue with your question, please try again and if
-      the issue persists please contact{" "}
+      OH NO... I ran into an issue with your question. Please try again,
+      ensuring you are following the{" "}
+      <a className={`${styles.link}`} onClick={tipsModalHandler}>
+        Guidance
+      </a>{" "}
+      and if the issue persists please contact{" "}
       <a className={`${styles.link}`} onClick={sendSupportEmailHandler}>
         enquiries@recmanager.co.uk
       </a>
@@ -304,25 +310,49 @@ function BotResponse(props) {
       : messageSentiment === "partial_answer"
       ? responseObj.contextDocuments
       : null;
+
   const sources = sourceObj
     ? sourceObj.map((source, index) => {
         const sourceItem =
           messageSentiment === "failed_to_answer" ? null : (
             //<a href={source.url} target="_blank" rel="noreferrer">
             <a
-              onClick={() =>
-                download(
-                  "erin_develop",
-                  source.url,
-                  source.name,
-                  "",
-                  props.queryId
-                )
-              }
+              onClick={() => {
+                if (showSourcesText == `${source.name}-${props.queryId}`) {
+                  setShowSourcesText(null);
+                } else {
+                  setShowSourcesText(`${source.name}-${props.queryId}`);
+                }
+              }}
             >
               <p className={`${styles.p} pointer`}>
-                <b>{source.name}</b>
+                <b style={{ borderBottom: "1px solid black" }}>{source.name}</b>
               </p>
+              {showSourcesText == `${source.name}-${props.queryId}` ? (
+                <div className={styles.sourceTextContainer}>
+                  <ul className={styles.sourceTextList}>
+                    {source.captions.map((caption, index) => {
+                      return (
+                        <p key={index} className={styles.sourceTextItem}>
+                          {caption}
+                        </p>
+                      );
+                    })}
+                  </ul>
+                  <BiArrowToBottom
+                    onClick={() =>
+                      download(
+                        "erin_develop",
+                        source.url,
+                        source.name,
+                        "",
+                        props.queryId
+                      )
+                    }
+                    className={styles.downloadButton}
+                  />
+                </div>
+              ) : null}
             </a>
           );
 
