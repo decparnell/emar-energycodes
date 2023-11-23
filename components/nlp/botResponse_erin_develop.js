@@ -316,18 +316,22 @@ function BotResponse(props) {
         const sourceItem =
           messageSentiment === "failed_to_answer" ? null : (
             //<a href={source.url} target="_blank" rel="noreferrer">
-            <a
-              onClick={() => {
-                if (showSourcesText == `${source.name}-${props.queryId}`) {
-                  setShowSourcesText(null);
-                } else {
-                  setShowSourcesText(`${source.name}-${props.queryId}`);
-                }
-              }}
-            >
-              <p className={`${styles.p} pointer`}>
-                <b style={{ borderBottom: "1px solid black" }}>{source.name}</b>
-              </p>
+            <>
+              <a
+                onClick={() => {
+                  if (showSourcesText == `${source.name}-${props.queryId}`) {
+                    setShowSourcesText(null);
+                  } else {
+                    setShowSourcesText(`${source.name}-${props.queryId}`);
+                  }
+                }}
+              >
+                <p className={`${styles.p} pointer`}>
+                  <b style={{ borderBottom: "1px solid black" }}>
+                    {source.name}
+                  </b>
+                </p>
+              </a>
               {showSourcesText == `${source.name}-${props.queryId}` ? (
                 <div className={styles.sourceTextContainer}>
                   <ul className={styles.sourceTextList}>
@@ -353,7 +357,7 @@ function BotResponse(props) {
                   />
                 </div>
               ) : null}
-            </a>
+            </>
           );
 
         return <li key={index}>{sourceItem}</li>;
