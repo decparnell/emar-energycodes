@@ -11,7 +11,7 @@ const SchedulesTables = (props) => {
 
   const VersionTable = (props) => {
     return (
-      <table id="versionTable" >
+      <table id="versionTable">
         <thead>
           <tr key="versionHeader">
             <th>Version</th>
@@ -23,43 +23,34 @@ const SchedulesTables = (props) => {
           {props.versions.map((version) => {
             const { versionName, implementationDate, reason } = version;
             return (
-              <Link
-                href={{
-                  pathname: "/codes-schedules/[schedule_id]/[versionName]",
-                  query: { schedule_id: scheduleId, versionName: versionName },
-                }}
+              <tr
+                className={`${
+                  selectedVersion == versionName ? styles.selected : ""
+                }`}
                 key={versionName}
-                passHref={true}
               >
-                <tr
+                <td
                   className={`${
                     selectedVersion == versionName ? styles.selected : ""
                   }`}
-                  key={versionName}
                 >
-                  <td
-                    className={`${
-                      selectedVersion == versionName ? styles.selected : ""
-                    }`}
-                  >
-                    {versionName ? versionName : "N/A"}
-                  </td>
-                  <td
-                    className={`${
-                      selectedVersion == versionName ? styles.selected : ""
-                    }`}
-                  >
-                    {implementationDate ? implementationDate : "N/A"}
-                  </td>
-                  <td
-                    className={`${
-                      selectedVersion == versionName ? styles.selected : ""
-                    }`}
-                  >
-                    {reason ? reason : "N/A"}
-                  </td>
-                </tr>
-              </Link>
+                  {versionName ? versionName : "N/A"}
+                </td>
+                <td
+                  className={`${
+                    selectedVersion == versionName ? styles.selected : ""
+                  }`}
+                >
+                  {implementationDate ? implementationDate : "N/A"}
+                </td>
+                <td
+                  className={`${
+                    selectedVersion == versionName ? styles.selected : ""
+                  }`}
+                >
+                  {reason ? reason : "N/A"}
+                </td>
+              </tr>
             );
           })}
         </tbody>

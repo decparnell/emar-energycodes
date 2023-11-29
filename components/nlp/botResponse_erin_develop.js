@@ -8,6 +8,7 @@ import {
   BiPlus,
   BiMinus,
   BiArrowToBottom,
+  BiFileFind,
 } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
@@ -17,6 +18,7 @@ import UserQuestion from "./userQuestion";
 import { mockData1, mockData2, mockData3, mockData4 } from "./mockData";
 import download from "../customComponents/customFileDownload";
 import { LogUserInfo } from "../logging";
+import OnHoverToolTip from "../helperFunctions/toolTip";
 function BotResponse(props) {
   const responseObj = props.response.response;
   const status = props.response.status;
@@ -317,21 +319,39 @@ function BotResponse(props) {
           messageSentiment === "failed_to_answer" ? null : (
             //<a href={source.url} target="_blank" rel="noreferrer">
             <>
-              <a
-                onClick={() => {
-                  if (showSourcesText == `${source.name}-${props.queryId}`) {
-                    setShowSourcesText(null);
-                  } else {
-                    setShowSourcesText(`${source.name}-${props.queryId}`);
-                  }
-                }}
-              >
-                <p className={`${styles.p} pointer`}>
-                  <b style={{ borderBottom: "1px solid black" }}>
-                    {source.name}
-                  </b>
+              <div className={`${styles.sourceItemContainer}`}>
+                <p className={`${styles.p}`}>
+                  <b>{source.name}</b>
                 </p>
-              </a>
+                <OnHoverToolTip title="Download Complete Source Document">
+                  <BiArrowToBottom
+                    onClick={() =>
+                      download(
+                        "erin_develop",
+                        source.url,
+                        source.name,
+                        "",
+                        props.queryId
+                      )
+                    }
+                    className={`${styles.downloadButton} pointer`}
+                  />
+                </OnHoverToolTip>
+                <OnHoverToolTip title="Open Source Snippets">
+                  <BiFileFind
+                    className={`${styles.downloadButton} pointer`}
+                    onClick={() => {
+                      if (
+                        showSourcesText == `${source.name}-${props.queryId}`
+                      ) {
+                        setShowSourcesText(null);
+                      } else {
+                        setShowSourcesText(`${source.name}-${props.queryId}`);
+                      }
+                    }}
+                  />
+                </OnHoverToolTip>
+              </div>
               {showSourcesText == `${source.name}-${props.queryId}` ? (
                 <div className={styles.sourceTextContainer}>
                   <ul className={styles.sourceTextList}>
@@ -343,24 +363,12 @@ function BotResponse(props) {
                       );
                     })}
                   </ul>
-                  <BiArrowToBottom
-                    onClick={() =>
-                      download(
-                        "erin_develop",
-                        source.url,
-                        source.name,
-                        "",
-                        props.queryId
-                      )
-                    }
-                    className={styles.downloadButton}
-                  />
                 </div>
               ) : null}
             </>
           );
 
-        return <li key={index}>{sourceItem}</li>;
+        return <div key={index}>{sourceItem}</div>;
       })
     : null;
 

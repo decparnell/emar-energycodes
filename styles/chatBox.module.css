@@ -368,8 +368,12 @@
   padding:0;
 }
 .downloadButton{
-  margin:1%;;
+  margin:0 0 0 1em;
   padding:0;
-  height: 2em;
-  width: 2em;
+  height: 1.5em;
+  width: 1.5em;
+}
+.sourceItemContainer{
+  display:flex;
+  flex-direction: row;
 }
