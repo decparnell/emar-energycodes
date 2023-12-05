@@ -323,6 +323,21 @@ function BotResponse(props) {
                 <p className={`${styles.p}`}>
                   <b>{source.name}</b>
                 </p>
+
+                <OnHoverToolTip title="Open Document Snippets">
+                  <BiFileFind
+                    className={`${styles.downloadButton} pointer`}
+                    onClick={() => {
+                      if (
+                        showSourcesText == `${source.name}-${props.queryId}`
+                      ) {
+                        setShowSourcesText(null);
+                      } else {
+                        setShowSourcesText(`${source.name}-${props.queryId}`);
+                      }
+                    }}
+                  />
+                </OnHoverToolTip>
                 <OnHoverToolTip title="Download Complete Source Document">
                   <BiArrowToBottom
                     onClick={() =>
@@ -335,20 +350,6 @@ function BotResponse(props) {
                       )
                     }
                     className={`${styles.downloadButton} pointer`}
-                  />
-                </OnHoverToolTip>
-                <OnHoverToolTip title="Open Source Snippets">
-                  <BiFileFind
-                    className={`${styles.downloadButton} pointer`}
-                    onClick={() => {
-                      if (
-                        showSourcesText == `${source.name}-${props.queryId}`
-                      ) {
-                        setShowSourcesText(null);
-                      } else {
-                        setShowSourcesText(`${source.name}-${props.queryId}`);
-                      }
-                    }}
                   />
                 </OnHoverToolTip>
               </div>
