@@ -7,6 +7,8 @@ import {
   BiLike,
   BiPlus,
   BiMinus,
+  BiArrowToBottom,
+  BiFileFind,
 } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
@@ -16,9 +18,11 @@ import UserQuestion from "./userQuestion";
 import { mockData1, mockData2, mockData3, mockData4 } from "./mockData";
 import download from "../customComponents/customFileDownload";
 import { LogUserInfo } from "../logging";
+import OnHoverToolTip from "../helperFunctions/toolTip";
 function BotResponse(props) {
   const responseObj = props.response.response;
   const status = props.response.status;
+  const openaiRequestStatus = props.response.OpenAI_request_status;
   const messageSentiment = props.botSentiment;
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;
   //maybe make some of these into an array... its busy
@@ -30,6 +34,7 @@ function BotResponse(props) {
   const [dislikeIconClicked, setDislikeIconClicked] = useState(false);
   const [likeIconClicked, setLikeIconClicked] = useState(false);
   const [showSources, setShowSources] = useState(false);
+  const [showSourcesText, setShowSourcesText] = useState(null);
   const normalMessage = status.custom_topics.length == 0;
 
   const [openTipsModal, setOpenTipsModal] = useState(false);
@@ -192,9 +197,30 @@ function BotResponse(props) {
     </>
   );
 
+  const rateLimitError =
+    "WOW... Lots of people are asking me questions currently so it is taking me a little longer to find the answer, please try again";
+
+  const genericErrorMessage = (
+    <>
+      OH NO... I ran into an issue with your question. Please try again,
+      ensuring you are following the{" "}
+      <a className={`${styles.link}`} onClick={tipsModalHandler}>
+        Guidance
+      </a>{" "}
+      and if the issue persists please contact{" "}
+      <a className={`${styles.link}`} onClick={sendSupportEmailHandler}>
+        enquiries@recmanager.co.uk
+      </a>
+      . They'll be more than happy to help you!
+    </>
+  );
   const Message = () => {
     if (!normalMessage) {
       return null;
+    } else if (openaiRequestStatus === "RateLimitError") {
+      return <p className={`${styles.p}`}>{rateLimitError}</p>;
+    } else if (openaiRequestStatus != "OK") {
+      return <p className={`${styles.p}`}>{genericErrorMessage}</p>;
     } else if (messageSentiment === "failed_to_answer") {
       return <p className={`${styles.p}`}>{inappropriateResponseMessage}</p>;
     } else {
@@ -286,29 +312,64 @@ function BotResponse(props) {
       : messageSentiment === "partial_answer"
       ? responseObj.contextDocuments
       : null;
+
   const sources = sourceObj
     ? sourceObj.map((source, index) => {
         const sourceItem =
           messageSentiment === "failed_to_answer" ? null : (
             //<a href={source.url} target="_blank" rel="noreferrer">
-            <a
-              onClick={() =>
-                download(
-                  "erin_develop",
-                  source.url,
-                  source.name,
-                  "",
-                  props.queryId
-                )
-              }
-            >
-              <p className={`${styles.p} pointer`}>
-                <b>{source.name}</b>
-              </p>
-            </a>
+            <>
+              <div className={`${styles.sourceItemContainer}`}>
+                <p className={`${styles.p}`}>
+                  <b>{source.name}</b>
+                </p>
+
+                <OnHoverToolTip title="Open Document Snippets">
+                  <BiFileFind
+                    className={`${styles.downloadButton} pointer`}
+                    onClick={() => {
+                      if (
+                        showSourcesText == `${source.name}-${props.queryId}`
+                      ) {
+                        setShowSourcesText(null);
+                      } else {
+                        setShowSourcesText(`${source.name}-${props.queryId}`);
+                      }
+                    }}
+                  />
+                </OnHoverToolTip>
+                <OnHoverToolTip title="Download Complete Source Document">
+                  <BiArrowToBottom
+                    onClick={() =>
+                      download(
+                        "erin_develop",
+                        source.url,
+                        source.name,
+                        "",
+                        props.queryId
+                      )
+                    }
+                    className={`${styles.downloadButton} pointer`}
+                  />
+                </OnHoverToolTip>
+              </div>
+              {showSourcesText == `${source.name}-${props.queryId}` ? (
+                <div className={styles.sourceTextContainer}>
+                  <ul className={styles.sourceTextList}>
+                    {source.captions.map((caption, index) => {
+                      return (
+                        <p key={index} className={styles.sourceTextItem}>
+                          {caption}
+                        </p>
+                      );
+                    })}
+                  </ul>
+                </div>
+              ) : null}
+            </>
           );
 
-        return <li key={index}>{sourceItem}</li>;
+        return <div key={index}>{sourceItem}</div>;
       })
     : null;
 

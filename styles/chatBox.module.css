@@ -352,3 +352,28 @@
   color: #77a465;
   cursor: pointer;
 }
+
+.sourceTextContainer{
+  border: 1px solid black;
+  padding-right: 5%;
+  border-radius: 5px;
+}
+.sourceTextList{
+  margin:0;
+  padding:0;
+}
+
+.sourceTextItem{
+  margin:2% 1% 0 1%;
+  padding:0;
+}
+.downloadButton{
+  margin:0 0 0 1em;
+  padding:0;
+  height: 1.5em;
+  width: 1.5em;
+}
+.sourceItemContainer{
+  display:flex;
+  flex-direction: row;
+}

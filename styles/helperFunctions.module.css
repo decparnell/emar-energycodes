@@ -5,11 +5,11 @@
 
 .tooltip {
   position: fixed;
-  margin-top: 4%;
-  margin-left: 1%;
+  margin-top: 0%;
+  margin-left: 3%;
   display: inline-block;
-  padding: 1%;
-  border: 5px solid #4d8934;
+  padding: 0.5%;
+  border: 2px solid #4d8934;
   border-radius: 10px;
   background-color: white;
 }
@@ -17,12 +17,12 @@
 .tooltip .tooltiptext {
   text-align: center;
   border-radius: 6px;
-  padding: 5px 0;
+  padding: 0;
   position: absolute;
   z-index: 1;
   top: 150%;
   left: 50%;
-  margin-left: -60px;
+  margin-left: -10%;
 }
 
 .tooltiptext::after {
@@ -30,7 +30,7 @@
   bottom: 100%;
   left: 50%;
   margin-left: -5px;
-  border-width: 5px;
+  border-width: 2px;
   border-style: solid;
   border-color: transparent transparent #4d8934 transparent;
 }

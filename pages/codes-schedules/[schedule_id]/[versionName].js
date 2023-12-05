@@ -341,7 +341,10 @@ function Schedules({
         )}
         {scheduleId == scheduleInterpretationDefinitions ? (
           <div className={styles.tablesContainer}>
-            <DefinitionTables definitions={definitions} />
+            <DefinitionTables
+              definitions={definitions}
+              version={docVersionName}
+            />
           </div>
         ) : null}
       </div>

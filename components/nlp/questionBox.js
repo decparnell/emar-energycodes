@@ -50,9 +50,6 @@ function QuestionBox(props) {
           onChange={questionChangeHandler}
           value={props.query}
           onKeyDown={pressEnterHandler}
-          variant="outlined"
-          margin="none"
-          fullwidth="true"
         />
         <div
           className={props.query.length < 250 ? styles.length : styles.tooLong}

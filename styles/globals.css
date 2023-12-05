@@ -1,10 +1,9 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans");
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: "Open Sans", cursive;
   background-color: #F1F1F1;
+  font-family: 'Roboto', sans-serif;
 }
 
 a {
@@ -54,7 +53,6 @@ table {
   text-align: center;
   cursor: pointer;
 }
-
 th {
   text-align: center;
   background-color: #4e8934;
@@ -65,7 +63,6 @@ th {
 td {
   text-align: center;
   padding: 0 0.4em;
-
 }
 
 tr {
