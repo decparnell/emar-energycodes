@@ -178,7 +178,7 @@ const ResultsTable = (props) => {
             : data.map((item, index) => {
                 if (typeof baseLink !== "undefined") {
                   return (
-                    <tr>
+                    <tr key={index}>
                       {returnTableDataForHeaders(
                         item,
                         `${baseLink}/${item[headers[0].dataColumn]}`
