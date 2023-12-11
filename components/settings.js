@@ -23,7 +23,7 @@ export const tabs = [
   { title: "Data Specification", link: "/dataspec" },
   { title: "Codes Road Map", link: "/codes-road-map" },
   { title: "Release Management", link: "/release-management" },
-  { title: "ERIN", link: "/erin_develop" },
+  { title: "ERIN", link: "/erin" },
 ];
 
 export const dashboards = [
