@@ -35,25 +35,51 @@ const CreateFlowStructure = (structure) => {
     for (const i in dataItems) {
       const dataItem = dataItems[i];
       const DItoADD = (
-        <Link
-          href={{
-            pathname: `/dataspec/${latestDataSpecVersion}/dataitem/[dataItemId]`,
-            query: {
-              dataItemId: dataItem.EnergyMarketDataItemIdentifier,
-            },
-          }}
-          passHref={true}
-        >
-          <tr className={styles.pointer}>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>{dataItem.VariantDataItemRequirementTypeRule}</td>
-            {createLevelsInfo(dataItem, collection)}
-            <td>{dataItem.DataItemName}</td>
-            <td>{dataItem.VariantDataItemValueRuleDescription}</td>
-          </tr>
-        </Link>
+        <tr className={styles.pointer}>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            <Link
+              href={{
+                pathname: `/dataspec/${latestDataSpecVersion}/dataitem/[dataItemId]`,
+                query: {
+                  dataItemId: dataItem.EnergyMarketDataItemIdentifier,
+                },
+              }}
+              passHref={true}
+            >
+              {dataItem.VariantDataItemRequirementTypeRule}
+            </Link>
+          </td>
+          {createLevelsInfo(dataItem, collection)}
+          <td>
+            <Link
+              href={{
+                pathname: `/dataspec/${latestDataSpecVersion}/dataitem/[dataItemId]`,
+                query: {
+                  dataItemId: dataItem.EnergyMarketDataItemIdentifier,
+                },
+              }}
+              passHref={true}
+            >
+              {dataItem.DataItemName}
+            </Link>
+          </td>
+          <td>
+            <Link
+              href={{
+                pathname: `/dataspec/${latestDataSpecVersion}/dataitem/[dataItemId]`,
+                query: {
+                  dataItemId: dataItem.EnergyMarketDataItemIdentifier,
+                },
+              }}
+              passHref={true}
+            >
+              {dataItem.VariantDataItemValueRuleDescription}
+            </Link>
+          </td>
+        </tr>
       );
       //push the data item into to the array
       tableRows.push(DItoADD);
@@ -62,20 +88,22 @@ const CreateFlowStructure = (structure) => {
   return (
     <table className={styles.flowStructure}>
       <thead>
-        <th>Group ID</th>
-        <th>Group Description</th>
-        <th>Range</th>
-        <th>Condition</th>
-        <th>L1</th>
-        <th>L2</th>
-        <th>L3</th>
-        <th>L4</th>
-        <th>L5</th>
-        <th>L6</th>
-        <th>L7</th>
-        <th>L8</th>
-        <th>Data Item Name</th>
-        <th>Data Item Rule</th>
+        <tr>
+          <th>Group ID</th>
+          <th>Group Description</th>
+          <th>Range</th>
+          <th>Condition</th>
+          <th>L1</th>
+          <th>L2</th>
+          <th>L3</th>
+          <th>L4</th>
+          <th>L5</th>
+          <th>L6</th>
+          <th>L7</th>
+          <th>L8</th>
+          <th>Data Item Name</th>
+          <th>Data Item Rule</th>
+        </tr>
       </thead>
       <tbody>{tableRows}</tbody>
     </table>

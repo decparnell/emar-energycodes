@@ -89,7 +89,7 @@ const ResultsTable = (props) => {
     return output;
   };
 
-  function returnTableDataForHeaders(item) {
+  function returnTableDataForHeaders(item, link = "") {
     let jsxArray = [];
     headers.map((row) => {
       if (
@@ -97,11 +97,25 @@ const ResultsTable = (props) => {
         row.dataColumn === "componentText"
       ) {
         jsxArray.push(
-          <td key={row.title}>{formatSearchByType(item, searchValue)}</td>
+          <td key={row.title}>
+            {link !== "" ? (
+              <Link href={link}>{formatSearchByType(item, searchValue)}</Link>
+            ) : (
+              formatSearchByType(item, searchValue)
+            )}
+          </td>
         );
         //jsxArray.push(<td key={row.title}>{item[row.dataColumn]}</td>);
       } else {
-        jsxArray.push(<td key={row.title}>{item[row.dataColumn]}</td>);
+        jsxArray.push(
+          <td key={row.title}>
+            {link !== "" ? (
+              <Link href={link}>{item[row.dataColumn]}</Link>
+            ) : (
+              item[row.dataColumn]
+            )}
+          </td>
+        );
       }
     });
     return jsxArray;
@@ -113,19 +127,19 @@ const ResultsTable = (props) => {
     );
 
     if (filteredMapping.length != 0) {
-      const currentDocVersionName = props.item.versionName;//filteredMapping[0].docVersionName;
+      const currentDocVersionName = props.item.versionName; //filteredMapping[0].docVersionName;
       const baseLink = `/codes-schedules/${props.item.documentId_FK}/${currentDocVersionName}?componentId=${props.item.componentId}`;
       return (
-        <Link key={props.index} href={baseLink}>
-          <tr key={props.index} >{returnTableDataForHeaders(props.item)}</tr>
-        </Link>
+        <tr key={props.index}>
+          {returnTableDataForHeaders(props.item, baseLink)}
+        </tr>
       );
     } else {
       const definitionLink = `/codes-schedules/definitions/${props.item.documentId_FK}`;
       return (
-        <Link key={props.index} href={definitionLink}>
-          <tr key={props.index}>{returnTableDataForHeaders(props.item)}</tr>
-        </Link>
+        <tr key={props.index}>
+          {returnTableDataForHeaders(props.item, definitionLink)}
+        </tr>
       );
     }
   };
@@ -157,24 +171,24 @@ const ResultsTable = (props) => {
         <tbody>
           {searchType === "Codes Schedules"
             ? data.map((item, index) => {
-              return (
-                <GenerateSchedulesRow item={item} index={index} key={index} />
-              );
-            })
-            : data.map((item, index) => {
-              if (typeof baseLink !== "undefined") {
                 return (
-                  <Link
-                    key={index}
-                    href={`${baseLink}/${item[headers[0].dataColumn]}`}
-                  >
-                    <tr>{returnTableDataForHeaders(item)}</tr>
-                  </Link>
+                  <GenerateSchedulesRow item={item} index={index} key={index} />
                 );
-              } else {
-                return <tr key={index}>{returnTableDataForHeaders(item)}</tr>;
-              }
-            })}
+              })
+            : data.map((item, index) => {
+                if (typeof baseLink !== "undefined") {
+                  return (
+                    <tr>
+                      {returnTableDataForHeaders(
+                        item,
+                        `${baseLink}/${item[headers[0].dataColumn]}`
+                      )}
+                    </tr>
+                  );
+                } else {
+                  return <tr key={index}>{returnTableDataForHeaders(item)}</tr>;
+                }
+              })}
         </tbody>
       </table>
     </InfiniteScroll>
