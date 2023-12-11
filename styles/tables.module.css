@@ -29,6 +29,10 @@
     width: 10%;
     min-width: 10vw;
     min-height: 20vh;
+    background-color: #4e8934;
+    color:white;
+    opacity: 75%;
+    font-weight: bold;
 }
 
 .customTableData{
@@ -72,4 +76,7 @@
     padding:0;
     text-decoration: none;
     border: 1px solid red;
+}
+.basicInformation{
+    width: 20%;
 }
