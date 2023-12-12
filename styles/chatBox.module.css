@@ -364,16 +364,28 @@
 }
 
 .sourceTextItem{
-  margin:2% 1% 0 1%;
+  margin:1% 1% 0 1%;
   padding:0;
+  width:90%;
 }
-.downloadButton{
+.downloadButton,.linkButton{
   margin:0 0 0 1em;
   padding:0;
   height: 1.5em;
   width: 1.5em;
 }
-.sourceItemContainer{
+.linkButton{
+  cursor: pointer;
+  height: 2em;
+  width:2em;
+  float:right;
+}
+.sourceItemContainer,.sourceFrag{
   display:flex;
   flex-direction: row;
+}
+
+.sourceFrag{
+  align-items: center;
+  margin: 1em 0 0 0;
 }

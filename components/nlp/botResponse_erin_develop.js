@@ -9,6 +9,7 @@ import {
   BiMinus,
   BiArrowToBottom,
   BiFileFind,
+  BiLink,
 } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
@@ -19,7 +20,9 @@ import { mockData1, mockData2, mockData3, mockData4 } from "./mockData";
 import download from "../customComponents/customFileDownload";
 import { LogUserInfo } from "../logging";
 import OnHoverToolTip from "../helperFunctions/toolTip";
+import { useRouter } from "next/navigation";
 function BotResponse(props) {
+  const pushRouter = useRouter();
   const responseObj = props.response.response;
   const status = props.response.status;
   const openaiRequestStatus = props.response.OpenAI_request_status;
@@ -36,7 +39,6 @@ function BotResponse(props) {
   const [showSources, setShowSources] = useState(false);
   const [showSourcesText, setShowSourcesText] = useState(null);
   const normalMessage = status.custom_topics.length == 0;
-
   const [openTipsModal, setOpenTipsModal] = useState(false);
   const [openExampleQuestions1Modal, setExampleQuestions1Modal] =
     useState(false);
@@ -70,6 +72,32 @@ function BotResponse(props) {
     window.open(
       "mailto:enquiries@recmanager.co.uk?subject=Support query for ERIN"
     );
+  };
+
+  const getComponentIdForLink = (captionText, documentName) => {
+    const data = { captionText: captionText, documentName: documentName };
+    const bodyData = JSON.stringify(data);
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: bodyData,
+    };
+
+    fetch("/api/getComponentId", options)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("data", data);
+        const clauseInfo = data.clauseInformation;
+        window.open(
+          `/codes-schedules/${clauseInfo.documentId}/${clauseInfo.versionNumber}?componentId=${clauseInfo.componentId}`,
+          "_ blank"
+        );
+      })
+      .catch((error) => {
+        console.error("Error logging Data:", error);
+      });
   };
 
   const tipsModal = (
@@ -355,15 +383,19 @@ function BotResponse(props) {
               </div>
               {showSourcesText == `${source.name}-${props.queryId}` ? (
                 <div className={styles.sourceTextContainer}>
-                  <ul className={styles.sourceTextList}>
-                    {source.captions.map((caption, index) => {
-                      return (
-                        <p key={index} className={styles.sourceTextItem}>
-                          {caption}
-                        </p>
-                      );
-                    })}
-                  </ul>
+                  {source.captions.map((caption, index) => {
+                    return (
+                      <div key={index} className={styles.sourceFrag}>
+                        <p className={styles.sourceTextItem}>{caption}</p>
+                        <BiLink
+                          className={styles.linkButton}
+                          onClick={() => {
+                            getComponentIdForLink(caption, source.name);
+                          }}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               ) : null}
             </>

@@ -110,13 +110,14 @@ function Schedules({
 
   useEffect(() => {
     if (typeof window != "undefined" && componentId && isLoading === false) {
-      const element = document.getElementById(componentId);
-
-      element?.scrollIntoView({
-        behavior: "smooth",
-        block: "end",
-        inline: "nearest",
-      });
+      setTimeout(() => {
+        const element = document.getElementById(componentId);
+        element?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+          inline: "nearest",
+        });
+      }, 3000);
     }
   }, [isLoading]);
 
