@@ -95,6 +95,10 @@ function BotResponse(props) {
           `/codes-schedules/${clauseInfo.documentId}/${clauseInfo.versionNumber}?componentId=${clauseInfo.componentId}`,
           "_ blank"
         );
+        LogUserInfo(
+          `Follow through link clicked => Document Id: ${clauseInfo.documentId}; ComponentId: ${clauseInfo.componentId}`,
+          props.queryId
+        );
       })
       .catch((error) => {
         console.error("Error logging Data:", error);
