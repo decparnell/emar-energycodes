@@ -41,6 +41,13 @@ export const dashboards = [
   },
 ];
 
+export const nlpLinkNames = [
+  "Main Body",
+  "Schedule",
+  "COMCOP",
+  "Service Definition",
+];
+
 export const dataSpecSerachTypes = [
   { name: "Market Messages" },
   { name: "Scenario Variants" },

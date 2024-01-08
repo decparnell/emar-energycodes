@@ -338,6 +338,7 @@ function Schedules({
             fetchData={fetchData}
             hasMoreData={hasMoreData}
             totalLength={startVal}
+            highlightComponentId={router.query.componentId}
           />
         )}
         {scheduleId == scheduleInterpretationDefinitions ? (

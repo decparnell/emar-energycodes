@@ -18,6 +18,7 @@ function NLP() {
   const [query, setQuery] = useState("");
   const [openDocumentsModal, setOpenDocumentsModal] = useState(false);
   const [closed, setClosed] = useState(false);
+  const [shortQuery, setShortQuery] = useState(false);
   useEffect(() => {
     LogUserInfo("VIEW: ERIN_DEVELOP");
   }, []);
@@ -163,6 +164,7 @@ function NLP() {
             setQuery={setQuery}
             query={query}
             isTyping={botIsTyping}
+            shortQuery={[shortQuery, setShortQuery]}
           />
         </div>
       </div>

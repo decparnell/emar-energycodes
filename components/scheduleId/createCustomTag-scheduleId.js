@@ -3,7 +3,12 @@ import Link from "next/link";
 import Popup from "reactjs-popup";
 import Image from "next/image";
 import LinkTextFromDefinitions from "../helperFunctions/linkTextFromDefinitions";
-function CreateCustomTag(clauseReference, clauseComponents, definitions) {
+function CreateCustomTag(
+  clauseReference,
+  clauseComponents,
+  definitions,
+  highlightComponentId
+) {
   const clauseJsx = [];
   const componentId = clauseComponents[0].componentId;
   const style = clauseComponents[0].componentType;
@@ -65,7 +70,8 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
           CustomTag,
           customClassName,
           definitions,
-          clauseComponentId
+          clauseComponentId,
+          highlightComponentId
         );
       }
       tableJsx.push(
@@ -84,7 +90,8 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
             CustomTag,
             customClassName,
             definitions,
-            clauseComponentId
+            clauseComponentId,
+            highlightComponentId
           );
         }
         tableJsx.push(<tr>{dataJsx}</tr>);
@@ -100,7 +107,8 @@ function CreateCustomTag(clauseReference, clauseComponents, definitions) {
         CustomTag,
         customClassName,
         definitions,
-        clauseComponentId
+        clauseComponentId,
+        highlightComponentId
       );
     }
   }
@@ -124,7 +132,8 @@ function addLinkedComponentsToOutput(
   CustomTag,
   customClassName,
   definitions,
-  clauseComponentId
+  clauseComponentId,
+  highlightComponentId
 ) {
   //create an array of the text to display including all links using split text function
   if (CustomTag === "Image") {
@@ -139,10 +148,17 @@ function addLinkedComponentsToOutput(
     );
   } else {
     const linkedText = LinkTextFromDefinitions(text, definitions);
+
     clauseJsx.push(
-      <CustomTag className={customClassName}
+      <CustomTag
+        className={`${customClassName} ${
+          highlightComponentId == clauseComponentId
+            ? styles.hightlightComponent
+            : null
+        }`}
         key={`${clauseComponentId}`}
-        id={`${clauseComponentId}`}>
+        id={`${clauseComponentId}`}
+      >
         {linkedText}
       </CustomTag>
     );

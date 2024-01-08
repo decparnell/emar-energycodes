@@ -232,10 +232,11 @@
   width: 95%;
 }
 
-.options {
+.options{
   display: flex;
   justify-content: flex-end;
 }
+
 
 .messageOptions{
   display: flex;
@@ -243,7 +244,7 @@
 }
 
 .messageButton {
-  padding-right: 10%;
+  padding-right: 3%;
   border: none;
   box-shadow: none;
   cursor: pointer;
@@ -342,10 +343,16 @@
 
 .sourcesOptionsContainer {
   display: flex;
-  justify-content: flex-start;
   margin-bottom: 1%;
+  width:100%;
 }
 
+.thumbOptions{
+  display:flex;
+  justify-self: flex-end;
+  color: grey;
+  width:40%;
+}
 .plusMinus {
   height: 1.5em;
   width: 1.5em;

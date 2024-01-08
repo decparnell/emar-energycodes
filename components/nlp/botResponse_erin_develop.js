@@ -21,6 +21,7 @@ import download from "../customComponents/customFileDownload";
 import { LogUserInfo } from "../logging";
 import OnHoverToolTip from "../helperFunctions/toolTip";
 import { useRouter } from "next/navigation";
+import { nlpLinkNames } from "../settings";
 function BotResponse(props) {
   const pushRouter = useRouter();
   const responseObj = props.response.response;
@@ -387,12 +388,14 @@ function BotResponse(props) {
                     return (
                       <div key={index} className={styles.sourceFrag}>
                         <p className={styles.sourceTextItem}>{caption}</p>
-                        <BiLink
-                          className={styles.linkButton}
-                          onClick={() => {
-                            getComponentIdForLink(caption, source.name);
-                          }}
-                        />
+                        {nlpLinkNames.some((v) => source.name.includes(v)) ? (
+                          <BiLink
+                            className={styles.linkButton}
+                            onClick={() => {
+                              getComponentIdForLink(caption, source.name);
+                            }}
+                          />
+                        ) : null}
                       </div>
                     );
                   })}
@@ -419,10 +422,22 @@ function BotResponse(props) {
     LogUserInfo("CLOSE: ERIN hide sources", props.queryId);
   };
 
+  const clickedStyle = `${styles.copyIcon} ${
+    copyIconClicked ? styles.copyIconClicked : null
+  }`;
+
+  const dislikedStyle = ` ${styles.dislikeIcon} ${
+    dislikeIconClicked ? styles.dislikeIconClicked : null
+  } ${likeIconClicked ? styles.disabled : null}`;
+
+  const likedStyle = ` ${styles.likeIcon} ${
+    likeIconClicked ? styles.likeIconClicked : null
+  } ${dislikeIconClicked ? styles.disabled : null}`;
+
   const sourcesOptions = (
     <div className={`${styles.sourcesOptionsContainer}`}>
       {messageSentiment === "complete_answer" ? (
-        "Sources:"
+        <p>Sources:</p>
       ) : messageSentiment === "partial_answer" ? (
         <p>
           Sorry, I am not able to confirm a definitive source to support the
@@ -457,18 +472,6 @@ function BotResponse(props) {
     </div>
   );
 
-  const clickedStyle = `${styles.copyIcon} ${
-    copyIconClicked ? styles.copyIconClicked : null
-  }`;
-
-  const dislikedStyle = ` ${styles.dislikeIcon} ${
-    dislikeIconClicked ? styles.dislikeIconClicked : null
-  } ${likeIconClicked ? styles.disabled : null}`;
-
-  const likedStyle = ` ${styles.likeIcon} ${
-    likeIconClicked ? styles.likeIconClicked : null
-  } ${dislikeIconClicked ? styles.disabled : null}`;
-
   return (
     <Fragment>
       {normalMessage ? (
@@ -493,14 +496,12 @@ function BotResponse(props) {
                 >
                   <BiCopyAlt className={clickedStyle} />
                 </button>
-                <button
-                  title="Dislike Response"
-                  className={`${styles.messageButton}`}
-                  disabled={dislikeIconClicked}
-                  onClick={dislikeFeedbackHandler}
-                >
-                  <BiDislike className={dislikedStyle} />
-                </button>
+              </div>
+            </div>
+            {<Message />}
+            <div className={`${styles.sourcesContainer}`}>
+              <div className={`${styles.thumbOptions}`}>
+                <p>Was this answer helpful?</p>
                 <button
                   title="Like Response"
                   className={`${styles.messageButton}`}
@@ -509,11 +510,17 @@ function BotResponse(props) {
                 >
                   <BiLike className={likedStyle} />
                 </button>
+                <button
+                  title="Dislike Response"
+                  className={`${styles.messageButton}`}
+                  disabled={dislikeIconClicked}
+                  onClick={dislikeFeedbackHandler}
+                >
+                  <BiDislike className={dislikedStyle} />
+                </button>
               </div>
-            </div>
-            {<Message />}
-            <div className={`${styles.sourcesContainer}`}>
               {sourcesOptions}
+
               {showSources === true ? sourcesList : null}
             </div>
           </div>

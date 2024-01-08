@@ -1,6 +1,7 @@
 import styles from "../../styles/nlp.module.css";
 import React from "react";
 import { BiSend } from "react-icons/bi";
+import ShortQueryModal from "./shortQueryModal";
 /* import { TextField } from "@mui/material"; */
 function QuestionBox(props) {
   const sendIcon = (
@@ -13,7 +14,9 @@ function QuestionBox(props) {
 
   const askQuestionHandler = (event) => {
     event.preventDefault();
-    if (props.isTyping !== true && props.query !== "") {
+    if (props.query.length < 10) {
+      props.shortQuery[1](true);
+    } else if (props.isTyping !== true && props.query !== "") {
       props.onAskQuestion();
     }
   };
@@ -39,33 +42,44 @@ function QuestionBox(props) {
   };
 
   return (
-    <form className={`${styles.questionBox}`} onSubmit={askQuestionHandler}>
-      <div className={`${styles.sendMessage}`}>
-        <input
-          className={`box ${styles.input}`}
-          id="username"
-          placeholder="Send a message"
-          name="Question box"
-          wrap="soft"
-          onChange={questionChangeHandler}
-          value={props.query}
-          onKeyDown={pressEnterHandler}
-        />
-        <div
-          className={props.query.length < 250 ? styles.length : styles.tooLong}
-        >
-          {props.query.length}/250
+    <>
+      <form className={`${styles.questionBox}`} onSubmit={askQuestionHandler}>
+        <div className={`${styles.sendMessage}`}>
+          <input
+            className={`box ${styles.input}`}
+            id="username"
+            placeholder="Send a message"
+            name="Question box"
+            wrap="soft"
+            onChange={questionChangeHandler}
+            value={props.query}
+            onKeyDown={pressEnterHandler}
+          />
+          <div
+            className={
+              props.query.length < 10
+                ? styles.tooShort
+                : props.query.length < 250
+                ? styles.length
+                : styles.tooLong
+            }
+          >
+            {props.query.length}/250
+          </div>
+          <button
+            title="Submit"
+            type="submit"
+            className={styles.button}
+            disabled={props.isTyping}
+          >
+            {sendIcon}
+          </button>
         </div>
-        <button
-          title="Submit"
-          type="submit"
-          className={styles.button}
-          disabled={props.isTyping}
-        >
-          {sendIcon}
-        </button>
-      </div>
-    </form>
+      </form>
+      {props.shortQuery[0] ? (
+        <ShortQueryModal onClose={() => props.shortQuery[1](false)} />
+      ) : null}
+    </>
   );
 }
 
