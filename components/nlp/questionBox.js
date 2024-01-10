@@ -12,13 +12,16 @@ function QuestionBox(props) {
 
   /* const sendIcon = <BiSend className={`${styles.sendIcon}`} />; */
 
-  const askQuestionHandler = (event) => {
-    event.preventDefault();
+  const checkQuestionandCall = () => {
     if (props.query.length < 10) {
       props.shortQuery[1](true);
     } else if (props.isTyping !== true && props.query !== "") {
       props.onAskQuestion();
     }
+  };
+  const askQuestionHandler = (event) => {
+    event.preventDefault();
+    checkQuestionandCall();
   };
 
   const questionChangeHandler = (event) => {
@@ -37,7 +40,7 @@ function QuestionBox(props) {
       event.target.value.length > 0
     ) {
       event.preventDefault();
-      props.onAskQuestion();
+      checkQuestionandCall();
     }
   };
 
