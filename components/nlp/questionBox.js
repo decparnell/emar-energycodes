@@ -1,7 +1,7 @@
 import styles from "../../styles/nlp.module.css";
 import React from "react";
 import { BiSend } from "react-icons/bi";
-import ShortQueryModal from "./shortQueryModal";
+import { ShortQueryModal } from "./modals";
 /* import { TextField } from "@mui/material"; */
 function QuestionBox(props) {
   const sendIcon = (
@@ -61,7 +61,7 @@ function QuestionBox(props) {
           <div
             className={
               props.query.length < 10
-                ? styles.tooShort
+                ? styles.tooLong
                 : props.query.length < 250
                 ? styles.length
                 : styles.tooLong
@@ -80,7 +80,10 @@ function QuestionBox(props) {
         </div>
       </form>
       {props.shortQuery[0] ? (
-        <ShortQueryModal onClose={() => props.shortQuery[1](false)} />
+        <ShortQueryModal
+          onClose={() => props.shortQuery[1](false)}
+          tipsModalHandler={props.tipsModalHandler}
+        />
       ) : null}
     </>
   );

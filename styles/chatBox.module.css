@@ -244,13 +244,15 @@
 }
 
 .messageButton {
-  padding-right: 3%;
+  margin-left: 1em;
   border: none;
   box-shadow: none;
   cursor: pointer;
   background-color: transparent;
 }
-
+.messageButton:last-child{
+  margin-left: 0.25em;
+}
 .button {
   border: none;
   box-shadow: none;
@@ -364,6 +366,7 @@
   border: 1px solid black;
   padding-right: 5%;
   border-radius: 5px;
+  padding-bottom: 1.5em;
 }
 .sourceTextList{
   margin:0;
@@ -395,4 +398,9 @@
 .sourceFrag{
   align-items: center;
   margin: 1em 0 0 0;
+  /* border: 1px solid red; */
+}
+
+.sourceTextContainer:last-child{
+  margin: 1em 0 1em 0;
 }

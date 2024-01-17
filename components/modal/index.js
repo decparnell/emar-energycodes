@@ -19,8 +19,8 @@ const ModalOverlay = (props) => {
   );
 };
 
-function Modal(props) {
-  if (props.open === false) return null;
+export const Modal = (props) => {
+  //  if (props.open === false) return null;
 
   return (
     <Fragment>
@@ -28,6 +28,4 @@ function Modal(props) {
       <Backdrop onClose={props.onClose} />
     </Fragment>
   );
-}
-
-export default Modal;
+};

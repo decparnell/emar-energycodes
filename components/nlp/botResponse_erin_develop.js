@@ -12,27 +12,27 @@ import {
   BiLink,
 } from "react-icons/bi";
 import styles from "../../styles/chatBox.module.css";
-import Modal from "../modal/index.js";
 import { callFeedback } from "./callFeedback";
 import { ContactsMessage } from "./nlpContactsMessage";
-import UserQuestion from "./userQuestion";
-import { mockData1, mockData2, mockData3, mockData4 } from "./mockData";
 import download from "../customComponents/customFileDownload";
 import { LogUserInfo } from "../logging";
 import OnHoverToolTip from "../helperFunctions/toolTip";
 import { useRouter } from "next/navigation";
 import { nlpLinkNames } from "../settings";
+import { FeedbackModal } from "./modals";
+
 function BotResponse(props) {
   const pushRouter = useRouter();
   const responseObj = props.response.response;
   const status = props.response.status;
   const openaiRequestStatus = props.response.OpenAI_request_status;
   const messageSentiment = props.botSentiment;
+  const tipsModalHandler = props.tipsModalHandler;
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;
   //maybe make some of these into an array... its busy
   const [copiedText, setCopiedText] = useState("");
-  const [openModal, setOpenModal] = useState(false);
   const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
+  const [openSuccessModal, setOpenSuccessModal] = useState(false);
   const [enteredFeedback, setEnteredFeedback] = useState("");
   const [copyIconClicked, setCopyIconClicked] = useState(false);
   const [dislikeIconClicked, setDislikeIconClicked] = useState(false);
@@ -40,34 +40,6 @@ function BotResponse(props) {
   const [showSources, setShowSources] = useState(false);
   const [showSourcesText, setShowSourcesText] = useState(null);
   const normalMessage = status.custom_topics.length == 0;
-  const [openTipsModal, setOpenTipsModal] = useState(false);
-  const [openExampleQuestions1Modal, setExampleQuestions1Modal] =
-    useState(false);
-  const [openExampleQuestions2Modal, setExampleQuestions2Modal] =
-    useState(false);
-
-  const closeTipsModal = () => {
-    setOpenTipsModal(false);
-    setExampleQuestions1Modal(false);
-    setExampleQuestions2Modal(false);
-    LogUserInfo("CLOSE: Tips Modal", props.queryId);
-  };
-
-  const tipsModalHandler = () => {
-    closeTipsModal();
-    setOpenTipsModal(true);
-    LogUserInfo("OPEN: Tips Modal", props.queryId);
-  };
-
-  const exampleQuestions1Handler = () => {
-    closeTipsModal();
-    setExampleQuestions1Modal(true);
-  };
-
-  const exampleQuestions2Handler = () => {
-    closeTipsModal();
-    setExampleQuestions2Modal(true);
-  };
 
   const sendSupportEmailHandler = () => {
     window.open(
@@ -104,107 +76,6 @@ function BotResponse(props) {
         console.error("Error logging Data:", error);
       });
   };
-
-  const tipsModal = (
-    <Modal open={openTipsModal} onClose={closeTipsModal}>
-      <div className={`${styles.tipsMessage}`}>
-        <p>
-          Hi! I’ve put together some helpful hints when asking me questions. If
-          you would also like to see some examples, click{" "}
-          <a className={`${styles.link}`} onClick={exampleQuestions1Handler}>
-            here
-          </a>
-          .
-        </p>
-      </div>
-      <div className={`${styles.tips}`}>
-        <div className={`${styles.doBox}`}>
-          <div className={`${styles.doCircle}`}>Do</div>
-          <ul className={`${styles.thumbsUp}`}>
-            <li className={`${styles.li}`}>
-              Use full sentences to ask your question
-            </li>
-            <li className={`${styles.li}`}>
-              Use language that is seen as REC terminology
-            </li>
-            <li className={`${styles.li}`}>
-              Access the source documentation which is provided alongside the
-              answer
-            </li>
-            <li>Provide feedback to allow for continuous improvement</li>
-          </ul>
-        </div>
-        <div className={`${styles.dontBox}`}>
-          <div className={`${styles.dontCircle}`}>Don't</div>
-          <ul className={`${styles.thumbsDown}`}>
-            <li className={`${styles.li}`}>
-              Ask questions which aren't related to the REC
-            </li>
-            <li className={`${styles.li}`}>
-              Navigate away before copying the answers to the questions you have
-              asked to the model
-            </li>
-            <li className={`${styles.li}`}>Forget to provide feedback</li>
-            <li>
-              Include any personal or company-specific details in your question
-            </li>
-          </ul>
-        </div>
-      </div>
-    </Modal>
-  );
-
-  const tipsExamples1Modal = (
-    <Modal open={openExampleQuestions1Modal} onClose={closeTipsModal}>
-      <div className={`${styles.exampleImagesMessage}`}>
-        <p>
-          If you know the right terminology, try asking me questions using both
-          the acronym and the exact REC term. I can then make sure I provide you
-          with the most useful information as possible, like the example below.
-        </p>
-      </div>
-      <div className={`${styles.exampleQuestions}`}>
-        <UserQuestion messageValue="What is REL?" />
-        <BotResponse response={mockData1} />
-        <UserQuestion messageValue="What is Retail Energy Location?" />
-        <BotResponse response={mockData2} />
-      </div>
-      <div className={`${styles.buttonContainer}`}>
-        <button className={`${styles.submit}`} onClick={tipsModalHandler}>
-          Back
-        </button>
-        <button
-          className={`${styles.submit}`}
-          onClick={exampleQuestions2Handler}
-        >
-          Next Example
-        </button>
-      </div>
-    </Modal>
-  );
-
-  const tipsExamples2Modal = (
-    <Modal open={openExampleQuestions2Modal} onClose={closeTipsModal}>
-      <div className={`${styles.exampleImagesMessage}`}>
-        <p>
-          If the answer I’ve given is not quite what you are looking for, try
-          and rephrase your questions to be more specific, so I can make sure my
-          answer provides you with only the information and sources you need,
-          like the examples below.
-        </p>
-      </div>
-      <div className={`${styles.exampleQuestions}`}>
-        <UserQuestion messageValue="If I don't like a decision, can I appeal?" />
-        <BotResponse response={mockData3} />
-        <UserQuestion messageValue="If I don't like a decision for a self-governance-change, can this be appealed?" />
-        <BotResponse response={mockData4} />
-      </div>
-      <button className={`${styles.submit}`} onClick={exampleQuestions1Handler}>
-        Back
-      </button>
-    </Modal>
-  );
-
   const inappropriateResponseMessage = (
     <>
       I’ve reviewed the REC, but unfortunately I can’t find the answer to your
@@ -269,8 +140,7 @@ function BotResponse(props) {
   };
 
   const dislikeFeedbackHandler = () => {
-    setOpenFeedbackModal(false);
-    setOpenModal(true);
+    setOpenFeedbackModal(true);
     setDislikeIconClicked(true);
     setLikeIconClicked(false);
   };
@@ -282,7 +152,7 @@ function BotResponse(props) {
   };
 
   const closeModal = () => {
-    setOpenModal(false);
+    setOpenFeedbackModal(false);
   };
 
   const submitFeedbackHandler = (event) => {
@@ -299,46 +169,24 @@ function BotResponse(props) {
     );
 
     setEnteredFeedback("");
-    closeModal();
-    setOpenFeedbackModal(true);
+    setOpenFeedbackModal(false);
   };
 
   const skipFeedbackHandler = () => {
     callFeedback(props.queryId, "negative", "", "/api/nlpFeedback_develop");
-    closeModal();
-    setOpenFeedbackModal(true);
+    setOpenFeedbackModal(false);
   };
 
   const feedbackChangeHandler = (event) => {
     setEnteredFeedback(event.target.value);
   };
 
-  const feedbackModal = (
-    <Modal open={openModal} onClose={closeModal}>
-      <form className={`${styles.feedback}`} onSubmit={submitFeedbackHandler}>
-        Please give some feedback
-        <div className={`${styles.feedbackBox}`}>
-          <textarea
-            className={`${styles.input}`}
-            name="Feedback box"
-            rows="5"
-            cols="70"
-            wrap="soft"
-            value={enteredFeedback}
-            onChange={feedbackChangeHandler}
-          ></textarea>
-        </div>
-        <div className={`${styles.buttonContainer}`}>
-          <button className={`${styles.submit}`} onClick={skipFeedbackHandler}>
-            Skip
-          </button>
-          <button type="submit" className={`${styles.submit}`}>
-            Submit
-          </button>
-        </div>
-      </form>
+  /*   const showSuccessModal = (
+    <Modal onClose={setOpenSuccessModal}>
+      <p>Thank you for your feedback and helping to improve this service</p>
     </Modal>
-  );
+  ); */
+
   const sourceObj =
     messageSentiment === "complete_answer"
       ? responseObj.verifiedSources
@@ -534,10 +382,18 @@ function BotResponse(props) {
       {status.custom_topics.includes("contact_details") ? (
         <ContactsMessage botIcon={botIcon} />
       ) : null}
-      {feedbackModal}
-      {tipsModal}
+      {openFeedbackModal ? (
+        <FeedbackModal
+          enteredFeedback={enteredFeedback}
+          skipFeedbackHandler={skipFeedbackHandler}
+          submitFeedbackHandler={submitFeedbackHandler}
+          feedbackChangeHandler={feedbackChangeHandler}
+        />
+      ) : null}
+      {/*
+       {tipsModal}
       {tipsExamples1Modal}
-      {tipsExamples2Modal}
+      {tipsExamples2Modal} */}
     </Fragment>
   );
 }

@@ -12,159 +12,24 @@ import styles from "../../styles/chatBox.module.css";
 import Modal from "../modal/index.js";
 import { callFeedback } from "./callFeedback";
 import { ContactsMessage } from "./nlpContactsMessage";
-import UserQuestion from "./userQuestion";
-import { mockData1, mockData2, mockData3, mockData4 } from "./mockData";
 
 function BotResponse(props) {
-  console.log(props);
   const responseObj = props.response.response;
   const status = props.response.status;
   const messageSentiment = props.botSentiment;
+  const tipsModalHandler = props.tipsModalHandler;
   const botIcon = <BiSupport className={`${styles.botIcon}`} />;
 
   //maybe make some of these into an array... its busy
   const [copiedText, setCopiedText] = useState("");
-  const [openModal, setOpenModal] = useState(false);
   const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
+  const [openSuccessModal, setOpenSuccessModal] = useState(false);
   const [enteredFeedback, setEnteredFeedback] = useState("");
   const [copyIconClicked, setCopyIconClicked] = useState(false);
   const [dislikeIconClicked, setDislikeIconClicked] = useState(false);
   const [likeIconClicked, setLikeIconClicked] = useState(false);
   const [showSources, setShowSources] = useState(false);
   const [showResponse, setShowResponse] = useState(true);
-
-  const [openTipsModal, setOpenTipsModal] = useState(false);
-  const [openExampleQuestions1Modal, setExampleQuestions1Modal] =
-    useState(false);
-  const [openExampleQuestions2Modal, setExampleQuestions2Modal] =
-    useState(false);
-
-  const closeTipsModal = () => {
-    setOpenTipsModal(false);
-    setExampleQuestions1Modal(false);
-    setExampleQuestions2Modal(false);
-  };
-
-  const tipsModalHandler = () => {
-    closeTipsModal();
-    setOpenTipsModal(true);
-  };
-
-  const exampleQuestions1Handler = () => {
-    closeTipsModal();
-    setExampleQuestions1Modal(true);
-  };
-
-  const exampleQuestions2Handler = () => {
-    closeTipsModal();
-    setExampleQuestions2Modal(true);
-  };
-
-  const sendSupportEmailHandler = () => {
-    window.open(
-      "mailto:enquiries@recmanager.co.uk?subject=Support query for ERIN"
-    );
-  };
-
-  const tipsModal = (
-    <Modal open={openTipsModal} onClose={closeTipsModal}>
-      <div className={`${styles.tipsMessage}`}>
-        <p>
-          Hi! I’ve put together some helpful hints when asking me questions. If
-          you would also like to see some examples, click{" "}
-          <a className={`${styles.link}`} onClick={exampleQuestions1Handler}>
-            here
-          </a>
-          .
-        </p>
-      </div>
-      <div className={`${styles.tips}`}>
-        <div className={`${styles.doBox}`}>
-          <div className={`${styles.doCircle}`}>Do</div>
-          <ul className={`${styles.thumbsUp}`}>
-            <li className={`${styles.li}`}>
-              Use full sentences to ask your question
-            </li>
-            <li className={`${styles.li}`}>
-              Use language that is seen as REC terminology
-            </li>
-            <li className={`${styles.li}`}>
-              Access the source documentation which is provided alongside the
-              answer
-            </li>
-            <li>Provide feedback to allow for continuous improvement</li>
-          </ul>
-        </div>
-        <div className={`${styles.dontBox}`}>
-          <div className={`${styles.dontCircle}`}>Don't</div>
-          <ul className={`${styles.thumbsDown}`}>
-            <li className={`${styles.li}`}>
-              Ask questions which aren't related to the REC
-            </li>
-            <li className={`${styles.li}`}>
-              Navigate away before copying the answers to the questions you have
-              asked to the model
-            </li>
-            <li className={`${styles.li}`}>Forget to provide feedback</li>
-            <li>
-              Include any personal or company-specific details in your question
-            </li>
-          </ul>
-        </div>
-      </div>
-    </Modal>
-  );
-
-  const tipsExamples1Modal = (
-    <Modal open={openExampleQuestions1Modal} onClose={closeTipsModal}>
-      <div className={`${styles.exampleImagesMessage}`}>
-        <p>
-          If you know the right terminology, try asking me questions using both
-          the acronym and the exact REC term. I can then make sure I provide you
-          with the most useful information as possible, like the example below.
-        </p>
-      </div>
-      <div className={`${styles.exampleQuestions}`}>
-        <UserQuestion messageValue="What is REL?" />
-        <BotResponse response={mockData1} />
-        <UserQuestion messageValue="What is Retail Energy Location?" />
-        <BotResponse response={mockData2} />
-      </div>
-      <div className={`${styles.buttonContainer}`}>
-        <button className={`${styles.submit}`} onClick={tipsModalHandler}>
-          Back
-        </button>
-        <button
-          className={`${styles.submit}`}
-          onClick={exampleQuestions2Handler}
-        >
-          Next Example
-        </button>
-      </div>
-    </Modal>
-  );
-
-  const tipsExamples2Modal = (
-    <Modal open={openExampleQuestions2Modal} onClose={closeTipsModal}>
-      <div className={`${styles.exampleImagesMessage}`}>
-        <p>
-          If the answer I’ve given is not quite what you are looking for, try
-          and rephrase your questions to be more specific, so I can make sure my
-          answer provides you with only the information and sources you need,
-          like the examples below.
-        </p>
-      </div>
-      <div className={`${styles.exampleQuestions}`}>
-        <UserQuestion messageValue="If I don't like a decision, can I appeal?" />
-        <BotResponse response={mockData3} />
-        <UserQuestion messageValue="If I don't like a decision for a self-governance-change, can this be appealed?" />
-        <BotResponse response={mockData4} />
-      </div>
-      <button className={`${styles.submit}`} onClick={exampleQuestions1Handler}>
-        Back
-      </button>
-    </Modal>
-  );
 
   const inappropriateResponseMessage = (
     <>
@@ -184,7 +49,14 @@ function BotResponse(props) {
         Service Desk
       </a>
       , or by sending an email to{" "}
-      <a className={`${styles.link}`} onClick={sendSupportEmailHandler}>
+      <a
+        className={`${styles.link}`}
+        onClick={() =>
+          window.open(
+            "mailto:enquiries@recmanager.co.uk?subject=Support query for ERIN"
+          )
+        }
+      >
         enquiries@recmanager.co.uk
       </a>
       . They'll be more than happy to help you!
@@ -205,7 +77,14 @@ function BotResponse(props) {
         here
       </a>
       , or by sending an email to{" "}
-      <a className={`${styles.link}`} onClick={sendSupportEmailHandler}>
+      <a
+        className={`${styles.link}`}
+        onClick={() =>
+          window.open(
+            "mailto:enquiries@recmanager.co.uk?subject=Support query for ERIN"
+          )
+        }
+      >
         enquiries@recmanager.co.uk
       </a>
       . They'll be more than happy to help you.
@@ -257,7 +136,7 @@ function BotResponse(props) {
 
   const dislikeFeedbackHandler = () => {
     setOpenFeedbackModal(false);
-    setOpenModal(true);
+    setOpenSuccessModal(true);
     setDislikeIconClicked(true);
     setLikeIconClicked(false);
   };
@@ -266,14 +145,6 @@ function BotResponse(props) {
     callFeedback(props.queryId, "positive", "");
     setLikeIconClicked(true);
     setDislikeIconClicked(false);
-  };
-
-  const closeModal = () => {
-    setOpenModal(false);
-  };
-
-  const closeFeedbackModal = () => {
-    setOpenFeedbackModal(false);
   };
 
   const submitFeedbackHandler = (event) => {
@@ -285,14 +156,13 @@ function BotResponse(props) {
     callFeedback(props.queryId, "negative", enteredFeedback);
 
     setEnteredFeedback("");
-    closeModal();
-    setOpenFeedbackModal(true);
+    setOpenFeedbackModal(false);
+    setOpenSuccessModal(true);
   };
 
   const skipFeedbackHandler = () => {
     callFeedback(props.queryId, "negative", "");
-    closeModal();
-    setOpenFeedbackModal(true);
+    setOpenFeedbackModal(false);
   };
 
   const feedbackChangeHandler = (event) => {
@@ -300,7 +170,7 @@ function BotResponse(props) {
   };
 
   const feedbackModal = (
-    <Modal open={openModal} onClose={closeModal}>
+    <Modal onClose={skipFeedbackHandler}>
       <form className={`${styles.feedback}`} onSubmit={submitFeedbackHandler}>
         Please give some feedback
         <div className={`${styles.feedbackBox}`}>
@@ -327,7 +197,7 @@ function BotResponse(props) {
   );
 
   const showSuccessModal = (
-    <Modal open={openFeedbackModal} onClose={closeFeedbackModal}>
+    <Modal onClose={setOpenSuccessModal}>
       <p>Thank you for your feedback and helping to improve this service</p>
     </Modal>
   );
@@ -515,9 +385,6 @@ function BotResponse(props) {
       {/*  adding in for contact details */}
       {partialCompleteMessage ? <ContactsMessage botIcon={botIcon} /> : null}
       {feedbackModal}
-      {tipsModal}
-      {tipsExamples1Modal}
-      {tipsExamples2Modal}
     </Fragment>
   );
 }
