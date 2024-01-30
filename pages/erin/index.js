@@ -4,12 +4,18 @@ import React, { useEffect, useState } from "react";
 import QuestionBox from "../../components/nlp/questionBox";
 import ChatBox from "../../components/nlp/chatBox";
 import UserQuestion from "../../components/nlp/userQuestion";
-import BotResponse from "../../components/nlp/botResponse_erin";
+import BotResponse from "../../components/nlp/botResponse_erin_develop";
 import QuestionHistory from "../../components/nlp/questionHistory";
 import { v4 as uuidv4 } from "uuid";
 import { uiVersion, loadedDocuments } from "../../components/settings";
-import Modal from "../../components/modal";
+import { Modal } from "../../components/modal";
 import { LogUserInfo } from "../../components/logging";
+import {
+  TipsModal,
+  TipsExamples1Modal,
+  TipsExamples2Modal,
+  DocumentsModal,
+} from "../../components/nlp/modals";
 
 function NLP() {
   const [botIsTyping, setBotIsTyping] = useState(false);
@@ -18,9 +24,48 @@ function NLP() {
   const [query, setQuery] = useState("");
   const [openDocumentsModal, setOpenDocumentsModal] = useState(false);
   const [closed, setClosed] = useState(false);
+  const [shortQuery, setShortQuery] = useState(false);
+  const [openTipsModal, setOpenTipsModal] = useState(false);
+  const [openExampleQuestions1Modal, setExampleQuestions1Modal] =
+    useState(false);
+  const [openExampleQuestions2Modal, setExampleQuestions2Modal] =
+    useState(false);
+
   useEffect(() => {
     LogUserInfo("VIEW: ERIN");
   }, []);
+
+  //handlers
+  const closeModal = () => {
+    setOpenTipsModal(false);
+    setExampleQuestions1Modal(false);
+    setExampleQuestions2Modal(false);
+  };
+
+  const tipsModalHandler = () => {
+    closeModal();
+    setOpenTipsModal(true);
+  };
+
+  const exampleQuestions1Handler = () => {
+    closeModal();
+    setExampleQuestions1Modal(true);
+  };
+
+  const exampleQuestions2Handler = () => {
+    closeModal();
+    setExampleQuestions2Modal(true);
+  };
+  const closeDocumentsModal = () => {
+    setOpenDocumentsModal(false);
+  };
+
+  const documentsModalHandler = () => {
+    setOpenDocumentsModal(true);
+  };
+
+  ////////////////
+
   const fetchData = async (queryId) => {
     const data = {
       query: query,
@@ -45,8 +90,10 @@ function NLP() {
             return [
               ...prevChat,
               <BotResponse
+                response=""
                 messageValue="An error occurred, please try again later"
                 key={`${queryId}_BOT_ERROR`}
+                tipsModalHandler={tipsModalHandler}
               />,
             ];
           });
@@ -59,7 +106,7 @@ function NLP() {
       .then((data) => {
         const botSentiment = data.status.answer_completness;
         const response = data;
-
+        console.log(response);
         setChatLog((prevChat) => {
           return [
             ...prevChat,
@@ -68,6 +115,7 @@ function NLP() {
               botSentiment={botSentiment}
               response={response}
               queryId={queryId}
+              tipsModalHandler={tipsModalHandler}
             />,
           ];
         });
@@ -85,6 +133,7 @@ function NLP() {
   const questionHandler = () => {
     //Storing queryid & user
     const queryId = uuidv4();
+
     setChatLog((prevChat) => {
       return [
         ...prevChat,
@@ -108,37 +157,6 @@ function NLP() {
       : null;
   }, [chatLog]);
 
-  const closeDocumentsModal = () => {
-    setOpenDocumentsModal(false);
-  };
-
-  const documentsModalHandler = () => {
-    setOpenDocumentsModal(true);
-  };
-
-  const documents = loadedDocuments.map((document, index) => {
-    return (
-      <li key={index}>
-        <p className={`${styles.p} `}>
-          <b>{document.documentType}</b> - {document.documentTitle}
-        </p>
-      </li>
-    );
-  });
-
-  const documentsList = (
-    <ul style={{ listStyle: "disc", margin: 0 }}>{documents}</ul>
-  );
-
-  const documentsModal = (
-    <Modal open={openDocumentsModal} onClose={closeDocumentsModal}>
-      <div className={`${styles.exampleImagesMessage}`}>
-        <p>Below is a list of the documents that are included in this model</p>
-      </div>
-      <div className={`${styles.documentsContainer}`}>{documentsList}</div>
-    </Modal>
-  );
-
   return (
     <div className={styles.container}>
       <Head>
@@ -155,13 +173,19 @@ function NLP() {
         )}
         <div className={`${styles.conversationContainer}`}>
           <div className={`box ${styles.chatBox}`}>
-            <ChatBox isTyping={botIsTyping} chatLog={chatLog} />
+            <ChatBox
+              isTyping={botIsTyping}
+              chatLog={chatLog}
+              tipsModalHandler={tipsModalHandler}
+            />
           </div>
           <QuestionBox
             onAskQuestion={questionHandler}
             setQuery={setQuery}
             query={query}
             isTyping={botIsTyping}
+            shortQuery={[shortQuery, setShortQuery]}
+            tipsModalHandler={tipsModalHandler}
           />
         </div>
       </div>
@@ -185,7 +209,29 @@ function NLP() {
           here.
         </a>
       </p>
-      {documentsModal}
+      {openDocumentsModal ? (
+        <DocumentsModal closeDocumentsModal={closeDocumentsModal} />
+      ) : null}
+      {openTipsModal ? (
+        <TipsModal
+          closeModal={closeModal}
+          exampleQuestions1Handler={exampleQuestions1Handler}
+        />
+      ) : null}
+      {openExampleQuestions1Modal ? (
+        <TipsExamples1Modal
+          closeModal={closeModal}
+          tipsModalHandler={tipsModalHandler}
+          exampleQuestions2Handler={exampleQuestions2Handler}
+        />
+      ) : null}
+
+      {openExampleQuestions2Modal ? (
+        <TipsExamples2Modal
+          closeModal={closeModal}
+          exampleQuestions1Handler={exampleQuestions1Handler}
+        />
+      ) : null}
     </div>
   );
 }
