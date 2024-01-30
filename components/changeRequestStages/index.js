@@ -13,7 +13,7 @@ function ChangeRequestStages(props) {
   const processStageData = props.processStageData;
 
   const processStageList = [
-    ...new Set(processStageData.map((item) => item["Current Process Stage"])),
+    ...new Set(processStageData.map((item) => item["currentProcessStage"])),
   ];
 
   const [currentProcessStg, setCurrentProcessStg] = useState(() => {
@@ -22,7 +22,7 @@ function ChangeRequestStages(props) {
 
   const [currentProcessStgItems, setCurrentProcessStgItems] = useState(() => {
     return processStageData.filter(
-      (item) => item["Current Process Stage"] === currentProcessStg
+      (item) => item["currentProcessStage"] === currentProcessStg
     );
   });
 
@@ -45,7 +45,7 @@ function ChangeRequestStages(props) {
   useEffect(() => {
     setCurrentProcessStg(processStageList[currentIndex]);
     const updatedProcessStgItems = processStageData.filter(
-      (item) => item["Current Process Stage"] === currentProcessStg
+      (item) => item["currentProcessStage"] === currentProcessStg
     );
     setCurrentProcessStgItems(updatedProcessStgItems);
   }, [currentProcessStg, currentIndex]);
@@ -96,12 +96,12 @@ function ChangeRequestStages(props) {
       <div className={styles.changeRqstList}>
         {currentProcessStgItems.map((name, index) => (
           <CustomBoxLink
-            href={name["Link to CP page"]}
+            href={name["linkToCPPage"]}
             key={index}
             target="_blank"
             rel="noreferrer"
           >
-            {name["Change Proposal Reference"] + " - " + name["Change Proposal Name"]}
+            {name["changeProposalRefId"] + " - " + name["changeProposalName"]}
           </CustomBoxLink>
         ))}
       </div>
