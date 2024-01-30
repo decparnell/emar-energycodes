@@ -71,7 +71,7 @@
 }
 
 .helpIcon {
-    width: 5%;
-    margin-top: 0%;
-    float: right;
+    width: 10%;
+    margin-top: 1%;
+    cursor: pointer;
 }
