@@ -58,7 +58,7 @@ function BotResponse(props) {
       body: bodyData,
     };
 
-    fetch("/api/getComponentId", options)
+    fetch("/api/getComponentId_develop", options)
       .then((response) => response.json())
       .then((data) => {
         console.log("data", data);
