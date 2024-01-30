@@ -11,9 +11,8 @@ import DashboardLink from "../../components/dashboardLink";
 import { LogUserInfo } from "../../components/logging";
 import SecondNavbar from "../../components/layout/secondHeader";
 import ChangeRequestStages from "../../components/changeRequestStages";
-import { changeRegister } from "../../components/settings";
 import DashboardSearch from "../../components/dashboardSearch";
-function DataSpec({ sections, items }) {
+function DataSpec({ sections, items, changeProposalRegisterData }) {
   useEffect(() => {
     LogUserInfo("VIEW: Data Spec Page");
     value.setChosenTab("Data Specification");
@@ -85,7 +84,7 @@ function DataSpec({ sections, items }) {
                 />
               </div>
               <div className={`${styles.upcomingChangesContent} box`}>
-                <ChangeRequestStages processStageData={changeRegister} />
+                <ChangeRequestStages processStageData={changeProposalRegisterData} />
               </div>
             </div>
           </div>
@@ -139,6 +138,11 @@ export async function getServerSideProps({ req, res }) {
   });
   const items = dataJson.items;
 
+  const changeProposalRegister = await fetch(
+    'https://prod-16.uksouth.logic.azure.com:443/workflows/df5711e6471e48219a884552371246b9/triggers/request/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=V_Q9HpIZN7LAgshnRWissL6G4T48j9Ws4Pf-jPX6bvE'
+  );
+  const changeProposalRegisterData = await changeProposalRegister.json();
+
   /*   const getProcessStgData = await fetch(
     "https://get-changerequest-from-recportal.azurewebsites.net/api/getchangerequestfromrecportal"
   );
@@ -148,6 +152,7 @@ export async function getServerSideProps({ req, res }) {
     props: {
       sections,
       items,
+      changeProposalRegisterData,
     },
   };
 }

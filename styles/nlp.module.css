@@ -130,3 +130,7 @@
 .tooLong{
   color:red;
 }
+
+.tooShort{
+  color:#9e7505;
+}

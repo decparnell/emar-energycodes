@@ -20,9 +20,8 @@ const CreateSchedulesContent = (props) => {
 
   const hasMore = props.hasMoreData;
   const fetchData = props.fetchData;
-
+  const hightlight = props.highlightComponentId;
   const totalLength = props.totalLength;
-
   const CreateContent = (props) => {
     let content = [];
 
@@ -56,7 +55,8 @@ const CreateSchedulesContent = (props) => {
             CreateCustomTag(
               clause.clauseReference,
               clauseComponents,
-              definitions
+              definitions,
+              hightlight
             )
           );
         }
@@ -85,8 +85,16 @@ const CreateSchedulesContent = (props) => {
       dataLength={totalLength}
       next={fetchData}
       hasMore={hasMore}
-      loader={scheduleId == scheduleInterpretationDefinitions ? null : <div className={"loading-container"}>Loading</div>}
-      endMessage={scheduleId == scheduleInterpretationDefinitions ? null : <p>No more data to load.</p>}
+      loader={
+        scheduleId == scheduleInterpretationDefinitions ? null : (
+          <div className={"loading-container"}>Loading</div>
+        )
+      }
+      endMessage={
+        scheduleId == scheduleInterpretationDefinitions ? null : (
+          <p>No more data to load.</p>
+        )
+      }
       className={styles.scroll}
     >
       <CreateContent />

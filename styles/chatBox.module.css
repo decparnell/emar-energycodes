@@ -232,10 +232,11 @@
   width: 95%;
 }
 
-.options {
+.options{
   display: flex;
   justify-content: flex-end;
 }
+
 
 .messageOptions{
   display: flex;
@@ -243,13 +244,15 @@
 }
 
 .messageButton {
-  padding-right: 10%;
+  margin-left: 1em;
   border: none;
   box-shadow: none;
   cursor: pointer;
   background-color: transparent;
 }
-
+.messageButton:last-child{
+  margin-left: 0.25em;
+}
 .button {
   border: none;
   box-shadow: none;
@@ -342,10 +345,16 @@
 
 .sourcesOptionsContainer {
   display: flex;
-  justify-content: flex-start;
   margin-bottom: 1%;
+  width:100%;
 }
 
+.thumbOptions{
+  display:flex;
+  justify-self: flex-end;
+  color: grey;
+  width:40%;
+}
 .plusMinus {
   height: 1.5em;
   width: 1.5em;
@@ -357,6 +366,7 @@
   border: 1px solid black;
   padding-right: 5%;
   border-radius: 5px;
+  padding-bottom: 1.5em;
 }
 .sourceTextList{
   margin:0;
@@ -364,16 +374,33 @@
 }
 
 .sourceTextItem{
-  margin:2% 1% 0 1%;
+  margin:1% 1% 0 1%;
   padding:0;
+  width:90%;
 }
-.downloadButton{
+.downloadButton,.linkButton{
   margin:0 0 0 1em;
   padding:0;
   height: 1.5em;
   width: 1.5em;
 }
-.sourceItemContainer{
+.linkButton{
+  cursor: pointer;
+  height: 2em;
+  width:2em;
+  float:right;
+}
+.sourceItemContainer,.sourceFrag{
   display:flex;
   flex-direction: row;
+}
+
+.sourceFrag{
+  align-items: center;
+  margin: 1em 0 0 0;
+  /* border: 1px solid red; */
+}
+
+.sourceTextContainer:last-child{
+  margin: 1em 0 1em 0;
 }
