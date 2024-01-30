@@ -14,7 +14,7 @@ export default function handler(req, res) {
   };
   //test
   return fetch(
-    "https://recconlpcogsearch.azurewebsites.net/api/findComponentFromText?code=1dF7p3DsRDIbvBM-g40Vxhsp2T793SJdsC--k10YA3NfAzFuzLd5BQ==",
+    "https://recco-openai-qa-prod.azurewebsites.net/api/findComponentFromText?code=9hf2U9c76W0bYaMPlRrxXPBucs77iA6bLq3ioS2PCnb7AzFuVcv7fQ==",
     options
   )
     .then((response) => response.json())
