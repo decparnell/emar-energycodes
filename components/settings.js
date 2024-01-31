@@ -44,7 +44,7 @@ export const dashboards = [
 export const nlpLinkNames = [
   "Main Body",
   "Schedule",
-  "COMCOP",
+  "CoMCoP",
   "Service Definition",
 ];
 
@@ -89,7 +89,6 @@ export const codeSchdulesHeaders = [
 ];
 
 export const uiVersion = "V2.4.0 - 31/07/23";
-
 
 export const loadedDocuments = [
   {
