@@ -23,7 +23,7 @@ export const tabs = [
   { title: "Data Specification", link: "/dataspec" },
   { title: "Codes Road Map", link: "/codes-road-map" },
   { title: "Release Management", link: "/release-management" },
-  { title: "ERIN", link: "/erin" },
+  { title: "ERIN", link: "/erin_develop" },
 ];
 
 export const dashboards = [
@@ -88,7 +88,7 @@ export const codeSchdulesHeaders = [
   { title: "Clause Text", dataColumn: "componentText" },
 ];
 
-export const uiVersion = "V2.4.0 - 31/07/23";
+export const uiVersion = "V3.0.0 - 01/01/24";
 
 export const loadedDocuments = [
   {
@@ -301,7 +301,7 @@ export const loadedDocuments = [
     documentTitle: "Performance Assurance Techniques",
   },
   {
-    documentType: "",
+    documentType: "Performance Assurance",
     documentTitle: "Performance Assurance: Retail Risk Register",
   },
   {
