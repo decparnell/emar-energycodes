@@ -6,6 +6,7 @@ import { useState, useContext, useEffect } from "react";
 import SideNav from "../../../components/dashboardSideNav";
 import SchedulesTables from "../../../components/tables/schedulesTables";
 import CreateSchedulesContent from "../../../components/scheduleId/createSchedulesContent";
+import CreateSchedulesLargeContent from "../../../components/scheduleId/createSchedulesLargeContent";
 import SecondNavbar from "../../../components/layout/secondHeader";
 import DocumentDownload from "../../../components/documentDownload";
 import DefinitionTables from "../../../components/tables/definitionsTables";
@@ -57,6 +58,7 @@ function Schedules({
   const [componentId, setComponentId] = useState(router.query.componentId);
   const [componentsData, setComponentsData] = useState([]);
   const [startVal, setStartVal] = useState(0);
+  const COMCOP_doc_id = 914;
 
   ////DEC - ISSUE WITH SCROLL _ FETCH DATA GETS DOUBLE TRIGGERED ON PAGE RELOAD
   /* if (typeof window != "undefined" && startVal === 0) {
@@ -145,6 +147,19 @@ function Schedules({
       }
     }
 
+    // getLargeScheduleComponentsBySectionId
+    // Doc COMCOP_doc_id - large document (consolidated metering code of practice)
+    if (shouldFetchMoreData && scheduleId == COMCOP_doc_id) {
+      const section = document.getElementById(
+        `sec${currentSections.sectionId}`
+      );
+
+      if (!section) {
+        url = `https://prod-07.uksouth.logic.azure.com/workflows/57d1b61abef74560aa495ec7d3eb41bc/triggers/request/paths/invoke/documentId/${scheduleId}/sectionId/${currentSections.sectionId}/version/${docVersionName}?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=DT4IB-nrTKIhSQC2PSOC04pOqVyut0bil5FjH9NXb9A`;
+      }
+      resetVarToDefault();
+    }
+
     setError(null);
     if (isLoading != true) {
       try {
@@ -152,7 +167,6 @@ function Schedules({
         const response = await fetch(url);
         const dataResJson = await response.json();
         const newDataComponents = dataResJson;
-
         if (startVal === 0) {
           setComponentsData(newDataComponents);
         } else if (
@@ -250,9 +264,9 @@ function Schedules({
     setTimeout(() => {
       window.scrollTo({
         top: 150, //Y coordinate
-        behavior: "smooth",
+        behavior: 'smooth',
       });
-    }, 3000); // 3seconds
+    }, 3000); // 3seconds  
   }
 
   // actual data - groupped all components by sections
@@ -271,6 +285,14 @@ function Schedules({
       }
     })
     .filter((group) => group !== undefined);
+
+  const LoadingText = (props) => {
+    return (
+      <p className={`${styles.loadingCustomStyle} loading-container`}>
+        Loading
+      </p>
+    )
+  }
 
   return (
     <div className={styles.infinitescrollContainer}>
@@ -326,21 +348,26 @@ function Schedules({
         </div>
 
         {shouldFetchMoreData ? (
-          <p className={`${styles.loadingCustomStyle} loading-container`}>
-            Loading
-          </p>
-        ) : (
-          <CreateSchedulesContent
-            scheduleId={scheduleId}
-            parts={parts}
-            definitions={definitions}
-            data={groupSectionsAndComponents}
-            fetchData={fetchData}
-            hasMoreData={hasMoreData}
-            totalLength={startVal}
-            highlightComponentId={router.query.componentId}
-          />
-        )}
+          <LoadingText />
+        ) : (scheduleId == COMCOP_doc_id ? (isLoading ? (
+          <LoadingText />
+        ) : (<CreateSchedulesLargeContent
+          definitions={definitions}
+          data={groupSectionsAndComponents}
+          highlightComponentId={router.query.componentId}
+        />)
+        ) : (<CreateSchedulesContent
+          scheduleId={scheduleId}
+          parts={parts}
+          definitions={definitions}
+          data={groupSectionsAndComponents}
+          fetchData={fetchData}
+          hasMoreData={hasMoreData}
+          totalLength={startVal}
+          highlightComponentId={router.query.componentId}
+        />
+        ))}
+
         {scheduleId == scheduleInterpretationDefinitions ? (
           <div className={styles.tablesContainer}>
             <DefinitionTables
@@ -349,6 +376,7 @@ function Schedules({
             />
           </div>
         ) : null}
+
       </div>
     </div>
   );

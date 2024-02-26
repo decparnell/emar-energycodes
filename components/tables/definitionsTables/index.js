@@ -65,10 +65,8 @@ const DefinitionTables = (props) => {
         sectionOrder: 3,
       },
     ];
-    console.log(formatData);
 
     formatData.map((section) => {
-      console.log(section);
       let componentsInSection = section.components;
 
       const clauses = componentsInSection.filter(function (el2) {
