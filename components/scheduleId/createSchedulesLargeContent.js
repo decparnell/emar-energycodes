@@ -14,14 +14,10 @@ const CreateSchedulesLargeContent = (props) => {
         totalLength: sum of all the components
 
     */
-  const scheduleId = props.scheduleId;
   const data = props.data;
   const definitions = props.definitions;
 
-  const hasMore = props.hasMoreData;
-  const fetchData = props.fetchData;
   const hightlight = props.highlightComponentId;
-  const totalLength = props.totalLength;
   const CreateContent = (props) => {
     let content = [];
 
